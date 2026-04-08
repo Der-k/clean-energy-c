@@ -20,7 +20,92 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8fbff 40%,
+    #eef5ff 100%
+  );
+  
+  font-family: var(--font-body), sans-serif;
+}
+.font-heading {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+
+
+.hero-marquee {
+  animation: hero-marquee-scroll 24s linear infinite;
+}
+
+.hero-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes hero-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+.btn-glow {
+  position: relative;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow:
+    0 6px 18px rgba(37, 99, 235, 0.25),
+    0 0 0 rgba(37, 99, 235, 0);
+  transition: all 0.25s ease;
+}
+
+.btn-glow:hover {
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.35),
+    0 0 20px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-glow:active {
+  transform: translateY(0);
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-outline-glow {
+  background: white;
+  border: 1px solid #dbeafe;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  transition: all 0.25s ease;
+}
+
+.btn-outline-glow:hover {
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.15),
+    0 0 12px rgba(37, 99, 235, 0.15);
+  border-color: #93c5fd;
+}
+
+.btn-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    rgba(37, 99, 235, 0.4),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::after {
+  opacity: 0.4;
 }
