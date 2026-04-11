@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${manrope.variable} bg-white text-slate-900 antialiased`}>
+      <body className={`${inter.variable} ${manrope.variable} bg-white text-[color:var(--text-main)]-900 antialiased`}>
         <Header />
         <main>{children}</main>
         <Footer />

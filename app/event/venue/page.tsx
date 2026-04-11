@@ -107,7 +107,7 @@ export default function VenuePage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
@@ -116,7 +116,7 @@ export default function VenuePage() {
               Event
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Venue</span>
+            <span className="text-[color:var(--text-main)]-700">Venue</span>
           </div>
 
           <div className="max-w-4xl">
@@ -124,11 +124,11 @@ export default function VenuePage() {
               Venue
             </p>
 
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Venue and location details
             </h1>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Switch between the two 2026 editions to view their venue details,
               location context, imagery, and map information.
             </p>
@@ -147,7 +147,7 @@ export default function VenuePage() {
                   className={`rounded-[26px] border p-6 text-left transition ${
                     isActive
                       ? "border-blue-500 bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-[0_18px_40px_rgba(37,99,235,0.18)]"
-                      : "border-blue-100 bg-white text-slate-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
+                      : "border-blue-100 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -166,7 +166,7 @@ export default function VenuePage() {
 
                       <div
                         className={`mt-4 space-y-2 text-sm ${
-                          isActive ? "text-blue-50" : "text-slate-600"
+                          isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
                         <div className="flex items-center gap-2">
@@ -194,7 +194,7 @@ export default function VenuePage() {
 
                   <p
                     className={`mt-5 text-sm leading-7 ${
-                      isActive ? "text-blue-50" : "text-slate-600"
+                      isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
                     {edition.summary}
@@ -212,11 +212,11 @@ export default function VenuePage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               About the Venue
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               {current.descriptionTitle}
             </h2>
 
-            <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
+            <div className="mt-6 space-y-5 text-base leading-8 text-[color:var(--text-main)]-600">
               {current.descriptionParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -227,10 +227,10 @@ export default function VenuePage() {
                 Venue Summary
               </p>
 
-              <div className="mt-4 space-y-3 text-sm text-slate-700">
+              <div className="mt-4 space-y-3 text-sm text-[color:var(--text-main)]-700">
                 {current.venueSummary.map((item) => (
                   <p key={item.label}>
-                    <span className="font-semibold text-slate-900">
+                    <span className="font-semibold text-[color:var(--text-main)]-900">
                       {item.label}:
                     </span>{" "}
                     {item.value}
@@ -273,7 +273,7 @@ export default function VenuePage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Arrival & Access
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               Practical location notes
             </h2>
 
@@ -285,7 +285,7 @@ export default function VenuePage() {
                 >
                   <div className="flex gap-3">
                     <Plane className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-                    <p className="text-sm leading-7 text-slate-700">{note}</p>
+                    <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{note}</p>
                   </div>
                 </div>
               ))}
@@ -293,7 +293,7 @@ export default function VenuePage() {
               <div className="rounded-[18px] border border-blue-100 bg-white p-5 shadow-sm">
                 <div className="flex gap-3">
                   <Hotel className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-                  <p className="text-sm leading-7 text-slate-700">
+                  <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                     The venue is intended to support conference sessions,
                     networking, partner visibility, and professional delegate
                     experience for the selected edition.
@@ -326,14 +326,14 @@ export default function VenuePage() {
             href={current.mapLink}
             target="_blank"
             rel="noreferrer"
-            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
           >
             Open in Google Maps
             <ArrowRight className="h-4 w-4" />
           </a>
 
           <a
-            href="https://eventbrite.com"
+            href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"

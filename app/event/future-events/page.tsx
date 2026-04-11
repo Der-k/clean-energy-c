@@ -109,20 +109,20 @@ export default function FutureEventsPage() {
 
                 <div className="flex flex-col justify-between p-4 md:p-5">
                   <div>
-                    <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-[color:var(--text-main)]-500">
                       <CalendarDays className="h-3.5 w-3.5 text-[#e06b56]" />
                       <span>{event.date}</span>
                     </div>
 
-                    <h2 className="text-base font-semibold text-slate-900 md:text-lg">
+                    <h2 className="text-base font-semibold text-[color:var(--text-main)]-900 md:text-lg">
                       {event.title}
                     </h2>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                    <p className="mt-3 text-sm leading-6 text-[color:var(--text-main)]-600">
                       {event.description}
                     </p>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--text-main)]-500">
                       <MapPin className="h-3.5 w-3.5 text-[#e06b56]" />
                       <span>
                         {event.location} · {event.venue}
@@ -131,7 +131,7 @@ export default function FutureEventsPage() {
                   </div>
 
                   <div className="mt-5 flex items-center justify-between gap-4">
-                    <span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
+                    <span className="text-xs font-medium uppercase tracking-[0.14em] text-[color:var(--text-main)]-400">
                       Event Details
                     </span>
 
@@ -155,7 +155,7 @@ export default function FutureEventsPage() {
               <p className="text-sm font-semibold text-[#02026d]">
                 Be part of the movement
               </p>
-              <p className="mt-1 text-sm text-slate-600">
+              <p className="mt-1 text-sm text-[color:var(--text-main)]-600">
                 Shape the future of sustainability
               </p>
             </div>

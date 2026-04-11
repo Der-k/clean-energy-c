@@ -2,7 +2,24 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --border-soft: #d6def0;
+  --border-strong: #bccae6;
+  --primary: #003994;
+  --primary-dark: #002a6d;
+  --text-muted: #111827; /* near-black, softer than pure black */
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 14px 40px rgba(0, 57, 148, 0.12);
+
+  /* Updated hover glow tokens */
+  --glow-blue-soft: 0 0 0 1px rgba(0, 57, 148, 0.18);
+  --glow-blue-medium: 0 0 0 3px rgba(0, 57, 148, 0.12);
+  --glow-blue-shadow: 0 16px 40px rgba(0, 57, 148, 0.18);
+  --glow-blue-shadow-strong: 0 20px 48px rgba(0, 57, 148, 0.24);
+
+   --text-main: #000000;
 }
 
 @theme inline {
@@ -14,21 +31,39 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0b1220;
+    --foreground: #f8fafc;
+    --surface: #111827;
+    --surface-muted: #172033;
+    --border-soft: #243041;
+    --border-strong: #334155;
+    --primary: #1c5bd1;
+    --primary-dark: #003994;
+    --text-muted: #f8fafc;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.35);
+
+    --glow-blue-soft: 0 0 0 1px rgba(28, 91, 209, 0.24);
+    --glow-blue-medium: 0 0 0 3px rgba(28, 91, 209, 0.16);
+    --glow-blue-shadow: 0 16px 40px rgba(0, 57, 148, 0.24);
+    --glow-blue-shadow-strong: 0 20px 48px rgba(0, 57, 148, 0.3);
+
+     --text-main: #111111;
   }
 }
 
-body {
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #f8fbff 40%,
-    #eef5ff 100%
-  );
-  
-  font-family: var(--font-body), sans-serif;
+html {
+  scroll-behavior: smooth;
 }
+
+body {
+  background: #ffffff;
+  color: var(--text-main);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .font-heading {
   font-family: var(--font-heading), sans-serif;
 }
@@ -37,10 +72,9 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
-
-
 .hero-marquee {
   animation: hero-marquee-scroll 24s linear infinite;
+  will-change: transform;
 }
 
 .hero-marquee:hover {
@@ -56,56 +90,226 @@ body {
   }
 }
 
+/* Primary button: sharp by default, branded glow on hover */
 .btn-glow {
   position: relative;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   box-shadow:
-    0 6px 18px rgba(37, 99, 235, 0.25),
-    0 0 0 rgba(37, 99, 235, 0);
-  transition: all 0.25s ease;
+    0 10px 24px rgba(0, 57, 148, 0.22),
+    0 2px 6px rgba(0, 57, 148, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    filter 0.2s ease;
 }
 
-.btn-glow:hover {
-  box-shadow:
-    0 10px 30px rgba(37, 99, 235, 0.35),
-    0 0 20px rgba(37, 99, 235, 0.25);
+.btn-glow:hover,
+.btn-glow:focus-visible {
   transform: translateY(-1px);
+  box-shadow:
+    var(--glow-blue-soft),
+    var(--glow-blue-medium),
+    0 14px 30px rgba(0, 57, 148, 0.28),
+    0 4px 10px rgba(0, 57, 148, 0.2),
+    0 0 18px rgba(0, 57, 148, 0.18);
 }
 
 .btn-glow:active {
   transform: translateY(0);
   box-shadow:
-    0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-.btn-outline-glow {
-  background: white;
-  border: 1px solid #dbeafe;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
-  transition: all 0.25s ease;
-}
-
-.btn-outline-glow:hover {
-  box-shadow:
-    0 8px 20px rgba(37, 99, 235, 0.15),
-    0 0 12px rgba(37, 99, 235, 0.15);
-  border-color: #93c5fd;
+    var(--glow-blue-soft),
+    0 8px 18px rgba(0, 57, 148, 0.2),
+    0 2px 6px rgba(0, 57, 148, 0.16);
 }
 
 .btn-glow::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at center,
-    rgba(37, 99, 235, 0.4),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 
-.btn-glow:hover::after {
-  opacity: 0.4;
+/* Outline button: white and sharp, then branded ring/glow on hover */
+.btn-outline-glow {
+  background: #ffffff;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-outline-glow:hover,
+.btn-outline-glow:focus-visible {
+  transform: translateY(-1px);
+  border-color: #5b84d6;
+  box-shadow:
+    var(--glow-blue-soft),
+    var(--glow-blue-medium),
+    0 10px 24px rgba(15, 23, 42, 0.08),
+    0 0 16px rgba(0, 57, 148, 0.12);
+}
+
+/* Reusable card surfaces */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-card-strong {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Reusable hover glow for cards */
+.hover-glow-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+.hover-glow-card:hover,
+.hover-glow-card:focus-within {
+  transform: translateY(-2px);
+  border-color: #5b84d6;
+  box-shadow:
+    var(--glow-blue-soft),
+    var(--glow-blue-medium),
+    var(--glow-blue-shadow),
+    0 0 22px rgba(0, 57, 148, 0.12);
+}
+
+/* Stronger version for feature cards */
+.hover-glow-card-strong {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.hover-glow-card-strong:hover,
+.hover-glow-card-strong:focus-within {
+  transform: translateY(-3px);
+  border-color: #3f6bc7;
+  box-shadow:
+    var(--glow-blue-soft),
+    0 0 0 4px rgba(0, 57, 148, 0.12),
+    var(--glow-blue-shadow-strong),
+    0 0 24px rgba(0, 57, 148, 0.14);
+}
+
+/* Optional for small logo/stat boxes */
+.hover-glow-soft {
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hover-glow-soft:hover,
+.hover-glow-soft:focus-within {
+  transform: translateY(-1px);
+  border-color: #9bb6ea;
+  box-shadow:
+    0 0 0 1px rgba(0, 57, 148, 0.2),
+    0 8px 20px rgba(0, 57, 148, 0.1),
+    0 0 14px rgba(0, 57, 148, 0.08);
+}
+
+.energy-bg {
+  background-image: url("/images/clean-energy-collage.png");
+  background-repeat: repeat;
+  background-size: 420px auto;
+  animation: floatZoom 18s ease-in-out infinite;
+}
+
+.energy-bg-2 {
+  transform: scale(1.1);
+  animation: driftTwo 55s linear infinite;
+}
+
+@keyframes driftTwo {
+  0% {
+    transform: scale(1.1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.1) translate3d(120px, 90px, 0);
+  }
+}
+
+@keyframes floatZoom {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.04) translateY(-12px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ===== GLOBAL TYPOGRAPHY SCALE (INDABA STYLE) ===== */
+
+h1 {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  p {
+    font-size: 19px;
+  }
+}
+
+@media (min-width: 1280px) {
+  p {
+    font-size: 20px;
+  }
+}
+
+.floating-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.floating-card-body {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hero-marquee-slow {
+  animation: hero-marquee-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.hero-marquee-slow:hover {
+  animation-play-state: paused;
 }

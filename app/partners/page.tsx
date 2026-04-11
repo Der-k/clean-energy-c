@@ -101,22 +101,22 @@ export default function PartnersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Partners & Sponsors</span>
+            <span className="text-[color:var(--text-main)]-700">Partners & Sponsors</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Partnerships
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Partners & Sponsors
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Explore the organizations supporting the Clean Energy Conference
               through partnership, sponsorship, strategic visibility, and sector collaboration.
             </p>
@@ -131,7 +131,7 @@ export default function PartnersPage() {
 
               <Link
                 href="/contact"
-                className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
               >
                 Contact Us
                 <ArrowRight className="h-4 w-4" />
@@ -224,7 +224,7 @@ function PartnerSection({
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
             {eyebrow}
           </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             {title}
           </h2>
         </div>
@@ -253,10 +253,10 @@ function PartnerSection({
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="text-2xl font-semibold text-slate-900">
+                  <h3 className="text-2xl font-semibold text-[color:var(--text-main)]-900">
                     {partner.name}
                   </h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-600">
+                  <p className="mt-4 text-sm leading-7 text-[color:var(--text-main)]-600">
                     {partner.description}
                   </p>
 

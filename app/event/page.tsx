@@ -139,12 +139,12 @@ export default function EventOverviewPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Event</span>
+            <span className="text-[color:var(--text-main)]-700">Event</span>
           </div>
 
           <div className="max-w-4xl">
@@ -152,11 +152,11 @@ export default function EventOverviewPage() {
               Event Overview
             </p>
 
-            <h1 className="font-heading mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Explore the 2026 event editions
             </h1>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Select an edition below to view its dates, location, programme
               emphasis, and key session formats.
             </p>
@@ -227,15 +227,15 @@ export default function EventOverviewPage() {
                 {current.tabLabel}
               </p>
 
-              <h2 className="font-heading mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+              <h2 className="font-heading mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
                 {current.title}
               </h2>
 
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
                 {current.subtitle}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-700">
+              <div className="mt-6 flex flex-wrap gap-3 text-sm text-[color:var(--text-main)]-700">
                 <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 shadow-sm">
                   <CalendarDays className="h-4 w-4 text-blue-600" />
                   <span>{current.date}</span>
@@ -254,7 +254,7 @@ export default function EventOverviewPage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href="https://eventbrite.com"
+                  href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
@@ -264,7 +264,7 @@ export default function EventOverviewPage() {
 
                 <a
                   href="/documents/clean-energy-conference-programme-2026.pdf"
-                  className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                  className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
                 >
                   Download Programme
                 </a>
@@ -289,7 +289,7 @@ export default function EventOverviewPage() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
                   {current.floatingLabel}
                 </p>
-                <p className="mt-2 text-sm font-medium text-slate-700">
+                <p className="mt-2 text-sm font-medium text-[color:var(--text-main)]-700">
                   {current.floatingValue}
                 </p>
               </div>
@@ -304,11 +304,11 @@ export default function EventOverviewPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Summary
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               {current.summaryTitle}
             </h2>
 
-            <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
+            <div className="mt-6 space-y-5 text-base leading-8 text-[color:var(--text-main)]-600">
               {current.summaryParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -328,7 +328,7 @@ export default function EventOverviewPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
             Day Themes
           </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             Two focused days with distinct themes
           </h2>
         </div>
@@ -342,10 +342,10 @@ export default function EventOverviewPage() {
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
                 {item.day}
               </p>
-              <h3 className="font-heading mt-3 text-2xl font-semibold text-slate-900">
+              <h3 className="font-heading mt-3 text-2xl font-semibold text-[color:var(--text-main)]-900">
                 {item.title}
               </h3>
-              <p className="mt-4 text-sm leading-7 text-slate-600">
+              <p className="mt-4 text-sm leading-7 text-[color:var(--text-main)]-600">
                 {item.summary}
               </p>
             </div>
@@ -359,10 +359,10 @@ export default function EventOverviewPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               What to Expect
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               Main session and engagement formats
             </h2>
-            <p className="mt-5 text-base leading-8 text-slate-600">
+            <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
               The programme combines formal sessions and networking-oriented
               moments so the event feels both informative and commercially useful.
             </p>
@@ -375,7 +375,7 @@ export default function EventOverviewPage() {
                 className="flex gap-3 rounded-[18px] border border-blue-100 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-                <p className="text-sm leading-7 text-slate-700">{item}</p>
+                <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
               </div>
             ))}
           </div>
@@ -402,12 +402,12 @@ export default function EventOverviewPage() {
               <a
                 href="/documents/clean-energy-conference-programme-2026.pdf"
                 download
-                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
               >
                 Download Programme
               </a>
               <a
-                href="https://eventbrite.com"
+                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
@@ -426,10 +426,10 @@ export default function EventOverviewPage() {
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-[22px] border border-blue-100 bg-gradient-to-b from-white to-blue-50 p-6 shadow-sm">
-      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-slate-900">
+      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900">
         {value}
       </p>
-      <p className="mt-2 text-sm text-slate-600">{label}</p>
+      <p className="mt-2 text-sm text-[color:var(--text-main)]-600">{label}</p>
     </div>
   );
 }

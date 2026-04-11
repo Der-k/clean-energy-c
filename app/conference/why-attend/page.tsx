@@ -102,22 +102,22 @@ export default function WhyAttendPage() {
     <main className="min-h-screen bg-[#f4f6f8]">
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-            <Link href="/" className="hover:text-blue-600">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+            <Link href="/" className="hover:text-[#009966]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/conference" className="hover:text-blue-600">
+            <Link href="/conference" className="hover:text-[#009966]">
               Conference
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Why Attend</span>
+            <span className="text-[color:var(--text-main)]-700">Why Attend</span>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
-        <h1 className="text-3xl font-bold tracking-[-0.02em] text-slate-900">
+        <h1 className="text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
           Why Attend
         </h1>
 
@@ -135,8 +135,8 @@ export default function WhyAttendPage() {
                     onClick={() => setActiveTab(tab)}
                     className={`border-r border-slate-200 px-6 py-4 text-sm font-semibold transition ${
                       isActive
-                        ? "bg-[#e06b56] text-white"
-                        : "bg-white text-slate-700 hover:bg-slate-50"
+                        ? "bg-[#009966] text-white"
+                        : "bg-white text-[color:var(--text-main)]-700 hover:bg-slate-50"
                     }`}
                   >
                     {item.label}
@@ -148,7 +148,7 @@ export default function WhyAttendPage() {
 
           <div className="grid gap-8 p-6 md:p-8 lg:grid-cols-[420px_1fr] lg:gap-10">
             <div className="relative">
-              <div className="absolute left-[-10px] top-[12px] hidden h-[85%] w-[18px] bg-[#e06b56] md:block" />
+              <div className="absolute left-[-10px] top-[12px] hidden h-[85%] w-[18px] bg-[#009966] md:block" />
               <div className="relative overflow-hidden bg-slate-100">
                 <div className="relative aspect-[4/5.8] w-full">
                   <Image
@@ -164,19 +164,21 @@ export default function WhyAttendPage() {
             </div>
 
             <div className="pt-1">
-              <h2 className="text-3xl font-semibold text-slate-900">
+              <h2 className="text-3xl font-semibold text-[color:var(--text-main)]-900">
                 {current.title}
               </h2>
 
-              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">
+              <p className="mt-4 max-w-3xl text-base leading-8 text-[color:var(--text-main)]-600">
                 {current.intro}
               </p>
 
               <div className="mt-6 grid gap-4 md:grid-cols-2">
                 {current.benefits.map((benefit) => (
                   <div key={benefit} className="flex gap-3">
-                    <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#e06b56]" />
-                    <p className="text-sm leading-7 text-slate-700">{benefit}</p>
+                    <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#009966]" />
+                    <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+                      {benefit}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -191,7 +193,7 @@ export default function WhyAttendPage() {
 
                 <Link
                   href="/partners"
-                  className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                  className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
                 >
                   Explore Opportunities
                   <ArrowRight className="h-4 w-4" />

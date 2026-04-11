@@ -15,7 +15,7 @@ export function MobileNav({
   if (!open) return null;
 
   return (
-    <div className="border-t border-blue-500 bg-blue-600 text-white xl:hidden">
+    <div className="border-t border-white/10 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-700 text-white shadow-[0_20px_40px_rgba(15,23,42,0.18)] xl:hidden">
       <div className="mx-auto max-w-7xl px-4 py-4">
         <div className="space-y-2">
           {navItems.map((item) =>
@@ -31,7 +31,7 @@ export function MobileNav({
                 key={item.label}
                 href={item.href!}
                 onClick={onClose}
-                className="block rounded-lg px-4 py-3 text-sm font-medium text-white hover:bg-blue-700"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </Link>
@@ -39,16 +39,16 @@ export function MobileNav({
           )}
         </div>
 
-        <div className="mt-4">
-         <a
-  href="https://eventbrite.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  onClick={onClose}
-  className="block rounded-full bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
->
-  Get Tickets
-</a>
+        <div className="mt-5">
+          <a
+            href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-blue-700 shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-blue-50"
+          >
+            Get Tickets
+          </a>
         </div>
       </div>
     </div>
@@ -67,20 +67,20 @@ function MobileAccordion({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-xl border border-blue-400 bg-blue-700/40">
+    <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/10 backdrop-blur-sm">
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-white"
+        className="flex w-full items-center justify-between px-4 py-3.5 text-left text-sm font-medium text-white transition hover:bg-white/5"
       >
         <span>{label}</span>
         <ChevronDown
-          className={`h-4 w-4 transition ${open ? "rotate-180" : ""}`}
+          className={`h-4 w-4 transition duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
       {open && (
-        <div className="border-t border-blue-400 px-2 py-2">
+        <div className="border-t border-white/10 px-2 py-2">
           {items.map((child) => {
             const isPdf = child.href.endsWith(".pdf");
 
@@ -91,7 +91,7 @@ function MobileAccordion({
                   href={child.href}
                   download
                   onClick={onClose}
-                  className="block rounded-lg px-3 py-2 text-sm text-white hover:bg-blue-700"
+                  className="block rounded-xl px-3 py-2.5 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
                 >
                   {child.label}
                 </a>
@@ -103,7 +103,7 @@ function MobileAccordion({
                 key={`${child.label}-${child.href}`}
                 href={child.href}
                 onClick={onClose}
-                className="block rounded-lg px-3 py-2 text-sm text-white hover:bg-blue-700"
+                className="block rounded-xl px-3 py-2.5 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
               >
                 {child.label}
               </Link>

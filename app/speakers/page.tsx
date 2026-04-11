@@ -238,22 +238,22 @@ export default function SpeakersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Speakers</span>
+            <span className="text-[color:var(--text-main)]-700">Speakers</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Speakers
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Conference speakers
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Explore the speaker structure for each 2026 edition. Final speaker
               names can be dropped into the grouped layout once confirmations are complete.
             </p>
@@ -272,7 +272,7 @@ export default function SpeakersPage() {
                   className={`rounded-[24px] border p-5 text-left transition ${
                     isActive
                       ? "border-blue-500 bg-blue-600 text-white shadow-[0_18px_36px_rgba(37,99,235,0.18)]"
-                      : "border-blue-100 bg-white text-slate-900 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
+                      : "border-blue-100 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
                   }`}
                 >
                   <p
@@ -296,7 +296,7 @@ export default function SpeakersPage() {
 
                   <p
                     className={`mt-4 text-sm leading-7 ${
-                      isActive ? "text-blue-50" : "text-slate-600"
+                      isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
                     {edition.intro}
@@ -314,7 +314,7 @@ export default function SpeakersPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               {current.label}
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               {group.label}
             </h2>
           </div>
@@ -336,10 +336,10 @@ export default function SpeakersPage() {
                 </div>
 
                 <div className="p-5">
-                  <h3 className="font-heading text-xl font-semibold text-slate-900">
+                  <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                     {speaker.name}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                  <p className="mt-2 text-sm leading-6 text-[color:var(--text-main)]-600">
                     {speaker.role}
                   </p>
                   <p className="mt-1 text-sm font-medium text-blue-600">
@@ -376,7 +376,7 @@ export default function SpeakersPage() {
                 Speaker Enquiry
               </Link>
               <a
-                href="https://eventbrite.com"
+                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"

@@ -22,7 +22,7 @@ export const navItems: NavItem[] = [
     label: "Event",
     children: [
       { label: "Event Overview", href: "/event" },
-      { label: "Programme", href: "/documents/clean-energy-conference-programme-2026.pdf" },
+      { label: "Programme", href: "/event/programme" },
       { label: "Venue", href: "/event/venue" },
       { label: "Future Events", href: "/event/future-events" },
     ],
@@ -57,11 +57,11 @@ export const navItems: NavItem[] = [
   children: [
     {
       label: "🎟 Rwanda (Kigali)",
-      href: "https://eventbrite.com",
+      href: "https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator",
     },
     {
       label: "🎟 Australia (Perth)",
-      href: "https://eventbrite.com",
+      href: "https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator",
     },
   ],
 },

@@ -58,7 +58,7 @@ export default function BecomePartnerPage() {
                 className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
               />
 
-              <select className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm text-slate-500 outline-none transition focus:border-blue-400 focus:bg-white">
+              <select className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm text-[color:var(--text-main)]-500 outline-none transition focus:border-blue-400 focus:bg-white">
                 <option>Select Sponsorship Level</option>
                 <option>Premium Partner</option>
                 <option>Platinum Sponsor</option>
@@ -81,11 +81,11 @@ export default function BecomePartnerPage() {
                 className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
               />
 
-              <div className="flex flex-col gap-1 text-sm text-slate-700">
+              <div className="flex flex-col gap-1 text-sm text-[color:var(--text-main)]-700">
                 <label className="font-medium">Company Logo</label>
                 <input
                   type="file"
-                  className="text-sm text-slate-600 file:mr-3 file:rounded file:border-0 file:bg-slate-200 file:px-3 file:py-2 file:text-sm file:font-medium"
+                  className="text-sm text-[color:var(--text-main)]-600 file:mr-3 file:rounded file:border-0 file:bg-slate-200 file:px-3 file:py-2 file:text-sm file:font-medium"
                 />
               </div>
             </div>

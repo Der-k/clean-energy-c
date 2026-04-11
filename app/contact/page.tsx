@@ -79,22 +79,22 @@ export default function ContactPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Contact Us</span>
+            <span className="text-[color:var(--text-main)]-700">Contact Us</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Contact Us
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Get in touch with the conference team
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Reach the right team for enquiries related to speakers, partnerships,
               media, delegates, venue information, or general conference support.
             </p>
@@ -116,18 +116,18 @@ export default function ContactPage() {
                   <Icon className="h-5 w-5" />
                 </div>
 
-                <h2 className="mt-5 text-xl font-semibold text-slate-900">
+                <h2 className="mt-5 text-xl font-semibold text-[color:var(--text-main)]-900">
                   {card.title}
                 </h2>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
                   {card.description}
                 </p>
 
                 <div className="mt-5 space-y-3 text-sm">
-                  <p className="font-medium text-slate-800">{card.person}</p>
+                  <p className="font-medium text-[color:var(--text-main)]-800">{card.person}</p>
 
-                  <div className="flex items-start gap-3 text-slate-700">
+                  <div className="flex items-start gap-3 text-[color:var(--text-main)]-700">
                     <Mail className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
                     <a
                       href={`mailto:${card.email}`}
@@ -138,7 +138,7 @@ export default function ContactPage() {
                   </div>
 
                   {card.phone ? (
-                    <div className="flex items-start gap-3 text-slate-700">
+                    <div className="flex items-start gap-3 text-[color:var(--text-main)]-700">
                       <Phone className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
                       <a href={`tel:${card.phone}`} className="hover:text-blue-600">
                         {card.phone}
@@ -159,10 +159,10 @@ export default function ContactPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
                 Send an Enquiry
               </p>
-              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
                 Contact form
               </h2>
-              <p className="mt-5 text-base leading-8 text-slate-600">
+              <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
                 Use the form to send a message to the conference team. You can
                 wire it to your backend or email service later.
               </p>
@@ -171,17 +171,17 @@ export default function ContactPage() {
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
                   Primary Contact
                 </p>
-                <div className="mt-4 space-y-3 text-sm text-slate-700">
+                <div className="mt-4 space-y-3 text-sm text-[color:var(--text-main)]-700">
                   <p>
-                    <span className="font-semibold text-slate-900">Phone:</span>{" "}
+                    <span className="font-semibold text-[color:var(--text-main)]-900">Phone:</span>{" "}
                     +254 725 707 557
                   </p>
                   <p>
-                    <span className="font-semibold text-slate-900">Email:</span>{" "}
+                    <span className="font-semibold text-[color:var(--text-main)]-900">Email:</span>{" "}
                     dorah.simiyu@cleanenergyconference.com.au
                   </p>
                   <p>
-                    <span className="font-semibold text-slate-900">Website:</span>{" "}
+                    <span className="font-semibold text-[color:var(--text-main)]-900">Website:</span>{" "}
                     www.cleanenergyconference.com.au
                   </p>
                 </div>
@@ -216,7 +216,7 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <select className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-500 outline-none transition focus:border-blue-400 focus:bg-white">
+                <select className="h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-[color:var(--text-main)]-500 outline-none transition focus:border-blue-400 focus:bg-white">
                   <option>Enquiry Type</option>
                   <option>General Enquiry</option>
                   <option>Speaker Enquiry</option>

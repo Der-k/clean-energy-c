@@ -101,14 +101,14 @@ export default function GalleryPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-500">Media</span>
+            <span className="text-[color:var(--text-main)]-500">Media</span>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Gallery & Highlights</span>
+            <span className="text-[color:var(--text-main)]-700">Gallery & Highlights</span>
           </div>
 
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -117,23 +117,23 @@ export default function GalleryPage() {
   Gallery & Highlights
 </p>
 
-<h1 className="mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+<h1 className="mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
   Conference gallery and highlights
 </h1>
 
-<p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+<p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
   Explore selected moments and highlights from the conference, including
   keynote sessions, networking, exhibitions, speaker appearances, and
   major event activities.
 </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
                   <Images className="h-4 w-4 text-blue-600" />
                   <span>{galleryItems.length} gallery images</span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
                   <Camera className="h-4 w-4 text-blue-600" />
                   <span>Conference moments</span>
                 </div>
@@ -191,7 +191,7 @@ export default function GalleryPage() {
                 className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
                   isActive
                     ? "bg-blue-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]"
-                    : "border border-blue-100 bg-white text-slate-700 hover:bg-blue-50"
+                    : "border border-blue-100 bg-white text-[color:var(--text-main)]-700 hover:bg-blue-50"
                 }`}
               >
                 {filter}
@@ -222,7 +222,7 @@ export default function GalleryPage() {
                 <div className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">
                   {item.category}
                 </div>
-                <p className="mt-3 text-sm leading-6 text-slate-700">{item.alt}</p>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--text-main)]-700">{item.alt}</p>
               </div>
             </article>
           ))}

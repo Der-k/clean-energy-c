@@ -72,24 +72,24 @@ export default function NewsPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-500">Media</span>
+            <span className="text-[color:var(--text-main)]-500">Media</span>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">News & Articles</span>
+            <span className="text-[color:var(--text-main)]-700">News & Articles</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               News & Articles
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Latest news and conference updates
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Explore press releases, event announcements, programme updates,
               and key stories related to the Clean Energy Conference.
             </p>
@@ -102,7 +102,7 @@ export default function NewsPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
             Latest Press Releases and Event News
           </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             Featured update
           </h2>
         </div>
@@ -122,16 +122,16 @@ export default function NewsPage() {
 
             <div className="flex items-center">
               <div className="p-6 md:p-8 lg:p-10">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm text-slate-700">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm text-[color:var(--text-main)]-700">
                   <CalendarDays className="h-4 w-4 text-blue-600" />
                   <span>{featuredArticle.date}</span>
                 </div>
 
-                <h3 className="mt-5 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+                <h3 className="mt-5 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
                   {featuredArticle.title}
                 </h3>
 
-                <p className="mt-5 text-base leading-8 text-slate-600">
+                <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
                   {featuredArticle.excerpt}
                 </p>
 
@@ -152,10 +152,10 @@ export default function NewsPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-12 md:px-6 lg:pb-16">
         <div className="max-w-3xl">
-          <h2 className="text-3xl font-bold tracking-[-0.02em] text-slate-900">
+          <h2 className="text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             More news and articles
           </h2>
-          <p className="mt-4 text-base leading-8 text-slate-600">
+          <p className="mt-4 text-base leading-8 text-[color:var(--text-main)]-600">
             Browse recent press releases, event stories, and conference-related updates.
           </p>
         </div>
@@ -177,12 +177,12 @@ export default function NewsPage() {
               </div>
 
               <div className="p-5">
-                <div className="inline-flex items-center gap-2 text-sm text-slate-500">
+                <div className="inline-flex items-center gap-2 text-sm text-[color:var(--text-main)]-500">
                   <CalendarDays className="h-4 w-4 text-blue-600" />
                   <span>{article.date}</span>
                 </div>
 
-                <h3 className="mt-4 text-xl font-semibold leading-8 text-slate-900">
+                <h3 className="mt-4 text-xl font-semibold leading-8 text-[color:var(--text-main)]-900">
                   {article.title}
                 </h3>
 
@@ -206,13 +206,13 @@ export default function NewsPage() {
           <button className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]">
             1
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50">
+          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
             2
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50">
+          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
             3
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50">
+          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
             Next
           </button>
         </div>

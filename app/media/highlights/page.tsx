@@ -147,24 +147,24 @@ export default function HighlightsPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-500">Media</span>
+            <span className="text-[color:var(--text-main)]-500">Media</span>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Highlights</span>
+            <span className="text-[color:var(--text-main)]-700">Highlights</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Highlights
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Edition highlights and featured moments
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               Explore key highlights from the 2026 Kigali and Perth editions,
               including programme emphasis, showcase formats, and expected
               strategic outcomes.
@@ -184,7 +184,7 @@ export default function HighlightsPage() {
                   className={`rounded-[24px] border p-5 text-left transition ${
                     isActive
                       ? "border-blue-500 bg-blue-600 text-white shadow-[0_18px_36px_rgba(37,99,235,0.18)]"
-                      : "border-blue-100 bg-white text-slate-900 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
+                      : "border-blue-100 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
                   }`}
                 >
                   <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-center">
@@ -203,7 +203,7 @@ export default function HighlightsPage() {
 
                       <p
                         className={`mt-3 text-sm leading-7 ${
-                          isActive ? "text-blue-50" : "text-slate-600"
+                          isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
                         {edition.theme}
@@ -212,7 +212,7 @@ export default function HighlightsPage() {
 
                     <div
                       className={`grid gap-2 text-sm ${
-                        isActive ? "text-blue-50" : "text-slate-600"
+                        isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -239,22 +239,22 @@ export default function HighlightsPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Spotlight
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               {current.spotlightTitle}
             </h2>
-            <p className="mt-5 text-base leading-8 text-slate-600">
+            <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
               {current.spotlightText}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/documents/clean-energy-conference-programme-2026.pdf"
-                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
               >
                 Download Programme
               </a>
               <a
-                href="https://eventbrite.com"
+                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
@@ -284,7 +284,7 @@ export default function HighlightsPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
             Highlight Formats
           </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             Featured programme elements
           </h2>
         </div>
@@ -302,11 +302,11 @@ export default function HighlightsPage() {
                   <Icon className="h-5 w-5" />
                 </div>
 
-                <h3 className="font-heading mt-5 text-xl font-semibold text-slate-900">
+                <h3 className="font-heading mt-5 text-xl font-semibold text-[color:var(--text-main)]-900">
                   {card.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
                   {card.text}
                 </p>
               </article>
@@ -321,7 +321,7 @@ export default function HighlightsPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Focus Areas
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               Edition-specific highlight areas
             </h2>
           </div>
@@ -332,10 +332,10 @@ export default function HighlightsPage() {
                 key={block.title}
                 className="rounded-[20px] border border-blue-100 bg-white p-5 shadow-sm"
               >
-                <h3 className="font-heading text-xl font-semibold text-slate-900">
+                <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                   {block.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
                   {block.text}
                 </p>
               </div>
@@ -350,10 +350,10 @@ export default function HighlightsPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Strategic Outputs
             </p>
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
               Expected highlight outcomes
             </h2>
-            <p className="mt-5 text-base leading-8 text-slate-600">
+            <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
               The concept note frames the conference as a platform for
               high-level dialogue, investment conversations, technical exchange,
               policy continuity, and partnership formation across the two editions.
@@ -367,13 +367,13 @@ export default function HighlightsPage() {
                 className="flex gap-3 rounded-[18px] border border-blue-100 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-                <p className="text-sm leading-7 text-slate-700">{item}</p>
+                <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
               </div>
             ))}
 
             <div className="flex gap-3 rounded-[18px] border border-blue-100 bg-white p-4 shadow-sm">
               <Users className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-              <p className="text-sm leading-7 text-slate-700">
+              <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                 A flagship platform connecting governments, investors, utilities,
                 innovators, and industry stakeholders.
               </p>
@@ -381,7 +381,7 @@ export default function HighlightsPage() {
 
             <div className="flex gap-3 rounded-[18px] border border-blue-100 bg-white p-4 shadow-sm">
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-              <p className="text-sm leading-7 text-slate-700">
+              <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                 A platform for formal reports, policy dialogue, and structured
                 cooperation mechanisms.
               </p>

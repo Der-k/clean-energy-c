@@ -112,7 +112,7 @@ export default function OrganizersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-blue-600">
               Home
             </Link>
@@ -121,17 +121,17 @@ export default function OrganizersPage() {
               Conference
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Organizers</span>
+            <span className="text-[color:var(--text-main)]-700">Organizers</span>
           </div>
 
           <div className="max-w-4xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
               Event Organizers
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Meet the organizers behind the conference
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
               A curated team of conference leaders, advisors, and support staff
               working across programme development, partnerships, delegate
               engagement, and event delivery.
@@ -228,10 +228,10 @@ function SectionHeader({
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
         {eyebrow}
       </p>
-      <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+      <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
         {title}
       </h2>
-      <p className="mt-5 text-base leading-8 text-slate-600">{description}</p>
+      <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">{description}</p>
     </div>
   );
 }
@@ -275,8 +275,8 @@ function OrganizerCard({
         </div>
 
         <div className={featured ? "p-5" : ""}>
-          <h3 className="font-heading text-xl font-semibold text-slate-900">{person.name}</h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">{person.role}</p>
+          <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">{person.name}</h3>
+          <p className="mt-2 text-sm leading-6 text-[color:var(--text-main)]-600">{person.role}</p>
           <p className="mt-1 text-sm font-medium text-blue-600">
             {person.organization}
           </p>
