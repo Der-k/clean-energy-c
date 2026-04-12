@@ -4,37 +4,30 @@ import { ChevronRight, Quote, Star } from "lucide-react";
 
 const featuredTestimonials = [
   {
-    name: "Dr. Angela Mbeki",
-    role: "Director, Sustainable Infrastructure Forum",
-    company: "SIF Global",
+    name: "Dr Dinah Mwinzi",
+    role: "Director at the Ministry of Education, Science and Technology",
+    company: "Mama Ngina University",
     image: "/images/testimonials/testimonial-1.jpg",
     quote:
-      "The conference created a rare environment where policy, investment, and implementation conversations all happened in one place. The quality of delegates and strategic dialogue made it genuinely worthwhile.",
+      "The Clean Energy Conference brought together the best minds in the industry. The discussions were insightful, the networking invaluable, and the energy inspiring. I walked away with fresh ideas, meaningful connections, and a clearer vision of where the industry is headed. Truly one of the best conferences in the secto",
   },
   {
-    name: "Michael Oduor",
-    role: "Managing Partner",
-    company: "EastGrid Capital",
+    name: "Steve Kuria",
+    role: "Founder & CEO. ",
+    company: "AAEMI",
     image: "/images/testimonials/testimonial-2.jpg",
     quote:
-      "What stood out most was the calibre of attendees. We were able to connect directly with decision-makers, explore serious partnership opportunities, and gain practical market insight in a very short time.",
+      "WThis conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
   },
   {
-    name: "Claire Bennett",
-    role: "Head of Energy Transition",
-    company: "BlueArc Advisory",
+    name: "Alex Chamwada",
+    role: "CEO",
+    company: "CHAMS Media Limited",
     image: "/images/testimonials/testimonial-3.jpg",
     quote:
       "The programme was highly relevant, the networking was strong, and the event felt well positioned for professionals looking for meaningful engagement rather than generic conference traffic.",
   },
-  {
-    name: "Eng. David Njoroge",
-    role: "Regional Technical Lead",
-    company: "Clean Systems Africa",
-    image: "/images/testimonials/testimonial-4.jpg",
-    quote:
-      "From the speaker sessions to the side conversations, the event delivered practical value. It was clear that the audience was there to engage seriously around projects, partnerships, and long-term opportunities.",
-  },
+  
 ];
 
 const shortTestimonials = [

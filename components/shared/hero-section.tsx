@@ -6,22 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 
 const carouselImages = [
-  {
-    src: "/images/hero-carousel-1.jpg",
-    alt: "Delegates networking at the conference",
-  },
-  {
-    src: "/images/hero-carousel-2.jpg",
-    alt: "Panel session during the conference",
-  },
-  {
-    src: "/images/hero-carousel-3.jpg",
-    alt: "Conference audience during keynote",
-  },
-  {
-    src: "/images/hero-carousel-4.jpg",
-    alt: "Exhibition and partner engagement area",
-  },
+  { src: "/images/hero-carousel-1.jpg", alt: "Delegates networking" },
+  { src: "/images/hero-carousel-2.jpg", alt: "Panel session" },
+  { src: "/images/hero-carousel-3.jpg", alt: "Audience keynote" },
+  { src: "/images/hero-carousel-4.jpg", alt: "Exhibition area" },
+  { src: "/images/hero-carousel-5.jpg", alt: "Speaker presentation" },
+  { src: "/images/hero-carousel-6.jpg", alt: "Networking event" },
+  { src: "/images/hero-carousel-7.jpg", alt: "Conference hall" },
+  { src: "/images/hero-carousel-8.jpg", alt: "Energy discussion" },
 ];
 
 const editions = [

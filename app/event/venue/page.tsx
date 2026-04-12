@@ -42,6 +42,7 @@ const editions = {
       "/images/venue/kigali-2.jpg",
       "/images/venue/kigali-3.jpg",
       "/images/venue/kigali-4.jpg",
+      "/images/venue/kigali-5.jpg",
     ],
     mapEmbed:
       "https://www.google.com/maps?q=Kigali%20Marriott%20Hotel%20Rwanda&z=15&output=embed",
@@ -79,6 +80,7 @@ const editions = {
       "/images/venue/perth-2.jpg",
       "/images/venue/perth-3.jpg",
       "/images/venue/perth-4.jpg",
+      "/images/venue/perth-5.jpg",
     ],
     mapEmbed:
       "https://www.google.com/maps?q=Novotel%20Perth%20Western%20Australia&z=15&output=embed",
