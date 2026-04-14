@@ -5,21 +5,21 @@
   --foreground: #0f172a;
   --surface: #ffffff;
   --surface-muted: #f8fafc;
-  --border-soft: #d6def0;
-  --border-strong: #bccae6;
-  --primary: #003994;
-  --primary-dark: #002a6d;
-  --text-muted: #111827; /* near-black, softer than pure black */
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.06);
-  --shadow-card: 0 14px 40px rgba(0, 57, 148, 0.12);
+  --border-soft: #d0d4f0;
+  --border-strong: #b0b6e6;
+  --primary: #02026e;
+  --primary-dark: #010150;
+  --text-muted: #111827;
+  --shadow-soft: 0 10px 30px rgba(2, 2, 110, 0.06);
+  --shadow-card: 0 14px 40px rgba(2, 2, 110, 0.12);
 
-  /* Updated hover glow tokens */
-  --glow-blue-soft: 0 0 0 1px rgba(0, 57, 148, 0.18);
-  --glow-blue-medium: 0 0 0 3px rgba(0, 57, 148, 0.12);
-  --glow-blue-shadow: 0 16px 40px rgba(0, 57, 148, 0.18);
-  --glow-blue-shadow-strong: 0 20px 48px rgba(0, 57, 148, 0.24);
+  /* Hover glow tokens */
+  --glow-blue-soft: 0 0 0 1px rgba(2, 2, 110, 0.18);
+  --glow-blue-medium: 0 0 0 3px rgba(2, 2, 110, 0.12);
+  --glow-blue-shadow: 0 16px 40px rgba(2, 2, 110, 0.18);
+  --glow-blue-shadow-strong: 0 20px 48px rgba(2, 2, 110, 0.24);
 
-   --text-main: #000000;
+  --text-main: #000000;
 }
 
 @theme inline {
@@ -37,18 +37,18 @@
     --surface-muted: #172033;
     --border-soft: #243041;
     --border-strong: #334155;
-    --primary: #1c5bd1;
-    --primary-dark: #003994;
+    --primary: #3535c4;
+    --primary-dark: #02026e;
     --text-muted: #f8fafc;
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
     --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.35);
 
-    --glow-blue-soft: 0 0 0 1px rgba(28, 91, 209, 0.24);
-    --glow-blue-medium: 0 0 0 3px rgba(28, 91, 209, 0.16);
-    --glow-blue-shadow: 0 16px 40px rgba(0, 57, 148, 0.24);
-    --glow-blue-shadow-strong: 0 20px 48px rgba(0, 57, 148, 0.3);
+    --glow-blue-soft: 0 0 0 1px rgba(53, 53, 196, 0.24);
+    --glow-blue-medium: 0 0 0 3px rgba(53, 53, 196, 0.16);
+    --glow-blue-shadow: 0 16px 40px rgba(2, 2, 110, 0.24);
+    --glow-blue-shadow-strong: 0 20px 48px rgba(2, 2, 110, 0.3);
 
-     --text-main: #111111;
+    --text-main: #111111;
   }
 }
 
@@ -90,13 +90,13 @@ body {
   }
 }
 
-/* Primary button: sharp by default, branded glow on hover */
+/* Primary button */
 .btn-glow {
   position: relative;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   box-shadow:
-    0 10px 24px rgba(0, 57, 148, 0.22),
-    0 2px 6px rgba(0, 57, 148, 0.18);
+    0 10px 24px rgba(2, 2, 110, 0.22),
+    0 2px 6px rgba(2, 2, 110, 0.18);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -110,24 +110,24 @@ body {
   box-shadow:
     var(--glow-blue-soft),
     var(--glow-blue-medium),
-    0 14px 30px rgba(0, 57, 148, 0.28),
-    0 4px 10px rgba(0, 57, 148, 0.2),
-    0 0 18px rgba(0, 57, 148, 0.18);
+    0 14px 30px rgba(2, 2, 110, 0.28),
+    0 4px 10px rgba(2, 2, 110, 0.2),
+    0 0 18px rgba(2, 2, 110, 0.18);
 }
 
 .btn-glow:active {
   transform: translateY(0);
   box-shadow:
     var(--glow-blue-soft),
-    0 8px 18px rgba(0, 57, 148, 0.2),
-    0 2px 6px rgba(0, 57, 148, 0.16);
+    0 8px 18px rgba(2, 2, 110, 0.2),
+    0 2px 6px rgba(2, 2, 110, 0.16);
 }
 
 .btn-glow::after {
   display: none;
 }
 
-/* Outline button: white and sharp, then branded ring/glow on hover */
+/* Outline button */
 .btn-outline-glow {
   background: #ffffff;
   border: 1px solid var(--border-soft);
@@ -143,12 +143,12 @@ body {
 .btn-outline-glow:hover,
 .btn-outline-glow:focus-visible {
   transform: translateY(-1px);
-  border-color: #5b84d6;
+  border-color: #5b5bd6;
   box-shadow:
     var(--glow-blue-soft),
     var(--glow-blue-medium),
     0 10px 24px rgba(15, 23, 42, 0.08),
-    0 0 16px rgba(0, 57, 148, 0.12);
+    0 0 16px rgba(2, 2, 110, 0.12);
 }
 
 /* Reusable card surfaces */
@@ -168,7 +168,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Reusable hover glow for cards */
+/* Hover glow for cards */
 .hover-glow-card {
   transition:
     transform 0.22s ease,
@@ -180,12 +180,12 @@ body {
 .hover-glow-card:hover,
 .hover-glow-card:focus-within {
   transform: translateY(-2px);
-  border-color: #5b84d6;
+  border-color: #5b5bd6;
   box-shadow:
     var(--glow-blue-soft),
     var(--glow-blue-medium),
     var(--glow-blue-shadow),
-    0 0 22px rgba(0, 57, 148, 0.12);
+    0 0 22px rgba(2, 2, 110, 0.12);
 }
 
 /* Stronger version for feature cards */
@@ -199,15 +199,15 @@ body {
 .hover-glow-card-strong:hover,
 .hover-glow-card-strong:focus-within {
   transform: translateY(-3px);
-  border-color: #3f6bc7;
+  border-color: #3f3fc7;
   box-shadow:
     var(--glow-blue-soft),
-    0 0 0 4px rgba(0, 57, 148, 0.12),
+    0 0 0 4px rgba(2, 2, 110, 0.12),
     var(--glow-blue-shadow-strong),
-    0 0 24px rgba(0, 57, 148, 0.14);
+    0 0 24px rgba(2, 2, 110, 0.14);
 }
 
-/* Optional for small logo/stat boxes */
+/* Small logo/stat boxes */
 .hover-glow-soft {
   transition:
     box-shadow 0.2s ease,
@@ -218,11 +218,11 @@ body {
 .hover-glow-soft:hover,
 .hover-glow-soft:focus-within {
   transform: translateY(-1px);
-  border-color: #9bb6ea;
+  border-color: #9b9bea;
   box-shadow:
-    0 0 0 1px rgba(0, 57, 148, 0.2),
-    0 8px 20px rgba(0, 57, 148, 0.1),
-    0 0 14px rgba(0, 57, 148, 0.08);
+    0 0 0 1px rgba(2, 2, 110, 0.2),
+    0 8px 20px rgba(2, 2, 110, 0.1),
+    0 0 14px rgba(2, 2, 110, 0.08);
 }
 
 .energy-bg {
@@ -258,7 +258,7 @@ body {
   }
 }
 
-/* ===== GLOBAL TYPOGRAPHY SCALE (INDABA STYLE) ===== */
+/* ===== GLOBAL TYPOGRAPHY SCALE ===== */
 
 h1 {
   font-size: clamp(2.8rem, 5vw, 4.5rem);
@@ -312,4 +312,10 @@ p {
 
 .hero-marquee-slow:hover {
   animation-play-state: paused;
+}
+
+@media (min-width: 1024px) {
+  html {
+    zoom: 0.75;
+  }
 }

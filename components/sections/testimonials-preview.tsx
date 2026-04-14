@@ -6,29 +6,30 @@ import { Quote, Star, ArrowRight } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Dr. Angela Mbeki",
-    role: "Director, Sustainable Infrastructure Forum",
-    company: "SIF Global",
+    name: "Dr Dinah Mwinzi",
+    role: "Director at the Ministry of Education, Science and Technology",
+    company: "Mama Ngina University",
     image: "/images/testimonials/testimonial-1.jpg",
     quote:
-      "The conference created a rare environment where policy, investment, and implementation conversations all happened in one place.",
+      "The Clean Energy Conference brought together the best minds in the industry. The discussions were insightful, the networking invaluable, and the energy inspiring. I walked away with fresh ideas, meaningful connections, and a clearer vision of where the industry is headed. Truly one of the best conferences in the secto",
   },
   {
-    name: "Michael Oduor",
-    role: "Managing Partner",
-    company: "EastGrid Capital",
+    name: "Steve Kuria",
+    role: "Founder & CEO. ",
+    company: "AAEMI",
     image: "/images/testimonials/testimonial-2.jpg",
     quote:
-      "We connected directly with decision-makers and explored serious partnership opportunities within a very short time.",
+      "WThis conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
   },
   {
-    name: "Claire Bennett",
-    role: "Head of Energy Transition",
-    company: "BlueArc Advisory",
+    name: "Alex Chamwada",
+    role: "CEO",
+    company: "CHAMS Media Limited",
     image: "/images/testimonials/testimonial-3.jpg",
     quote:
-      "Highly relevant programme with strong networking and real value for professionals in the sector.",
+      "The programme was highly relevant, the networking was strong, and the event felt well positioned for professionals looking for meaningful engagement rather than generic conference traffic.",
   },
+  
 ];
 
 export function TestimonialsPreview() {

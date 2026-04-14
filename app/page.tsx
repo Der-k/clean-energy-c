@@ -5,11 +5,11 @@ import { PartnersPreview } from "@/components/sections/partners-preview";
 
 export default function HomePage() {
   return (
-    <>
+     <main className="pt-24">
       <HeroSection />
       <TestimonialsPreview />
       <VenuePreview />
       <PartnersPreview />
-    </>
+     </main>
   );
 }

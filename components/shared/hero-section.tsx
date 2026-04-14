@@ -79,13 +79,13 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-white min-h-[calc(100vh-96px)]">
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_62%,#f8fafc_100%)]" />
       <div className="absolute inset-x-0 top-0 h-px bg-slate-200" />
 
       {/* ── ROW 1: heading + image ── */}
-      <div className="relative mx-auto max-w-7xl px-4 pt-10 md:px-6 lg:pt-14">
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-14">
+      <div className="relative mx-auto max-w-7xl px-4 pt-6 md:px-6 lg:pt-8">
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-10">
 
           {/* LEFT: heading, description, buttons, edition cards */}
           <div className="max-w-3xl pt-2">
@@ -93,20 +93,20 @@ export function HeroSection() {
               Africa × Australia · Two 2026 Conference Editions
             </div>
 
-            <h1 className="font-heading mt-6 max-w-4xl text-4xl font-extrabold leading-[0.96] tracking-[-0.045em] text-[color:var(--text-main)]-950 sm:text-5xl lg:text-[4.4rem]">
+            <h1 className="font-heading mt-4 max-w-4xl text-4xl font-extrabold leading-[0.96] tracking-[-0.045em] text-[color:var(--text-main)]-950 sm:text-[3.25rem] lg:text-[3.8rem]">
               Driving the Future of
               <span className="mt-2 block text-blue-600">Clean Energy</span>
              
             </h1>
 
-            <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[color:var(--text-main)]-700 sm:text-lg">
+            <p className="mt-4 max-w-2xl text-[17px] leading-7 text-[color:var(--text-main)]-700 sm:text-lg">
               Join policymakers, investors, project developers, innovators, and
               industry stakeholders across Kigali and Perth for a high-level
               platform focused on energy transition, climate finance, regional
               collaboration, and market opportunity.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href="https://eventbrite.com"
                 target="_blank"
@@ -134,12 +134,12 @@ export function HeroSection() {
             </div>
 
             {/* Edition cards */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 flex flex-wrap gap-3">
               {editions.map((edition) => (
                 <Link
                   key={edition.name}
                   href={edition.href}
-                  className="hover-glow-card group block rounded-[22px] border border-slate-200 bg-white p-5 shadow-[0_12px_34px_rgba(15,23,42,0.06)]"
+                  className="hover-glow-card group block rounded-[22px] border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)]"
                 >
                   <p className={`text-[11px] font-semibold uppercase tracking-[0.2em] ${edition.accent}`}>
                     {edition.name}
@@ -284,46 +284,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── ROW 2: stats + conference focus ── */}
-      <div className="relative mx-auto max-w-7xl px-4 pb-14 md:px-6 lg:pb-20">
-        <div className="grid items-start gap-12 pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-14">
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 gap-4 border-t border-slate-200 pt-6 sm:grid-cols-3">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="font-heading text-3xl font-bold tracking-[-0.03em] text-[color:var(--text-main)]-950">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-sm text-[color:var(--text-main)]-600">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Conference Focus card */}
-          <div className="rounded-[24px] border border-[#003994]/30 bg-[#003994] p-5 text-white shadow-[0_20px_60px_rgba(0,57,148,0.35)] sm:p-6">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/70">
-              Conference Focus
-            </p>
-            <p className="mt-2 font-heading text-lg font-semibold leading-7 text-white sm:text-xl">
-              Connecting African energy priorities with Australian capital,
-              innovation, project delivery expertise, and strategic partnerships.
-            </p>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              {["Climate finance", "Green hydrogen", "Grid modernisation", "Mining & ESG"].map((tag) => (
-                <div
-                  key={tag}
-                  className="hover-glow-soft rounded-2xl border border-white/20 bg-white/10 px-3 py-3 backdrop-blur-sm transition hover:border-white/40 hover:bg-white/15 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_10px_25px_rgba(255,255,255,0.15),0_0_20px_rgba(255,255,255,0.12)]"
-                >
-                  {tag}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
       
-      </div>
     </section>
   );
 }

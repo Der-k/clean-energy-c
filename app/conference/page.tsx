@@ -153,7 +153,7 @@ export default function ConferenceOverviewPage() {
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (
-    <main className="bg-white">
+    <main className="pt-24 bg-white">
       <section className="relative overflow-hidden border-b border-blue-100 bg-white">
         <div className="absolute inset-0">
           <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />

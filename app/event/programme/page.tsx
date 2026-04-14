@@ -112,7 +112,7 @@ export default function ProgrammePage() {
   }
 
   return (
-    <main className="bg-white">
+    <main className="pt-24 bg-white">
       <section className="relative overflow-hidden border-b border-slate-200 bg-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_70%,#f8fafc_100%)]" />
 
