@@ -15,7 +15,7 @@ export function MobileNav({
   if (!open) return null;
 
   return (
-    <div className="border-t border-white/10 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-700 text-white shadow-[0_20px_40px_rgba(15,23,42,0.18)] xl:hidden">
+    <div className="border-t border-white/10 bg-gradient-to-b from-[#010150] via-[#02026e] to-[#010150] text-white shadow-[0_20px_40px_rgba(15,23,42,0.18)] xl:hidden">
       <div className="mx-auto max-w-7xl px-4 py-4">
         <div className="space-y-2">
           {navItems.map((item) =>
@@ -45,9 +45,7 @@ export function MobileNav({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-[#010150]
- shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-[#02026e]/5
-"
+            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-[#010150] shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-[#02026e]/5"
           >
             Get Tickets
           </a>

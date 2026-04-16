@@ -21,7 +21,7 @@ const editions = {
     tabLabel: "Kigali Edition",
     title: "Kigali Event Overview",
     subtitle:
-      "A two-day conference and exhibition centered on East Africa’s clean energy transition, regional integration, investment, and practical collaboration.",
+      "A two-day conference and exhibition centered on East Africa's clean energy transition, regional integration, investment, and practical collaboration.",
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     duration: "2-Day Programme",
@@ -31,8 +31,8 @@ const editions = {
     floatingValue: "Kigali Marriott Hotel, Rwanda",
     summaryTitle: "A concise overview of the Kigali edition",
     summaryParagraphs: [
-      "The Kigali Edition is designed as a two-day industry platform focused on East Africa’s energy transition, combining conference sessions, exhibition access, sponsor visibility, networking, and structured discussion.",
-      "It highlights regional integration, geothermal and renewable expansion, decentralized energy systems, green industrialization, climate finance mobilization, and Rwanda’s growing leadership in clean mobility and innovation-driven energy policy.",
+      "The Kigali Edition is designed as a two-day industry platform focused on East Africa's energy transition, combining conference sessions, exhibition access, sponsor visibility, networking, and structured discussion.",
+      "It highlights regional integration, geothermal and renewable expansion, decentralized energy systems, green industrialization, climate finance mobilization, and Rwanda's growing leadership in clean mobility and innovation-driven energy policy.",
       "The event creates space for stronger Kenya–Rwanda collaboration in cross-border power trade, regional power pools, clean technology ecosystems, and institutional partnerships.",
     ],
     stats: [
@@ -44,7 +44,7 @@ const editions = {
     dayThemes: [
       {
         day: "Day 1",
-        title: "Building Rwanda’s Clean Energy Future",
+        title: "Building Rwanda's Clean Energy Future",
         summary:
           "Government dialogue, smart mobility, clean fuels, clean cooking, geothermal, carbon capture, responsible mining, circular economy, and investor-facing deal rooms.",
       },
@@ -105,7 +105,7 @@ const editions = {
         day: "Day 2",
         title: "Site Visits and Extended Industry Engagement",
         summary:
-          "The concept note includes Day 2 starting with mine site and recycling plant visits, extending the edition’s practical focus on mining, circularity, and industrial energy opportunity.",
+          "The concept note includes Day 2 starting with mine site and recycling plant visits, extending the edition's practical focus on mining, circularity, and industrial energy opportunity.",
       },
     ],
     sessionTypes: [
@@ -131,11 +131,11 @@ export default function EventOverviewPage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
-          <div className="absolute bottom-[-120px] left-[25%] h-[220px] w-[220px] rounded-full bg-blue-50/80 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/8 blur-3xl" />
+          <div className="absolute bottom-[-120px] left-[25%] h-[220px] w-[220px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
@@ -174,8 +174,8 @@ export default function EventOverviewPage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`group relative overflow-hidden rounded-[28px] text-left transition ${
                     isActive
-                      ? "ring-2 ring-blue-500 shadow-[0_18px_40px_rgba(37,99,235,0.20)]"
-                      : "border border-blue-500/20 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+                      ? "ring-2 ring-[#02026e] shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
+                      : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.12)]"
                   }`}
                 >
                   <div className="relative h-[280px] w-full">
@@ -190,7 +190,7 @@ export default function EventOverviewPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/10" />
 
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-100 backdrop-blur-md">
+                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
                         {isActive ? "Selected Edition" : "Select Edition"}
                       </div>
 
@@ -198,19 +198,19 @@ export default function EventOverviewPage() {
                         {edition.tabLabel}
                       </h2>
 
-                      <div className="mt-4 space-y-2 text-sm text-blue-50">
+                      <div className="mt-4 space-y-2 text-sm text-white/80">
                         <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 text-blue-300" />
+                          <CalendarDays className="h-4 w-4 text-white/60" />
                           <span>{edition.date}</span>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-blue-300" />
+                          <MapPin className="h-4 w-4 text-white/60" />
                           <span>{edition.venue}</span>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <Clock3 className="h-4 w-4 text-blue-300" />
+                          <Clock3 className="h-4 w-4 text-white/60" />
                           <span>{edition.duration}</span>
                         </div>
                       </div>
@@ -236,17 +236,17 @@ export default function EventOverviewPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3 text-sm text-[color:var(--text-main)]-700">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
                   <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{current.date}</span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
                   <MapPin className="h-4 w-4 text-[#02026e]" />
                   <span>{current.venue}</span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
                   <Clock3 className="h-4 w-4 text-[#02026e]" />
                   <span>{current.duration}</span>
                 </div>
@@ -272,7 +272,7 @@ export default function EventOverviewPage() {
             </div>
 
             <div className="relative">
-              <div className="overflow-hidden rounded-[24px] border border-blue-500/20 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]">
+              <div className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]">
                 <div className="relative aspect-[4/3.2] w-full">
                   <Image
                     src={current.heroImage}
@@ -285,7 +285,7 @@ export default function EventOverviewPage() {
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 left-6 hidden rounded-2xl border border-blue-500/20 bg-white px-5 py-4 shadow-xl md:block">
+              <div className="absolute -bottom-6 left-6 hidden rounded-2xl border border-[#02026e]/20 bg-white px-5 py-4 shadow-xl md:block">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                   {current.floatingLabel}
                 </p>
@@ -337,7 +337,7 @@ export default function EventOverviewPage() {
           {current.dayThemes.map((item) => (
             <div
               key={item.day}
-              className="rounded-[24px] border border-blue-500/20 bg-white p-6 shadow-sm"
+              className="rounded-[24px] border border-[#02026e]/20 bg-white p-6 shadow-sm"
             >
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                 {item.day}
@@ -372,7 +372,7 @@ export default function EventOverviewPage() {
             {current.sessionTypes.map((item) => (
               <div
                 key={item}
-                className="flex gap-3 rounded-[18px] border border-blue-500/20 bg-white p-4 shadow-sm"
+                className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
@@ -383,16 +383,16 @@ export default function EventOverviewPage() {
       </SectionShell>
 
       <SectionShell>
-        <div className="rounded-[28px] border border-blue-500/20 bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Next step
               </p>
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Explore the full programme or secure your place
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
                 Review the session flow in more detail or move straight to
                 registration.
               </p>
@@ -425,8 +425,8 @@ export default function EventOverviewPage() {
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-[22px] border border-blue-500/20 bg-gradient-to-b from-white to-blue-50 p-6 shadow-sm">
-      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900">
+    <div className="rounded-[22px] border border-[#02026e]/20 bg-gradient-to-b from-white to-[#02026e]/5 p-6 shadow-sm">
+      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[#02026e]">
         {value}
       </p>
       <p className="mt-2 text-sm text-[color:var(--text-main)]-600">{label}</p>
