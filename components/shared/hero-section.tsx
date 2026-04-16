@@ -125,31 +125,33 @@ function FlipImageSlot({
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-white">
+    <div className="relative w-full h-full overflow-hidden">
       {/* Category label */}
       <div className="absolute top-2 left-3 z-20">
-        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/70 drop-shadow-sm">
           {label}
         </span>
       </div>
 
+      {/* Image — fills the entire slot with cover */}
       <div
-        className="absolute inset-0 flex items-center justify-center"
+        className="absolute inset-0"
         style={{ transformOrigin: "top center", ...panelStyle() }}
       >
         <img
           src={currentImage.src}
           alt={currentImage.alt}
           style={{
-            maxWidth: "90%",
-            maxHeight: "90%",
-            objectFit: "contain",
-            width: "auto",
-            height: "auto",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            display: "block",
           }}
         />
       </div>
 
+      {/* Crease shimmer */}
       {phase !== "idle" && (
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[2px] z-10"
@@ -313,7 +315,7 @@ export function HeroSection() {
                           label={slot.label}
                         />
                         {i < 2 && (
-                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-slate-100" />
+                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-white/20" />
                         )}
                       </div>
                     ))}
