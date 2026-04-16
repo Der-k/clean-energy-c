@@ -46,6 +46,17 @@ export const navItems: NavItem[] = [
     label: "Speakers",
     href: "/speakers",
   },
+
+  {
+    label: "Programme",
+    href: "/event/programme",
+  },
+
+{
+    label: "Visa",
+    href: "/visa",
+  },
+
   {
     label: "Contact",
     children: [

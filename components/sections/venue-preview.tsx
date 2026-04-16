@@ -30,7 +30,7 @@ export function VenuePreview() {
     <section className="bg-slate-50">
       <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Venue
           </p>
           <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -73,12 +73,12 @@ export function VenuePreview() {
               <div className="p-6">
                 <div className="space-y-3 text-sm text-[color:var(--text-main)]-700">
                   <div className="flex items-center gap-2">
-                    <CalendarDays className="h-4 w-4 text-blue-600" />
+                    <CalendarDays className="h-4 w-4 text-[#02026e]" />
                     <span>{venue.date}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-blue-600" />
+                    <MapPin className="h-4 w-4 text-[#02026e]" />
                     <span>{venue.location}</span>
                   </div>
                 </div>

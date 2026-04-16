@@ -72,15 +72,18 @@ const contactCards = [
 export default function ContactPage() {
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20
+ bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[50px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/5
+/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[50px] h-[240px] w-[240px] rounded-full bg-[#02026e]/5
+/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -88,7 +91,7 @@ export default function ContactPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Contact Us
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
@@ -110,9 +113,11 @@ export default function ContactPage() {
             return (
               <article
                 key={card.title}
-                className="rounded-[22px] border border-blue-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+                className="rounded-[22px] border border-[#02026e]/20
+ bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#02026e]/5
+ text-[#02026e]">
                   <Icon className="h-5 w-5" />
                 </div>
 
@@ -128,10 +133,10 @@ export default function ContactPage() {
                   <p className="font-medium text-[color:var(--text-main)]-800">{card.person}</p>
 
                   <div className="flex items-start gap-3 text-[color:var(--text-main)]-700">
-                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#02026e]" />
                     <a
                       href={`mailto:${card.email}`}
-                      className="hover:text-blue-600"
+                      className="hover:text-[#02026e]"
                     >
                       {card.email}
                     </a>
@@ -139,8 +144,8 @@ export default function ContactPage() {
 
                   {card.phone ? (
                     <div className="flex items-start gap-3 text-[color:var(--text-main)]-700">
-                      <Phone className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
-                      <a href={`tel:${card.phone}`} className="hover:text-blue-600">
+                      <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#02026e]" />
+                      <a href={`tel:${card.phone}`} className="hover:text-[#02026e]">
                         {card.phone}
                       </a>
                     </div>
@@ -156,7 +161,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Send an Enquiry
               </p>
               <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -167,8 +172,9 @@ export default function ContactPage() {
                 wire it to your backend or email service later.
               </p>
 
-              <div className="mt-8 rounded-[20px] border border-blue-100 bg-white p-5 shadow-sm">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
+              <div className="mt-8 rounded-[20px] border border-[#02026e]/20
+ bg-white p-5 shadow-sm">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                   Primary Contact
                 </p>
                 <div className="mt-4 space-y-3 text-sm text-[color:var(--text-main)]-700">
@@ -188,7 +194,8 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-blue-100 bg-white p-6 shadow-sm md:p-8">
+            <div className="rounded-[24px] border border-[#02026e]/20
+ bg-white p-6 shadow-sm md:p-8">
               <form className="grid gap-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <input
@@ -247,7 +254,8 @@ export default function ContactPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
-        <div className="rounded-[28px] border border-blue-100 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/20
+ bg-gradient-to-r from-blue-600 to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">

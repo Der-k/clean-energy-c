@@ -45,7 +45,9 @@ export function MobileNav({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-blue-700 shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-blue-50"
+            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-[#010150]
+ shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-[#02026e]/5
+"
           >
             Get Tickets
           </a>

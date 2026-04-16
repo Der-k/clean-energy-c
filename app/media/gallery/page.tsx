@@ -94,15 +94,15 @@ export default function GalleryPage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -113,7 +113,7 @@ export default function GalleryPage() {
 
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
   Gallery & Highlights
 </p>
 
@@ -128,19 +128,19 @@ export default function GalleryPage() {
 </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
-                  <Images className="h-4 w-4 text-blue-600" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
+                  <Images className="h-4 w-4 text-[#02026e]" />
                   <span>{galleryItems.length} gallery images</span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
-                  <Camera className="h-4 w-4 text-blue-600" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
+                  <Camera className="h-4 w-4 text-[#02026e]" />
                   <span>Conference moments</span>
                 </div>
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[24px] border border-blue-100 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]">
+            <div className="overflow-hidden rounded-[24px] border border-blue-500/20 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]">
               <div className="grid grid-cols-2 gap-2 p-2">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[18px]">
                   <Image
@@ -191,7 +191,7 @@ export default function GalleryPage() {
                 className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
                   isActive
                     ? "bg-blue-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]"
-                    : "border border-blue-100 bg-white text-[color:var(--text-main)]-700 hover:bg-blue-50"
+                    : "border border-blue-500/20 bg-white text-[color:var(--text-main)]-700 hover:bg-blue-50"
                 }`}
               >
                 {filter}
@@ -206,7 +206,7 @@ export default function GalleryPage() {
           {filteredItems.map((item, index) => (
             <article
               key={`${item.src}-${index}`}
-              className="group overflow-hidden rounded-[22px] border border-blue-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
+              className="group overflow-hidden rounded-[22px] border border-blue-500/20 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
@@ -219,7 +219,7 @@ export default function GalleryPage() {
               </div>
 
               <div className="p-4">
-                <div className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">
+                <div className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#02026e]">
                   {item.category}
                 </div>
                 <p className="mt-3 text-sm leading-6 text-[color:var(--text-main)]-700">{item.alt}</p>

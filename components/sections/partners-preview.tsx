@@ -5,29 +5,18 @@ import Link from "next/link";
 
 const featuredPartners = [
   {
-    name: "Central Energy Fund",
-    logo: "/images/partners/cef.png",
+    name: "AAEMI",
+    logo: "/images/partners/cef.jpg",
   },
   {
-    name: "Edison Power",
-    logo: "/images/partners/edison-power.png",
+    name: "Kratos sotions",
+    logo: "/images/partners/kratos.jpg",
   },
   {
-    name: "Rompco",
-    logo: "/images/partners/rompco.png",
+    name: "Calebb international",
+    logo: "/images/partners/calebb.jpg",
   },
-  {
-    name: "Eskom",
-    logo: "/images/partners/eskom.png",
-  },
-  {
-    name: "Development Bank of Southern Africa",
-    logo: "/images/partners/dbsa.png",
-  },
-  {
-    name: "EWSETA",
-    logo: "/images/partners/ewseta.png",
-  },
+  
 ];
 
 export function PartnersPreview() {
@@ -35,7 +24,7 @@ export function PartnersPreview() {
     <section className="bg-[#f8fafc]">
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:py-20">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Partnerships
           </p>
 

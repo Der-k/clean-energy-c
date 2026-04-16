@@ -21,7 +21,7 @@ const editions = {
     eyebrow: "2026 Edition",
     title: "Kigali Edition Overview",
     subtitle:
-      "A high-level platform for East Africa’s clean energy transition, regional integration, and investment dialogue.",
+      "A high-level platform for East Africa's clean energy transition, regional integration, and investment dialogue.",
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     heroImage: "/images/conference/kigali-hero.jpg",
@@ -37,8 +37,8 @@ const editions = {
     overviewTitle:
       "East Africa-focused clean energy dialogue, investment, and collaboration",
     overviewParagraphs: [
-      "The Kigali Edition will focus strongly on East Africa’s energy transition, highlighting regional integration, geothermal and renewable expansion, decentralized energy systems, green industrialization, and climate finance mobilization.",
-      "It also recognizes Rwanda’s growing leadership in clean mobility, sustainable urban systems, and innovation-driven energy policy.",
+      "The Kigali Edition will focus strongly on East Africa's energy transition, highlighting regional integration, geothermal and renewable expansion, decentralized energy systems, green industrialization, and climate finance mobilization.",
+      "It also recognizes Rwanda's growing leadership in clean mobility, sustainable urban systems, and innovation-driven energy policy.",
       "The platform creates space to deepen Kenya–Rwanda collaboration in cross-border power trade, regional power pools, clean technology ecosystems, and institutional partnerships.",
     ],
     stats: [
@@ -48,11 +48,11 @@ const editions = {
       { value: "Africa", label: "Regional focus" },
     ],
     reasonsToAttend: [
-      "Connect with policymakers, investors, regulators, and innovators shaping East Africa’s energy transition.",
+      "Connect with policymakers, investors, regulators, and innovators shaping East Africa's energy transition.",
       "Gain insight into regional integration, decentralized energy systems, and green industrialization.",
       "Explore climate finance mobilization and practical implementation opportunities.",
       "Build institutional and commercial relationships across clean technology and cross-border energy ecosystems.",
-      "Learn from discussions tied closely to Rwanda’s and the region’s energy priorities.",
+      "Learn from discussions tied closely to Rwanda's and the region's energy priorities.",
     ],
     sectors: [
       "Renewable Energy",
@@ -154,15 +154,15 @@ export default function ConferenceOverviewPage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -170,7 +170,7 @@ export default function ConferenceOverviewPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Conference Overview
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
@@ -194,8 +194,8 @@ export default function ConferenceOverviewPage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`group relative overflow-hidden rounded-[28px] text-left transition ${
                     isActive
-                      ? "ring-2 ring-blue-500 shadow-[0_18px_40px_rgba(37,99,235,0.20)]"
-                      : "border border-blue-100 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+                      ? "ring-2 ring-[#02026e] shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
+                      : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.12)]"
                   }`}
                 >
                   <div className="relative h-[280px] w-full">
@@ -210,7 +210,7 @@ export default function ConferenceOverviewPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/10" />
 
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-100 backdrop-blur-md">
+                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
                         {isActive ? "Selected Edition" : "Select Edition"}
                       </div>
 
@@ -218,14 +218,14 @@ export default function ConferenceOverviewPage() {
                         {edition.tabLabel}
                       </h2>
 
-                      <div className="mt-4 space-y-2 text-sm text-blue-50">
+                      <div className="mt-4 space-y-2 text-sm text-white/80">
                         <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 text-blue-300" />
+                          <CalendarDays className="h-4 w-4 text-white/60" />
                           <span>{edition.date}</span>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-blue-300" />
+                          <MapPin className="h-4 w-4 text-white/60" />
                           <span>{edition.venue}</span>
                         </div>
                       </div>
@@ -238,7 +238,7 @@ export default function ConferenceOverviewPage() {
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 {current.eyebrow}
               </p>
 
@@ -251,13 +251,13 @@ export default function ConferenceOverviewPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3 text-sm text-[color:var(--text-main)]-700">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 shadow-sm">
-                  <CalendarDays className="h-4 w-4 text-blue-600" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
+                  <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{current.date}</span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 shadow-sm">
-                  <MapPin className="h-4 w-4 text-blue-600" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
+                  <MapPin className="h-4 w-4 text-[#02026e]" />
                   <span>{current.venue}</span>
                 </div>
               </div>
@@ -282,7 +282,7 @@ export default function ConferenceOverviewPage() {
             </div>
 
             <div className="relative">
-              <div className="overflow-hidden rounded-[22px] border border-blue-100 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]">
+              <div className="overflow-hidden rounded-[22px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]">
                 <div className="relative aspect-[4/3] w-full">
                   <Image
                     src={current.heroImage}
@@ -302,7 +302,7 @@ export default function ConferenceOverviewPage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Event Overview
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -329,7 +329,7 @@ export default function ConferenceOverviewPage() {
           {current.gallery.map((src, index) => (
             <div
               key={`${src}-${index}`}
-              className={`relative overflow-hidden rounded-[18px] border border-blue-100 bg-blue-50 ${
+              className={`relative overflow-hidden rounded-[18px] border border-[#02026e]/20 bg-[#02026e]/5 ${
                 index === 0 ? "sm:col-span-2 lg:col-span-1" : ""
               }`}
             >
@@ -350,7 +350,7 @@ export default function ConferenceOverviewPage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Why Attend
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -359,7 +359,7 @@ export default function ConferenceOverviewPage() {
 
             <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
               Each edition is tailored to its regional context while maintaining
-              the conference’s broader goal of connecting government, industry,
+              the conference's broader goal of connecting government, industry,
               investors, innovators, and development partners around clean energy
               opportunity.
             </p>
@@ -367,7 +367,7 @@ export default function ConferenceOverviewPage() {
             <div className="mt-8">
               <Link
                 href="/partners"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#02026e] hover:text-[#010150]"
               >
                 Explore partnership opportunities
                 <ArrowRight className="h-4 w-4" />
@@ -379,10 +379,10 @@ export default function ConferenceOverviewPage() {
             {current.reasonsToAttend.map((reason) => (
               <div
                 key={reason}
-                className="rounded-[18px] border border-blue-100 bg-white p-5 shadow-sm"
+                className="rounded-[18px] border border-[#02026e]/20 bg-white p-5 shadow-sm"
               >
                 <div className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                   <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{reason}</p>
                 </div>
               </div>
@@ -394,7 +394,7 @@ export default function ConferenceOverviewPage() {
       <SectionShell muted>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Sectors Represented
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -405,7 +405,7 @@ export default function ConferenceOverviewPage() {
               {current.sectors.map((sector) => (
                 <div
                   key={sector}
-                  className="rounded-[16px] border border-blue-100 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-700 shadow-sm"
+                  className="rounded-[16px] border border-[#02026e]/20 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-700 shadow-sm"
                 >
                   {sector}
                 </div>
@@ -414,7 +414,7 @@ export default function ConferenceOverviewPage() {
           </div>
 
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Who Attends
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -425,20 +425,20 @@ export default function ConferenceOverviewPage() {
               {current.audienceBreakdown.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-[18px] border border-blue-100 bg-white p-4 shadow-sm"
+                  className="rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
                 >
                   <div className="mb-2 flex items-center justify-between gap-4">
                     <span className="text-sm font-medium text-[color:var(--text-main)]-700">
                       {item.label}
                     </span>
-                    <span className="text-base font-bold text-blue-600">
+                    <span className="text-base font-bold text-[#02026e]">
                       {item.value}
                     </span>
                   </div>
 
-                  <div className="h-2 overflow-hidden rounded-full bg-blue-50">
+                  <div className="h-2.5 overflow-hidden rounded-full bg-[#02026e]/12">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500"
+                      className="h-full rounded-full bg-gradient-to-r from-[#02026e] to-[#3535c4]"
                       style={{ width: item.value }}
                     />
                   </div>
@@ -450,16 +450,16 @@ export default function ConferenceOverviewPage() {
       </SectionShell>
 
       <SectionShell>
-        <div className="rounded-[26px] border border-blue-100 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[26px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Ready to participate?
               </p>
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Secure your place at the {current.tabLabel.toLowerCase()}
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
                 Register early, explore the programme, and position your
                 organization for visibility, networking, and strategic engagement.
               </p>
@@ -470,7 +470,7 @@ export default function ConferenceOverviewPage() {
                 href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
               </a>
@@ -490,8 +490,8 @@ export default function ConferenceOverviewPage() {
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-[22px] border border-blue-100 bg-gradient-to-b from-white to-blue-50 p-6 shadow-sm">
-      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900">
+    <div className="rounded-[22px] border border-[#02026e]/20 bg-gradient-to-b from-white to-[#02026e]/5 p-6 shadow-sm">
+      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[#02026e]">
         {value}
       </p>
       <p className="mt-2 text-sm text-[color:var(--text-main)]-600">{label}</p>

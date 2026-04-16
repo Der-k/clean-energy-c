@@ -118,11 +118,11 @@ export default function ProgrammePage() {
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/event" className="hover:text-blue-600">
+            <Link href="/event" className="hover:text-[#02026e]">
               Event
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -131,7 +131,7 @@ export default function ProgrammePage() {
 
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Programme Access
               </p>
 
@@ -147,7 +147,8 @@ export default function ProgrammePage() {
               <div className="mt-8 space-y-4">
                 <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
+ text-[#02026e]">
                       <FileText className="h-5 w-5" />
                     </div>
 
@@ -165,7 +166,8 @@ export default function ProgrammePage() {
 
                 <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
+ text-[#02026e]">
                       <Download className="h-5 w-5" />
                     </div>
 
@@ -187,7 +189,7 @@ export default function ProgrammePage() {
               {!isSubmitted ? (
                 <>
                   <div className="mb-6">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
                       Request Form
                     </p>
                     <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -306,7 +308,9 @@ export default function ProgrammePage() {
                       )}
                     </div>
 
-                    <div className="rounded-[20px] border border-blue-100 bg-blue-50 px-4 py-4">
+                    <div className="rounded-[20px] border border-[#02026e]/20
+ bg-[#02026e]/5
+ px-4 py-4">
                       <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
                         Selected file
                       </p>
@@ -326,7 +330,8 @@ export default function ProgrammePage() {
                 </>
               ) : (
                 <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#02026e]/5
+ text-[#02026e]">
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
 

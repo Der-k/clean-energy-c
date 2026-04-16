@@ -105,19 +105,22 @@ const supportTeam: Organizer[] = [
 export default function OrganizersPage() {
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20
+ bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[50px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/5
+/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[50px] h-[240px] w-[240px] rounded-full bg-[#02026e]/5
+/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/conference" className="hover:text-blue-600">
+            <Link href="/conference" className="hover:text-[#02026e]">
               Conference
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -125,7 +128,7 @@ export default function OrganizersPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Event Organizers
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
@@ -182,7 +185,8 @@ export default function OrganizersPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-6 lg:pb-20">
-        <div className="rounded-[26px] border border-blue-100 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[26px] border border-[#02026e]/20
+ bg-gradient-to-r from-blue-600 to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
@@ -225,7 +229,7 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-3xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
         {eyebrow}
       </p>
       <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -247,13 +251,15 @@ function OrganizerCard({
 }) {
   return (
     <article
-      className={`group overflow-hidden rounded-[22px] border border-blue-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)] ${
+      className={`group overflow-hidden rounded-[22px] border border-[#02026e]/20
+ bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)] ${
         featured ? "p-0" : compact ? "p-4" : "p-5"
       }`}
     >
       <div className={featured ? "" : "space-y-4"}>
         <div
-          className={`relative overflow-hidden bg-blue-50 ${
+          className={`relative overflow-hidden bg-[#02026e]/5
+ ${
             featured
               ? "aspect-[4/4.5] w-full"
               : compact
@@ -277,7 +283,7 @@ function OrganizerCard({
         <div className={featured ? "p-5" : ""}>
           <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">{person.name}</h3>
           <p className="mt-2 text-sm leading-6 text-[color:var(--text-main)]-600">{person.role}</p>
-          <p className="mt-1 text-sm font-medium text-blue-600">
+          <p className="mt-1 text-sm font-medium text-[#02026e]">
             {person.organization}
           </p>
         </div>

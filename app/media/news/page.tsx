@@ -65,15 +65,18 @@ const articles = [
 export default function NewsPage() {
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20
+ bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/5
+/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/5
+/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -83,7 +86,7 @@ export default function NewsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               News & Articles
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
@@ -99,7 +102,7 @@ export default function NewsPage() {
 
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Latest Press Releases and Event News
           </p>
           <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -107,7 +110,8 @@ export default function NewsPage() {
           </h2>
         </div>
 
-        <article className="mt-8 overflow-hidden rounded-[26px] border border-blue-100 bg-white shadow-[0_18px_50px_rgba(37,99,235,0.08)]">
+        <article className="mt-8 overflow-hidden rounded-[26px] border border-[#02026e]/20
+ bg-white shadow-[0_18px_50px_rgba(37,99,235,0.08)]">
           <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="relative min-h-[280px]">
               <Image
@@ -122,8 +126,10 @@ export default function NewsPage() {
 
             <div className="flex items-center">
               <div className="p-6 md:p-8 lg:p-10">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm text-[color:var(--text-main)]-700">
-                  <CalendarDays className="h-4 w-4 text-blue-600" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20
+ bg-[#02026e]/5
+ px-4 py-2 text-sm text-[color:var(--text-main)]-700">
+                  <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{featuredArticle.date}</span>
                 </div>
 
@@ -164,7 +170,8 @@ export default function NewsPage() {
           {articles.map((article) => (
             <article
               key={article.title}
-              className="group overflow-hidden rounded-[22px] border border-blue-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
+              className="group overflow-hidden rounded-[22px] border border-[#02026e]/20
+ bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
             >
               <div className="relative aspect-[4/2.7] w-full overflow-hidden">
                 <Image
@@ -178,7 +185,7 @@ export default function NewsPage() {
 
               <div className="p-5">
                 <div className="inline-flex items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-                  <CalendarDays className="h-4 w-4 text-blue-600" />
+                  <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{article.date}</span>
                 </div>
 
@@ -189,7 +196,8 @@ export default function NewsPage() {
                 <div className="mt-6">
                   <Link
                     href={article.href}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#02026e] transition hover:text-[#010150]
+"
                   >
                     Read More
                     <ArrowRight className="h-4 w-4" />
@@ -206,13 +214,19 @@ export default function NewsPage() {
           <button className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]">
             1
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
+          <button className="rounded-full border border-[#02026e]/20
+ bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+">
             2
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
+          <button className="rounded-full border border-[#02026e]/20
+ bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+">
             3
           </button>
-          <button className="rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-blue-50">
+          <button className="rounded-full border border-[#02026e]/20
+ bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+">
             Next
           </button>
         </div>
@@ -220,7 +234,8 @@ export default function NewsPage() {
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
-          <div className="rounded-[28px] border border-blue-100 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+          <div className="rounded-[28px] border border-[#02026e]/20
+ bg-gradient-to-r from-blue-600 to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="max-w-2xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
@@ -237,7 +252,9 @@ export default function NewsPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/contact"
-                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
+ transition hover:bg-[#02026e]/5
+"
                 >
                   Contact Us
                 </Link>

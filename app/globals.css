@@ -37,14 +37,14 @@
     --surface-muted: #172033;
     --border-soft: #243041;
     --border-strong: #334155;
-    --primary: #3535c4;
+    --primary: #02026e;
     --primary-dark: #02026e;
     --text-muted: #f8fafc;
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
     --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.35);
 
-    --glow-blue-soft: 0 0 0 1px rgba(53, 53, 196, 0.24);
-    --glow-blue-medium: 0 0 0 3px rgba(53, 53, 196, 0.16);
+    --glow-blue-soft: 0 0 0 1px rgba(2, 2, 110, 0.24);
+    --glow-blue-medium: 0 0 0 3px rgba(2, 2, 110, 0.16);
     --glow-blue-shadow: 0 16px 40px rgba(2, 2, 110, 0.24);
     --glow-blue-shadow-strong: 0 20px 48px rgba(2, 2, 110, 0.3);
 
@@ -143,7 +143,7 @@ body {
 .btn-outline-glow:hover,
 .btn-outline-glow:focus-visible {
   transform: translateY(-1px);
-  border-color: #5b5bd6;
+  border-color: #02026e;
   box-shadow:
     var(--glow-blue-soft),
     var(--glow-blue-medium),
@@ -180,7 +180,7 @@ body {
 .hover-glow-card:hover,
 .hover-glow-card:focus-within {
   transform: translateY(-2px);
-  border-color: #5b5bd6;
+  border-color: #02026e;
   box-shadow:
     var(--glow-blue-soft),
     var(--glow-blue-medium),
@@ -199,7 +199,7 @@ body {
 .hover-glow-card-strong:hover,
 .hover-glow-card-strong:focus-within {
   transform: translateY(-3px);
-  border-color: #3f3fc7;
+  border-color: #02026e;
   box-shadow:
     var(--glow-blue-soft),
     0 0 0 4px rgba(2, 2, 110, 0.12),
@@ -218,7 +218,7 @@ body {
 .hover-glow-soft:hover,
 .hover-glow-soft:focus-within {
   transform: translateY(-1px);
-  border-color: #9b9bea;
+  border-color: #02026e;
   box-shadow:
     0 0 0 1px rgba(2, 2, 110, 0.2),
     0 8px 20px rgba(2, 2, 110, 0.1),

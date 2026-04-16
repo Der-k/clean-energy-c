@@ -19,7 +19,7 @@ const featuredTestimonials = [
     company: "AAEMI",
     image: "/images/testimonials/testimonial-2.jpg",
     quote:
-      "WThis conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
+      "This conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
   },
   {
     name: "Alex Chamwada",
@@ -68,19 +68,22 @@ const shortTestimonials = [
 export default function TestimonialsPage() {
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20
+ bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[50px] h-[260px] w-[260px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/5
+/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[50px] h-[260px] w-[260px] rounded-full bg-[#02026e]/5
+/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/conference" className="hover:text-blue-600">
+            <Link href="/conference" className="hover:text-[#02026e]">
               Conference
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -88,7 +91,7 @@ export default function TestimonialsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Testimonials
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
@@ -121,7 +124,7 @@ export default function TestimonialsPage() {
 
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Featured Testimonials
           </p>
           <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -138,11 +141,14 @@ export default function TestimonialsPage() {
           {featuredTestimonials.map((item) => (
             <article
               key={item.name}
-              className="rounded-[24px] border border-blue-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+              className="rounded-[24px] border border-[#02026e]/20
+ bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
             >
               <div className="flex flex-col gap-5 sm:flex-row">
                 <div className="shrink-0">
-                  <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-blue-100 bg-blue-50">
+                  <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-[#02026e]/20
+ bg-[#02026e]/5
+">
                     <Image
                       src={item.image}
                       alt={item.name}
@@ -160,12 +166,13 @@ export default function TestimonialsPage() {
                         {item.name}
                       </h3>
                       <p className="mt-1 text-sm text-[color:var(--text-main)]-600">{item.role}</p>
-                      <p className="text-sm font-medium text-blue-600">
+                      <p className="text-sm font-medium text-[#02026e]">
                         {item.company}
                       </p>
                     </div>
 
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
+ text-[#02026e]">
                       <Quote className="h-5 w-5" />
                     </div>
                   </div>
@@ -191,7 +198,7 @@ export default function TestimonialsPage() {
       <section className="bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               More Attendee Feedback
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -207,9 +214,11 @@ export default function TestimonialsPage() {
             {shortTestimonials.map((item, index) => (
               <article
                 key={`${item.author}-${index}`}
-                className="rounded-[20px] border border-blue-100 bg-white p-5 shadow-sm"
+                className="rounded-[20px] border border-[#02026e]/20
+ bg-white p-5 shadow-sm"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#02026e]/5
+ text-[#02026e]">
                   <Quote className="h-4 w-4" />
                 </div>
 
@@ -217,7 +226,8 @@ export default function TestimonialsPage() {
                   “{item.quote}”
                 </p>
 
-                <div className="mt-4 border-t border-blue-100 pt-4">
+                <div className="mt-4 border-t border-[#02026e]/20
+ pt-4">
                   <p className="text-sm font-medium text-[color:var(--text-main)]-900">
                     {item.author}
                   </p>
@@ -229,7 +239,8 @@ export default function TestimonialsPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
-        <div className="rounded-[28px] border border-blue-100 bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/20
+ bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
@@ -247,7 +258,9 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/tickets"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
+ transition hover:bg-[#02026e]/5
+"
               >
                 Register Now
               </Link>

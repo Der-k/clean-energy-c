@@ -2,26 +2,48 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 
-const carouselImages = [
-  { src: "/images/hero-carousel-1.jpg", alt: "Delegates networking" },
-  { src: "/images/hero-carousel-2.jpg", alt: "Panel session" },
-  { src: "/images/hero-carousel-3.jpg", alt: "Audience keynote" },
-  { src: "/images/hero-carousel-4.jpg", alt: "Exhibition area" },
-  { src: "/images/hero-carousel-5.jpg", alt: "Speaker presentation" },
-  { src: "/images/hero-carousel-6.jpg", alt: "Networking event" },
-  { src: "/images/hero-carousel-7.jpg", alt: "Conference hall" },
-  { src: "/images/hero-carousel-8.jpg", alt: "Energy discussion" },
+const flipImages = [
+  { src: "/images/S-energy.png", alt: "Description" },
+  { src: "/images/P-energy.jpg", alt: "Description" },
+  { src: "/images/W-energy.png", alt: "Description" },
+  { src: "/images/G-energy.png", alt: "Description" },
+  { src: "/images/P-energy.jpg", alt: "Description" },
+  { src: "/images/S-energy.png", alt: "Description" },
+  { src: "/images/W-energy.png", alt: "Description" },
+  { src: "/images/G-energy.png", alt: "Description" },
 ];
+
+const carouselImages = [
+  { src: "/images/hero-carousel-1.jpeg", alt: "Delegates networking" },
+  { src: "/images/hero-carousel-2.jpeg", alt: "Panel session" },
+  { src: "/images/hero-carousel-3.jpeg", alt: "Audience keynote" },
+  { src: "/images/hero-carousel-4.jpeg", alt: "Exhibition area" },
+  { src: "/images/hero-carousel-5.jpeg", alt: "Speaker presentation" },
+  { src: "/images/hero-carousel-6.jpeg", alt: "Networking event" },
+  { src: "/images/hero-carousel-7.jpeg", alt: "Conference hall" },
+  { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
+];
+
+// Each slot gets its own staggered image queue so they never show the same image
+const slotImageSets = [
+  [0, 1, 2, 3],
+  [1, 2, 3, 0],
+  [2, 3, 0, 1],
+];
+
+const FLIP_INTERVAL = 10000; // ms between flips per slot
+const FLIP_HALF = 180;      // half the flip animation duration
+const SLOT_STAGGER = 3000;  // ms between each slot's first flip
 
 const editions = [
   {
     name: "Kigali Edition",
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
-    accent: "text-blue-600",
+    accent: "text-[#02026e]",
     href: "/conference?edition=kigali",
   },
   {
@@ -33,12 +55,102 @@ const editions = [
   },
 ];
 
-const stats = [
-  { value: "2", label: "2026 editions" },
-  { value: "600+", label: "Delegates targeted" },
-  { value: "5000+", label: "Past participants" },
-];
+// ─── FlipImageSlot ────────────────────────────────────────────────────────────
+// Global flip coordinator — emits staggered flip signals
+const slotCallbacks: Array<(() => void) | null> = [null, null, null];
 
+function registerSlot(index: number, cb: () => void) {
+  slotCallbacks[index] = cb;
+}
+
+// ─── FlipImageSlot ────────────────────────────────────────────────────────────
+type FlipPhase = "idle" | "fold-out" | "fold-in";
+
+function FlipImageSlot({
+  imageIndices,
+  initialDelay,
+  slotIndex,
+}: {
+  imageIndices: number[];
+  initialDelay: number;
+  slotIndex: number;
+}) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [phase, setPhase] = useState<FlipPhase>("idle");
+
+  const doFlip = useCallback(() => {
+    setPhase("fold-out");
+    setTimeout(() => {
+      setCurrentIdx((prev) => (prev + 1) % imageIndices.length);
+      setPhase("fold-in");
+    }, FLIP_HALF);
+    setTimeout(() => setPhase("idle"), FLIP_HALF * 2);
+  }, [imageIndices.length]);
+
+  useEffect(() => {
+    registerSlot(slotIndex, doFlip);
+  }, [slotIndex, doFlip]);
+
+  useEffect(() => {
+    if (slotIndex !== 0) return; // only slot 0 drives the master clock
+
+    const masterTick = () => {
+      // Fire each slot staggered so they never overlap
+      slotCallbacks.forEach((cb, i) => {
+        setTimeout(() => cb?.(), i * SLOT_STAGGER);
+      });
+    };
+
+    const initial = setTimeout(() => {
+      masterTick();
+      const interval = setInterval(masterTick, FLIP_INTERVAL);
+      return () => clearInterval(interval);
+    }, initialDelay);
+
+    return () => clearTimeout(initial);
+  }, [slotIndex, initialDelay]);
+
+  const currentImage = flipImages[imageIndices[currentIdx]];
+
+  const panelStyle = (): React.CSSProperties => {
+    if (phase === "fold-out")
+      return {
+        transform: "perspective(900px) rotateX(-90deg)",
+        transition: `transform ${FLIP_HALF}ms cubic-bezier(0.4,0,1,1)`,
+      };
+    if (phase === "fold-in")
+      return {
+        transform: "perspective(900px) rotateX(0deg)",
+        transition: `transform ${FLIP_HALF}ms cubic-bezier(0,0,0.6,1)`,
+      };
+    return { transform: "perspective(900px) rotateX(0deg)", transition: "none" };
+  };
+
+  return (
+    <div className="relative w-full h-full overflow-hidden bg-white">
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        style={{ transformOrigin: "top center", ...panelStyle() }}
+      >
+        <img
+          src={currentImage.src}
+          alt={currentImage.alt}
+          style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain", width: "auto", height: "auto" }}
+        />
+      </div>
+      {phase !== "idle" && (
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-[2px] z-10"
+          style={{
+            background: "linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.5) 50%,transparent 100%)",
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+// ─── HeroSection ──────────────────────────────────────────────────────────────
 export function HeroSection() {
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
@@ -55,7 +167,7 @@ export function HeroSection() {
       const elementCenter = rect.top + rect.height / 2;
       const viewportCenter = viewportHeight / 2;
       const distanceFromCenter = elementCenter - viewportCenter;
-      const nextTarget = Math.max(Math.min(distanceFromCenter * 0.28, 180), -180);
+      const nextTarget = Math.max(Math.min(distanceFromCenter * 0.28, 60), -60);
       targetOffsetRef.current = nextTarget;
     };
 
@@ -89,14 +201,14 @@ export function HeroSection() {
 
           {/* LEFT: heading, description, buttons, edition cards */}
           <div className="max-w-3xl pt-2">
-            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-blue-700 shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
+            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#010150]
+ shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
               Africa × Australia · Two 2026 Conference Editions
             </div>
 
             <h1 className="font-heading mt-4 max-w-4xl text-4xl font-extrabold leading-[0.96] tracking-[-0.045em] text-[color:var(--text-main)]-950 sm:text-[3.25rem] lg:text-[3.8rem]">
               Driving the Future of
-              <span className="mt-2 block text-blue-600">Clean Energy</span>
-             
+              <span className="mt-2 block text-[#02026e]">Clean Energy</span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-[17px] leading-7 text-[color:var(--text-main)]-700 sm:text-lg">
@@ -120,7 +232,7 @@ export function HeroSection() {
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="/documents/clean-energy-conference-programme-2026.pdf"
+                href="/event/programme"
                 className="btn-outline-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
               >
                 View Programme
@@ -146,11 +258,11 @@ export function HeroSection() {
                   </p>
                   <div className="mt-4 space-y-3 text-sm text-[color:var(--text-main)]-700">
                     <div className="flex items-start gap-2.5">
-                      <CalendarDays className="mt-0.5 h-4 w-4 text-blue-600" />
+                      <CalendarDays className="mt-0.5 h-4 w-4 text-[#02026e]" />
                       <span>{edition.date}</span>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <MapPin className="mt-0.5 h-4 w-4 text-blue-600" />
+                      <MapPin className="mt-0.5 h-4 w-4 text-[#02026e]" />
                       <span>{edition.venue}</span>
                     </div>
                   </div>
@@ -163,39 +275,50 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* RIGHT: parallax image with floating cards */}
+          {/* RIGHT: original frame shape, 3 stacked flip slots inside */}
           <div className="relative lg:pt-2">
             <div className="relative">
+              {/*
+                Original frame: rounded-[32px], border, heavy shadow.
+                Inner parallax wrapper kept exactly as before.
+                Instead of one image we stack 3 FlipImageSlots,
+                each taking 1/3 of the total height.
+              */}
               <div
                 ref={imageWrapRef}
-                className="relative overflow-hidden rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)]"
+                className="relative rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)]"
               >
-                <div className="relative aspect-[4/4.7] w-full overflow-hidden">
-                  <div
-                    className="absolute inset-0 will-change-transform"
-                    style={{ transform: `translate3d(0, ${imageOffset}px, 0) scale(1.22)` }}
-                  >
-                    <Image
-                      src="/images/S-energy.png"
-                      alt="Clean Energy Conference Africa Australia"
-                      fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 42vw"
-                      className="object-cover"
-                    />
+                <div
+                  className="absolute inset-0 will-change-transform"
+                  style={{ transform: `translate3d(0, ${imageOffset}px, 0) scale(1.08)` }}
+                >
+                  {/* 3 equal-height rows that together fill the aspect ratio */}
+                  <div className="flex flex-col" style={{ aspectRatio: "4 / 5.2" }}>
+                    {slotImageSets.map((indices, i) => (
+                      <div key={i} className="relative flex-1 w-full">
+                       <FlipImageSlot imageIndices={indices} initialDelay={0} slotIndex={i} />
+                        {/* Thin divider line between rows */}
+                        {i < 2 && (
+                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-white/25" />
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
+
+                {/* Spacer div to give the container its natural height */}
+                <div className="aspect-[4/5.2] w-full"/>
               </div>
 
-              {/* Kigali floating card */}
+              {/* Kigali floating card — unchanged */}
               <div className="hover-glow-card-strong absolute -left-2 top-8 hidden w-48 rounded-[8px] border border-slate-200 bg-white p-1 shadow-[0_10px_24px_rgba(15,23,42,0.1)] xl:block">
-                <p className="floating-card-label text-blue-600">Kigali Edition</p>
+                <p className="floating-card-label text-[#02026e]">Kigali Edition</p>
                 <p className="floating-card-body">
                   East Africa energy, climate finance & regional partnerships.
                 </p>
               </div>
 
-              {/* Perth floating card */}
+              {/* Perth floating card — unchanged */}
               <div className="hover-glow-card-strong absolute -right-2 bottom-8 hidden w-52 rounded-[8px] border border-slate-200 bg-white p-1 shadow-[0_10px_24px_rgba(15,23,42,0.1)] xl:block">
                 <p className="floating-card-label text-emerald-600">Perth Edition</p>
                 <p className="floating-card-body">
@@ -204,12 +327,12 @@ export function HeroSection() {
               </div>
             </div>
           </div>
+
         </div>
       </div>{/* ── end row 1 container ── */}
 
-      {/* ── CONFERENCE MOMENTS — true full-width, right after edition cards ── */}
+      {/* ── CONFERENCE MOMENTS — unchanged ── */}
       <div className="relative w-full mt-10 overflow-hidden bg-[#003994]">
-        {/* Label bar */}
         <div className="flex items-center justify-between px-6 py-3 border-b border-white/10">
           <div className="flex items-center gap-3">
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/60">
@@ -226,7 +349,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Cinematic marquee */}
         <div className="relative">
           <div
             id="moments-track"
@@ -252,7 +374,6 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Left fade + arrow */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#003994] to-transparent" />
           <button
             onClick={() => {
@@ -267,7 +388,6 @@ export function HeroSection() {
             </svg>
           </button>
 
-          {/* Right fade + arrow */}
           <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#003994] to-transparent" />
           <button
             onClick={() => {
@@ -284,7 +404,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      
     </section>
   );
 }

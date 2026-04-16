@@ -38,7 +38,7 @@ export function TestimonialsPreview() {
       <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
         {/* HEADER */}
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Testimonials
           </p>
           <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -67,7 +67,8 @@ export function TestimonialsPreview() {
                   />
                 </div>
 
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#02026e]/5
+ text-[#02026e]">
                   <Quote className="h-4 w-4" />
                 </div>
               </div>
@@ -79,7 +80,7 @@ export function TestimonialsPreview() {
               <div className="mt-5">
                 <p className="font-medium text-[color:var(--text-main)]-900">{item.name}</p>
                 <p className="text-sm text-[color:var(--text-main)]-600">{item.role}</p>
-                <p className="text-sm font-medium text-blue-600">
+                <p className="text-sm font-medium text-[#02026e]">
                   {item.company}
                 </p>
               </div>

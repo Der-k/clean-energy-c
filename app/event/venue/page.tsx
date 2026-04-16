@@ -28,7 +28,7 @@ const editions = {
     descriptionTitle: "A premium venue in the heart of Kigali",
     descriptionParagraphs: [
       "The Kigali edition will be hosted at Kigali Marriott Hotel, providing a professional setting for conference sessions, networking, exhibition access, and delegate engagement.",
-      "The venue aligns well with the event’s positioning as a high-level gathering focused on clean energy transition, climate finance, innovation, responsible mining, and regional collaboration.",
+      "The venue aligns well with the event's positioning as a high-level gathering focused on clean energy transition, climate finance, innovation, responsible mining, and regional collaboration.",
       "Its setting supports keynote sessions, panel discussions, sponsor visibility, and executive networking in a polished business environment.",
     ],
     venueSummary: [
@@ -62,12 +62,12 @@ const editions = {
     venueName: "Novotel Hotel Perth",
     date: "31 Aug – 1 Sept 2026",
     summary:
-      "A business-friendly Perth venue aligned with the edition’s focus on investment, mining technology, and Australia–Africa energy collaboration.",
+      "A business-friendly Perth venue aligned with the edition's focus on investment, mining technology, and Australia–Africa energy collaboration.",
     descriptionTitle: "A strategic Perth base for the Australia edition",
     descriptionParagraphs: [
       "The Perth edition will take place at Novotel Hotel Perth, offering a practical and professional venue for conference sessions, networking, and partner engagement.",
-      "Perth’s role as a global mining and clean energy investment hub makes it a strong location for discussions around capital markets, critical minerals, green hydrogen, storage innovation, and ESG leadership.",
-      "The venue supports the edition’s Australia-facing emphasis while maintaining the conference’s broader Africa–Australia collaboration focus.",
+      "Perth's role as a global mining and clean energy investment hub makes it a strong location for discussions around capital markets, critical minerals, green hydrogen, storage innovation, and ESG leadership.",
+      "The venue supports the edition's Australia-facing emphasis while maintaining the conference's broader Africa–Australia collaboration focus.",
     ],
     venueSummary: [
       { label: "Venue", value: "Novotel Hotel Perth" },
@@ -102,19 +102,19 @@ export default function VenuePage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-100 bg-white">
+      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-cyan-100/60 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-blue-600">
+            <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/event" className="hover:text-blue-600">
+            <Link href="/event" className="hover:text-[#02026e]">
               Event
             </Link>
             <ChevronRight className="h-4 w-4" />
@@ -122,7 +122,7 @@ export default function VenuePage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Venue
             </p>
 
@@ -148,15 +148,15 @@ export default function VenuePage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`rounded-[26px] border p-6 text-left transition ${
                     isActive
-                      ? "border-blue-500 bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-[0_18px_40px_rgba(37,99,235,0.18)]"
-                      : "border-blue-100 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
+                      ? "border-blue-500 bg-gradient-to-br from-blue-600 to-#02026e-500 text-white shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
+                      : "border-blue-500/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(2,2,110,0.12)]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p
                         className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                          isActive ? "text-blue-100" : "text-blue-600"
+                          isActive ? "text-blue-100" : "text-[#02026e]"
                         }`}
                       >
                         {edition.tabLabel} Edition
@@ -187,7 +187,7 @@ export default function VenuePage() {
                       className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
                         isActive
                           ? "bg-white/15 text-white"
-                          : "bg-blue-50 text-blue-600"
+                          : "bg-blue-50/8 text-[#02026e]"
                       }`}
                     >
                       <Building2 className="h-5 w-5" />
@@ -211,7 +211,7 @@ export default function VenuePage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               About the Venue
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -224,8 +224,8 @@ export default function VenuePage() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-[20px] border border-blue-100 bg-gradient-to-b from-white to-blue-50 p-5 shadow-sm">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
+            <div className="mt-8 rounded-[20px] border border-blue-500/20 bg-gradient-to-b from-white to-blue-50 p-5 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                 Venue Summary
               </p>
 
@@ -246,7 +246,7 @@ export default function VenuePage() {
             {current.images.map((image, index) => (
               <div
                 key={image}
-                className={`overflow-hidden rounded-[20px] border border-blue-100 bg-blue-50 shadow-sm ${
+                className={`overflow-hidden rounded-[20px] border border-blue-500/20 bg-blue-50 shadow-sm ${
                   index === 0 ? "sm:col-span-2" : ""
                 }`}
               >
@@ -272,7 +272,7 @@ export default function VenuePage() {
       <SectionShell muted>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Arrival & Access
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -283,18 +283,18 @@ export default function VenuePage() {
               {current.arrivalNotes.map((note) => (
                 <div
                   key={note}
-                  className="rounded-[18px] border border-blue-100 bg-white p-5 shadow-sm"
+                  className="rounded-[18px] border border-blue-500/20 bg-white p-5 shadow-sm"
                 >
                   <div className="flex gap-3">
-                    <Plane className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                    <Plane className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                     <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{note}</p>
                   </div>
                 </div>
               ))}
 
-              <div className="rounded-[18px] border border-blue-100 bg-white p-5 shadow-sm">
+              <div className="rounded-[18px] border border-blue-500/20 bg-white p-5 shadow-sm">
                 <div className="flex gap-3">
-                  <Hotel className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                  <Hotel className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                   <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                     The venue is intended to support conference sessions,
                     networking, partner visibility, and professional delegate
@@ -307,7 +307,7 @@ export default function VenuePage() {
 
           <div
             id="venue-map"
-            className="overflow-hidden rounded-[24px] border border-blue-100 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]"
+            className="overflow-hidden rounded-[24px] border border-blue-500/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]"
           >
             <div className="aspect-[16/10] w-full">
               <iframe
