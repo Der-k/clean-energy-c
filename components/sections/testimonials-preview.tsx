@@ -19,7 +19,7 @@ const testimonials = [
     company: "AAEMI",
     image: "/images/testimonials/testimonial-2.jpg",
     quote:
-      "WThis conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
+      "This conference is a goldmine for clean energy investment. I connected with innovative startups, explored emerging trends, and engaged in high-level discussions with industry leaders. The networking and deal-making opportunities are unmatched—highly recommended for investors looking to drive the future of sustainability",
   },
   {
     name: "Alex Chamwada",
