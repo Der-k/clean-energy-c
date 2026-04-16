@@ -5,16 +5,24 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 
-const flipImages = [
-  { src: "/images/S-energy.png", alt: "Description" },
-  { src: "/images/P-energy.jpg", alt: "Description" },
-  { src: "/images/W-energy.png", alt: "Description" },
-  { src: "/images/G-energy.png", alt: "Description" },
-  { src: "/images/P-energy.jpg", alt: "Description" },
-  { src: "/images/S-energy.png", alt: "Description" },
-  { src: "/images/W-energy.png", alt: "Description" },
-  { src: "/images/G-energy.png", alt: "Description" },
-];
+// Images grouped by category — add/remove files freely within each group
+const categoryImages = {
+  solar: [
+    { src: "/images/solar-1.png", alt: "Solar energy" },
+    { src: "/images/solar-2.jpg", alt: "Solar panels" },
+    { src: "/images/solar-3.jpg", alt: "Solar farm" },
+  ],
+  geothermal: [
+    { src: "/images/geo-1.jpg", alt: "Geothermal energy" },
+    { src: "/images/geo-2.jpg", alt: "Hydrothermal plant" },
+    { src: "/images/geo-3.jpg", alt: "Geothermal steam" },
+  ],
+  mining: [
+    { src: "/images/mining-1.jpg", alt: "Mining operations" },
+    { src: "/images/mining-2.jpg", alt: "Mine site" },
+    { src: "/images/mining-3.jpg", alt: "Clean mining" },
+  ],
+};
 
 const carouselImages = [
   { src: "/images/hero-carousel-1.jpeg", alt: "Delegates networking" },
@@ -27,16 +35,9 @@ const carouselImages = [
   { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
 ];
 
-// Each slot gets its own staggered image queue so they never show the same image
-const slotImageSets = [
-  [0, 1, 2, 3],
-  [1, 2, 3, 0],
-  [2, 3, 0, 1],
-];
-
 const FLIP_INTERVAL = 10000; // ms between flips per slot
-const FLIP_HALF = 180;      // half the flip animation duration
-const SLOT_STAGGER = 3000;  // ms between each slot's first flip
+const FLIP_HALF = 180;       // half the flip animation duration
+const SLOT_STAGGER = 3000;   // ms between each slot firing
 
 const editions = [
   {
@@ -55,10 +56,8 @@ const editions = [
   },
 ];
 
-// ─── FlipImageSlot ────────────────────────────────────────────────────────────
-// Global flip coordinator — emits staggered flip signals
+// ─── Global coordinator ───────────────────────────────────────────────────────
 const slotCallbacks: Array<(() => void) | null> = [null, null, null];
-
 function registerSlot(index: number, cb: () => void) {
   slotCallbacks[index] = cb;
 }
@@ -67,13 +66,13 @@ function registerSlot(index: number, cb: () => void) {
 type FlipPhase = "idle" | "fold-out" | "fold-in";
 
 function FlipImageSlot({
-  imageIndices,
-  initialDelay,
+  images,
   slotIndex,
+  label,
 }: {
-  imageIndices: number[];
-  initialDelay: number;
+  images: { src: string; alt: string }[];
   slotIndex: number;
+  label: string;
 }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [phase, setPhase] = useState<FlipPhase>("idle");
@@ -81,21 +80,20 @@ function FlipImageSlot({
   const doFlip = useCallback(() => {
     setPhase("fold-out");
     setTimeout(() => {
-      setCurrentIdx((prev) => (prev + 1) % imageIndices.length);
+      setCurrentIdx((prev) => (prev + 1) % images.length);
       setPhase("fold-in");
     }, FLIP_HALF);
     setTimeout(() => setPhase("idle"), FLIP_HALF * 2);
-  }, [imageIndices.length]);
+  }, [images.length]);
 
   useEffect(() => {
     registerSlot(slotIndex, doFlip);
   }, [slotIndex, doFlip]);
 
   useEffect(() => {
-    if (slotIndex !== 0) return; // only slot 0 drives the master clock
+    if (slotIndex !== 0) return; // slot 0 drives the master clock
 
     const masterTick = () => {
-      // Fire each slot staggered so they never overlap
       slotCallbacks.forEach((cb, i) => {
         setTimeout(() => cb?.(), i * SLOT_STAGGER);
       });
@@ -105,12 +103,12 @@ function FlipImageSlot({
       masterTick();
       const interval = setInterval(masterTick, FLIP_INTERVAL);
       return () => clearInterval(interval);
-    }, initialDelay);
+    }, 1000);
 
     return () => clearTimeout(initial);
-  }, [slotIndex, initialDelay]);
+  }, [slotIndex]);
 
-  const currentImage = flipImages[imageIndices[currentIdx]];
+  const currentImage = images[currentIdx];
 
   const panelStyle = (): React.CSSProperties => {
     if (phase === "fold-out")
@@ -128,6 +126,13 @@ function FlipImageSlot({
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-white">
+      {/* Category label */}
+      <div className="absolute top-2 left-3 z-20">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+          {label}
+        </span>
+      </div>
+
       <div
         className="absolute inset-0 flex items-center justify-center"
         style={{ transformOrigin: "top center", ...panelStyle() }}
@@ -135,14 +140,22 @@ function FlipImageSlot({
         <img
           src={currentImage.src}
           alt={currentImage.alt}
-          style={{ maxWidth: "90%", maxHeight: "90%", objectFit: "contain", width: "auto", height: "auto" }}
+          style={{
+            maxWidth: "90%",
+            maxHeight: "90%",
+            objectFit: "contain",
+            width: "auto",
+            height: "auto",
+          }}
         />
       </div>
+
       {phase !== "idle" && (
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[2px] z-10"
           style={{
-            background: "linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.5) 50%,transparent 100%)",
+            background:
+              "linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.5) 50%,transparent 100%)",
           }}
         />
       )}
@@ -190,6 +203,12 @@ export function HeroSection() {
     };
   }, []);
 
+  const slots = [
+    { images: categoryImages.solar, label: "Solar" },
+    { images: categoryImages.geothermal, label: "Geothermal & Hydrothermal" },
+    { images: categoryImages.mining, label: "Mining" },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-white min-h-[calc(100vh-96px)]">
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_62%,#f8fafc_100%)]" />
@@ -199,10 +218,9 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-4 pt-6 md:px-6 lg:pt-8">
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-10">
 
-          {/* LEFT: heading, description, buttons, edition cards */}
+          {/* LEFT */}
           <div className="max-w-3xl pt-2">
-            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#010150]
- shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
+            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#010150] shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
               Africa × Australia · Two 2026 Conference Editions
             </div>
 
@@ -275,42 +293,36 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* RIGHT: original frame shape, 3 stacked flip slots inside */}
+          {/* RIGHT: 3 stacked category slots */}
           <div className="relative lg:pt-2">
             <div className="relative">
-              {/*
-                Original frame: rounded-[32px], border, heavy shadow.
-                Inner parallax wrapper kept exactly as before.
-                Instead of one image we stack 3 FlipImageSlots,
-                each taking 1/3 of the total height.
-              */}
               <div
                 ref={imageWrapRef}
-                className="relative rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)]"
+                className="relative rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)] overflow-hidden"
               >
                 <div
                   className="absolute inset-0 will-change-transform"
                   style={{ transform: `translate3d(0, ${imageOffset}px, 0) scale(1.08)` }}
                 >
-                  {/* 3 equal-height rows that together fill the aspect ratio */}
                   <div className="flex flex-col" style={{ aspectRatio: "4 / 5.2" }}>
-                    {slotImageSets.map((indices, i) => (
+                    {slots.map((slot, i) => (
                       <div key={i} className="relative flex-1 w-full">
-                       <FlipImageSlot imageIndices={indices} initialDelay={0} slotIndex={i} />
-                        {/* Thin divider line between rows */}
+                        <FlipImageSlot
+                          images={slot.images}
+                          slotIndex={i}
+                          label={slot.label}
+                        />
                         {i < 2 && (
-                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-white/25" />
+                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-slate-100" />
                         )}
                       </div>
                     ))}
                   </div>
                 </div>
-
-                {/* Spacer div to give the container its natural height */}
-                <div className="aspect-[4/5.2] w-full"/>
+                <div className="aspect-[4/5.2] w-full" />
               </div>
 
-              {/* Kigali floating card — unchanged */}
+              {/* Kigali floating card */}
               <div className="hover-glow-card-strong absolute -left-2 top-8 hidden w-48 rounded-[8px] border border-slate-200 bg-white p-1 shadow-[0_10px_24px_rgba(15,23,42,0.1)] xl:block">
                 <p className="floating-card-label text-[#02026e]">Kigali Edition</p>
                 <p className="floating-card-body">
@@ -318,7 +330,7 @@ export function HeroSection() {
                 </p>
               </div>
 
-              {/* Perth floating card — unchanged */}
+              {/* Perth floating card */}
               <div className="hover-glow-card-strong absolute -right-2 bottom-8 hidden w-52 rounded-[8px] border border-slate-200 bg-white p-1 shadow-[0_10px_24px_rgba(15,23,42,0.1)] xl:block">
                 <p className="floating-card-label text-emerald-600">Perth Edition</p>
                 <p className="floating-card-body">
@@ -329,9 +341,9 @@ export function HeroSection() {
           </div>
 
         </div>
-      </div>{/* ── end row 1 container ── */}
+      </div>
 
-      {/* ── CONFERENCE MOMENTS — unchanged ── */}
+      {/* ── CONFERENCE MOMENTS ── */}
       <div className="relative w-full mt-10 overflow-hidden bg-[#003994]">
         <div className="flex items-center justify-between px-6 py-3 border-b border-white/10">
           <div className="flex items-center gap-3">
