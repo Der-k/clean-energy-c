@@ -11,16 +11,19 @@ const categoryImages = {
     { src: "/images/solar-1.png", alt: "Solar energy" },
     { src: "/images/solar-2.jpg", alt: "Solar panels" },
     { src: "/images/solar-3.jpg", alt: "Solar farm" },
+    { src: "/images/solar-4.jpg", alt: "Solar farm" },
   ],
   geothermal: [
     { src: "/images/geo-1.jpg", alt: "Geothermal energy" },
     { src: "/images/geo-2.jpg", alt: "Hydrothermal plant" },
     { src: "/images/geo-3.jpg", alt: "Geothermal steam" },
+    { src: "/images/geo-4.jpg", alt: "Geothermal steam" },
   ],
   mining: [
     { src: "/images/mining-1.jpg", alt: "Mining operations" },
     { src: "/images/mining-2.jpg", alt: "Mine site" },
     { src: "/images/mining-3.jpg", alt: "Clean mining" },
+     { src: "/images/mining-4.jpg", alt: "Clean mining" },
   ],
 };
 
