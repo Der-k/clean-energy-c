@@ -18,11 +18,11 @@ const galleryItems: GalleryItem[] = [
   { src: "/images/gallery/gallery-4.jpg", alt: "Speaker panel discussion", category: "Speakers" },
   { src: "/images/gallery/gallery-5.jpeg", alt: "Audience during conference session", category: "Conference" },
   { src: "/images/gallery/gallery-7.jpg", alt: "Sponsor and exhibitor stand", category: "Exhibition" },
-  { src: "/images/gallery/gallery-8.jpg", alt: "Featured speaker on stage", category: "Speakers" },
-  { src: "/images/gallery/gallery-9.jpg", alt: "Clean energy conference audience", category: "Conference" },
+  { src: "/images/gallery/hero-carousel-3.jpeg", alt: "Featured speaker on stage", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-4.jpeg", alt: "Clean energy conference audience", category: "Conference" },
   { src: "/images/gallery/gallery-10.jpg", alt: "Delegates at networking session", category: "Networking" },
   { src: "/images/gallery/gallery-11.jpg", alt: "Exhibition booth and branding", category: "Exhibition" },
-  { src: "/images/gallery/gallery-12.jpg", alt: "Panel speaker session", category: "Speakers" },
+  { src: "/images/gallery/gallery-11.jpeg", alt: "Panel speaker session", category: "Speakers" },
 ];
 
 const filters = ["All", "Conference", "Networking", "Exhibition", "Speakers", "Highlights"] as const;
