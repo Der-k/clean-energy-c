@@ -319,3 +319,12 @@ p {
     zoom: 0.75;
   }
 }
+
+@keyframes marquee-loop {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hero-marquee-slow {
+  animation: marquee-loop 40s linear infinite;
+}

@@ -35,7 +35,7 @@ const editions: Record<
     date: "6–7 August 2026",
     location: "Kigali Marriott Hotel, Rwanda",
     intro:
-      "The Kigali speaker programme is aligned to East Africa’s energy transition, regional integration, climate finance, decentralized systems, clean mobility, and green industrialization.",
+      "The Kigali speaker programme is aligned to East Africa's energy transition, regional integration, climate finance, decentralized systems, clean mobility, and green industrialization.",
     groups: [
       {
         label: "Host Government / Institutional Leadership",
@@ -231,10 +231,10 @@ export default function SpeakersPage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
@@ -271,13 +271,13 @@ export default function SpeakersPage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`rounded-[24px] border p-5 text-left transition ${
                     isActive
-                      ? "border-blue-500 bg-blue-600 text-white shadow-[0_18px_36px_rgba(37,99,235,0.18)]"
-                      : "border-blue-500/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-blue-200 hover:bg-blue-500"
+                      ? "border-[#02026e] bg-gradient-to-br from-[#02026e] to-[#010150] text-white shadow-[0_18px_36px_rgba(2,2,110,0.22)]"
+                      : "border-[#02026e]/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-[#02026e]/40 hover:shadow-[0_16px_36px_rgba(2,2,110,0.10)]"
                   }`}
                 >
                   <p
                     className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                      isActive ? "text-blue-100" : "text-[#02026e]"
+                      isActive ? "text-white/70" : "text-[#02026e]"
                     }`}
                   >
                     {edition.label}
@@ -296,7 +296,7 @@ export default function SpeakersPage() {
 
                   <p
                     className={`mt-4 text-sm leading-7 ${
-                      isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
+                      isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
                     {edition.intro}
@@ -323,9 +323,9 @@ export default function SpeakersPage() {
             {group.speakers.map((speaker) => (
               <article
                 key={`${group.label}-${speaker.name}-${speaker.role}`}
-                className="group overflow-hidden rounded-[22px] border border-blue-500/20 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+                className="group overflow-hidden rounded-[22px] border border-[#02026e]/20 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.10)]"
               >
-                <div className="relative aspect-[4/4.6] w-full overflow-hidden bg-blue-50">
+                <div className="relative aspect-[4/4.6] w-full overflow-hidden bg-[#02026e]/5">
                   <Image
                     src={speaker.image}
                     alt={speaker.name}
@@ -353,16 +353,16 @@ export default function SpeakersPage() {
       ))}
 
       <SectionShell>
-        <div className="rounded-[28px] border border-blue-500/20 bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Speaker updates
               </p>
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Final speaker announcements can be added here
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
                 This page is structured to match a grouped conference speaker directory,
                 with category-led sections and reusable speaker cards.
               </p>
@@ -371,8 +371,7 @@ export default function SpeakersPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
- transition hover:bg-blue-50"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Speaker Enquiry
               </Link>

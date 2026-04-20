@@ -14,7 +14,7 @@ import {
   Handshake,
   FileText,
   Users,
-  CheckCircle2, // ✅ ADD THIS
+  CheckCircle2,
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 
@@ -31,7 +31,7 @@ const editions = {
     heroImage: "/images/highlights/kigali-highlight-hero.jpg",
     spotlightTitle: "Programme highlights from the Kigali edition",
     spotlightText:
-      "The Kigali edition emphasizes East Africa’s energy transition and Rwanda’s position as a hub for clean mobility, innovation-led policy, regional integration, and climate-focused energy growth.",
+      "The Kigali edition emphasizes East Africa's energy transition and Rwanda's position as a hub for clean mobility, innovation-led policy, regional integration, and climate-focused energy growth.",
     cards: [
       {
         title: "High-Level Plenaries",
@@ -65,7 +65,7 @@ const editions = {
       },
       {
         title: "Innovation-led clean mobility",
-        text: "Reflects Rwanda’s growing visibility in clean mobility, sustainable urban systems, and policy-led innovation.",
+        text: "Reflects Rwanda's growing visibility in clean mobility, sustainable urban systems, and policy-led innovation.",
       },
     ],
     outcomeCards: [
@@ -140,10 +140,10 @@ export default function HighlightsPage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
@@ -183,15 +183,15 @@ export default function HighlightsPage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`rounded-[24px] border p-5 text-left transition ${
                     isActive
-                      ? "border-blue-500 bg-blue-600 text-white shadow-[0_18px_36px_rgba(37,99,235,0.18)]"
-                      : "border-blue-500/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-blue-200 hover:bg-blue-500"
+                      ? "border-[#02026e] bg-gradient-to-br from-[#02026e] to-[#010150] text-white shadow-[0_18px_36px_rgba(2,2,110,0.22)]"
+                      : "border-[#02026e]/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:border-[#02026e]/40 hover:shadow-[0_16px_36px_rgba(2,2,110,0.10)]"
                   }`}
                 >
                   <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-center">
                     <div>
                       <p
                         className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                          isActive ? "text-blue-100" : "text-[#02026e]"
+                          isActive ? "text-white/70" : "text-[#02026e]"
                         }`}
                       >
                         {edition.label}
@@ -203,7 +203,7 @@ export default function HighlightsPage() {
 
                       <p
                         className={`mt-3 text-sm leading-7 ${
-                          isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
+                          isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
                         {edition.theme}
@@ -212,7 +212,7 @@ export default function HighlightsPage() {
 
                     <div
                       className={`grid gap-2 text-sm ${
-                        isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
+                        isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -264,7 +264,7 @@ export default function HighlightsPage() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[24px] border border-blue-500/20 bg-white shadow-[0_20px_50px_rgba(37,99,235,0.08)]">
+          <div className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]">
             <div className="relative aspect-[4/3] w-full">
               <Image
                 src={current.heroImage}
@@ -296,9 +296,9 @@ export default function HighlightsPage() {
             return (
               <article
                 key={card.title}
-                className="rounded-[22px] border border-blue-500/20 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(37,99,235,0.10)]"
+                className="rounded-[22px] border border-[#02026e]/20 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(2,2,110,0.10)]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#02026e]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#02026e]/8 text-[#02026e]">
                   <Icon className="h-5 w-5" />
                 </div>
 
@@ -330,7 +330,7 @@ export default function HighlightsPage() {
             {current.featuredBlocks.map((block) => (
               <div
                 key={block.title}
-                className="rounded-[20px] border border-blue-500/20 bg-white p-5 shadow-sm"
+                className="rounded-[20px] border border-[#02026e]/20 bg-white p-5 shadow-sm"
               >
                 <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                   {block.title}
@@ -364,14 +364,14 @@ export default function HighlightsPage() {
             {current.outcomeCards.map((item) => (
               <div
                 key={item}
-                className="flex gap-3 rounded-[18px] border border-blue-500/20 bg-white p-4 shadow-sm"
+                className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
               </div>
             ))}
 
-            <div className="flex gap-3 rounded-[18px] border border-blue-500/20 bg-white p-4 shadow-sm">
+            <div className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm">
               <Users className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
               <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                 A flagship platform connecting governments, investors, utilities,
@@ -379,7 +379,7 @@ export default function HighlightsPage() {
               </p>
             </div>
 
-            <div className="flex gap-3 rounded-[18px] border border-blue-500/20 bg-white p-4 shadow-sm">
+            <div className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm">
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
               <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
                 A platform for formal reports, policy dialogue, and structured
@@ -391,16 +391,16 @@ export default function HighlightsPage() {
       </SectionShell>
 
       <SectionShell>
-        <div className="rounded-[28px] border border-blue-500/20 bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Discover more
               </p>
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Explore the full programme or browse the gallery
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
                 Move from headline highlights to the full programme flow and the
                 wider event experience.
               </p>
@@ -409,8 +409,7 @@ export default function HighlightsPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 href="/documents/clean-energy-conference-programme-2026.pdf"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
- transition hover:bg-blue-50"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Download Programme
               </a>

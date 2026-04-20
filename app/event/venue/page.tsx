@@ -102,10 +102,10 @@ export default function VenuePage() {
 
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-blue-500/20 bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-blue-50/10 blur-3xl" />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-blue-50/8 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
@@ -148,15 +148,15 @@ export default function VenuePage() {
                   onClick={() => setActiveEdition(editionKey)}
                   className={`rounded-[26px] border p-6 text-left transition ${
                     isActive
-                      ? "border-blue-500 bg-gradient-to-br from-blue-600 to-#02026e-500 text-white shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
-                      : "border-blue-500/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(2,2,110,0.12)]"
+                      ? "border-[#02026e] bg-gradient-to-br from-[#02026e] to-[#010150] text-white shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
+                      : "border-[#02026e]/20 bg-white text-[color:var(--text-main)]-900 shadow-sm hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(2,2,110,0.12)]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p
                         className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                          isActive ? "text-blue-100" : "text-[#02026e]"
+                          isActive ? "text-white/70" : "text-[#02026e]"
                         }`}
                       >
                         {edition.tabLabel} Edition
@@ -168,7 +168,7 @@ export default function VenuePage() {
 
                       <div
                         className={`mt-4 space-y-2 text-sm ${
-                          isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
+                          isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
                         <div className="flex items-center gap-2">
@@ -187,7 +187,7 @@ export default function VenuePage() {
                       className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
                         isActive
                           ? "bg-white/15 text-white"
-                          : "bg-blue-50/8 text-[#02026e]"
+                          : "bg-[#02026e]/8 text-[#02026e]"
                       }`}
                     >
                       <Building2 className="h-5 w-5" />
@@ -196,7 +196,7 @@ export default function VenuePage() {
 
                   <p
                     className={`mt-5 text-sm leading-7 ${
-                      isActive ? "text-blue-50" : "text-[color:var(--text-main)]-600"
+                      isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
                     {edition.summary}
@@ -224,7 +224,7 @@ export default function VenuePage() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-[20px] border border-blue-500/20 bg-gradient-to-b from-white to-blue-50 p-5 shadow-sm">
+            <div className="mt-8 rounded-[20px] border border-[#02026e]/20 bg-gradient-to-b from-white to-[#02026e]/5 p-5 shadow-sm">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                 Venue Summary
               </p>
@@ -246,7 +246,7 @@ export default function VenuePage() {
             {current.images.map((image, index) => (
               <div
                 key={image}
-                className={`overflow-hidden rounded-[20px] border border-blue-500/20 bg-blue-50 shadow-sm ${
+                className={`overflow-hidden rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 shadow-sm ${
                   index === 0 ? "sm:col-span-2" : ""
                 }`}
               >
@@ -283,7 +283,7 @@ export default function VenuePage() {
               {current.arrivalNotes.map((note) => (
                 <div
                   key={note}
-                  className="rounded-[18px] border border-blue-500/20 bg-white p-5 shadow-sm"
+                  className="rounded-[18px] border border-[#02026e]/20 bg-white p-5 shadow-sm"
                 >
                   <div className="flex gap-3">
                     <Plane className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
@@ -292,7 +292,7 @@ export default function VenuePage() {
                 </div>
               ))}
 
-              <div className="rounded-[18px] border border-blue-500/20 bg-white p-5 shadow-sm">
+              <div className="rounded-[18px] border border-[#02026e]/20 bg-white p-5 shadow-sm">
                 <div className="flex gap-3">
                   <Hotel className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                   <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
@@ -307,7 +307,7 @@ export default function VenuePage() {
 
           <div
             id="venue-map"
-            className="overflow-hidden rounded-[24px] border border-blue-500/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]"
+            className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]"
           >
             <div className="aspect-[16/10] w-full">
               <iframe

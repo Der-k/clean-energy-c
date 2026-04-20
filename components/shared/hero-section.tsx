@@ -8,7 +8,7 @@ import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 // Images grouped by category — add/remove files freely within each group
 const categoryImages = {
   solar: [
-    { src: "/images/solar-1.png", alt: "Solar energy" },
+    { src: "/images/solar-1.jpg", alt: "Solar energy" },
     { src: "/images/solar-2.jpg", alt: "Solar panels" },
     { src: "/images/solar-3.jpg", alt: "Solar farm" },
     { src: "/images/solar-4.jpg", alt: "Solar farm" },
@@ -23,7 +23,7 @@ const categoryImages = {
     { src: "/images/mining-1.jpg", alt: "Mining operations" },
     { src: "/images/mining-2.jpg", alt: "Mine site" },
     { src: "/images/mining-3.jpg", alt: "Clean mining" },
-     { src: "/images/mining-4.jpg", alt: "Clean mining" },
+    { src: "/images/mining-4.jpg", alt: "Clean mining" },
   ],
 };
 
@@ -77,15 +77,19 @@ function FlipImageSlot({
   slotIndex: number;
   label: string;
 }) {
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const [displayIdx, setDisplayIdx] = useState(0);
+  const [nextIdx, setNextIdx] = useState(1);
   const [phase, setPhase] = useState<FlipPhase>("idle");
 
   const doFlip = useCallback(() => {
+    setNextIdx((prev) => (prev + 1) % images.length);
     setPhase("fold-out");
+
     setTimeout(() => {
-      setCurrentIdx((prev) => (prev + 1) % images.length);
+      setDisplayIdx((prev) => (prev + 1) % images.length);
       setPhase("fold-in");
     }, FLIP_HALF);
+
     setTimeout(() => setPhase("idle"), FLIP_HALF * 2);
   }, [images.length]);
 
@@ -94,7 +98,7 @@ function FlipImageSlot({
   }, [slotIndex, doFlip]);
 
   useEffect(() => {
-    if (slotIndex !== 0) return; // slot 0 drives the master clock
+    if (slotIndex !== 0) return;
 
     const masterTick = () => {
       slotCallbacks.forEach((cb, i) => {
@@ -111,7 +115,7 @@ function FlipImageSlot({
     return () => clearTimeout(initial);
   }, [slotIndex]);
 
-  const currentImage = images[currentIdx];
+  const currentImage = images[displayIdx];
 
   const panelStyle = (): React.CSSProperties => {
     if (phase === "fold-out")
@@ -129,14 +133,12 @@ function FlipImageSlot({
 
   return (
     <div className="relative w-full h-full overflow-hidden">
-      {/* Category label */}
       <div className="absolute top-2 left-3 z-20">
         <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/70 drop-shadow-sm">
           {label}
         </span>
       </div>
 
-      {/* Image — fills the entire slot with cover */}
       <div
         className="absolute inset-0"
         style={{ transformOrigin: "top center", ...panelStyle() }}
@@ -154,7 +156,6 @@ function FlipImageSlot({
         />
       </div>
 
-      {/* Crease shimmer */}
       {phase !== "idle" && (
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[2px] z-10"
@@ -170,12 +171,19 @@ function FlipImageSlot({
 
 // ─── HeroSection ──────────────────────────────────────────────────────────────
 export function HeroSection() {
+  // ── Parallax refs ──
   const imageWrapRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const currentOffsetRef = useRef(0);
   const targetOffsetRef = useRef(0);
   const [imageOffset, setImageOffset] = useState(0);
 
+  // ── Marquee refs ──
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const marqueePosRef = useRef(0);
+  const marqueeRafRef = useRef<number | null>(null);
+
+  // ── Parallax effect ──
   useEffect(() => {
     const updateTarget = () => {
       const el = imageWrapRef.current;
@@ -207,6 +215,43 @@ export function HeroSection() {
       if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
     };
   }, []);
+
+  // ── Marquee RAF loop ──
+  useEffect(() => {
+    const SPEED = 1.3; // px per frame (~78px/s at 60fps)
+
+    const tick = () => {
+      const el = marqueeRef.current;
+      if (el) {
+        const halfWidth = el.scrollWidth / 2;
+        marqueePosRef.current -= SPEED;
+        // Seamlessly wrap: once we've scrolled one full copy, snap back
+        if (marqueePosRef.current <= -halfWidth) {
+          marqueePosRef.current += halfWidth;
+        }
+        el.style.transform = `translateX(${marqueePosRef.current}px)`;
+      }
+      marqueeRafRef.current = requestAnimationFrame(tick);
+    };
+
+    marqueeRafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (marqueeRafRef.current) cancelAnimationFrame(marqueeRafRef.current);
+    };
+  }, []);
+
+  // ── Marquee prev/next ──
+  const shiftMarquee = (dir: "prev" | "next") => {
+    const el = marqueeRef.current;
+    if (!el) return;
+    // Measure the first child (one image tile) for jump distance
+    const imgWidth = (el.firstElementChild as HTMLElement)?.offsetWidth ?? 520;
+    const halfWidth = el.scrollWidth / 2;
+    marqueePosRef.current += dir === "prev" ? imgWidth : -imgWidth;
+    // Keep position within the seamless loop bounds
+    if (marqueePosRef.current > 0) marqueePosRef.current -= halfWidth;
+    if (marqueePosRef.current <= -halfWidth) marqueePosRef.current += halfWidth;
+  };
 
   const slots = [
     { images: categoryImages.solar, label: "Solar" },
@@ -367,12 +412,10 @@ export function HeroSection() {
         </div>
 
         <div className="relative">
-          <div
-            id="moments-track"
-            className="flex gap-0 overflow-x-auto"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            <div className="hero-marquee-slow flex w-max gap-0">
+          {/* Outer clip container — hides the overflowing marquee */}
+          <div className="overflow-hidden">
+            {/* Inner marquee strip — driven by RAF, no CSS animation */}
+            <div ref={marqueeRef} className="flex w-max gap-0 will-change-transform">
               {[...carouselImages, ...carouselImages].map((image, index) => (
                 <div
                   key={`${image.src}-${index}`}
@@ -391,28 +434,24 @@ export function HeroSection() {
             </div>
           </div>
 
+          {/* Left fade + prev button */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#003994] to-transparent" />
           <button
-            onClick={() => {
-              const el = document.getElementById("moments-track");
-              if (el) el.scrollBy({ left: -520, behavior: "smooth" });
-            }}
+            onClick={() => shiftMarquee("prev")}
             className="pointer-events-auto absolute left-8 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#003994] shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition hover:scale-110 hover:shadow-[0_6px_28px_rgba(0,0,0,0.4)]"
-            aria-label="Scroll left"
+            aria-label="Previous"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
+          {/* Right fade + next button */}
           <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#003994] to-transparent" />
           <button
-            onClick={() => {
-              const el = document.getElementById("moments-track");
-              if (el) el.scrollBy({ left: 520, behavior: "smooth" });
-            }}
+            onClick={() => shiftMarquee("next")}
             className="pointer-events-auto absolute right-8 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#003994] shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition hover:scale-110 hover:shadow-[0_6px_28px_rgba(0,0,0,0.4)]"
-            aria-label="Scroll right"
+            aria-label="Next"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />

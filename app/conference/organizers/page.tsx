@@ -186,7 +186,7 @@ export default function OrganizersPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-6 lg:pb-20">
         <div className="rounded-[26px] border border-[#02026e]/20
- bg-gradient-to-r from-blue-600 to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+ bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
