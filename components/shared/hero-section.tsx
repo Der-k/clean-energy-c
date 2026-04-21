@@ -171,50 +171,10 @@ function FlipImageSlot({
 
 // ─── HeroSection ──────────────────────────────────────────────────────────────
 export function HeroSection() {
-  // ── Parallax refs ──
-  const imageWrapRef = useRef<HTMLDivElement | null>(null);
-  const frameRef = useRef<number | null>(null);
-  const currentOffsetRef = useRef(0);
-  const targetOffsetRef = useRef(0);
-  const [imageOffset, setImageOffset] = useState(0);
-
   // ── Marquee refs ──
   const marqueeRef = useRef<HTMLDivElement>(null);
   const marqueePosRef = useRef(0);
   const marqueeRafRef = useRef<number | null>(null);
-
-  // ── Parallax effect ──
-  useEffect(() => {
-    const updateTarget = () => {
-      const el = imageWrapRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      const distanceFromCenter = elementCenter - viewportCenter;
-      const nextTarget = Math.max(Math.min(distanceFromCenter * 0.28, 60), -60);
-      targetOffsetRef.current = nextTarget;
-    };
-
-    const animate = () => {
-      currentOffsetRef.current +=
-        (targetOffsetRef.current - currentOffsetRef.current) * 0.08;
-      setImageOffset(currentOffsetRef.current);
-      frameRef.current = window.requestAnimationFrame(animate);
-    };
-
-    updateTarget();
-    frameRef.current = window.requestAnimationFrame(animate);
-    window.addEventListener("scroll", updateTarget, { passive: true });
-    window.addEventListener("resize", updateTarget);
-
-    return () => {
-      window.removeEventListener("scroll", updateTarget);
-      window.removeEventListener("resize", updateTarget);
-      if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
-    };
-  }, []);
 
   // ── Marquee RAF loop ──
   useEffect(() => {
@@ -346,30 +306,21 @@ export function HeroSection() {
           {/* RIGHT: 3 stacked category slots */}
           <div className="relative lg:pt-2">
             <div className="relative">
-              <div
-                ref={imageWrapRef}
-                className="relative rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)] overflow-hidden"
-              >
-                <div
-                  className="absolute inset-0 will-change-transform"
-                  style={{ transform: `translate3d(0, ${imageOffset}px, 0) scale(1.08)` }}
-                >
-                  <div className="flex flex-col" style={{ aspectRatio: "4 / 5.2" }}>
-                    {slots.map((slot, i) => (
-                      <div key={i} className="relative flex-1 w-full">
-                        <FlipImageSlot
-                          images={slot.images}
-                          slotIndex={i}
-                          label={slot.label}
-                        />
-                        {i < 2 && (
-                          <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-white/20" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
+              <div className="relative rounded-[32px] border border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.18)] overflow-hidden">
+                <div className="flex flex-col" style={{ aspectRatio: "4 / 5.2" }}>
+                  {slots.map((slot, i) => (
+                    <div key={i} className="relative flex-1 w-full">
+                      <FlipImageSlot
+                        images={slot.images}
+                        slotIndex={i}
+                        label={slot.label}
+                      />
+                      {i < 2 && (
+                        <div className="absolute inset-x-0 bottom-0 h-[2px] z-20 bg-white/20" />
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <div className="aspect-[4/5.2] w-full" />
               </div>
 
               {/* Kigali floating card */}
