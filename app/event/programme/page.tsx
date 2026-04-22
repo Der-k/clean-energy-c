@@ -43,6 +43,7 @@ export default function ProgrammePage() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const selectedProgramme = useMemo(
     () => programmeFiles[form.eventChoice],
@@ -52,6 +53,7 @@ export default function ProgrammePage() {
   function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
+    setSubmitError("");
   }
 
   function validateForm() {
@@ -59,6 +61,7 @@ export default function ProgrammePage() {
 
     if (!form.firstName.trim()) nextErrors.firstName = "First name is required.";
     if (!form.secondName.trim()) nextErrors.secondName = "Second name is required.";
+
     if (!form.email.trim()) {
       nextErrors.email = "Email is required.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -80,24 +83,43 @@ export default function ProgrammePage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    setSubmitError("");
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
 
     try {
-      // BACKEND PLACEHOLDER
-      // Later replace this block with your API call, for example:
-      // await fetch("/api/programme-request", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(form),
-      // });
+      const response = await fetch("/api/programme-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-      await new Promise((resolve) => setTimeout(resolve, 900));
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        console.error("Programme request failed:", result);
+
+        if (result?.errors) {
+          setErrors((prev) => ({
+            ...prev,
+            firstName: result.errors.firstName?.[0] ?? "",
+            secondName: result.errors.secondName?.[0] ?? "",
+            email: result.errors.email?.[0] ?? "",
+            organization: result.errors.organization?.[0] ?? "",
+            eventChoice: result.errors.eventChoice?.[0] ?? "",
+          }));
+        }
+
+        setSubmitError(result?.message || "Something went wrong. Please try again.");
+        return;
+      }
 
       setIsSubmitted(true);
 
-      // Trigger programme download
       const link = document.createElement("a");
       link.href = selectedProgramme.href;
       link.download = "";
@@ -106,13 +128,14 @@ export default function ProgrammePage() {
       link.remove();
     } catch (error) {
       console.error("Programme request failed:", error);
+      setSubmitError("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <main className="pt-24 bg-white">
+    <main className="bg-white pt-24">
       <section className="relative overflow-hidden border-b border-slate-200 bg-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_70%,#f8fafc_100%)]" />
 
@@ -147,8 +170,7 @@ export default function ProgrammePage() {
               <div className="mt-8 space-y-4">
                 <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
- text-[#02026e]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
                       <FileText className="h-5 w-5" />
                     </div>
 
@@ -166,8 +188,7 @@ export default function ProgrammePage() {
 
                 <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
- text-[#02026e]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
                       <Download className="h-5 w-5" />
                     </div>
 
@@ -308,9 +329,7 @@ export default function ProgrammePage() {
                       )}
                     </div>
 
-                    <div className="rounded-[20px] border border-[#02026e]/20
- bg-[#02026e]/5
- px-4 py-4">
+                    <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
                         Selected file
                       </p>
@@ -318,6 +337,10 @@ export default function ProgrammePage() {
                         {selectedProgramme.label}
                       </p>
                     </div>
+
+                    {submitError && (
+                      <p className="text-sm text-red-600">{submitError}</p>
+                    )}
 
                     <button
                       type="submit"
@@ -330,8 +353,7 @@ export default function ProgrammePage() {
                 </>
               ) : (
                 <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#02026e]/5
- text-[#02026e]">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#02026e]/5 text-[#02026e]">
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
 
@@ -367,6 +389,8 @@ export default function ProgrammePage() {
                       type="button"
                       onClick={() => {
                         setIsSubmitted(false);
+                        setSubmitError("");
+                        setErrors({});
                         setForm({
                           firstName: "",
                           secondName: "",
