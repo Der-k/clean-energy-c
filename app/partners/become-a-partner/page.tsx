@@ -1,122 +1,526 @@
-export default function BecomePartnerPage() {
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import {
+  ChevronRight,
+  Handshake,
+  Building2,
+  Globe2,
+  CheckCircle2,
+} from "lucide-react";
+
+type SponsorshipInterest =
+  | "title"
+  | "platinum"
+  | "gold"
+  | "silver"
+  | "bronze"
+  | "exhibition"
+  | "custom";
+
+type FormState = {
+  firstName: string;
+  secondName: string;
+  email: string;
+  phone: string;
+  organization: string;
+  jobTitle: string;
+  interest: SponsorshipInterest;
+  eventChoice: "kigali" | "perth" | "both";
+  message: string;
+};
+
+export default function BecomeASponsorPage() {
+  const [form, setForm] = useState<FormState>({
+    firstName: "",
+    secondName: "",
+    email: "",
+    phone: "",
+    organization: "",
+    jobTitle: "",
+    interest: "gold",
+    eventChoice: "both",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>(
+    {}
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+    setSubmitError("");
+  }
+
+  function validateForm() {
+    const nextErrors: Partial<Record<keyof FormState, string>> = {};
+
+    if (!form.firstName.trim()) nextErrors.firstName = "First name is required.";
+    if (!form.secondName.trim()) nextErrors.secondName = "Second name is required.";
+
+    if (!form.email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+
+    if (!form.phone.trim()) nextErrors.phone = "Phone number is required.";
+    if (!form.organization.trim()) {
+      nextErrors.organization = "Organization is required.";
+    }
+    if (!form.jobTitle.trim()) nextErrors.jobTitle = "Job title is required.";
+    if (!form.message.trim()) nextErrors.message = "Please include a short message.";
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setSubmitError("");
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      // Replace this endpoint with your actual sponsor API route
+      const response = await fetch("/api/sponsorship-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      let result: any = null;
+
+      try {
+        result = await response.json();
+      } catch {
+        result = null;
+      }
+
+      if (!response.ok || !result?.ok) {
+        setSubmitError(
+          result?.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Sponsorship request failed:", error);
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
-    <main className="min-h-screen bg-[#f3f3f3] px-4 py-8 md:px-6 lg:py-10">
-      <div className="mx-auto max-w-5xl">
-        <section className="rounded-[22px] bg-[#02026d] px-6 py-8 text-center text-white shadow-[0_18px_40px_rgba(2,2,109,0.20)]">
-          <p className="text-lg font-extrabold uppercase tracking-tight md:text-2xl">
-            Be a Sponsor at the 2026 Clean Energy Conference & Exhibition
-          </p>
+    <main className="bg-white pt-24">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_72%,#f8fafc_100%)]" />
 
-          <div className="mt-4 space-y-2 text-xs font-semibold md:text-sm">
-            <p>Marriott Hotel, Kigali | 6th August – 7th August 2026</p>
-            <p>Duxton Hotel, Perth, Australia | 31st August – 1st September 2026</p>
+        <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+            <Link href="/" className="transition hover:text-[#003994]">
+              Home
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link href="/partners" className="transition hover:text-[#003994]">
+              Partners
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-slate-700">Become a Sponsor</span>
           </div>
 
-          <div className="mt-5">
-            <a
-             href="/event/programme"
-              className="inline-flex items-center rounded bg-[#2346c7] px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-white transition hover:bg-[#2d54e4]"
-            >
-              Download Prospectus
-            </a>
-          </div>
-        </section>
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+                Sponsorship Opportunities
+              </p>
 
-        <section className="mt-6 rounded-[16px] bg-white p-5 shadow-[0_14px_35px_rgba(0,0,0,0.18)] md:p-8">
-          <form className="mx-auto max-w-4xl">
-            <div className="grid gap-4 md:grid-cols-2">
-              <input
-                type="text"
-                placeholder="Sponsor Full Name"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-              <input
-                type="text"
-                placeholder="Phone Number"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
+              <h1 className="mt-3 font-heading text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+                Become a sponsor of the Clean Energy Conference 2026
+              </h1>
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-              <input
-                type="text"
-                placeholder="Subject"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+                Position your brand alongside senior decision-makers, investors,
+                project developers, technology providers, and public sector leaders
+                shaping the clean energy transition in Africa and Australia.
+              </p>
 
-              <input
-                type="text"
-                placeholder="Company Name"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-              <input
-                type="text"
-                placeholder="Company Website (Optional)"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
+              <div className="mt-8 grid gap-4">
+                <div className="rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#003994]/5 text-[#003994]">
+                      <Handshake className="h-5 w-5" />
+                    </div>
 
-              <select className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm text-[color:var(--text-main)]-500 outline-none transition focus:border-blue-400 focus:bg-white">
-                <option>Select Sponsorship Level</option>
-                <option>Premium Partner</option>
-                <option>Platinum Sponsor</option>
-                <option>Gold Sponsor</option>
-                <option>Silver Sponsor</option>
-                <option>Strategic Partner</option>
-              </select>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">
+                        Strategic visibility
+                      </p>
+                      <p className="mt-1 text-sm leading-7 text-slate-600">
+                        Showcase your company to a high-value audience through
+                        branding, speaking visibility, exhibition presence, and
+                        direct stakeholder engagement.
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-              <input
-                type="text"
-                placeholder="Estimated Sponsorship Budget"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-            </div>
+                <div className="rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#003994]/5 text-[#003994]">
+                      <Building2 className="h-5 w-5" />
+                    </div>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-              <input
-                type="text"
-                placeholder="Company Social Media Links"
-                className="h-11 rounded border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">
+                        Access the right audience
+                      </p>
+                      <p className="mt-1 text-sm leading-7 text-slate-600">
+                        Connect with policymakers, utilities, developers,
+                        financiers, EPCs, technology partners, and corporate energy
+                        stakeholders across both editions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="flex flex-col gap-1 text-sm text-[color:var(--text-main)]-700">
-                <label className="font-medium">Company Logo</label>
-                <input
-                  type="file"
-                  className="text-sm text-[color:var(--text-main)]-600 file:mr-3 file:rounded file:border-0 file:bg-slate-200 file:px-3 file:py-2 file:text-sm file:font-medium"
-                />
+                <div className="rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#003994]/5 text-[#003994]">
+                      <Globe2 className="h-5 w-5" />
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">
+                        Kigali and Perth editions
+                      </p>
+                      <p className="mt-1 text-sm leading-7 text-slate-600">
+                        Explore sponsorship for Kigali, Perth, or a combined 2026
+                        conference partnership package.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 rounded-[24px] border border-slate-200 bg-slate-50 p-6">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#003994]">
+                  Why sponsor
+                </p>
+
+                <ul className="mt-4 space-y-3">
+                  {[
+                    "Strengthen brand credibility in the clean energy market",
+                    "Support dialogue around energy transition, investment, and innovation",
+                    "Build commercial relationships with high-level attendees",
+                    "Gain tailored visibility through curated sponsorship packages",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#003994]" />
+                      <span className="text-sm leading-7 text-slate-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            <div className="mt-5">
-              <textarea
-                rows={5}
-                placeholder="Brief Company Description"
-                className="w-full rounded border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-            </div>
+            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_48px_rgba(15,23,42,0.08)] md:p-8">
+              {!isSubmitted ? (
+                <>
+                  <div className="mb-6">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#003994]">
+                      Sponsor Enquiry
+                    </p>
+                    <h2 className="mt-2 font-heading text-2xl font-bold tracking-[-0.02em] text-slate-900">
+                      Request sponsorship information
+                    </h2>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      Submit your details and our team will get in touch with the
+                      relevant sponsorship options and partnership opportunities.
+                    </p>
+                  </div>
 
-            <div className="mt-5">
-              <textarea
-                rows={5}
-                placeholder="Additional Comments / Special Requests"
-                className="w-full rounded border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-blue-400 focus:bg-white"
-              />
-            </div>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label
+                          htmlFor="firstName"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          First name
+                        </label>
+                        <input
+                          id="firstName"
+                          type="text"
+                          value={form.firstName}
+                          onChange={(e) => updateField("firstName", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter first name"
+                        />
+                        {errors.firstName && (
+                          <p className="mt-2 text-xs text-red-600">{errors.firstName}</p>
+                        )}
+                      </div>
 
-            <div className="mt-6 flex justify-center">
-              <button
-                type="submit"
-                className="rounded-full bg-[#02026d] px-6 py-3 text-xs font-bold text-white shadow-[0_10px_24px_rgba(2,2,109,0.28)] transition hover:bg-blue-800"
-              >
-                Submit Sponsor Application
-              </button>
+                      <div>
+                        <label
+                          htmlFor="secondName"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Second name
+                        </label>
+                        <input
+                          id="secondName"
+                          type="text"
+                          value={form.secondName}
+                          onChange={(e) => updateField("secondName", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter second name"
+                        />
+                        {errors.secondName && (
+                          <p className="mt-2 text-xs text-red-600">{errors.secondName}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label
+                          htmlFor="email"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Email address
+                        </label>
+                        <input
+                          id="email"
+                          type="email"
+                          value={form.email}
+                          onChange={(e) => updateField("email", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter email address"
+                        />
+                        {errors.email && (
+                          <p className="mt-2 text-xs text-red-600">{errors.email}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="phone"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Phone number
+                        </label>
+                        <input
+                          id="phone"
+                          type="text"
+                          value={form.phone}
+                          onChange={(e) => updateField("phone", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter phone number"
+                        />
+                        {errors.phone && (
+                          <p className="mt-2 text-xs text-red-600">{errors.phone}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label
+                          htmlFor="organization"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Organization
+                        </label>
+                        <input
+                          id="organization"
+                          type="text"
+                          value={form.organization}
+                          onChange={(e) => updateField("organization", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter organization"
+                        />
+                        {errors.organization && (
+                          <p className="mt-2 text-xs text-red-600">
+                            {errors.organization}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="jobTitle"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Job title
+                        </label>
+                        <input
+                          id="jobTitle"
+                          type="text"
+                          value={form.jobTitle}
+                          onChange={(e) => updateField("jobTitle", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter job title"
+                        />
+                        {errors.jobTitle && (
+                          <p className="mt-2 text-xs text-red-600">{errors.jobTitle}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label
+                          htmlFor="interest"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Sponsorship interest
+                        </label>
+                        <select
+                          id="interest"
+                          value={form.interest}
+                          onChange={(e) =>
+                            updateField(
+                              "interest",
+                              e.target.value as SponsorshipInterest
+                            )
+                          }
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        >
+                          <option value="title">Title Sponsor</option>
+                          <option value="platinum">Platinum Sponsor</option>
+                          <option value="gold">Gold Sponsor</option>
+                          <option value="silver">Silver Sponsor</option>
+                          <option value="bronze">Bronze Sponsor</option>
+                          <option value="exhibition">Exhibition Sponsor</option>
+                          <option value="custom">Custom Package</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="eventChoice"
+                          className="mb-2 block text-sm font-medium text-slate-800"
+                        >
+                          Preferred edition
+                        </label>
+                        <select
+                          id="eventChoice"
+                          value={form.eventChoice}
+                          onChange={(e) =>
+                            updateField(
+                              "eventChoice",
+                              e.target.value as "kigali" | "perth" | "both"
+                            )
+                          }
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        >
+                          <option value="kigali">Kigali Edition</option>
+                          <option value="perth">Perth Edition</option>
+                          <option value="both">Both Editions</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="mb-2 block text-sm font-medium text-slate-800"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        rows={5}
+                        value={form.message}
+                        onChange={(e) => updateField("message", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        placeholder="Tell us about your sponsorship goals, preferred package, or questions."
+                      />
+                      {errors.message && (
+                        <p className="mt-2 text-xs text-red-600">{errors.message}</p>
+                      )}
+                    </div>
+
+                    {submitError && (
+                      <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {submitError}
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="inline-flex w-full items-center justify-center rounded-2xl bg-[#003994] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#002b6f] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit sponsorship enquiry"}
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#003994]/10 text-[#003994]">
+                    <CheckCircle2 className="h-8 w-8" />
+                  </div>
+
+                  <h2 className="mt-6 font-heading text-2xl font-bold text-slate-900">
+                    Sponsorship request received
+                  </h2>
+
+                  <p className="mt-3 max-w-md text-sm leading-7 text-slate-600">
+                    Thank you for your interest in sponsoring the Clean Energy
+                    Conference 2026. Our team will review your enquiry and get in
+                    touch with the relevant partnership information.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                    <Link
+                      href="/partners"
+                      className="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-[#003994] hover:text-[#003994]"
+                    >
+                      Back to Partners
+                    </Link>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsSubmitted(false);
+                        setForm({
+                          firstName: "",
+                          secondName: "",
+                          email: "",
+                          phone: "",
+                          organization: "",
+                          jobTitle: "",
+                          interest: "gold",
+                          eventChoice: "both",
+                          message: "",
+                        });
+                      }}
+                      className="rounded-2xl bg-[#003994] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#002b6f]"
+                    >
+                      Submit another enquiry
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          </form>
-        </section>
-      </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

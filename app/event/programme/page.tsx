@@ -3,6 +3,17 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Download, FileText, CheckCircle2 } from "lucide-react";
+import { Resend } from 'resend';
+
+
+const resend = new Resend('re_3e8j7GuT_BeDkvB7hWLTo3aQ7uKs6wwaJ');
+
+resend.emails.send({
+  from: 'onboarding@resend.dev',
+  to: 'derekgk0@gmail.com',
+  subject: 'Hello World',
+  html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+});
 
 type EventOption = "kigali" | "perth" | "both";
 
