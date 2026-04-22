@@ -273,7 +273,7 @@ export default function ConferenceOverviewPage() {
                 </a>
 
                 <a
-                  href="/documents/clean-energy-conference-programme-2026.pdf"
+                 href="/event/programme"
                   className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
                 >
                   View Programme
@@ -475,7 +475,7 @@ export default function ConferenceOverviewPage() {
                 Register Now
               </a>
               <a
-                href="/documents/clean-energy-conference-programme-2026.pdf"
+               href="/event/programme"
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Request Programme

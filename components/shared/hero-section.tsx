@@ -201,7 +201,7 @@ export function HeroSection() {
 
   // ── Marquee RAF loop ──
   useEffect(() => {
-    const SPEED = 1.3; // px per frame (~78px/s at 60fps)
+    const SPEED = 0.9; // px per frame (~24px/s at 60fps)
 
     const tick = () => {
       const el = marqueeRef.current;

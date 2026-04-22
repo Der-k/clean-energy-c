@@ -252,23 +252,22 @@ export default function EventOverviewPage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
-                >
-                  Register Now
-                </a>
-
-                <a
-                  href="/documents/clean-energy-conference-programme-2026.pdf"
-                  className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
-                >
-                  Download Programme
-                </a>
-              </div>
+             <div className="flex flex-wrap gap-3">
+              <a
+                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+              >
+                Register Now
+              </a>
+              <a
+               href="/event/programme"
+                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Request Programme
+              </a>
+            </div>
             </div>
 
             <div className="relative">
@@ -398,22 +397,20 @@ export default function EventOverviewPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="/documents/clean-energy-conference-programme-2026.pdf"
-                download
-                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
-              >
-                Download Programme
-              </a>
+         <div className="flex flex-wrap gap-3">
               <a
                 href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
-                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+               href="/event/programme"
+                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Request Programme
               </a>
             </div>
           </div>

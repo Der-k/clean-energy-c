@@ -14,7 +14,7 @@ export default function BecomePartnerPage() {
 
           <div className="mt-5">
             <a
-              href="/documents/clean-energy-conference-programme-2026.pdf"
+             href="/event/programme"
               className="inline-flex items-center rounded bg-[#2346c7] px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-white transition hover:bg-[#2d54e4]"
             >
               Download Prospectus

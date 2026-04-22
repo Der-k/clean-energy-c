@@ -1,8 +1,6 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Quote, Star } from "lucide-react";
-
 
 const featuredTestimonials = [
   {
@@ -15,7 +13,7 @@ const featuredTestimonials = [
   },
   {
     name: "Steve Kuria",
-    role: "Founder & CEO. ",
+    role: "Founder & CEO.",
     company: "AAEMI",
     image: "/images/testimonials/testimonial-2.jpg",
     quote:
@@ -29,7 +27,6 @@ const featuredTestimonials = [
     quote:
       "The programme was highly relevant, the networking was strong, and the event felt well positioned for professionals looking for meaningful engagement rather than generic conference traffic.",
   },
-  
 ];
 
 const shortTestimonials = [
@@ -68,13 +65,10 @@ const shortTestimonials = [
 export default function TestimonialsPage() {
   return (
     <main className="pt-24 bg-white">
-      <section className="relative overflow-hidden border-b border-[#02026e]/20
- bg-white">
+      <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/5
-/10 blur-3xl" />
-          <div className="absolute right-[-80px] top-[50px] h-[260px] w-[260px] rounded-full bg-[#02026e]/5
-/8 blur-3xl" />
+          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
+          <div className="absolute right-[-80px] top-[50px] h-[260px] w-[260px] rounded-full bg-[#02026e]/8 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
@@ -141,14 +135,11 @@ export default function TestimonialsPage() {
           {featuredTestimonials.map((item) => (
             <article
               key={item.name}
-              className="rounded-[24px] border border-[#02026e]/20
- bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.10)]"
+              className="rounded-[24px] border border-[#02026e]/20 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.10)]"
             >
               <div className="flex flex-col gap-5 sm:flex-row">
                 <div className="shrink-0">
-                  <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-[#02026e]/20
- bg-[#02026e]/5
-">
+                  <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-[#02026e]/20 bg-[#02026e]/5">
                     <Image
                       src={item.image}
                       alt={item.name}
@@ -171,14 +162,13 @@ export default function TestimonialsPage() {
                       </p>
                     </div>
 
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5
- text-[#02026e]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
                       <Quote className="h-5 w-5" />
                     </div>
                   </div>
 
                   <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
-                    “{item.quote}”
+                    "{item.quote}"
                   </p>
 
                   <div className="mt-5 flex items-center gap-1 text-amber-500">
@@ -214,20 +204,17 @@ export default function TestimonialsPage() {
             {shortTestimonials.map((item, index) => (
               <article
                 key={`${item.author}-${index}`}
-                className="rounded-[20px] border border-[#02026e]/20
- bg-white p-5 shadow-sm"
+                className="rounded-[20px] border border-[#02026e]/20 bg-white p-5 shadow-sm"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#02026e]/5
- text-[#02026e]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#02026e]/5 text-[#02026e]">
                   <Quote className="h-4 w-4" />
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-[color:var(--text-main)]-700">
-                  “{item.quote}”
+                  "{item.quote}"
                 </p>
 
-                <div className="mt-4 border-t border-[#02026e]/20
- pt-4">
+                <div className="mt-4 border-t border-[#02026e]/20 pt-4">
                   <p className="text-sm font-medium text-[color:var(--text-main)]-900">
                     {item.author}
                   </p>
@@ -239,17 +226,16 @@ export default function TestimonialsPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
-        <div className="rounded-[28px] border border-[#02026e]/20
- bg-gradient-to-r from-blue-600 to-#02026e-500 px-6 py-8 text-white shadow-[0_18px_50px_rgba(37,99,235,0.18)] md:px-10 md:py-10">
+        <div className="rounded-[28px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Join future attendees
               </p>
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Experience the conference for yourself
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
                 Register now and be part of the conversations, partnerships, and
                 opportunities shaping the clean energy sector.
               </p>
@@ -258,9 +244,7 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/tickets"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
- transition hover:bg-[#02026e]/5
-"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
               </Link>

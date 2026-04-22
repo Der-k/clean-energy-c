@@ -248,7 +248,7 @@ export default function HighlightsPage() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="/documents/clean-energy-conference-programme-2026.pdf"
+               href="/event/programme"
                 className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
               >
                 Download Programme
@@ -408,7 +408,7 @@ export default function HighlightsPage() {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href="/documents/clean-energy-conference-programme-2026.pdf"
+               href="/event/programme"
                 className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Download Programme
