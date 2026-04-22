@@ -50,7 +50,7 @@ export function Header() {
           {/* LOGO */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/images/logo.png"
+              src="/images/logo_2.png"
               alt="Clean Energy Conference"
               width={240}
               height={120}
