@@ -2,6 +2,12 @@ import "./globals.css";
 import { Inter, Manrope } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+export const metadata = {
+  title: "Clean Energy Conference",
+  icons: {
+    icon: "/icon.png",
+  },
+};
 
 const inter = Inter({
   subsets: ["latin"],
