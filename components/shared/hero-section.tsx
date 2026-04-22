@@ -38,9 +38,9 @@ const carouselImages = [
   { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
 ];
 
-const FLIP_INTERVAL = 10000; // ms between flips per slot
-const FLIP_HALF = 180;       // half the flip animation duration
-const SLOT_STAGGER = 3000;   // ms between each slot firing
+const FLIP_DURATION = 1200;     // total flip duration (ms)
+const SLOT_GAP = 600;           // pause between each slot flipping (ms)
+const CYCLE_PAUSE = 5000;       // pause after all 3 have flipped before restarting (ms)
 
 const editions = [
   {
@@ -66,8 +66,6 @@ function registerSlot(index: number, cb: () => void) {
 }
 
 // ─── FlipImageSlot ────────────────────────────────────────────────────────────
-type FlipPhase = "idle" | "fold-out" | "fold-in";
-
 function FlipImageSlot({
   images,
   slotIndex,
@@ -77,21 +75,32 @@ function FlipImageSlot({
   slotIndex: number;
   label: string;
 }) {
-  const [displayIdx, setDisplayIdx] = useState(0);
-  const [nextIdx, setNextIdx] = useState(1);
-  const [phase, setPhase] = useState<FlipPhase>("idle");
+  const [frontIdx, setFrontIdx] = useState(0);
+  const [backIdx, setBackIdx]   = useState(1);
+  const [flipped, setFlipped]   = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
 
   const doFlip = useCallback(() => {
-    setNextIdx((prev) => (prev + 1) % images.length);
-    setPhase("fold-out");
+    if (isFlipping) return;
+    setIsFlipping(true);
 
+    // Load the next image onto whichever face is currently hidden
+    const nextImg = flipped
+      ? (frontIdx + 1) % images.length
+      : (backIdx + 1) % images.length;
+
+    if (flipped) {
+      setFrontIdx(nextImg);
+    } else {
+      setBackIdx(nextImg);
+    }
+
+    // Small delay so the hidden face's src has updated before we rotate to it
     setTimeout(() => {
-      setDisplayIdx((prev) => (prev + 1) % images.length);
-      setPhase("fold-in");
-    }, FLIP_HALF);
-
-    setTimeout(() => setPhase("idle"), FLIP_HALF * 2);
-  }, [images.length]);
+      setFlipped((f) => !f);
+      setTimeout(() => setIsFlipping(false), FLIP_DURATION);
+    }, 50);
+  }, [isFlipping, flipped, frontIdx, backIdx, images.length]);
 
   useEffect(() => {
     registerSlot(slotIndex, doFlip);
@@ -100,71 +109,85 @@ function FlipImageSlot({
   useEffect(() => {
     if (slotIndex !== 0) return;
 
-    const masterTick = () => {
+    let cancelled = false;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    // Fire slot 0 → slot 1 → slot 2 sequentially, then pause, then repeat.
+    const runCycle = () => {
+      if (cancelled) return;
       slotCallbacks.forEach((cb, i) => {
-        setTimeout(() => cb?.(), i * SLOT_STAGGER);
+        const t = setTimeout(() => {
+          if (!cancelled) cb?.();
+        }, i * (FLIP_DURATION + SLOT_GAP));
+        timers.push(t);
       });
+      const cycleLength = 3 * (FLIP_DURATION + SLOT_GAP) + CYCLE_PAUSE;
+      const t = setTimeout(runCycle, cycleLength);
+      timers.push(t);
     };
 
-    const initial = setTimeout(() => {
-      masterTick();
-      const interval = setInterval(masterTick, FLIP_INTERVAL);
-      return () => clearInterval(interval);
-    }, 1000);
+    const initial = setTimeout(runCycle, 1000);
+    timers.push(initial);
 
-    return () => clearTimeout(initial);
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
   }, [slotIndex]);
 
-  const currentImage = images[displayIdx];
-
-  const panelStyle = (): React.CSSProperties => {
-    if (phase === "fold-out")
-      return {
-        transform: "perspective(900px) rotateX(-90deg)",
-        transition: `transform ${FLIP_HALF}ms cubic-bezier(0.4,0,1,1)`,
-      };
-    if (phase === "fold-in")
-      return {
-        transform: "perspective(900px) rotateX(0deg)",
-        transition: `transform ${FLIP_HALF}ms cubic-bezier(0,0,0.6,1)`,
-      };
-    return { transform: "perspective(900px) rotateX(0deg)", transition: "none" };
-  };
-
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden" style={{ perspective: "1200px" }}>
+      {/* Label */}
       <div className="absolute top-2 left-3 z-20">
         <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/70 drop-shadow-sm">
           {label}
         </span>
       </div>
 
+      {/* Card wrapper — this is what rotates */}
       <div
-        className="absolute inset-0"
-        style={{ transformOrigin: "top center", ...panelStyle() }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          transformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transition: isFlipping
+            ? `transform ${FLIP_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`
+            : "none",
+        }}
       >
+        {/* Front face */}
         <img
-          src={currentImage.src}
-          alt={currentImage.alt}
+          src={images[frontIdx].src}
+          alt={images[frontIdx].alt}
           style={{
+            position: "absolute",
+            inset: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
             objectPosition: "center",
-            display: "block",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
+        />
+        {/* Back face */}
+        <img
+          src={images[backIdx].src}
+          alt={images[backIdx].alt}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
           }}
         />
       </div>
-
-      {phase !== "idle" && (
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-[2px] z-10"
-          style={{
-            background:
-              "linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.5) 50%,transparent 100%)",
-          }}
-        />
-      )}
     </div>
   );
 }
