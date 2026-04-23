@@ -77,55 +77,181 @@ const infoCards = [
 
 export default function ExhibitionPage() {
   const [form, setForm] = useState<FormState>(initialForm);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>(
+    {}
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+    setSubmitError("");
+  }
+
+  function validateForm() {
+    const nextErrors: Partial<Record<keyof FormState, string>> = {};
+
+    if (!form.companyName.trim()) {
+      nextErrors.companyName = "Company name is required.";
+    }
+
+    if (!form.contactName.trim()) {
+      nextErrors.contactName = "Contact name is required.";
+    }
+
+    if (!form.email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+
+    if (!form.phone.trim()) {
+      nextErrors.phone = "Phone number is required.";
+    }
+
+    if (!form.country.trim()) {
+      nextErrors.country = "Country is required.";
+    }
+
+    if (!form.sector.trim()) {
+      nextErrors.sector = "Sector is required.";
+    }
+
+    if (!form.editionInterest.trim()) {
+      nextErrors.editionInterest = "Please select an edition.";
+    }
+
+    if (!form.boothPreference.trim()) {
+      nextErrors.boothPreference = "Please select a booth preference.";
+    }
+
+    if (!form.message.trim()) {
+      nextErrors.message = "Please include a short message.";
+    }
+
+    if (form.website.trim()) {
+      const websitePattern =
+        /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+      if (!websitePattern.test(form.website.trim())) {
+        nextErrors.website = "Enter a valid website URL.";
+      }
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Form:", form);
-    setSubmitted(true);
-    setForm(initialForm);
+
+    setSubmitError("");
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/exhibitor-interest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      let result: any = null;
+
+      try {
+        result = await response.json();
+      } catch {
+        result = null;
+      }
+
+      if (!response.ok || !result?.ok) {
+        if (result?.errors) {
+          setErrors((prev) => ({
+            ...prev,
+            companyName: result.errors.companyName?.[0] ?? "",
+            contactName: result.errors.contactName?.[0] ?? "",
+            email: result.errors.email?.[0] ?? "",
+            phone: result.errors.phone?.[0] ?? "",
+            country: result.errors.country?.[0] ?? "",
+            website: result.errors.website?.[0] ?? "",
+            sector: result.errors.sector?.[0] ?? "",
+            editionInterest: result.errors.editionInterest?.[0] ?? "",
+            boothPreference: result.errors.boothPreference?.[0] ?? "",
+            message: result.errors.message?.[0] ?? "",
+          }));
+        }
+
+        setSubmitError(
+          result?.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      setForm(initialForm);
+      setErrors({});
+    } catch (error) {
+      console.error("Exhibitor interest submission failed:", error);
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <main className="bg-white pt-24">
-      {/* HERO */}
-      <section className="bg-[#02026e] text-white py-20">
+      <section className="bg-[#02026e] py-20 text-white">
         <div className="mx-auto max-w-7xl px-4">
-          <h1 className="text-4xl font-bold">
+          <div className="mb-5 flex flex-wrap items-center gap-2 text-sm text-white/70">
+            <Link href="/" className="transition hover:text-white">
+              Home
+            </Link>
+            <span>/</span>
+            <Link href="/event" className="transition hover:text-white">
+              Event
+            </Link>
+            <span>/</span>
+            <span className="text-white">Exhibition</span>
+          </div>
+
+          <h1 className="text-4xl font-bold tracking-[-0.03em] sm:text-5xl">
             Exhibition Opportunities (To Be Announced)
           </h1>
-          <p className="mt-4 text-white/80 max-w-2xl">
+          <p className="mt-4 max-w-2xl text-white/80">
             Register your interest to exhibit at the Clean Energy Conference
             Kigali &amp; Perth 2026.
           </p>
         </div>
       </section>
 
-      {/* INFO CARDS */}
-      <section className="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-3 gap-6">
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 md:grid-cols-3">
         {infoCards.map((card) => (
           <div
             key={card.title}
-            className="border rounded-2xl p-6 shadow-sm"
+            className="rounded-2xl border border-slate-200 p-6 shadow-sm"
           >
             <Lightbulb className="h-6 w-6 text-[#02026e]" />
-            <h3 className="mt-3 font-semibold text-lg">{card.title}</h3>
-            <p className="text-sm mt-2 text-zinc-600">
-              {card.description}
-            </p>
+            <h3 className="mt-3 text-lg font-semibold text-slate-900">
+              {card.title}
+            </h3>
+            <p className="mt-2 text-sm text-zinc-600">{card.description}</p>
           </div>
         ))}
       </section>
 
-      {/* PROFILES + BENEFITS */}
-      <section className="max-w-7xl mx-auto px-4 pb-16 grid lg:grid-cols-2 gap-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-16 lg:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold">Who Should Exhibit</h2>
-          <div className="mt-6 grid sm:grid-cols-2 gap-3">
+          <h2 className="text-2xl font-bold text-slate-900">Who Should Exhibit</h2>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {exhibitorProfiles.map((item) => (
               <div
                 key={item}
-                className="border rounded-lg px-4 py-3 text-sm"
+                className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700"
               >
                 {item}
               </div>
@@ -134,25 +260,22 @@ export default function ExhibitionPage() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-[#009966]">
-            Benefits
-          </h2>
+          <h2 className="text-2xl font-bold text-[#009966]">Benefits</h2>
           <div className="mt-6 space-y-3">
             {benefits.map((item) => (
               <div
                 key={item}
-                className="flex gap-2 items-start text-sm"
+                className="flex items-start gap-2 text-sm text-slate-700"
               >
-                <CheckCircle2 className="h-4 w-4 text-[#009966]" />
-                {item}
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#009966]" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FORM */}
-      <section className="max-w-7xl mx-auto px-4 pb-20">
+      <section className="mx-auto max-w-7xl px-4 pb-20">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-8">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
@@ -229,7 +352,11 @@ export default function ExhibitionPage() {
 
                 <button
                   type="button"
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => {
+                    setSubmitted(false);
+                    setSubmitError("");
+                    setErrors({});
+                  }}
                   className="mt-8 rounded-2xl bg-[#02026e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#010150]"
                 >
                   Submit another response
@@ -256,14 +383,17 @@ export default function ExhibitionPage() {
                         Company name
                       </label>
                       <input
+                        type="text"
                         placeholder="Enter company name"
                         value={form.companyName}
-                        onChange={(e) =>
-                          setForm({ ...form, companyName: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
-                        required
+                        onChange={(e) => updateField("companyName", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.companyName && (
+                        <p className="mt-2 text-xs text-red-600">
+                          {errors.companyName}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -271,14 +401,17 @@ export default function ExhibitionPage() {
                         Contact name
                       </label>
                       <input
+                        type="text"
                         placeholder="Enter contact name"
                         value={form.contactName}
-                        onChange={(e) =>
-                          setForm({ ...form, contactName: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
-                        required
+                        onChange={(e) => updateField("contactName", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.contactName && (
+                        <p className="mt-2 text-xs text-red-600">
+                          {errors.contactName}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -288,15 +421,15 @@ export default function ExhibitionPage() {
                         Email address
                       </label>
                       <input
-                        placeholder="Enter email address"
                         type="email"
+                        placeholder="Enter email address"
                         value={form.email}
-                        onChange={(e) =>
-                          setForm({ ...form, email: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
-                        required
+                        onChange={(e) => updateField("email", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.email && (
+                        <p className="mt-2 text-xs text-red-600">{errors.email}</p>
+                      )}
                     </div>
 
                     <div>
@@ -304,13 +437,15 @@ export default function ExhibitionPage() {
                         Phone number
                       </label>
                       <input
+                        type="text"
                         placeholder="Enter phone number"
                         value={form.phone}
-                        onChange={(e) =>
-                          setForm({ ...form, phone: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
+                        onChange={(e) => updateField("phone", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.phone && (
+                        <p className="mt-2 text-xs text-red-600">{errors.phone}</p>
+                      )}
                     </div>
                   </div>
 
@@ -320,13 +455,15 @@ export default function ExhibitionPage() {
                         Country
                       </label>
                       <input
+                        type="text"
                         placeholder="Enter country"
                         value={form.country}
-                        onChange={(e) =>
-                          setForm({ ...form, country: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
+                        onChange={(e) => updateField("country", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.country && (
+                        <p className="mt-2 text-xs text-red-600">{errors.country}</p>
+                      )}
                     </div>
 
                     <div>
@@ -334,13 +471,15 @@ export default function ExhibitionPage() {
                         Website
                       </label>
                       <input
+                        type="text"
                         placeholder="Enter website"
                         value={form.website}
-                        onChange={(e) =>
-                          setForm({ ...form, website: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
+                        onChange={(e) => updateField("website", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
+                      {errors.website && (
+                        <p className="mt-2 text-xs text-red-600">{errors.website}</p>
+                      )}
                     </div>
                   </div>
 
@@ -349,14 +488,30 @@ export default function ExhibitionPage() {
                       <label className="mb-2 block text-sm font-medium text-slate-800">
                         Sector
                       </label>
-                      <input
-                        placeholder="e.g. Solar, Hydrogen, Storage"
+                      <select
                         value={form.sector}
-                        onChange={(e) =>
-                          setForm({ ...form, sector: e.target.value })
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
-                      />
+                        onChange={(e) => updateField("sector", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                      >
+                        <option value="">Select sector</option>
+                        <option value="renewable-energy">Renewable Energy</option>
+                        <option value="ev-battery">EV / Battery Technology</option>
+                        <option value="critical-minerals">Critical Minerals</option>
+                        <option value="epc-engineering">EPC / Engineering</option>
+                        <option value="storage-grid-hydrogen">
+                          Storage / Smart Grid / Hydrogen
+                        </option>
+                        <option value="esg-sustainability">
+                          ESG / Sustainability / Climate Solutions
+                        </option>
+                        <option value="research-startup">
+                          Research / University / Startup
+                        </option>
+                        <option value="other">Other</option>
+                      </select>
+                      {errors.sector && (
+                        <p className="mt-2 text-xs text-red-600">{errors.sector}</p>
+                      )}
                     </div>
 
                     <div>
@@ -366,16 +521,20 @@ export default function ExhibitionPage() {
                       <select
                         value={form.editionInterest}
                         onChange={(e) =>
-                          setForm({ ...form, editionInterest: e.target.value })
+                          updateField("editionInterest", e.target.value)
                         }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
-                        required
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       >
                         <option value="">Select edition</option>
-                        <option value="Kigali Edition">Kigali Edition</option>
-                        <option value="Perth Edition">Perth Edition</option>
-                        <option value="Both Editions">Both Editions</option>
+                        <option value="kigali">Kigali Edition</option>
+                        <option value="perth">Perth Edition</option>
+                        <option value="both">Both Editions</option>
                       </select>
+                      {errors.editionInterest && (
+                        <p className="mt-2 text-xs text-red-600">
+                          {errors.editionInterest}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -386,17 +545,22 @@ export default function ExhibitionPage() {
                     <select
                       value={form.boothPreference}
                       onChange={(e) =>
-                        setForm({ ...form, boothPreference: e.target.value })
+                        updateField("boothPreference", e.target.value)
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                     >
-                      <option value="">Select booth preference</option>
-                      <option value="Standard Booth">Standard Booth</option>
-                      <option value="Premium Booth">Premium Booth</option>
-                      <option value="Startup Showcase">Startup Showcase</option>
-                      <option value="Technology Demo Area">Technology Demo Area</option>
-                      <option value="Custom Package">Custom Package</option>
+                      <option value="">Select preference</option>
+                      <option value="small-booth">Small Booth</option>
+                      <option value="standard-booth">Standard Booth</option>
+                      <option value="premium-booth">Premium Booth</option>
+                      <option value="custom-space">Custom Space</option>
+                      <option value="unsure">Not Sure Yet</option>
                     </select>
+                    {errors.boothPreference && (
+                      <p className="mt-2 text-xs text-red-600">
+                        {errors.boothPreference}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -404,19 +568,32 @@ export default function ExhibitionPage() {
                       Message
                     </label>
                     <textarea
-                      placeholder="What would you like to exhibit?"
-                      value={form.message}
-                      onChange={(e) =>
-                        setForm({ ...form, message: e.target.value })
-                      }
                       rows={5}
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e]/40 focus:ring-4 focus:ring-[#02026e]/10"
+                      placeholder="Tell us about your company, what you would like to exhibit, and any preferences."
+                      value={form.message}
+                      onChange={(e) => updateField("message", e.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                     />
+                    {errors.message && (
+                      <p className="mt-2 text-xs text-red-600">{errors.message}</p>
+                    )}
                   </div>
 
-                  <button className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#02026e] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#010150]">
-                    Submit enquiry
+                  {submitError && (
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      {submitError}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#02026e] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#010150] disabled:cursor-not-allowed disabled:opacity-70"
+                  >
                     <Send className="h-4 w-4" />
+                    {isSubmitting
+                      ? "Submitting..."
+                      : "Submit exhibition interest"}
                   </button>
                 </form>
               </>

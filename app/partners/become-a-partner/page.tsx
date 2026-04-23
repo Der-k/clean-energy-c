@@ -19,6 +19,8 @@ type SponsorshipInterest =
   | "exhibition"
   | "custom";
 
+type EventChoice = "kigali" | "perth" | "both";
+
 type FormState = {
   firstName: string;
   secondName: string;
@@ -27,7 +29,7 @@ type FormState = {
   organization: string;
   jobTitle: string;
   interest: SponsorshipInterest;
-  eventChoice: "kigali" | "perth" | "both";
+  eventChoice: EventChoice;
   message: string;
 };
 
@@ -70,11 +72,18 @@ export default function BecomeASponsorPage() {
     }
 
     if (!form.phone.trim()) nextErrors.phone = "Phone number is required.";
+
     if (!form.organization.trim()) {
       nextErrors.organization = "Organization is required.";
     }
-    if (!form.jobTitle.trim()) nextErrors.jobTitle = "Job title is required.";
-    if (!form.message.trim()) nextErrors.message = "Please include a short message.";
+
+    if (!form.jobTitle.trim()) {
+      nextErrors.jobTitle = "Job title is required.";
+    }
+
+    if (!form.message.trim()) {
+      nextErrors.message = "Please include a short message.";
+    }
 
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -90,7 +99,6 @@ export default function BecomeASponsorPage() {
     setIsSubmitting(true);
 
     try {
-      // Replace this endpoint with your actual sponsor API route
       const response = await fetch("/api/sponsorship-request", {
         method: "POST",
         headers: {
@@ -108,6 +116,21 @@ export default function BecomeASponsorPage() {
       }
 
       if (!response.ok || !result?.ok) {
+        if (result?.errors) {
+          setErrors((prev) => ({
+            ...prev,
+            firstName: result.errors.firstName?.[0] ?? "",
+            secondName: result.errors.secondName?.[0] ?? "",
+            email: result.errors.email?.[0] ?? "",
+            phone: result.errors.phone?.[0] ?? "",
+            organization: result.errors.organization?.[0] ?? "",
+            jobTitle: result.errors.jobTitle?.[0] ?? "",
+            interest: result.errors.interest?.[0] ?? "",
+            eventChoice: result.errors.eventChoice?.[0] ?? "",
+            message: result.errors.message?.[0] ?? "",
+          }));
+        }
+
         setSubmitError(
           result?.message || "Something went wrong. Please try again."
         );
@@ -408,6 +431,9 @@ export default function BecomeASponsorPage() {
                           <option value="exhibition">Exhibition Sponsor</option>
                           <option value="custom">Custom Package</option>
                         </select>
+                        {errors.interest && (
+                          <p className="mt-2 text-xs text-red-600">{errors.interest}</p>
+                        )}
                       </div>
 
                       <div>
@@ -421,10 +447,7 @@ export default function BecomeASponsorPage() {
                           id="eventChoice"
                           value={form.eventChoice}
                           onChange={(e) =>
-                            updateField(
-                              "eventChoice",
-                              e.target.value as "kigali" | "perth" | "both"
-                            )
+                            updateField("eventChoice", e.target.value as EventChoice)
                           }
                           className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                         >
@@ -432,6 +455,11 @@ export default function BecomeASponsorPage() {
                           <option value="perth">Perth Edition</option>
                           <option value="both">Both Editions</option>
                         </select>
+                        {errors.eventChoice && (
+                          <p className="mt-2 text-xs text-red-600">
+                            {errors.eventChoice}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -498,6 +526,8 @@ export default function BecomeASponsorPage() {
                       type="button"
                       onClick={() => {
                         setIsSubmitted(false);
+                        setSubmitError("");
+                        setErrors({});
                         setForm({
                           firstName: "",
                           secondName: "",
