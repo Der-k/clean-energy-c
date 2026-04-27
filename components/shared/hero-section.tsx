@@ -17,7 +17,6 @@ const categoryImages = {
     { src: "/images/geo-2.jpg", alt: "Hydrothermal plant" },
     { src: "/images/geo-3.jpg", alt: "Geothermal steam" },
     { src: "/images/geo-4.jpg", alt: "Geothermal steam" },
-
   ],
   mining: [
     { src: "/images/mining-1.jpg", alt: "Mining operations" },
@@ -38,10 +37,30 @@ const carouselImages = [
   { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
 ];
 
-const FLIP_DURATION = 1200;
-const SLOT_GAP = 600;
-const CYCLE_PAUSE = 5000;
+const FLIP_DURATION = 1200;   // kept so cycle-timing math is unchanged
+const SLOT_GAP      = 600;
+const CYCLE_PAUSE   = 5000;
 
+// Color wash timing
+const WASH_IN_MS  = 380;      // sweep in: fast enough to feel punchy
+const WASH_OUT_MS = 500;      // retract: slightly slower for a smooth reveal
+
+// ─── Inject Ken Burns keyframes once, client-side only ────────────────────────
+const injectSlotStyles = (() => {
+  let done = false;
+  return () => {
+    if (done || typeof document === "undefined") return;
+    done = true;
+    const el = document.createElement("style");
+    el.id = "__slot-styles";
+    el.textContent = [
+      "@keyframes kb0{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate(-1.6%,-1.6%)}}",
+      "@keyframes kb1{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate( 1.6%, 1.6%)}}",
+      "@keyframes kb2{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate( 1.6%,-1.6%)}}",
+    ].join("");
+    document.head.appendChild(el);
+  };
+})();
 
 const editions = [
   {
@@ -67,6 +86,9 @@ function registerSlot(index: number, cb: () => void) {
 }
 
 // ─── FlipImageSlot ────────────────────────────────────────────────────────────
+// Animation: brand-blue color wash sweeps left→right over the panel, the image
+// swaps underneath at full coverage, then the wash retracts right→left revealing
+// the new image. Ken Burns runs continuously on the active image.
 function FlipImageSlot({
   images,
   slotIndex,
@@ -78,29 +100,66 @@ function FlipImageSlot({
   label: string;
   cardPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }) {
-  const [frontIdx, setFrontIdx] = useState(0);
-  const [backIdx, setBackIdx] = useState(1);
-  const [flipped, setFlipped] = useState(false);
-  const [isFlipping, setIsFlipping] = useState(false);
+  const [baseIdx, setBaseIdx] = useState(0);
+  const [baseKey, setBaseKey] = useState(0); // increment → Ken Burns restarts
+
+  // Refs let doFlip read/write current state without going stale
+  const washRef    = useRef<HTMLDivElement>(null);
+  const baseIdxRef = useRef(0);
+  const busyRef    = useRef(false);
+
+  useEffect(() => { injectSlotStyles(); }, []);
 
   const doFlip = useCallback(() => {
-    if (isFlipping) return;
-    setIsFlipping(true);
-    const nextImg = flipped
-      ? (frontIdx + 1) % images.length
-      : (backIdx + 1) % images.length;
-    if (flipped) setFrontIdx(nextImg);
-    else setBackIdx(nextImg);
-    setTimeout(() => {
-      setFlipped((f) => !f);
-      setTimeout(() => setIsFlipping(false), FLIP_DURATION);
-    }, 50);
-  }, [isFlipping, flipped, frontIdx, backIdx, images.length]);
+    if (busyRef.current) return;
+    busyRef.current = true;
+
+    const wash = washRef.current;
+    if (!wash) { busyRef.current = false; return; }
+
+    const next = (baseIdxRef.current + 1) % images.length;
+
+    // ── Phase 1: reset wash to left edge (no transition) ──────────────────
+    wash.style.transition      = "none";
+    wash.style.transform       = "scaleX(0)";
+    wash.style.transformOrigin = "left center";
+    wash.style.opacity         = "0.82";
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+
+        // ── Phase 2: sweep in across the panel ──────────────────────────
+        wash.style.transition = `transform ${WASH_IN_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+        wash.style.transform  = "scaleX(1)";
+
+        setTimeout(() => {
+
+          // ── Phase 3: swap image while fully covered ────────────────────
+          baseIdxRef.current = next;
+          setBaseIdx(next);
+          setBaseKey((k) => k + 1);
+
+          // ── Phase 4: retract wash from right edge, fade the tail end ──
+          wash.style.transformOrigin = "right center";
+          wash.style.transition = [
+            `transform ${WASH_OUT_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+            `opacity   ${WASH_OUT_MS * 0.4}ms ease ${WASH_OUT_MS * 0.6}ms`,
+          ].join(", ");
+          wash.style.transform = "scaleX(0)";
+          wash.style.opacity   = "0";
+
+          setTimeout(() => { busyRef.current = false; }, WASH_OUT_MS);
+
+        }, WASH_IN_MS + 20);
+      });
+    });
+  }, [images.length]); // baseIdx read via ref — no stale closure
 
   useEffect(() => {
     registerSlot(slotIndex, doFlip);
   }, [slotIndex, doFlip]);
 
+  // Orchestrate all three slots (unchanged logic)
   useEffect(() => {
     if (slotIndex !== 0) return;
     let cancelled = false;
@@ -120,7 +179,7 @@ function FlipImageSlot({
 
   const positionStyle: React.CSSProperties = {
     position: "absolute",
-    zIndex: 20,
+    zIndex: 25,
     ...(cardPosition === "top-left"     && { top: 12, left: 12 }),
     ...(cardPosition === "top-right"    && { top: 12, right: 12 }),
     ...(cardPosition === "bottom-left"  && { bottom: 12, left: 12 }),
@@ -128,36 +187,48 @@ function FlipImageSlot({
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden" style={{ perspective: "1200px" }}>
-      <div
+    <div className="relative w-full h-full overflow-hidden">
+
+      {/* ── Active image — Ken Burns slow zoom ── */}
+      <img
+        key={baseKey}
+        src={images[baseIdx].src}
+        alt={images[baseIdx].alt}
         style={{
           position: "absolute", inset: 0,
-          transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-          transition: isFlipping
-            ? `transform ${FLIP_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`
-            : "none",
+          width: "100%", height: "100%",
+          objectFit: "cover", objectPosition: "center",
+          animation: `kb${slotIndex % 3} 7500ms ease-out both`,
+          willChange: "transform",
         }}
-      >
-        <img src={images[frontIdx].src} alt={images[frontIdx].alt}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center",
-            backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-        />
-        <img src={images[backIdx].src} alt={images[backIdx].alt}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center",
-            backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)" }}
-        />
-      </div>
-      <div className="absolute inset-0 z-10 pointer-events-none"
+      />
+
+      {/* ── Color wash — animated imperatively via washRef ── */}
+      <div
+        ref={washRef}
         style={{
+          position: "absolute", inset: 0,
+          zIndex: 8,
+          background: "linear-gradient(105deg, #02026e 0%, #1140c4 45%, #02026e 100%)",
+          transform: "scaleX(0)",
+          transformOrigin: "left center",
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── Vignette gradient ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 10,
           background: cardPosition.startsWith("bottom")
             ? "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)"
             : "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 55%)",
         }}
       />
+
+      {/* ── Label chip ── */}
       <div style={{
         ...positionStyle,
         borderRadius: 6, padding: "4px 10px",
@@ -174,31 +245,23 @@ function FlipImageSlot({
 }
 
 // ─── ConferenceMomentsCarousel ─────────────────────────────────────────────────
-// Continuous-scroll marquee on all screen sizes.
-// • Images are taller (clamp height, 3:2 aspect ratio)
-// • Touch/pointer drag works everywhere — velocity-based momentum
-// • Prev/Next buttons nudge the scroll speed (feel: push the belt)
-// • Dots derived from marquee position track which image is "centremost"
-
-const MARQUEE_BASE_SPEED = 0.7;   // px per frame auto-scroll
-const MOMENTUM_DECAY     = 0.90;  // drag release decay
-const MIN_VELOCITY       = 0.15;  // below this → hand back to auto
+const MARQUEE_BASE_SPEED = 0.7;
+const MOMENTUM_DECAY     = 0.90;
+const MIN_VELOCITY       = 0.15;
 
 function ConferenceMomentsCarousel() {
-  const wrapperRef = useRef<HTMLDivElement>(null); // drag surface
-  const marqueeRef = useRef<HTMLDivElement>(null); // the moving strip
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
   const dotsRef    = useRef<HTMLDivElement>(null);
 
   const nudgeRef = useRef<(dir: "prev" | "next") => void>(() => {});
 
-  // ── All animation + interaction wired up with native listeners ──────────────
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const strip   = marqueeRef.current;
     const dotsCtr = dotsRef.current;
     if (!wrapper || !strip || !dotsCtr) return;
 
-    // ── state (plain vars, no React) ─────────────────────────────────────────
     let pos        = 0;
     let vel        = 0;
     let dragging   = false;
@@ -209,7 +272,6 @@ function ConferenceMomentsCarousel() {
     let activeIdx  = 0;
     let raf: number;
 
-    // ── measure once ─────────────────────────────────────────────────────────
     const measure = () => {
       halfW = strip.scrollWidth / 2;
       if (strip.children.length >= 2) {
@@ -218,10 +280,8 @@ function ConferenceMomentsCarousel() {
         cardW = b.offsetLeft - a.offsetLeft;
       }
     };
-    // defer so images have rendered
     requestAnimationFrame(measure);
 
-    // ── dots ─────────────────────────────────────────────────────────────────
     const updateDots = (idx: number) => {
       const dots = dotsCtr.children;
       for (let i = 0; i < dots.length; i++) {
@@ -231,59 +291,37 @@ function ConferenceMomentsCarousel() {
       }
     };
 
-    // ── RAF tick ─────────────────────────────────────────────────────────────
     const tick = () => {
       if (!halfW) measure();
-
-      // velocity decay
       vel = Math.abs(vel) > MIN_VELOCITY ? vel * MOMENTUM_DECAY : 0;
-
       if (!dragging) pos -= MARQUEE_BASE_SPEED + vel;
-
-      // wrap
       if (pos <= -halfW) pos += halfW;
       if (pos > 0)       pos -= halfW;
-
       strip.style.transform = `translateX(${pos}px)`;
-
-      // active dot via pure math
       if (cardW > 0) {
         const n   = carouselImages.length;
         const raw = Math.round((-pos + window.innerWidth / 2 - cardW / 2) / cardW);
         const idx = ((raw % n) + n) % n;
         if (idx !== activeIdx) { activeIdx = idx; updateDots(idx); }
       }
-
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
-    // expose nudge to button handlers (which are React onClick, that's fine —
-    // clicks are infrequent and not on the hot path)
     nudgeRef.current = (dir) => { vel = dir === "prev" ? 6 : -6; };
 
-    // ── native touch handlers — registered with passive:true so browser
-    //    composites immediately without waiting for JS ───────────────────────
     const onTouchStart = (e: TouchEvent) => {
-      dragging = true;
-      lastX    = e.touches[0].clientX;
-      lastT    = performance.now();
-      vel      = 0;
+      dragging = true; lastX = e.touches[0].clientX; lastT = performance.now(); vel = 0;
     };
-
     const onTouchMove = (e: TouchEvent) => {
       if (!dragging) return;
       const now = performance.now();
       const dx  = e.touches[0].clientX - lastX;
-      pos      += dx;
-      vel       = -(dx / Math.max(now - lastT, 1)) * 16;
-      lastX     = e.touches[0].clientX;
-      lastT     = now;
+      pos += dx; vel = -(dx / Math.max(now - lastT, 1)) * 16;
+      lastX = e.touches[0].clientX; lastT = now;
     };
-
     const onTouchEnd = () => { dragging = false; };
 
-    // mouse drag for desktop
     const onMouseDown = (e: MouseEvent) => {
       dragging = true; lastX = e.clientX; lastT = performance.now(); vel = 0;
       wrapper.style.cursor = "grabbing";
@@ -292,13 +330,11 @@ function ConferenceMomentsCarousel() {
       if (!dragging) return;
       const now = performance.now();
       const dx  = e.clientX - lastX;
-      pos      += dx;
-      vel       = -(dx / Math.max(now - lastT, 1)) * 16;
-      lastX     = e.clientX; lastT = now;
+      pos += dx; vel = -(dx / Math.max(now - lastT, 1)) * 16;
+      lastX = e.clientX; lastT = now;
     };
     const onMouseUp = () => { dragging = false; wrapper.style.cursor = "grab"; };
 
-    // passive:true = browser doesn't block composite thread waiting for preventDefault
     wrapper.addEventListener("touchstart",  onTouchStart, { passive: true });
     wrapper.addEventListener("touchmove",   onTouchMove,  { passive: true });
     wrapper.addEventListener("touchend",    onTouchEnd,   { passive: true });
@@ -319,11 +355,9 @@ function ConferenceMomentsCarousel() {
     };
   }, []);
 
-  // ── Render — no event handlers on the hot path ──────────────────────────────
   return (
     <div className="relative w-full mt-10 overflow-hidden bg-[#003994]">
 
-      {/* Header bar */}
       <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/10">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <span className="text-[10px] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em] text-white/60 shrink-0">
@@ -340,7 +374,6 @@ function ConferenceMomentsCarousel() {
         </div>
       </div>
 
-      {/* Drag surface */}
       <div
         ref={wrapperRef}
         className="relative py-4"
@@ -374,7 +407,6 @@ function ConferenceMomentsCarousel() {
           </div>
         </div>
 
-        {/* Left fade + prev (desktop only) */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-14 sm:w-20 bg-gradient-to-r from-[#003994] to-transparent z-10" />
         <button
           onClick={() => nudgeRef.current("prev")}
@@ -389,7 +421,6 @@ function ConferenceMomentsCarousel() {
           </svg>
         </button>
 
-        {/* Right fade + next (desktop only) */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-14 sm:w-20 bg-gradient-to-l from-[#003994] to-transparent z-10" />
         <button
           onClick={() => nudgeRef.current("next")}
@@ -405,7 +436,6 @@ function ConferenceMomentsCarousel() {
         </button>
       </div>
 
-      {/* Dots — imperatively updated, never re-rendered */}
       <div ref={dotsRef} className="flex justify-center items-center gap-1.5 pb-4">
         {carouselImages.map((_, i) => (
           <button
@@ -422,7 +452,6 @@ function ConferenceMomentsCarousel() {
           />
         ))}
       </div>
-
     </div>
   );
 }

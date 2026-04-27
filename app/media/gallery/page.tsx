@@ -12,17 +12,45 @@ type GalleryItem = {
 };
 
 const galleryItems: GalleryItem[] = [
-  { src: "/images/gallery/hero-carousel-1.jpeg", alt: "Conference keynote session", category: "Conference" },
+  // Conference
+  { src: "/images/gallery/gallery-1.jpg", alt: "Conference opening session", category: "Conference" },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Conference exhibition display", category: "Conference" },
+  { src: "/images/gallery/gallery-4.jpg", alt: "Conference audience session", category: "Conference" },
+  { src: "/images/gallery/gallery-5.jpeg", alt: "Conference discussion session", category: "Conference" },
+  { src: "/images/gallery/gallery-10.jpg", alt: "Conference delegates", category: "Conference" },
+
+
+  // Networking
   { src: "/images/gallery/gallery-2.jpg", alt: "Delegates networking", category: "Networking" },
-  { src: "/images/gallery/gallery-13.jpg", alt: "Exhibition floor interaction", category: "Exhibition" },
-  { src: "/images/gallery/gallery-4.jpg", alt: "Speaker panel discussion", category: "Speakers" },
-  { src: "/images/gallery/gallery-5.jpeg", alt: "Audience during conference session", category: "Conference" },
-  { src: "/images/gallery/gallery-7.jpg", alt: "Sponsor and exhibitor stand", category: "Exhibition" },
-  { src: "/images/gallery/hero-carousel-3.jpeg", alt: "Featured speaker on stage", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-4.jpeg", alt: "Clean energy conference audience", category: "Conference" },
-  { src: "/images/gallery/gallery-10.jpg", alt: "Delegates at networking session", category: "Networking" },
-  { src: "/images/gallery/gallery-11.jpg", alt: "Exhibition booth and branding", category: "Exhibition" },
-  { src: "/images/gallery/gallery-11.jpeg", alt: "Panel speaker session", category: "Speakers" },
+  { src: "/images/gallery/gallery-11.jpg", alt: "Delegates meeting at the conference", category: "Networking" },
+  { src: "/images/gallery/gallery-11.jpeg", alt: "Networking and partner engagement", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-1.jpeg", alt: "Delegates networking", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-2.jpeg", alt: "Conference delegates in discussion", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-3.jpeg", alt: "Roundtable discussion", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-4.jpeg", alt: "Delegates seated during session", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-7.jpeg", alt: "Conference networking room", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-8.jpeg", alt: "Audience networking session", category: "Networking" },
+  { src: "/images/gallery/hero-carousel-10.jpeg", alt: "Panel discussion and audience", category: "Networking" },
+
+  // Exhibition
+  { src: "/images/gallery/gallery-7.jpg", alt: "Exhibition booth and branding", category: "Exhibition" },
+ 
+  { src: "/images/gallery/gallery-13.jpg", alt: "Exhibition stand", category: "Exhibition" },
+  { src: "/images/gallery/hero-carousel-16.jpeg", alt: "Exhibition and event branding", category: "Exhibition" },
+
+  // Speakers
+  { src: "/images/gallery/hero-carousel-5.jpeg", alt: "Speaker at conference table", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-6.jpeg", alt: "Speaker presentation", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-9.jpg", alt: "Speaker addressing delegates", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-9 (2).jpeg", alt: "Speaker session", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-9 (3).jpeg", alt: "Speaker presentation session", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-9 (5).jpeg", alt: "Speaker keynote session", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-10.jpg", alt: "Speaker on stage", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-11.jpg", alt: "Speaker at podium", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-12.jpg", alt: "Panel speakers on stage", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-13.jpeg", alt: "Speaker presentation", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-14.jpeg", alt: "Award presentation", category: "Speakers" },
+  { src: "/images/gallery/hero-carousel-15.jpeg", alt: "Speaker at podium", category: "Speakers" },
 ];
 
 const filters = ["All", "Conference", "Networking", "Exhibition", "Speakers", "Highlights"] as const;

@@ -28,7 +28,7 @@ const editions = {
     location: "Kigali Marriott Hotel, Rwanda",
     theme:
       "East Africa energy transition, regional integration, geothermal, climate finance, clean mobility, and decentralized systems.",
-    heroImage: "/images/highlights/kigali-highlight-hero.jpg",
+    heroImage: "/images/highlights/kigali-highlight-hero.jpeg",
     spotlightTitle: "Programme highlights from the Kigali edition",
     spotlightText:
       "The Kigali edition emphasizes East Africa's energy transition and Rwanda's position as a hub for clean mobility, innovation-led policy, regional integration, and climate-focused energy growth.",
@@ -83,7 +83,7 @@ const editions = {
     location: "Novotel Hotel Perth, Western Australia",
     theme:
       "Capital markets, mining technology, green hydrogen, storage innovation, ESG leadership, and Africa–Australia investment ties.",
-    heroImage: "/images/highlights/perth-highlight-hero.jpg",
+    heroImage: "/images/highlights/perth-highlight-hero.jpeg",
     spotlightTitle: "Programme highlights from the Perth edition",
     spotlightText:
       "The Perth edition is positioned as a strategic bridge between African clean energy priorities and Australian finance, mining innovation, hydrogen expertise, storage capability, and ESG leadership frameworks.",
