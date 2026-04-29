@@ -28,11 +28,11 @@ type FormState = {
 const programmeFiles: Record<EventOption, { label: string; href: string }> = {
   kigali: {
     label: "Kigali Edition Programme",
-    href: "/documents/programme-kigali-2026.pdf",
+    href: "/documents/clean-energy-conference-programme-2026.pdf",
   },
   perth: {
     label: "Perth Edition Programme",
-    href: "/documents/programme-perth-2026.pdf",
+    href: "/documents/clean-energy-conference-programme-2026.pdf",
   },
   both: {
     label: "Full 2026 Programme",
