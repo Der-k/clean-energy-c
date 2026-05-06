@@ -335,7 +335,7 @@ export default function VenuePage() {
           </a>
 
           <a
-            href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+            href="/get-tickets"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"

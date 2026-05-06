@@ -68,11 +68,11 @@ export const navItems: NavItem[] = [
   children: [
     {
       label: "🎟 Rwanda (Kigali)",
-      href: "https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator",
+      href: "https://clean-energy.zohobackstage.com/kigali#/buyTickets/selectTickets?lang=en",
     },
     {
       label: "🎟 Australia (Perth)",
-      href: "https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator",
+      href: "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
     },
   ],
 },

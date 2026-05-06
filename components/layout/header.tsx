@@ -93,7 +93,7 @@ export function Header() {
           {/* CTA */}
           <div className="hidden xl:flex xl:items-center xl:gap-4">
             <a
-              href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+              href="/get-tickets"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] shadow-[0_10px_25px_rgba(0,0,0,0.18)] transition hover:bg-[#f0f4ff] hover:scale-[1.02]"

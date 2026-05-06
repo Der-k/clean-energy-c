@@ -254,7 +254,7 @@ export default function EventOverviewPage() {
 
              <div className="flex flex-wrap gap-3">
               <a
-                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+                href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
@@ -399,7 +399,7 @@ export default function EventOverviewPage() {
 
          <div className="flex flex-wrap gap-3">
               <a
-                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+                href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"

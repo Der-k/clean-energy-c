@@ -41,7 +41,7 @@ export function MobileNav({
 
         <div className="mt-5">
           <a
-            href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+            href="/get-tickets"
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}

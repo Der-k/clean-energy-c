@@ -37,6 +37,8 @@ const carouselImages = [
   { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
 ];
 
+
+
 const FLIP_DURATION = 1200;   // kept so cycle-timing math is unchanged
 const SLOT_GAP      = 600;
 const CYCLE_PAUSE   = 5000;
@@ -190,18 +192,18 @@ function FlipImageSlot({
     <div className="relative w-full h-full overflow-hidden">
 
       {/* ── Active image — Ken Burns slow zoom ── */}
-      <img
-        key={baseKey}
-        src={images[baseIdx].src}
-        alt={images[baseIdx].alt}
-        style={{
-          position: "absolute", inset: 0,
-          width: "100%", height: "100%",
-          objectFit: "cover", objectPosition: "center",
-          animation: `kb${slotIndex % 3} 7500ms ease-out both`,
-          willChange: "transform",
-        }}
-      />
+<Image
+  key={baseKey}
+  src={images[baseIdx].src}
+  alt={images[baseIdx].alt}
+  fill
+  priority={slotIndex === 0} // only first visible slot
+  sizes="(max-width: 768px) 100vw, 50vw"
+  className="object-cover"
+  style={{
+    animation: `kb${slotIndex % 3} 7500ms ease-out both`,
+  }}
+/>
 
       {/* ── Color wash — animated imperatively via washRef ── */}
       <div

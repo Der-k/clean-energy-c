@@ -376,7 +376,7 @@ export default function SpeakersPage() {
                 Speaker Enquiry
               </Link>
               <a
-                href="https://www.eventbrite.com.au/e/clean-energy-conference-exhibition-australia-africa-2026-tickets-1980448579012?aff=oddtdtcreator"
+                href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
