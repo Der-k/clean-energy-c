@@ -72,7 +72,7 @@ export default function TestimonialsPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -85,13 +85,14 @@ export default function TestimonialsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Testimonials
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               What attendees say about the conference experience
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Hear from senior attendees, delegates, partners, and industry
               participants who found value in the conversations, visibility,
               networking, and practical market insight the conference delivered.
@@ -100,14 +101,14 @@ export default function TestimonialsPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/tickets"
-                className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+                className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
               >
                 Register Now
               </Link>
 
               <Link
                 href="/conference/why-attend"
-                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+                className="btn-outline-glow rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
               >
                 Why Attend
               </Link>
@@ -156,8 +157,8 @@ export default function TestimonialsPage() {
                       <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                         {item.name}
                       </h3>
-                      <p className="mt-1 text-sm text-[color:var(--text-main)]-600">{item.role}</p>
-                      <p className="text-sm font-medium text-[#02026e]">
+                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">{item.role}</p>
+                      <p className="text-base font-medium text-[#02026e]">
                         {item.company}
                       </p>
                     </div>
@@ -167,7 +168,7 @@ export default function TestimonialsPage() {
                     </div>
                   </div>
 
-                  <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+                  <p className="text-base leading-7 text-[color:var(--text-main)]-700">
                     "{item.quote}"
                   </p>
 
@@ -210,12 +211,12 @@ export default function TestimonialsPage() {
                   <Quote className="h-4 w-4" />
                 </div>
 
-                <p className="mt-4 text-sm leading-7 text-[color:var(--text-main)]-700">
+                <p className="mt-4 text-base leading-7 text-[color:var(--text-main)]-700">
                   "{item.quote}"
                 </p>
 
                 <div className="mt-4 border-t border-[#02026e]/20 pt-4">
-                  <p className="text-sm font-medium text-[color:var(--text-main)]-900">
+                  <p className="text-base font-medium text-[color:var(--text-main)]-900">
                     {item.author}
                   </p>
                 </div>
@@ -235,7 +236,7 @@ export default function TestimonialsPage() {
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Experience the conference for yourself
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Register now and be part of the conversations, partnerships, and
                 opportunities shaping the clean energy sector.
               </p>
@@ -244,13 +245,13 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/tickets"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
               </Link>
               <Link
                 href="/conference/why-attend"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Why Attend
               </Link>

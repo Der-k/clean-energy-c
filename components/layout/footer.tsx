@@ -6,15 +6,15 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-semibold text-zinc-900">
+            <p className="text-base font-semibold text-zinc-900">
               Clean Energy Conference
             </p>
-            <p className="mt-1 text-sm text-zinc-600">
+            <p className="mt-1 text-base text-zinc-600">
               Fast, clean, and professional event website.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4 text-sm text-zinc-600">
+          <div className="flex flex-wrap gap-4 text-base text-zinc-600">
             <Link href="/conference">Conference</Link>
             <Link href="/event">Event</Link>
             <Link href="/speakers">Speakers</Link>

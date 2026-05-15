@@ -69,7 +69,7 @@ export default function FutureEventsPage() {
   return (
     <main className="bg-[#02026d]">
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:py-12">
-        <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-blue-100/80">
+        <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-blue-100/80">
           <Link href="/" className="hover:text-white">
             Home
           </Link>
@@ -85,7 +85,7 @@ export default function FutureEventsPage() {
           <h1 className="text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl">
             Events
           </h1>
-          <p className="mt-1 text-sm font-semibold text-white">
+          <p className="mt-1 text-base font-semibold text-white">
             Clean Energy Events Around the World
           </p>
         </div>
@@ -114,11 +114,12 @@ export default function FutureEventsPage() {
                       <span>{event.date}</span>
                     </div>
 
-                    <h2 className="text-base font-semibold text-[color:var(--text-main)]-900 md:text-lg">
+                    <h2 className="text-base font-semibold text-[color:var(--text-main)]-900 md:text-xl
+">
                       {event.title}
                     </h2>
 
-                    <p className="mt-3 text-sm leading-6 text-[color:var(--text-main)]-600">
+                    <p className="mt-3 text-base leading-6 text-[color:var(--text-main)]-600">
                       {event.description}
                     </p>
 
@@ -137,7 +138,7 @@ export default function FutureEventsPage() {
 
                     <Link
                       href={event.href}
-                      className="inline-flex items-center gap-2 rounded-full bg-[#02026d] px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#02026d] px-4 py-2 text-base font-semibold text-white transition hover:bg-blue-700"
                     >
                       View Details
                       <ArrowRight className="h-4 w-4" />
@@ -152,17 +153,17 @@ export default function FutureEventsPage() {
         <div className="mt-8 rounded-xl bg-white p-4 shadow-sm md:p-5">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-sm font-semibold text-[#02026d]">
+              <p className="text-base font-semibold text-[#02026d]">
                 Be part of the movement
               </p>
-              <p className="mt-1 text-sm text-[color:var(--text-main)]-600">
+              <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                 Shape the future of sustainability
               </p>
             </div>
 
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded bg-emerald-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
+              className="inline-flex items-center justify-center rounded bg-emerald-500 px-5 py-2 text-base font-semibold text-white transition hover:bg-emerald-600"
             >
               Join Us
             </Link>

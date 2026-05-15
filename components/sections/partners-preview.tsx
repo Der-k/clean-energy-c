@@ -24,7 +24,7 @@ export function PartnersPreview() {
     <section className="bg-[#f8fafc]">
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:py-20">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Partnerships
           </p>
 
@@ -62,7 +62,7 @@ export function PartnersPreview() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/partners"
-            className="btn-glow rounded-full px-7 py-3 text-sm font-semibold text-white"
+            className="btn-glow rounded-full px-7 py-3 text-base font-semibold text-white"
           >
             View All Partners
           </Link>

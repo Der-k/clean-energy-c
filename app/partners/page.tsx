@@ -27,7 +27,7 @@ export default function PartnersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-zinc-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-zinc-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -36,7 +36,7 @@ export default function PartnersPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Partnerships
             </p>
 
@@ -44,7 +44,8 @@ export default function PartnersPage() {
               Partners & Sponsors
             </h1>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-zinc-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-zinc-600">
               Leading partners, sponsors, and collaborators will be announced soon.
               The conference continues to attract major players across energy,
               infrastructure, finance, and innovation.
@@ -53,14 +54,14 @@ export default function PartnersPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/partners/become-a-partner"
-                className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+                className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
               >
                 Become a Partner
               </Link>
 
               <Link
                 href="/contact"
-                className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-zinc-900"
+                className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-zinc-900"
               >
                 Contact Us
                 <ArrowRight className="h-4 w-4" />
@@ -90,7 +91,7 @@ export default function PartnersPage() {
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Position your brand within the clean energy conversation
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-base leading-7 text-blue-50 md:text-base">
                 Join the conference as a sponsor or partner and connect with
                 delegates, policymakers, investors, and industry leaders.
               </p>
@@ -99,14 +100,14 @@ export default function PartnersPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/partners/become-a-partner"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-blue-50"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-blue-50"
               >
                 Become a Partner
               </Link>
 
               <Link
                 href="/contact"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Contact the Team
               </Link>
@@ -163,11 +164,12 @@ function PartnerSection({
                   {eyebrow}
                 </div>
 
-                <h3 className="text-lg font-semibold text-slate-500">
+                <h3 className="text-xl
+ font-semibold text-black">
                   To Be Announced
                 </h3>
 
-                <p className="max-w-md text-sm text-slate-400">
+                <p className="max-w-md text-base text-slate-400">
                   Official partners and sponsors for this category will be
                   announced soon. Stay tuned for updates.
                 </p>

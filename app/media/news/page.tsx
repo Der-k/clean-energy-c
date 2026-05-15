@@ -75,7 +75,7 @@ export default function NewsPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -86,13 +86,14 @@ export default function NewsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               News & Articles
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Latest news and conference updates
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Explore press releases, event announcements, programme updates,
               and key stories related to the Clean Energy Conference.
             </p>
@@ -128,7 +129,7 @@ export default function NewsPage() {
               <div className="p-6 md:p-8 lg:p-10">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20
  bg-[#02026e]/5
- px-4 py-2 text-sm text-[color:var(--text-main)]-700">
+ px-4 py-2 text-base text-[color:var(--text-main)]-700">
                   <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{featuredArticle.date}</span>
                 </div>
@@ -144,7 +145,7 @@ export default function NewsPage() {
                 <div className="mt-8">
                   <Link
                     href={featuredArticle.href}
-                    className="btn-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
+                    className="btn-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white"
                   >
                     Read Article
                     <ArrowRight className="h-4 w-4" />
@@ -184,7 +185,7 @@ export default function NewsPage() {
               </div>
 
               <div className="p-5">
-                <div className="inline-flex items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+                <div className="inline-flex items-center gap-2 text-base text-[color:var(--text-main)]-500">
                   <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{article.date}</span>
                 </div>
@@ -196,7 +197,7 @@ export default function NewsPage() {
                 <div className="mt-6">
                   <Link
                     href={article.href}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#02026e] transition hover:text-[#010150]
+                    className="inline-flex items-center gap-2 text-base font-semibold text-[#02026e] transition hover:text-[#010150]
 "
                   >
                     Read More
@@ -211,21 +212,21 @@ export default function NewsPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-12 md:px-6 lg:pb-16">
         <div className="flex flex-wrap items-center gap-3">
-          <button className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]">
+          <button className="rounded-full bg-blue-600 px-4 py-2 text-base font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]">
             1
           </button>
           <button className="rounded-full border border-[#02026e]/20
- bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+ bg-white px-4 py-2 text-base font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
 ">
             2
           </button>
           <button className="rounded-full border border-[#02026e]/20
- bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+ bg-white px-4 py-2 text-base font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
 ">
             3
           </button>
           <button className="rounded-full border border-[#02026e]/20
- bg-white px-4 py-2 text-sm font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
+ bg-white px-4 py-2 text-base font-semibold text-[color:var(--text-main)]-700 hover:bg-[#02026e]/5
 ">
             Next
           </button>
@@ -244,7 +245,7 @@ export default function NewsPage() {
                 <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                   Want the latest conference updates?
                 </h2>
-                <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+                <p className="mt-3 text-base leading-7 text-blue-50 md:text-base">
                   Contact the team for announcements, media enquiries, and upcoming news.
                 </p>
               </div>
@@ -252,7 +253,7 @@ export default function NewsPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/contact"
-                  className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010150]
+                  className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#010150]
  transition hover:bg-[#02026e]/5
 "
                 >
@@ -260,7 +261,7 @@ export default function NewsPage() {
                 </Link>
                 <Link
                   href="/media/gallery"
-                  className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
                 >
                   View Gallery
                 </Link>

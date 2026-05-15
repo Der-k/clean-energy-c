@@ -207,7 +207,7 @@ export default function ExhibitionPage() {
     <main className="bg-white pt-24">
       <section className="bg-[#02026e] py-20 text-white">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-5 flex flex-wrap items-center gap-2 text-sm text-white/70">
+          <div className="mb-5 flex flex-wrap items-center gap-2 text-base text-white/70">
             <Link href="/" className="transition hover:text-white">
               Home
             </Link>
@@ -236,22 +236,23 @@ export default function ExhibitionPage() {
             className="rounded-2xl border border-slate-200 p-6 shadow-sm"
           >
             <Lightbulb className="h-6 w-6 text-[#02026e]" />
-            <h3 className="mt-3 text-lg font-semibold text-slate-900">
+            <h3 className="mt-3 text-xl
+ font-semibold text-black">
               {card.title}
             </h3>
-            <p className="mt-2 text-sm text-zinc-600">{card.description}</p>
+            <p className="mt-2 text-base text-zinc-600">{card.description}</p>
           </div>
         ))}
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-16 lg:grid-cols-2">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900">Who Should Exhibit</h2>
+          <h2 className="text-2xl font-bold text-black">Who Should Exhibit</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {exhibitorProfiles.map((item) => (
               <div
                 key={item}
-                className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700"
+                className="rounded-lg border border-slate-200 px-4 py-3 text-base text-black"
               >
                 {item}
               </div>
@@ -265,7 +266,7 @@ export default function ExhibitionPage() {
             {benefits.map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-2 text-sm text-slate-700"
+                className="flex items-start gap-2 text-base text-black"
               >
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#009966]" />
                 <span>{item}</span>
@@ -278,15 +279,15 @@ export default function ExhibitionPage() {
       <section className="mx-auto max-w-7xl px-4 pb-20">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Exhibition Enquiry
             </p>
 
-            <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-slate-900">
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-black">
               Register your interest as an exhibitor
             </h2>
 
-            <p className="mt-4 text-base leading-8 text-slate-600">
+            <p className="mt-4 text-base leading-8 text-black">
               The exhibition programme is still being finalized, but you can register
               your interest now to receive early updates, booth information, and
               priority communication when exhibition opportunities are released.
@@ -296,10 +297,10 @@ export default function ExhibitionPage() {
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-base font-semibold text-black">
                     Early access to exhibition updates
                   </p>
-                  <p className="mt-1 text-sm leading-7 text-slate-600">
+                  <p className="mt-1 text-base leading-7 text-black">
                     Get notified when exhibition categories, pricing, and booth
                     allocations are announced.
                   </p>
@@ -309,10 +310,10 @@ export default function ExhibitionPage() {
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-base font-semibold text-black">
                     Strong sector visibility
                   </p>
-                  <p className="mt-1 text-sm leading-7 text-slate-600">
+                  <p className="mt-1 text-base leading-7 text-black">
                     Position your company alongside clean energy stakeholders,
                     investors, developers, and decision-makers.
                   </p>
@@ -322,10 +323,10 @@ export default function ExhibitionPage() {
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <Globe2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-base font-semibold text-black">
                     Kigali and Perth editions
                   </p>
-                  <p className="mt-1 text-sm leading-7 text-slate-600">
+                  <p className="mt-1 text-base leading-7 text-black">
                     Indicate whether you are interested in Kigali, Perth, or both
                     editions.
                   </p>
@@ -341,11 +342,11 @@ export default function ExhibitionPage() {
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
 
-                <h3 className="mt-6 text-2xl font-bold text-slate-900">
+                <h3 className="mt-6 text-2xl font-bold text-black">
                   Interest received
                 </h3>
 
-                <p className="mt-3 max-w-md text-sm leading-7 text-slate-600">
+                <p className="mt-3 max-w-md text-base leading-7 text-black">
                   Thank you for registering your exhibition interest. We will reach
                   out once exhibition opportunities and booth options are available.
                 </p>
@@ -357,7 +358,7 @@ export default function ExhibitionPage() {
                     setSubmitError("");
                     setErrors({});
                   }}
-                  className="mt-8 rounded-2xl bg-[#02026e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#010150]"
+                  className="mt-8 rounded-2xl bg-[#02026e] px-5 py-3 text-base font-semibold text-white transition hover:bg-[#010150]"
                 >
                   Submit another response
                 </button>
@@ -365,13 +366,13 @@ export default function ExhibitionPage() {
             ) : (
               <>
                 <div className="mb-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
+                  <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
                     Register Now
                   </p>
-                  <h3 className="mt-2 text-2xl font-bold tracking-[-0.02em] text-slate-900">
+                  <h3 className="mt-2 text-2xl font-bold tracking-[-0.02em] text-black">
                     Exhibitor interest form
                   </h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">
+                  <p className="mt-2 text-base leading-7 text-black">
                     Complete the form below and our team will keep you informed.
                   </p>
                 </div>
@@ -379,7 +380,7 @@ export default function ExhibitionPage() {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Company name
                       </label>
                       <input
@@ -387,7 +388,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter company name"
                         value={form.companyName}
                         onChange={(e) => updateField("companyName", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.companyName && (
                         <p className="mt-2 text-xs text-red-600">
@@ -397,7 +398,7 @@ export default function ExhibitionPage() {
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Contact name
                       </label>
                       <input
@@ -405,7 +406,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter contact name"
                         value={form.contactName}
                         onChange={(e) => updateField("contactName", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.contactName && (
                         <p className="mt-2 text-xs text-red-600">
@@ -417,7 +418,7 @@ export default function ExhibitionPage() {
 
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Email address
                       </label>
                       <input
@@ -425,7 +426,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter email address"
                         value={form.email}
                         onChange={(e) => updateField("email", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.email && (
                         <p className="mt-2 text-xs text-red-600">{errors.email}</p>
@@ -433,7 +434,7 @@ export default function ExhibitionPage() {
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Phone number
                       </label>
                       <input
@@ -441,7 +442,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter phone number"
                         value={form.phone}
                         onChange={(e) => updateField("phone", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.phone && (
                         <p className="mt-2 text-xs text-red-600">{errors.phone}</p>
@@ -451,7 +452,7 @@ export default function ExhibitionPage() {
 
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Country
                       </label>
                       <input
@@ -459,7 +460,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter country"
                         value={form.country}
                         onChange={(e) => updateField("country", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.country && (
                         <p className="mt-2 text-xs text-red-600">{errors.country}</p>
@@ -467,7 +468,7 @@ export default function ExhibitionPage() {
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Website
                       </label>
                       <input
@@ -475,7 +476,7 @@ export default function ExhibitionPage() {
                         placeholder="Enter website"
                         value={form.website}
                         onChange={(e) => updateField("website", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       />
                       {errors.website && (
                         <p className="mt-2 text-xs text-red-600">{errors.website}</p>
@@ -485,13 +486,13 @@ export default function ExhibitionPage() {
 
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Sector
                       </label>
                       <select
                         value={form.sector}
                         onChange={(e) => updateField("sector", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       >
                         <option value="">Select sector</option>
                         <option value="renewable-energy">Renewable Energy</option>
@@ -515,7 +516,7 @@ export default function ExhibitionPage() {
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-slate-800">
+                      <label className="mb-2 block text-base font-medium text-black">
                         Edition interest
                       </label>
                       <select
@@ -523,7 +524,7 @@ export default function ExhibitionPage() {
                         onChange={(e) =>
                           updateField("editionInterest", e.target.value)
                         }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                       >
                         <option value="">Select edition</option>
                         <option value="kigali">Kigali Edition</option>
@@ -539,7 +540,7 @@ export default function ExhibitionPage() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-slate-800">
+                    <label className="mb-2 block text-base font-medium text-black">
                       Booth preference
                     </label>
                     <select
@@ -547,7 +548,7 @@ export default function ExhibitionPage() {
                       onChange={(e) =>
                         updateField("boothPreference", e.target.value)
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                     >
                       <option value="">Select preference</option>
                       <option value="small-booth">Small Booth</option>
@@ -564,7 +565,7 @@ export default function ExhibitionPage() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-slate-800">
+                    <label className="mb-2 block text-base font-medium text-black">
                       Message
                     </label>
                     <textarea
@@ -572,7 +573,7 @@ export default function ExhibitionPage() {
                       placeholder="Tell us about your company, what you would like to exhibit, and any preferences."
                       value={form.message}
                       onChange={(e) => updateField("message", e.target.value)}
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
                     />
                     {errors.message && (
                       <p className="mt-2 text-xs text-red-600">{errors.message}</p>
@@ -580,7 +581,7 @@ export default function ExhibitionPage() {
                   </div>
 
                   {submitError && (
-                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-base text-red-700">
                       {submitError}
                     </div>
                   )}
@@ -588,7 +589,7 @@ export default function ExhibitionPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#02026e] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-[#010150] disabled:cursor-not-allowed disabled:opacity-70"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#02026e] px-5 py-3.5 text-base font-semibold text-white transition hover:bg-[#010150] disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     <Send className="h-4 w-4" />
                     {isSubmitting

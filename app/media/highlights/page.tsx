@@ -147,7 +147,7 @@ export default function HighlightsPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -158,13 +158,14 @@ export default function HighlightsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Highlights
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Edition highlights and featured moments
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Explore key highlights from the 2026 Kigali and Perth editions,
               including programme emphasis, showcase formats, and expected
               strategic outcomes.
@@ -190,7 +191,7 @@ export default function HighlightsPage() {
                   <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-center">
                     <div>
                       <p
-                        className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                        className={`text-[13px] font-semibold uppercase tracking-[0.18em] ${
                           isActive ? "text-white/70" : "text-[#02026e]"
                         }`}
                       >
@@ -202,7 +203,7 @@ export default function HighlightsPage() {
                       </h2>
 
                       <p
-                        className={`mt-3 text-sm leading-7 ${
+                        className={`mt-3 text-base leading-7 ${
                           isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
@@ -211,7 +212,7 @@ export default function HighlightsPage() {
                     </div>
 
                     <div
-                      className={`grid gap-2 text-sm ${
+                      className={`grid gap-2 text-base ${
                         isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                       }`}
                     >
@@ -236,7 +237,7 @@ export default function HighlightsPage() {
       <SectionShell>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Spotlight
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -249,7 +250,7 @@ export default function HighlightsPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                href="/event/programme"
-                className="btn-outline-glow rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+                className="btn-outline-glow rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
               >
                 Download Programme
               </a>
@@ -257,7 +258,7 @@ export default function HighlightsPage() {
                 href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+                className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
               >
                 Register Now
               </a>
@@ -281,7 +282,7 @@ export default function HighlightsPage() {
 
       <SectionShell muted>
         <div className="max-w-3xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
             Highlight Formats
           </p>
           <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -306,7 +307,7 @@ export default function HighlightsPage() {
                   {card.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
+                <p className="mt-3 text-base leading-7 text-[color:var(--text-main)]-600">
                   {card.text}
                 </p>
               </article>
@@ -318,7 +319,7 @@ export default function HighlightsPage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Focus Areas
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -335,7 +336,7 @@ export default function HighlightsPage() {
                 <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                   {block.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
+                <p className="mt-3 text-base leading-7 text-[color:var(--text-main)]-600">
                   {block.text}
                 </p>
               </div>
@@ -347,7 +348,7 @@ export default function HighlightsPage() {
       <SectionShell muted>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Strategic Outputs
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -367,13 +368,13 @@ export default function HighlightsPage() {
                 className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-                <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
+                <p className="text-base leading-7 text-[color:var(--text-main)]-700">{item}</p>
               </div>
             ))}
 
             <div className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm">
               <Users className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-              <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+              <p className="text-base leading-7 text-[color:var(--text-main)]-700">
                 A flagship platform connecting governments, investors, utilities,
                 innovators, and industry stakeholders.
               </p>
@@ -381,7 +382,7 @@ export default function HighlightsPage() {
 
             <div className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm">
               <FileText className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-              <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+              <p className="text-base leading-7 text-[color:var(--text-main)]-700">
                 A platform for formal reports, policy dialogue, and structured
                 cooperation mechanisms.
               </p>
@@ -400,7 +401,7 @@ export default function HighlightsPage() {
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Explore the full programme or browse the gallery
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Move from headline highlights to the full programme flow and the
                 wider event experience.
               </p>
@@ -409,13 +410,13 @@ export default function HighlightsPage() {
             <div className="flex flex-wrap gap-3">
               <a
                href="/event/programme"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Download Programme
               </a>
               <Link
                 href="/media/gallery"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 View Gallery
               </Link>

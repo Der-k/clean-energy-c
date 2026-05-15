@@ -56,7 +56,7 @@ export function StatsBar() {
             </span>
 
             {/* LABEL */}
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">
+            <span className="text-base font-semibold uppercase tracking-[0.18em] text-white/75">
               {stat.label}
             </span>
           </div>

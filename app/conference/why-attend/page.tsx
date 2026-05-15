@@ -102,7 +102,7 @@ export default function WhyAttendPage() {
     <main className="min-h-screen bg-[#f4f6f8]">
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#009966]">
               Home
             </Link>
@@ -133,7 +133,7 @@ export default function WhyAttendPage() {
                     key={tab}
                     type="button"
                     onClick={() => setActiveTab(tab)}
-                    className={`border-r border-slate-200 px-6 py-4 text-sm font-semibold transition ${
+                    className={`border-r border-slate-200 px-6 py-4 text-base font-semibold transition ${
                       isActive
                         ? "bg-[#009966] text-white"
                         : "bg-white text-[color:var(--text-main)]-700 hover:bg-slate-50"
@@ -176,7 +176,7 @@ export default function WhyAttendPage() {
                 {current.benefits.map((benefit) => (
                   <div key={benefit} className="flex gap-3">
                     <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#009966]" />
-                    <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+                    <p className="text-base leading-7 text-[color:var(--text-main)]-700">
                       {benefit}
                     </p>
                   </div>
@@ -186,14 +186,14 @@ export default function WhyAttendPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/tickets"
-                  className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+                  className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
                 >
                   Register Now
                 </Link>
 
                 <Link
                   href="/partners"
-                  className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+                  className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
                 >
                   Explore Opportunities
                   <ArrowRight className="h-4 w-4" />

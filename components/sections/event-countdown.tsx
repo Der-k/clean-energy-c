@@ -116,14 +116,14 @@ function EventCountdownCard({ event }: { event: EventItem }) {
 
   return (
     <div
-      className={`rounded-[28px] border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(2,6,23,0.08)] sm:p-8 ${
+      className={`rounded-[28px] border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(0,0,0,0.2)] sm:p-8 ${
         isBlue ? "border-blue-100" : "border-emerald-100"
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p
-            className={`text-sm font-semibold uppercase tracking-[0.18em] ${
+            className={`text-base font-semibold uppercase tracking-[0.18em] ${
               isBlue ? "text-[#003994]" : "text-[#009966]"
             }`}
           >
@@ -160,7 +160,7 @@ function EventCountdownCard({ event }: { event: EventItem }) {
         />
       </div>
 
-      <div className="mt-6 space-y-3 text-sm text-zinc-600">
+      <div className="mt-6 space-y-3 text-base text-zinc-600">
         <div className="flex items-center gap-3">
           <CalendarDays className="h-4 w-4 text-zinc-400" />
           <span>{event.dateLabel}</span>
@@ -182,18 +182,19 @@ function EventCountdownCard({ event }: { event: EventItem }) {
 
 export function EventCountdown() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 sm:py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,57,148,0.08),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(0,153,102,0.08),transparent_32%)]" />
+    <section className="relative overflow-hidden bg-[#020266] py-20 sm:py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,153,102,0.18),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_32%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-700">
+          <div className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
             Event Countdown
           </div>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl lg:text-5xl">
+          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Countdown to Kigali and Perth 2026
           </h2>
-          <p className="mt-5 text-base leading-8 text-zinc-600 sm:text-lg">
+          <p className="mt-5 text-base leading-8 text-white/70 sm:text-xl
+">
             Join the next editions of The Clean Energy Conference & Exhibition
             as Africa and Australia connect around renewable energy, critical
             minerals, innovation, investment, and sustainable infrastructure.

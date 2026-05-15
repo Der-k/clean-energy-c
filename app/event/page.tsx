@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   ChevronRight,
   CalendarDays,
@@ -12,6 +12,11 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
+import {
+  kigaliProgramme,
+  perthProgramme,
+} from "@/lib/event-programmes";
+
 
 type EditionKey = "kigali" | "perth";
 
@@ -41,20 +46,7 @@ const editions = {
       { value: "8+", label: "Programme Formats" },
       { value: "EA", label: "Regional Focus" },
     ],
-    dayThemes: [
-      {
-        day: "Day 1",
-        title: "Building Rwanda's Clean Energy Future",
-        summary:
-          "Government dialogue, smart mobility, clean fuels, clean cooking, geothermal, carbon capture, responsible mining, circular economy, and investor-facing deal rooms.",
-      },
-      {
-        day: "Day 2",
-        title: "Climate Finance, ESG & Resilient Energy Systems",
-        summary:
-          "Climate finance, ESG, workforce transition, waste-to-energy, smart cities, agri-energy, research presentations, and conference close-out action points.",
-      },
-    ],
+  dayThemes: kigaliProgramme,
     sessionTypes: [
       "Registration and welcome refreshments",
       "Opening remarks and keynote sessions",
@@ -94,20 +86,7 @@ const editions = {
       { value: "AU–AF", label: "Partnership Focus" },
       { value: "Global", label: "Investment Outlook" },
     ],
-    dayThemes: [
-      {
-        day: "Day 1",
-        title: "Build Clean Energy Future in Australia",
-        summary:
-          "Government dialogue, smart mobility, clean fuels, clean cooking, geothermal, CCUS, renewable project finance, critical minerals, circularity, and entrepreneur-investor deal rooms.",
-      },
-      {
-        day: "Day 2",
-        title: "Site Visits and Extended Industry Engagement",
-        summary:
-          "The concept note includes Day 2 starting with mine site and recycling plant visits, extending the edition's practical focus on mining, circularity, and industrial energy opportunity.",
-      },
-    ],
+    dayThemes:perthProgramme,
     sessionTypes: [
       "Registration and welcome refreshments",
       "Opening remarks and keynote sessions",
@@ -122,6 +101,8 @@ const editions = {
     ],
   },
 };
+
+
 
 const editionOrder: EditionKey[] = ["kigali", "perth"];
 
@@ -139,7 +120,7 @@ export default function EventOverviewPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -148,7 +129,7 @@ export default function EventOverviewPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Event Overview
             </p>
 
@@ -156,7 +137,8 @@ export default function EventOverviewPage() {
               Explore the 2026 event editions
             </h1>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Select an edition below to view its dates, location, programme
               emphasis, and key session formats.
             </p>
@@ -190,7 +172,7 @@ export default function EventOverviewPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/10" />
 
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
+                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
                         {isActive ? "Selected Edition" : "Select Edition"}
                       </div>
 
@@ -198,7 +180,7 @@ export default function EventOverviewPage() {
                         {edition.tabLabel}
                       </h2>
 
-                      <div className="mt-4 space-y-2 text-sm text-white/80">
+                      <div className="mt-4 space-y-2 text-base text-white/80">
                         <div className="flex items-center gap-2">
                           <CalendarDays className="h-4 w-4 text-white/60" />
                           <span>{edition.date}</span>
@@ -223,7 +205,7 @@ export default function EventOverviewPage() {
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 {current.tabLabel}
               </p>
 
@@ -231,11 +213,12 @@ export default function EventOverviewPage() {
                 {current.title}
               </h2>
 
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+              <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
                 {current.subtitle}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3 text-sm text-[color:var(--text-main)]-700">
+              <div className="mt-6 flex flex-wrap gap-3 text-base text-[color:var(--text-main)]-700">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
                   <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{current.date}</span>
@@ -257,13 +240,13 @@ export default function EventOverviewPage() {
                 href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
               </a>
               <a
                href="/event/programme"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Request Programme
               </a>
@@ -285,10 +268,10 @@ export default function EventOverviewPage() {
               </div>
 
               <div className="absolute -bottom-6 left-6 hidden rounded-2xl border border-[#02026e]/20 bg-white px-5 py-4 shadow-xl md:block">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#02026e]">
+                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                   {current.floatingLabel}
                 </p>
-                <p className="mt-2 text-sm font-medium text-[color:var(--text-main)]-700">
+                <p className="mt-2 text-base font-medium text-[color:var(--text-main)]-700">
                   {current.floatingValue}
                 </p>
               </div>
@@ -300,7 +283,7 @@ export default function EventOverviewPage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Summary
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -323,39 +306,37 @@ export default function EventOverviewPage() {
       </SectionShell>
 
       <SectionShell muted>
-        <div className="max-w-3xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
-            Day Themes
-          </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
-            Two focused days with distinct themes
-          </h2>
-        </div>
+  <div className="max-w-3xl">
+    <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+      Event Programme
+    </p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
-          {current.dayThemes.map((item) => (
-            <div
-              key={item.day}
-              className="rounded-[24px] border border-[#02026e]/20 bg-white p-6 shadow-sm"
-            >
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
-                {item.day}
-              </p>
-              <h3 className="font-heading mt-3 text-2xl font-semibold text-[color:var(--text-main)]-900">
-                {item.title}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-[color:var(--text-main)]-600">
-                {item.summary}
-              </p>
-            </div>
-          ))}
-        </div>
-      </SectionShell>
+    <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900 md:text-4xl">
+      Explore the live conference schedule
+    </h2>
 
+    <p className="mt-5 text-base leading-8 text-[color:var(--text-main)]-600">
+      Each event day automatically cycles through the conference programme,
+      highlighting key sessions, networking moments, investor discussions,
+      exhibitions, and technical presentations.
+    </p>
+  </div>
+
+  <div className="mt-12 grid gap-6 lg:grid-cols-2">
+    {current.dayThemes.map((item) => (
+      <ProgrammeCard
+        key={item.day}
+        day={item.day}
+        title={item.title}
+        programme={item.programme}
+      />
+    ))}
+  </div>
+</SectionShell>
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               What to Expect
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -374,7 +355,7 @@ export default function EventOverviewPage() {
                 className="flex gap-3 rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
               >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-                <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{item}</p>
+                <p className="text-base leading-7 text-[color:var(--text-main)]-700">{item}</p>
               </div>
             ))}
           </div>
@@ -391,7 +372,7 @@ export default function EventOverviewPage() {
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Explore the full programme or secure your place
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Review the session flow in more detail or move straight to
                 registration.
               </p>
@@ -402,13 +383,13 @@ export default function EventOverviewPage() {
                 href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Register Now
               </a>
               <a
                href="/event/programme"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Request Programme
               </a>
@@ -426,7 +407,106 @@ function StatCard({ value, label }: { value: string; label: string }) {
       <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-[#02026e]">
         {value}
       </p>
-      <p className="mt-2 text-sm text-[color:var(--text-main)]-600">{label}</p>
+      <p className="mt-2 text-base text-[color:var(--text-main)]-600">{label}</p>
+    </div>
+  );
+}
+
+function ProgrammeCard({
+  day,
+  title,
+  programme,
+}: {
+  day: string;
+  title: string;
+  programme: {
+    time: string;
+    activity: string;
+  }[];
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const goNext = () => {
+    setActiveIndex((prev) =>
+      prev === programme.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const goPrev = () => {
+    setActiveIndex((prev) =>
+      prev === 0 ? programme.length - 1 : prev - 1
+    );
+  };
+
+  // AUTO-SWITCH (kept)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) =>
+        prev === programme.length - 1 ? 0 : prev + 1
+      );
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, [programme.length]);
+
+  const activeItem = programme[activeIndex];
+
+  return (
+    <div className="relative overflow-hidden rounded-[30px] border border-[#02026e]/15 bg-white p-7 shadow-[0_15px_45px_rgba(2,2,110,0.08)]">
+      <div className="absolute right-[-50px] top-[-50px] h-[160px] w-[160px] rounded-full bg-[#02026e]/5 blur-3xl" />
+
+      <div className="relative">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+              {day}
+            </p>
+
+            <h3 className="font-heading mt-3 max-w-[420px] text-2xl font-bold leading-tight text-[color:var(--text-main)]-900">
+              {title}
+            </h3>
+          </div>
+
+          <div className="rounded-2xl bg-[#02026e] px-4 py-3 text-white shadow-lg">
+            <Clock3 className="h-5 w-5" />
+          </div>
+        </div>
+
+        {/* Active Slot */}
+        <div className="mt-10 rounded-[24px] border border-[#02026e]/10 bg-gradient-to-br from-[#02026e] to-[#010150] p-7 text-white">
+          <div className="text-sm uppercase tracking-[0.18em] text-white/60">
+            Current Programme Slot
+          </div>
+
+          <div className="mt-4 text-5xl font-black tracking-[-0.04em]">
+            {activeItem.time}
+          </div>
+
+          <div className="mt-5 text-xl font-medium leading-9 text-white/90">
+            {activeItem.activity}
+          </div>
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="mt-6 flex items-center justify-between">
+          <button
+            onClick={goPrev}
+            className="flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 text-sm font-semibold text-[#02026e] shadow-sm hover:bg-[#02026e]/5"
+          >
+            <ChevronRight className="h-4 w-4 rotate-180" />
+            Previous
+          </button>
+
+          <button
+            onClick={goNext}
+            className="flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 text-sm font-semibold text-[#02026e] shadow-sm hover:bg-[#02026e]/5"
+          >
+            Next
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

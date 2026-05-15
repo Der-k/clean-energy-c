@@ -199,22 +199,23 @@ export default function ContactPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-black">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-slate-700">Contact Us</span>
+            <span className="text-black">Contact Us</span>
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Contact Us
             </p>
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-black sm:text-5xl">
               Get in touch with the conference team
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-black">
               Reach the right team for enquiries related to speakers, partnerships,
               media, delegates, venue information, or general conference support.
             </p>
@@ -236,18 +237,18 @@ export default function ContactPage() {
                   <Icon className="h-5 w-5" />
                 </div>
 
-                <h2 className="mt-5 text-xl font-semibold text-slate-900">
+                <h2 className="mt-5 text-xl font-semibold text-black">
                   {card.title}
                 </h2>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-base leading-7 text-black">
                   {card.description}
                 </p>
 
-                <div className="mt-5 space-y-3 text-sm">
-                  <p className="font-medium text-slate-800">{card.person}</p>
+                <div className="mt-5 space-y-3 text-base">
+                  <p className="font-medium text-black">{card.person}</p>
 
-                  <div className="flex items-start gap-3 text-slate-700">
+                  <div className="flex items-start gap-3 text-black">
                     <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#02026e]" />
                     <a href={`mailto:${card.email}`} className="hover:text-[#02026e]">
                       {card.email}
@@ -255,7 +256,7 @@ export default function ContactPage() {
                   </div>
 
                   {card.phone ? (
-                    <div className="flex items-start gap-3 text-slate-700">
+                    <div className="flex items-start gap-3 text-black">
                       <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#02026e]" />
                       <a href={`tel:${card.phone}`} className="hover:text-[#02026e]">
                         {card.phone}
@@ -276,29 +277,29 @@ export default function ContactPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Send an Enquiry
               </p>
-              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
+              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-black">
                 Contact form
               </h2>
-              <p className="mt-5 text-base leading-8 text-slate-600">
+              <p className="mt-5 text-base leading-8 text-black">
                 Use the form to send a message to the conference team and we will
                 direct it to the right department.
               </p>
 
               <div className="mt-8 rounded-[20px] border border-[#02026e]/20 bg-white p-5 shadow-sm">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
+                <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                   Primary Contact
                 </p>
-                <div className="mt-4 space-y-3 text-sm text-slate-700">
+                <div className="mt-4 space-y-3 text-base text-black">
                   <p>
-                    <span className="font-semibold text-slate-900">Phone:</span>{" "}
+                    <span className="font-semibold text-black">Phone:</span>{" "}
                     +254 725 707 557
                   </p>
                   <p>
-                    <span className="font-semibold text-slate-900">Email:</span>{" "}
+                    <span className="font-semibold text-black">Email:</span>{" "}
                     dorah.simiyu@cleanenergyconference.com.au
                   </p>
                   <p>
-                    <span className="font-semibold text-slate-900">Website:</span>{" "}
+                    <span className="font-semibold text-black">Website:</span>{" "}
                     www.cleanenergyconference.com.au
                   </p>
                 </div>
@@ -312,11 +313,11 @@ export default function ContactPage() {
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
 
-                  <h3 className="mt-6 text-2xl font-bold text-slate-900">
+                  <h3 className="mt-6 text-2xl font-bold text-black">
                     Enquiry sent successfully
                   </h3>
 
-                  <p className="mt-3 max-w-md text-sm leading-7 text-slate-600">
+                  <p className="mt-3 max-w-md text-base leading-7 text-black">
                     Thank you for contacting the conference team. We will review
                     your message and get back to you shortly.
                   </p>
@@ -328,7 +329,7 @@ export default function ContactPage() {
                       setSubmitError("");
                       setErrors({});
                     }}
-                    className="mt-8 rounded-full bg-[#02026e] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#010150]"
+                    className="mt-8 rounded-full bg-[#02026e] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#010150]"
                   >
                     Send another enquiry
                   </button>
@@ -342,7 +343,7 @@ export default function ContactPage() {
                         placeholder="Full Name"
                         value={form.fullName}
                         onChange={(e) => updateField("fullName", e.target.value)}
-                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
                       {errors.fullName && (
                         <p className="mt-2 text-xs text-red-600">{errors.fullName}</p>
@@ -355,7 +356,7 @@ export default function ContactPage() {
                         placeholder="Email Address"
                         value={form.email}
                         onChange={(e) => updateField("email", e.target.value)}
-                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
                       {errors.email && (
                         <p className="mt-2 text-xs text-red-600">{errors.email}</p>
@@ -370,7 +371,7 @@ export default function ContactPage() {
                         placeholder="Phone Number"
                         value={form.phone}
                         onChange={(e) => updateField("phone", e.target.value)}
-                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
                       {errors.phone && (
                         <p className="mt-2 text-xs text-red-600">{errors.phone}</p>
@@ -383,7 +384,7 @@ export default function ContactPage() {
                         placeholder="Subject"
                         value={form.subject}
                         onChange={(e) => updateField("subject", e.target.value)}
-                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                        className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
                       {errors.subject && (
                         <p className="mt-2 text-xs text-red-600">{errors.subject}</p>
@@ -397,7 +398,7 @@ export default function ContactPage() {
                       onChange={(e) =>
                         updateField("enquiryType", e.target.value as EnquiryType)
                       }
-                      className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-600 outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                      className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-black outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                     >
                       <option value="">Enquiry Type</option>
                       <option value="general">General Enquiry</option>
@@ -418,7 +419,7 @@ export default function ContactPage() {
                       placeholder="Your Message"
                       value={form.message}
                       onChange={(e) => updateField("message", e.target.value)}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-[#02026e]/40 focus:bg-white"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                     />
                     {errors.message && (
                       <p className="mt-2 text-xs text-red-600">{errors.message}</p>
@@ -426,7 +427,7 @@ export default function ContactPage() {
                   </div>
 
                   {submitError && (
-                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-base text-red-700">
                       {submitError}
                     </div>
                   )}
@@ -435,7 +436,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="btn-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+                      className="btn-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
                     >
                       {isSubmitting ? "Sending..." : "Send Enquiry"}
                       <Send className="h-4 w-4" />
@@ -458,7 +459,7 @@ export default function ContactPage() {
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Stay connected with the conference
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Follow the conference across social channels for updates,
                 announcements, programme news, and speaker releases.
               </p>
@@ -469,14 +470,14 @@ export default function ContactPage() {
                 href="https://cleanenergyconference.com.au"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/15"
               >
                 <Globe className="h-4 w-4" />
                 Visit Website
               </a>
               <a
                 href="mailto:info@cleanenergyconference.com.au"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/15"
               >
                 <Mail className="h-4 w-4" />
                 Email Us

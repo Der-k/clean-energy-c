@@ -115,7 +115,7 @@ export default function OrganizersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -128,13 +128,14 @@ export default function OrganizersPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Event Organizers
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Meet the organizers behind the conference
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               A curated team of conference leaders, advisors, and support staff
               working across programme development, partnerships, delegate
               engagement, and event delivery.
@@ -195,13 +196,13 @@ export default function OrganizersPage() {
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Reach out for partnerships, delegate enquiries, or event support
               </h2>
-              <p className="mt-3 text-sm leading-7 text-blue-50 md:text-base">
+              <p className="mt-3 text-base leading-7 text-blue-50 md:text-base">
                 Get in touch with the organizing team for sponsorship, attendance,
                 or event coordination matters.
               </p>
             </div>
 
-            <div className="grid gap-3 text-sm">
+            <div className="grid gap-3 text-base">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-3">
                 <Mail className="h-4 w-4" />
                 <span>info@cleanenergyconference.com</span>
@@ -282,8 +283,8 @@ function OrganizerCard({
 
         <div className={featured ? "p-5" : ""}>
           <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">{person.name}</h3>
-          <p className="mt-2 text-sm leading-6 text-[color:var(--text-main)]-600">{person.role}</p>
-          <p className="mt-1 text-sm font-medium text-[#02026e]">
+          <p className="mt-2 text-base leading-6 text-[color:var(--text-main)]-600">{person.role}</p>
+          <p className="mt-1 text-base font-medium text-[#02026e]">
             {person.organization}
           </p>
         </div>

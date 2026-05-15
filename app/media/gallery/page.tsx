@@ -167,7 +167,7 @@ export default function GalleryPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">Home</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-[color:var(--text-main)]-500">Media</span>
@@ -177,21 +177,22 @@ export default function GalleryPage() {
 
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Gallery & Highlights
               </p>
               <h1 className="mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
                 Conference gallery and highlights
               </h1>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+              <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
                 Explore selected moments and highlights from the conference, including keynote sessions, networking, exhibitions, speaker appearances, and major event activities.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-base text-[color:var(--text-main)]-700 shadow-sm">
                   <Images className="h-4 w-4 text-[#02026e]" />
                   <span>{galleryItems.length} gallery images</span>
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-sm text-[color:var(--text-main)]-700 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-white px-4 py-2 text-base text-[color:var(--text-main)]-700 shadow-sm">
                   <Camera className="h-4 w-4 text-[#02026e]" />
                   <span>Conference moments</span>
                 </div>
@@ -227,7 +228,7 @@ export default function GalleryPage() {
                 key={filter}
                 type="button"
                 onClick={() => setActiveFilter(filter)}
-                className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                className={`rounded-full px-5 py-2.5 text-base font-semibold transition ${
                   isActive
                     ? "bg-blue-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)]"
                     : "border border-blue-500/20 bg-white text-[color:var(--text-main)]-700 hover:bg-blue-50"

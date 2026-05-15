@@ -109,7 +109,7 @@ export default function VenuePage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -122,7 +122,7 @@ export default function VenuePage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Venue
             </p>
 
@@ -130,7 +130,8 @@ export default function VenuePage() {
               Venue and location details
             </h1>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Switch between the two 2026 editions to view their venue details,
               location context, imagery, and map information.
             </p>
@@ -155,7 +156,7 @@ export default function VenuePage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p
-                        className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                        className={`text-[13px] font-semibold uppercase tracking-[0.18em] ${
                           isActive ? "text-white/70" : "text-[#02026e]"
                         }`}
                       >
@@ -167,7 +168,7 @@ export default function VenuePage() {
                       </h2>
 
                       <div
-                        className={`mt-4 space-y-2 text-sm ${
+                        className={`mt-4 space-y-2 text-base ${
                           isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                         }`}
                       >
@@ -195,7 +196,7 @@ export default function VenuePage() {
                   </div>
 
                   <p
-                    className={`mt-5 text-sm leading-7 ${
+                    className={`mt-5 text-base leading-7 ${
                       isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
@@ -211,7 +212,7 @@ export default function VenuePage() {
       <SectionShell>
         <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               About the Venue
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -225,11 +226,11 @@ export default function VenuePage() {
             </div>
 
             <div className="mt-8 rounded-[20px] border border-[#02026e]/20 bg-gradient-to-b from-white to-[#02026e]/5 p-5 shadow-sm">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#02026e]">
+              <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">
                 Venue Summary
               </p>
 
-              <div className="mt-4 space-y-3 text-sm text-[color:var(--text-main)]-700">
+              <div className="mt-4 space-y-3 text-base text-[color:var(--text-main)]-700">
                 {current.venueSummary.map((item) => (
                   <p key={item.label}>
                     <span className="font-semibold text-[color:var(--text-main)]-900">
@@ -272,7 +273,7 @@ export default function VenuePage() {
       <SectionShell muted>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Arrival & Access
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -287,7 +288,7 @@ export default function VenuePage() {
                 >
                   <div className="flex gap-3">
                     <Plane className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-                    <p className="text-sm leading-7 text-[color:var(--text-main)]-700">{note}</p>
+                    <p className="text-base leading-7 text-[color:var(--text-main)]-700">{note}</p>
                   </div>
                 </div>
               ))}
@@ -295,7 +296,7 @@ export default function VenuePage() {
               <div className="rounded-[18px] border border-[#02026e]/20 bg-white p-5 shadow-sm">
                 <div className="flex gap-3">
                   <Hotel className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
-                  <p className="text-sm leading-7 text-[color:var(--text-main)]-700">
+                  <p className="text-base leading-7 text-[color:var(--text-main)]-700">
                     The venue is intended to support conference sessions,
                     networking, partner visibility, and professional delegate
                     experience for the selected edition.
@@ -328,7 +329,7 @@ export default function VenuePage() {
             href={current.mapLink}
             target="_blank"
             rel="noreferrer"
-            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
           >
             Open in Google Maps
             <ArrowRight className="h-4 w-4" />
@@ -338,7 +339,7 @@ export default function VenuePage() {
             href="/get-tickets"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+            className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
           >
             Register Now
           </a>

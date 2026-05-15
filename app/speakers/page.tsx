@@ -238,7 +238,7 @@ export default function SpeakersPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -247,13 +247,14 @@ export default function SpeakersPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Speakers
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Conference speakers
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Explore the speaker structure for each 2026 edition. Final speaker
               names can be dropped into the grouped layout once confirmations are complete.
             </p>
@@ -276,14 +277,14 @@ export default function SpeakersPage() {
                   }`}
                 >
                   <p
-                    className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                    className={`text-[13px] font-semibold uppercase tracking-[0.18em] ${
                       isActive ? "text-white/70" : "text-[#02026e]"
                     }`}
                   >
                     {edition.label}
                   </p>
 
-                  <div className="mt-4 grid gap-2 text-sm">
+                  <div className="mt-4 grid gap-2 text-base">
                     <div className="flex items-center gap-2">
                       <CalendarDays className="h-4 w-4" />
                       <span>{edition.date}</span>
@@ -295,7 +296,7 @@ export default function SpeakersPage() {
                   </div>
 
                   <p
-                    className={`mt-4 text-sm leading-7 ${
+                    className={`mt-4 text-base leading-7 ${
                       isActive ? "text-white/80" : "text-[color:var(--text-main)]-600"
                     }`}
                   >
@@ -311,7 +312,7 @@ export default function SpeakersPage() {
       {current.groups.map((group, index) => (
         <SectionShell key={group.label} muted={index % 2 === 1}>
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               {current.label}
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -339,10 +340,10 @@ export default function SpeakersPage() {
                   <h3 className="font-heading text-xl font-semibold text-[color:var(--text-main)]-900">
                     {speaker.name}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--text-main)]-600">
+                  <p className="mt-2 text-base leading-6 text-[color:var(--text-main)]-600">
                     {speaker.role}
                   </p>
-                  <p className="mt-1 text-sm font-medium text-[#02026e]">
+                  <p className="mt-1 text-base font-medium text-[#02026e]">
                     {speaker.organization}
                   </p>
                 </div>
@@ -362,7 +363,7 @@ export default function SpeakersPage() {
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Final speaker announcements can be added here
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 This page is structured to match a grouped conference speaker directory,
                 with category-led sections and reusable speaker cards.
               </p>
@@ -371,7 +372,7 @@ export default function SpeakersPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 Speaker Enquiry
               </Link>
@@ -379,7 +380,7 @@ export default function SpeakersPage() {
                 href="/get-tickets"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Register Now
               </a>

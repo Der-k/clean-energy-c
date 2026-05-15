@@ -103,7 +103,7 @@ export default function VisaPage() {
       <section className="border-b border-zinc-200 bg-gradient-to-b from-[#003994]/[0.05] via-white to-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center rounded-full border border-[#003994]/15 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003994] shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-[#003994]/15 bg-white px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994] shadow-sm">
               Visa Planning
             </div>
 
@@ -111,14 +111,15 @@ export default function VisaPage() {
               Plan your visa and travel for the 2026 conference editions
             </h1>
 
-            <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 sm:text-lg">
+            <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 sm:text-xl
+">
               This page helps delegates prepare early for travel to the Kigali and
               Perth editions of the Clean Energy Conference & Exhibition. Use it as
               a planning guide for timelines, supporting documents, and conference
               details that may be useful during your travel preparation.
             </p>
 
-            <div className="mt-6 rounded-[22px] border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-7 text-amber-900">
+            <div className="mt-6 rounded-[22px] border border-amber-200 bg-amber-50 px-5 py-4 text-base leading-7 text-amber-900">
               Visa rules depend on your passport, country of residence, and travel
               route. Always confirm the latest requirements with the relevant embassy,
               consulate, or official immigration website before booking final travel.
@@ -135,7 +136,7 @@ export default function VisaPage() {
                 Australia visa guide available
               </div>
 
-              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#009966]">
+              <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#009966]">
                 Perth edition travel support
               </p>
 
@@ -155,7 +156,7 @@ export default function VisaPage() {
                 <Link
                   href={australiaVisaGuideHref}
                   target="_blank"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#009966] px-6 py-3 text-sm font-semibold text-white transition hover:shadow-[0_0_32px_rgba(0,153,102,0.28)]"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#009966] px-6 py-3 text-base font-semibold text-white transition hover:shadow-[0_0_32px_rgba(0,153,102,0.28)]"
                 >
                   <Download className="h-4 w-4" />
                   Download Australia visa guide
@@ -163,7 +164,7 @@ export default function VisaPage() {
 
                 <a
                   href="mailto:info@cleanenergyconference.com.au"
-                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:border-[#009966]/40 hover:text-[#009966]"
+                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-6 py-3 text-base font-semibold text-zinc-950 transition hover:border-[#009966]/40 hover:text-[#009966]"
                 >
                   <Mail className="h-4 w-4" />
                   Ask for support
@@ -172,7 +173,7 @@ export default function VisaPage() {
             </div>
 
             <div className="rounded-[26px] border border-zinc-200 bg-white p-5 shadow-sm">
-              <p className="text-sm font-bold text-zinc-950">
+              <p className="text-base font-bold text-zinc-950">
                 The guide helps with:
               </p>
 
@@ -186,14 +187,14 @@ export default function VisaPage() {
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3">
                     <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#009966]" />
-                    <span className="text-sm leading-6 text-zinc-700">
+                    <span className="text-base leading-6 text-zinc-700">
                       {item}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+              <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-base leading-6 text-amber-900">
                 This guide is for delegate preparation. Always confirm current visa
                 rules through official Australian immigration channels before applying.
               </div>
@@ -210,7 +211,7 @@ export default function VisaPage() {
           Kigali visa guidance
         </div>
 
-        <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+        <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
           Kigali edition travel support
         </p>
 
@@ -234,7 +235,7 @@ export default function VisaPage() {
       </div>
 
       <div className="rounded-[26px] border border-zinc-200 bg-white p-5 shadow-sm">
-        <p className="text-sm font-bold text-zinc-950">
+        <p className="text-base font-bold text-zinc-950">
           What Kenyan delegates should carry:
         </p>
 
@@ -249,14 +250,14 @@ export default function VisaPage() {
           ].map((item) => (
             <div key={item} className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#003994]" />
-              <span className="text-sm leading-6 text-zinc-700">
+              <span className="text-base leading-6 text-zinc-700">
                 {item}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+        <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-base leading-6 text-amber-900">
           Entry requirements can change. Delegates should confirm current travel
           rules with the Rwanda High Commission in Kenya, Kenya High Commission in
           Kigali, or official immigration channels before travelling.
@@ -270,7 +271,7 @@ export default function VisaPage() {
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="rounded-[30px] border border-zinc-200 bg-zinc-50 p-6 shadow-sm sm:p-8 lg:p-10">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
               Recommended process
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-zinc-950">
@@ -296,11 +297,12 @@ export default function VisaPage() {
                     <Icon className="h-5 w-5" />
                   </div>
 
-                  <h3 className="mt-4 text-lg font-semibold text-zinc-950">
+                  <h3 className="mt-4 text-xl
+ font-semibold text-zinc-950">
                     {step.title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-7 text-zinc-600">
+                  <p className="mt-3 text-base leading-7 text-zinc-600">
                     {step.description}
                   </p>
                 </div>
@@ -313,7 +315,7 @@ export default function VisaPage() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[28px] border border-zinc-200 bg-white p-7 shadow-sm">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
               Document checklist
             </p>
             <h2 className="mt-3 text-2xl font-bold tracking-[-0.02em] text-zinc-950">
@@ -327,14 +329,14 @@ export default function VisaPage() {
                   className="flex items-start gap-3 rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3"
                 >
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#009966]" />
-                  <span className="text-sm leading-7 text-zinc-700">{item}</span>
+                  <span className="text-base leading-7 text-zinc-700">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="rounded-[28px] border border-zinc-200 bg-white p-7 shadow-sm">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#009966]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#009966]">
               Suggested timeline
             </p>
             <h2 className="mt-3 text-2xl font-bold tracking-[-0.02em] text-zinc-950">
@@ -347,10 +349,10 @@ export default function VisaPage() {
                   key={item.label}
                   className="rounded-[22px] border border-zinc-200 bg-zinc-50 p-5"
                 >
-                  <p className="text-sm font-semibold text-zinc-950">
+                  <p className="text-base font-semibold text-zinc-950">
                     {item.label}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-zinc-600">
+                  <p className="mt-2 text-base leading-7 text-zinc-600">
                     {item.text}
                   </p>
                 </div>
@@ -367,7 +369,7 @@ export default function VisaPage() {
               key={edition.name}
               className={`rounded-[28px] border p-7 shadow-sm ${edition.accent}`}
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
                 Conference Edition
               </p>
 
@@ -375,7 +377,7 @@ export default function VisaPage() {
                 {edition.name}
               </h2>
 
-              <div className="mt-5 space-y-3 text-sm text-zinc-700">
+              <div className="mt-5 space-y-3 text-base text-zinc-700">
                 <div className="flex items-start gap-3">
                   <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" />
                   <span>{edition.date}</span>
@@ -387,14 +389,14 @@ export default function VisaPage() {
                 </div>
               </div>
 
-              <p className="mt-5 text-sm leading-7 text-zinc-600">
+              <p className="mt-5 text-base leading-7 text-zinc-600">
                 {edition.visaText}
               </p>
 
               <div className="mt-6">
                 <Link
                   href={edition.href}
-                  className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${edition.button}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-base font-semibold transition ${edition.button}`}
                 >
                   View {edition.name}
                   <ArrowRight className="h-4 w-4" />
@@ -416,7 +418,7 @@ export default function VisaPage() {
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Request documentation early and keep your application moving
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Ticket guidance in the concept note shows early bird registration at
                 USD 770 until 1 March 2026, with regular tickets at USD 800. Secure
                 your place early so your conference registration can support your
@@ -427,7 +429,7 @@ export default function VisaPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 href="mailto:info@cleanenergyconference.com.au"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#003994] transition hover:bg-white/90"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-base font-semibold text-[#003994] transition hover:bg-white/90"
               >
                 <Mail className="h-4 w-4" />
                 Contact conference team
@@ -435,7 +437,7 @@ export default function VisaPage() {
 
               <Link
                 href="/tickets"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 View tickets
                 <ArrowRight className="h-4 w-4" />

@@ -59,7 +59,7 @@ export function VenuePreview() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
-                <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-sm">
+                <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[13px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-sm">
                   {venue.edition}
                 </div>
 
@@ -71,7 +71,7 @@ export function VenuePreview() {
               </div>
 
               <div className="p-6">
-                <div className="space-y-3 text-sm text-[color:var(--text-main)]-700">
+                <div className="space-y-3 text-base text-[color:var(--text-main)]-700">
                   <div className="flex items-center gap-2">
                     <CalendarDays className="h-4 w-4 text-[#02026e]" />
                     <span>{venue.date}</span>
@@ -83,7 +83,7 @@ export function VenuePreview() {
                   </div>
                 </div>
 
-                <p className="mt-5 text-sm leading-7 text-[color:var(--text-main)]-700">
+                <p className="mt-5 text-base leading-7 text-[color:var(--text-main)]-700">
                   {venue.description}
                 </p>
               </div>
@@ -94,7 +94,7 @@ export function VenuePreview() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/event/venue"
-            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
           >
             View full venue details
             <ArrowRight className="h-4 w-4" />

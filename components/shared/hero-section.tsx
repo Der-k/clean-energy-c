@@ -468,16 +468,40 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-white min-h-[calc(100vh-96px)]">
+
+{/* Background gradient */}
+<div className="absolute inset-0 z-0 bg-[linear-gradient(to_bottom,white_0%,white_62%,#f8fafc_100%)]" />
+
+{/* Decorative background logo */}
+<div className="absolute top-[-12%] left-[-10%] z-[1] pointer-events-none">
+
+  {/* ambient glow */}
+  <div className="absolute top-[10%] left-[10%] h-[500px] w-[500px] rounded-full bg-[#003994]/12 blur-3xl" />
+
+  {/* logo */}
+  <div className="relative h-[720px] w-[720px] opacity-[0.13]">
+    <Image
+      src="/images/logo_3.png"
+      alt="Background Logo"
+      fill
+      priority
+      className="object-contain"
+    />
+  </div>
+
+
+
+</div>
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_62%,#f8fafc_100%)]" />
       <div className="absolute inset-x-0 top-0 h-px bg-slate-200" />
 
       {/* ── ROW 1: heading + image ── */}
-      <div className="relative mx-auto max-w-7xl px-4 pt-6 md:px-6 lg:pt-8">
+      <div className="relative z-20 mx-auto max-w-7xl px-4 pt-6 md:px-6 lg:pt-8">
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-10">
 
           {/* LEFT */}
           <div className="max-w-3xl pt-2">
-            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#010150] shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
+            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.24em] text-[#010150] shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
               Africa × Australia · Two 2026 Conference Editions
             </div>
 
@@ -486,52 +510,80 @@ export function HeroSection() {
               <span className="mt-2 block text-[#02026e]">Clean Energy</span>
             </h1>
 
-            <p className="mt-4 max-w-2xl text-[17px] leading-7 text-slate-700 sm:text-lg">
+            <p className="mt-4 max-w-2xl text-[17px] leading-7 text-black sm:text-xl
+">
               Join policymakers, investors, project developers, innovators, and
               industry stakeholders across Kigali and Perth for a high-level
               platform focused on energy transition, climate finance, regional
               collaboration, and market opportunity.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="https://eventbrite.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[#003994] bg-white transition
-                  shadow-[0_10px_25px_rgba(255,255,255,0.25)]
-                  hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_0_20px_rgba(255,255,255,0.35),0_12px_30px_rgba(255,255,255,0.25)]
-                  hover:scale-[1.02]"
-              >
-                Register Now
-                <ArrowRight className="h-4 w-4" />
-              </a>
-              <a
-                href="/event/programme"
-                className="btn-outline-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
-              >
-                View Programme
-              </a>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+             <a
+  href="/get-tickets"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    relative inline-flex items-center gap-2 rounded-full px-7 py-3
+    text-base font-semibold text-white
+    bg-red-600
+    shadow-[0_10px_30px_rgba(220,38,38,0.35)]
+    transition-all duration-300
+
+    hover:bg-red-500
+    hover:shadow-[0_0_25px_rgba(255,0,0,0.55),0_0_60px_rgba(255,0,0,0.25)]
+    hover:scale-[1.04]
+
+    active:scale-[0.97]
+    active:shadow-[0_0_35px_rgba(255,0,0,0.65)]
+
+    focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2
+  "
+>
+  Register Now
+  <ArrowRight className="h-4 w-4" />
+</a>
+             <a
+  href="/event/programme"
+  className="
+    relative inline-flex items-center gap-2 rounded-full px-7 py-3
+    text-base font-semibold text-white
+    bg-emerald-600
+    shadow-[0_10px_30px_rgba(16,185,129,0.35)]
+    transition-all duration-300
+
+    hover:bg-emerald-500
+    hover:shadow-[0_0_25px_rgba(16,185,129,0.55),0_0_60px_rgba(16,185,129,0.25)]
+    hover:scale-[1.04]
+
+    active:scale-[0.97]
+    active:shadow-[0_0_35px_rgba(16,185,129,0.65)]
+
+    focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2
+  "
+>
+  View Programme
+</a>
               <Link
                 href="/partners/become-a-partner"
-                className="btn-outline-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-slate-900"
+                className="btn-outline-glow inline-flex items-center rounded-full px-6 py-3 text-base font-semibold text-black"
               >
                 Become a Partner
               </Link>
             </div>
 
             {/* Edition cards */}
-            <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 grid grid-cols-2 gap-3">
               {editions.map((edition) => (
-                <Link
-                  key={edition.name}
-                  href={edition.href}
-                  className="hover-glow-card group block rounded-[22px] border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)]"
-                >
-                  <p className={`text-[11px] font-semibold uppercase tracking-[0.2em] ${edition.accent}`}>
+               <Link
+  key={edition.name}
+  href={edition.href}
+  className="w-full hover-glow-card group block rounded-[22px] border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.06)]"
+>
+                  <p className={`text-[13px] font-semibold uppercase tracking-[0.2em] ${edition.accent}`}>
                     {edition.name}
                   </p>
-                  <div className="mt-4 space-y-3 text-sm text-slate-700">
+                  <div className="mt-4 space-y-3 text-base text-black">
                     <div className="flex items-start gap-2.5">
                       <CalendarDays className="mt-0.5 h-4 w-4 text-[#02026e]" />
                       <span>{edition.date}</span>
@@ -541,7 +593,7 @@ export function HeroSection() {
                       <span>{edition.venue}</span>
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between text-sm font-medium text-slate-700">
+                  <div className="mt-4 flex items-center justify-between text-base font-medium text-black">
                     <span>View details</span>
                     <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
                   </div>

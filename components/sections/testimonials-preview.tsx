@@ -29,22 +29,21 @@ const testimonials = [
     quote:
       "The programme was highly relevant, the networking was strong, and the event felt well positioned for professionals looking for meaningful engagement rather than generic conference traffic.",
   },
-  
 ];
 
 export function TestimonialsPreview() {
   return (
-    <section className="bg-white">
+    <section className="bg-[#020266]">
       <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
         {/* HEADER */}
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#00cc88]">
             Testimonials
           </p>
-          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
+          <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-white">
             What attendees say about the conference
           </h2>
-          <p className="mt-4 text-base leading-8 text-[color:var(--text-main)]-600">
+          <p className="mt-4 text-base leading-8 text-white/85">
             Feedback from senior delegates, investors, and industry professionals who have participated in previous editions.
           </p>
         </div>
@@ -54,10 +53,10 @@ export function TestimonialsPreview() {
           {testimonials.map((item) => (
             <div
               key={item.name}
-              className="hover-glow-card rounded-[24px] border border-slate-200 bg-white p-6 shadow-[0_12px_34px_rgba(15,23,42,0.06)]"
+              className="hover-glow-card rounded-[24px] border border-white/20 bg-white/10 p-6 shadow-[0_12px_34px_rgba(0,0,0,0.35)] backdrop-blur-sm"
             >
               <div className="flex items-start justify-between gap-4">
-                <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-white/30 bg-white/15">
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -67,25 +66,24 @@ export function TestimonialsPreview() {
                   />
                 </div>
 
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#02026e]/5
- text-[#02026e]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#009966]/30 text-[#00cc88]">
                   <Quote className="h-4 w-4" />
                 </div>
               </div>
 
-              <p className="mt-5 text-sm leading-7 text-[color:var(--text-main)]-700">
-                “{item.quote}”
+              <p className="mt-5 text-base leading-7 text-white/90">
+                "{item.quote}"
               </p>
 
               <div className="mt-5">
-                <p className="font-medium text-[color:var(--text-main)]-900">{item.name}</p>
-                <p className="text-sm text-[color:var(--text-main)]-600">{item.role}</p>
-                <p className="text-sm font-medium text-[#02026e]">
+                <p className="font-semibold text-white">{item.name}</p>
+                <p className="text-base text-white/70">{item.role}</p>
+                <p className="text-base font-semibold text-[#00cc88]">
                   {item.company}
                 </p>
               </div>
 
-              <div className="mt-4 flex items-center gap-1 text-amber-500">
+              <div className="mt-4 flex items-center gap-1 text-amber-300">
                 <Star className="h-4 w-4 fill-current" />
                 <Star className="h-4 w-4 fill-current" />
                 <Star className="h-4 w-4 fill-current" />
@@ -100,7 +98,7 @@ export function TestimonialsPreview() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/conference/testimonials"
-            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+            className="btn-outline-glow inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition duration-300 hover:border-white/50 hover:bg-white/22"
           >
             View all testimonials
             <ArrowRight className="h-4 w-4" />

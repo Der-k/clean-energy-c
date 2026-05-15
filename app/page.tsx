@@ -5,12 +5,14 @@ import { TestimonialsPreview } from "@/components/sections/testimonials-preview"
 import { VenuePreview } from "@/components/sections/venue-preview";
 import { PartnersPreview } from "@/components/sections/partners-preview";
 import { StatsBar } from "@/components/sections/stats-bar";
+import { ProgrammeCtaSection } from "@/components/sections/programme-cta-section";
 
 export default function HomePage() {
   return (
     <main className="pt-24">
       <HeroSection />
       <StatsBar />
+      <ProgrammeCtaSection />
       <ConferenceOverview />
       <TestimonialsPreview />
       <VenuePreview />

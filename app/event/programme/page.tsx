@@ -151,7 +151,7 @@ export default function ProgrammePage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_70%,#f8fafc_100%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -165,7 +165,7 @@ export default function ProgrammePage() {
 
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Programme Access
               </p>
 
@@ -173,7 +173,8 @@ export default function ProgrammePage() {
                 Request the conference programme
               </h1>
 
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-[color:var(--text-main)]-600">
+              <p className="mt-5 max-w-2xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
                 Select the edition you are interested in, submit your details,
                 and access the relevant programme document for the conference.
               </p>
@@ -186,10 +187,10 @@ export default function ProgrammePage() {
                     </div>
 
                     <div>
-                      <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Available programme options
                       </p>
-                      <p className="mt-1 text-sm leading-7 text-[color:var(--text-main)]-600">
+                      <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
                         Kigali Edition, Perth Edition, or the combined 2026
                         programme document.
                       </p>
@@ -204,10 +205,10 @@ export default function ProgrammePage() {
                     </div>
 
                     <div>
-                      <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Download after submission
                       </p>
-                      <p className="mt-1 text-sm leading-7 text-[color:var(--text-main)]-600">
+                      <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
                         Once submitted, the selected programme file will open or
                         download automatically.
                       </p>
@@ -221,7 +222,7 @@ export default function ProgrammePage() {
               {!isSubmitted ? (
                 <>
                   <div className="mb-6">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
+                    <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
                       Request Form
                     </p>
                     <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
@@ -234,7 +235,7 @@ export default function ProgrammePage() {
                       <div>
                         <label
                           htmlFor="firstName"
-                          className="mb-2 block text-sm font-medium text-[color:var(--text-main)]-800"
+                          className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
                         >
                           First name
                         </label>
@@ -243,7 +244,7 @@ export default function ProgrammePage() {
                           type="text"
                           value={form.firstName}
                           onChange={(e) => updateField("firstName", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                           placeholder="Enter first name"
                         />
                         {errors.firstName && (
@@ -254,7 +255,7 @@ export default function ProgrammePage() {
                       <div>
                         <label
                           htmlFor="secondName"
-                          className="mb-2 block text-sm font-medium text-[color:var(--text-main)]-800"
+                          className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
                         >
                           Second name
                         </label>
@@ -263,7 +264,7 @@ export default function ProgrammePage() {
                           type="text"
                           value={form.secondName}
                           onChange={(e) => updateField("secondName", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                           placeholder="Enter second name"
                         />
                         {errors.secondName && (
@@ -275,7 +276,7 @@ export default function ProgrammePage() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="mb-2 block text-sm font-medium text-[color:var(--text-main)]-800"
+                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
                       >
                         Email
                       </label>
@@ -284,7 +285,7 @@ export default function ProgrammePage() {
                         type="email"
                         value={form.email}
                         onChange={(e) => updateField("email", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                         placeholder="Enter email address"
                       />
                       {errors.email && (
@@ -295,7 +296,7 @@ export default function ProgrammePage() {
                     <div>
                       <label
                         htmlFor="organization"
-                        className="mb-2 block text-sm font-medium text-[color:var(--text-main)]-800"
+                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
                       >
                         Organization
                       </label>
@@ -304,7 +305,7 @@ export default function ProgrammePage() {
                         type="text"
                         value={form.organization}
                         onChange={(e) => updateField("organization", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                         placeholder="Enter organization"
                       />
                       {errors.organization && (
@@ -317,7 +318,7 @@ export default function ProgrammePage() {
                     <div>
                       <label
                         htmlFor="eventChoice"
-                        className="mb-2 block text-sm font-medium text-[color:var(--text-main)]-800"
+                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
                       >
                         Which event do you want?
                       </label>
@@ -327,7 +328,7 @@ export default function ProgrammePage() {
                         onChange={(e) =>
                           updateField("eventChoice", e.target.value as EventOption)
                         }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                       >
                         <option value="kigali">Kigali Edition</option>
                         <option value="perth">Perth Edition</option>
@@ -341,22 +342,22 @@ export default function ProgrammePage() {
                     </div>
 
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
-                      <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Selected file
                       </p>
-                      <p className="mt-1 text-sm text-[color:var(--text-main)]-600">
+                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                         {selectedProgramme.label}
                       </p>
                     </div>
 
                     {submitError && (
-                      <p className="text-sm text-red-600">{submitError}</p>
+                      <p className="text-base text-red-600">{submitError}</p>
                     )}
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="btn-glow inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+                      className="btn-glow inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
                     >
                       {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
                     </button>
@@ -372,16 +373,16 @@ export default function ProgrammePage() {
                     Programme request submitted
                   </h2>
 
-                  <p className="mt-3 max-w-md text-sm leading-7 text-[color:var(--text-main)]-600">
+                  <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
                     Thank you, {form.firstName}. Your selected programme should
                     begin downloading automatically.
                   </p>
 
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
-                    <p className="text-sm font-semibold text-[color:var(--text-main)]-900">
+                    <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                       Downloaded file
                     </p>
-                    <p className="mt-1 text-sm text-[color:var(--text-main)]-600">
+                    <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                       {selectedProgramme.label}
                     </p>
                   </div>
@@ -390,7 +391,7 @@ export default function ProgrammePage() {
                     <a
                       href={selectedProgramme.href}
                       download
-                      className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--text-main)]-900"
+                      className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
                     >
                       Download again
                       <Download className="h-4 w-4" />
@@ -410,7 +411,7 @@ export default function ProgrammePage() {
                           eventChoice: "both",
                         });
                       }}
-                      className="btn-glow rounded-full px-6 py-3 text-sm font-semibold text-white"
+                      className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
                     >
                       Submit another request
                     </button>

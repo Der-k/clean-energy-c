@@ -40,7 +40,7 @@ export default function GetTicketsPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           {/* Breadcrumb */}
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[color:var(--text-main)]-500">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
             <Link href="/" className="hover:text-[#02026e]">
               Home
             </Link>
@@ -52,13 +52,14 @@ export default function GetTicketsPage() {
 
           {/* Heading */}
           <div className="max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
               Registration
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
               Select your conference edition
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--text-main)]-600">
+            <p className="mt-5 max-w-3xl text-xl
+ leading-8 text-[color:var(--text-main)]-600">
               Choose the edition you wish to attend. You will be redirected to
               the official registration platform to complete your ticket
               purchase securely.
@@ -95,11 +96,11 @@ export default function GetTicketsPage() {
                   {item.title}
                 </h2>
 
-                <p className="mt-3 text-sm leading-7 text-[color:var(--text-main)]-600">
+                <p className="mt-3 text-base leading-7 text-[color:var(--text-main)]-600">
                   {item.description}
                 </p>
 
-                <div className="mt-5 space-y-2 text-sm text-[color:var(--text-main)]-700">
+                <div className="mt-5 space-y-2 text-base text-[color:var(--text-main)]-700">
                   <div className="flex items-center gap-2">
                     <CalendarDays className="h-4 w-4 text-[#02026e]" />
                     <span>{item.date}</span>
@@ -111,7 +112,7 @@ export default function GetTicketsPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#02026e] group-hover:text-[#010150]">
+                <div className="mt-6 inline-flex items-center gap-2 text-base font-semibold text-[#02026e] group-hover:text-[#010150]">
                   Proceed to registration
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </div>
@@ -132,7 +133,7 @@ export default function GetTicketsPage() {
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Explore the full conference programme
               </h2>
-              <p className="mt-3 text-sm leading-7 text-white/80 md:text-base">
+              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Review session formats, speakers, and thematic focus areas before
                 securing your place.
               </p>
@@ -141,14 +142,14 @@ export default function GetTicketsPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/event/programme"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#02026e] transition hover:bg-white/90"
+                className="rounded-full bg-white px-6 py-3 text-base font-semibold text-[#02026e] transition hover:bg-white/90"
               >
                 View Programme
               </Link>
 
               <Link
                 href="/conference"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 Conference Overview
               </Link>

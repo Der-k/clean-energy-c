@@ -15,7 +15,7 @@ export function MobileNav({
   if (!open) return null;
 
   return (
-    <div className="border-t border-white/10 bg-gradient-to-b from-[#010150] via-[#02026e] to-[#010150] text-white shadow-[0_20px_40px_rgba(15,23,42,0.18)] xl:hidden">
+    <div className="max-h-[calc(100vh-108px)] overflow-y-auto border-t border-white/10 bg-gradient-to-b from-[#010150] via-[#02026e] to-[#010150] text-white shadow-[0_20px_40px_rgba(15,23,42,0.18)] xl:hidden">
       <div className="mx-auto max-w-7xl px-4 py-4">
         <div className="space-y-2">
           {navItems.map((item) =>
@@ -31,25 +31,28 @@ export function MobileNav({
                 key={item.label}
                 href={item.href!}
                 onClick={onClose}
-                className="block rounded-xl px-4 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white"
+                className="block rounded-xl px-4 py-3 text-base font-medium text-white/90 transition hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </Link>
             )
           )}
         </div>
+<div className="mt-5">
+  <a
+    href="/get-tickets"
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={onClose}
+    className="group relative block overflow-hidden rounded-full bg-[#ec0005] px-5 py-4 text-center text-base font-bold text-white shadow-[0_10px_30px_rgba(236,0,5,0.35)] transition duration-300 active:scale-[0.98]"
+  >
+    {/* Animated Overlay */}
+    <span className="absolute inset-0 -translate-x-full bg-[#057d54] transition-transform duration-300 ease-out group-active:translate-x-0" />
 
-        <div className="mt-5">
-          <a
-            href="/get-tickets"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onClose}
-            className="block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-[#010150] shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition hover:bg-[#02026e]/5"
-          >
-            Get Tickets
-          </a>
-        </div>
+    {/* Text */}
+    <span className="relative z-10">Get Tickets</span>
+  </a>
+</div> 
       </div>
     </div>
   );
@@ -71,7 +74,7 @@ function MobileAccordion({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between px-4 py-3.5 text-left text-sm font-medium text-white transition hover:bg-white/5"
+        className="flex w-full items-center justify-between px-4 py-3.5 text-left text-base font-medium text-white transition hover:bg-white/5"
       >
         <span>{label}</span>
         <ChevronDown
@@ -91,7 +94,7 @@ function MobileAccordion({
                   href={child.href}
                   download
                   onClick={onClose}
-                  className="block rounded-xl px-3 py-2.5 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
+                  className="block rounded-xl px-3 py-2.5 text-base text-white/90 transition hover:bg-white/10 hover:text-white"
                 >
                   {child.label}
                 </a>
@@ -103,7 +106,7 @@ function MobileAccordion({
                 key={`${child.label}-${child.href}`}
                 href={child.href}
                 onClick={onClose}
-                className="block rounded-xl px-3 py-2.5 text-sm text-white/90 transition hover:bg-white/10 hover:text-white"
+                className="block rounded-xl px-3 py-2.5 text-base text-white/90 transition hover:bg-white/10 hover:text-white"
               >
                 {child.label}
               </Link>
