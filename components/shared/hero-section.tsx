@@ -518,59 +518,95 @@ export function HeroSection() {
               collaboration, and market opportunity.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-             <a
-  href="/get-tickets"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="
-    relative inline-flex items-center gap-2 rounded-full px-7 py-3
-    text-base font-semibold text-white
-    bg-red-600
-    shadow-[0_10px_30px_rgba(220,38,38,0.35)]
-    transition-all duration-300
+           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-    hover:bg-red-500
-    hover:shadow-[0_0_25px_rgba(255,0,0,0.55),0_0_60px_rgba(255,0,0,0.25)]
-    hover:scale-[1.04]
+  {/* PRIMARY CTA */}
+  <a
+    href="/get-tickets"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      rounded-full px-7 py-3 text-base font-semibold text-white
 
-    active:scale-[0.97]
-    active:shadow-[0_0_35px_rgba(255,0,0,0.65)]
+      bg-gradient-to-r from-[#02026e] via-[#1140c4] to-[#02026e]
+      bg-[length:200%_100%] bg-left
 
-    focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2
-  "
->
-  Register Now
-  <ArrowRight className="h-4 w-4" />
-</a>
-             <a
-  href="/event/programme"
-  className="
-    relative inline-flex items-center gap-2 rounded-full px-7 py-3
-    text-base font-semibold text-white
-    bg-emerald-600
-    shadow-[0_10px_30px_rgba(16,185,129,0.35)]
-    transition-all duration-300
+      shadow-[0_12px_35px_rgba(2,2,110,0.35)]
+      transition-all duration-500 ease-out
 
-    hover:bg-emerald-500
-    hover:shadow-[0_0_25px_rgba(16,185,129,0.55),0_0_60px_rgba(16,185,129,0.25)]
-    hover:scale-[1.04]
+      hover:bg-right hover:shadow-[0_18px_60px_rgba(17,64,196,0.45)]
+      hover:scale-[1.05]
 
-    active:scale-[0.97]
-    active:shadow-[0_0_35px_rgba(16,185,129,0.65)]
+      active:scale-[0.97]
 
-    focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2
-  "
->
-  View Programme
-</a>
-              <Link
-                href="/partners/become-a-partner"
-                className="btn-outline-glow inline-flex items-center rounded-full px-6 py-3 text-base font-semibold text-black"
-              >
-                Become a Partner
-              </Link>
-            </div>
+      focus:outline-none focus:ring-2 focus:ring-[#1140c4]/60 focus:ring-offset-2
+    "
+  >
+    {/* subtle light sweep */}
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span className="absolute -left-[120%] top-0 h-full w-[60%] rotate-12 bg-white/20 blur-md transition-all duration-700 group-hover:left-[120%]" />
+    </span>
+
+    <span className="relative z-10">Register Now</span>
+    <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+  </a>
+
+  {/* SECONDARY CTA */}
+  <a
+    href="/event/programme"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      rounded-full px-7 py-3 text-base font-semibold
+
+      text-[#02026e]
+      bg-white/70 backdrop-blur-md
+
+      border border-[#02026e]/20
+      shadow-[0_10px_30px_rgba(2,2,110,0.12)]
+
+      transition-all duration-300
+
+      hover:bg-white
+      hover:border-[#02026e]/40
+      hover:shadow-[0_14px_45px_rgba(2,2,110,0.18)]
+      hover:scale-[1.04]
+
+      active:scale-[0.98]
+
+      focus:outline-none focus:ring-2 focus:ring-[#02026e]/40 focus:ring-offset-2
+    "
+  >
+    View Programme
+  </a>
+
+  {/* TERTIARY CTA */}
+  <Link
+    href="/partners/become-a-partner"
+    className="
+      group inline-flex items-center justify-center
+      rounded-full px-6 py-3 text-base font-semibold
+
+      text-slate-900
+      bg-transparent
+
+      border border-slate-300
+      shadow-sm
+
+      transition-all duration-300
+
+      hover:border-slate-400
+      hover:bg-slate-50
+      hover:shadow-md
+      hover:scale-[1.03]
+
+      active:scale-[0.98]
+    "
+  >
+    Become a Partner
+  </Link>
+
+</div>
 
             {/* Edition cards */}
           <div className="mt-6 grid grid-cols-2 gap-3">
