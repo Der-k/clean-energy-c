@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
-    src: "/images/hero-1.mp4",
+    src: "/videos/hero-1.mp4",
     alt: "Solar energy graphic",
   },
   {
-    src: "/images/hero-2.mp4",
+    src: "/videos/hero-2.mp4",
     alt: "Conference networking graphic",
   },
 ];
