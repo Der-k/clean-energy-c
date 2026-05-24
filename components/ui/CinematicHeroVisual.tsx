@@ -13,6 +13,17 @@ const slides = [
     src: "/images/hero-2.mp4",
     alt: "Conference networking graphic",
   },
+  {
+    src: "/images/hero-3.mp4",
+    alt: "Conference networking graphic",
+  },
+  {
+    src: "/images/hero-4.mp4",
+    alt: "Conference networking graphic",
+  },{
+    src: "/images/hero-5.mp4",
+    alt: "Conference networking graphic",
+  },
 ];
 
 const AUTO_DURATION = 6500;
