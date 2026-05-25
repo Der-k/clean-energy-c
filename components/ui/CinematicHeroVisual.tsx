@@ -20,13 +20,20 @@ const slides = [
   {
     src: "/images/hero-4.mp4",
     alt: "Conference networking graphic",
-  },{
+  },
+  {
     src: "/images/hero-5.mp4",
     alt: "Conference networking graphic",
   },
+{
+    src: "/images/hero-6.mp4",
+    alt: "Conference networking graphic",
+  },
+
+  
 ];
 
-const AUTO_DURATION = 6500;
+const AUTO_DURATION = 5000;
 
 export function CinematicHeroVisual() {
   const [index, setIndex] = useState(0);
@@ -75,52 +82,38 @@ export function CinematicHeroVisual() {
         <motion.div
           key={index}
           className="absolute inset-0"
-          initial={{
-            opacity: 0,
-            y: -90,
-            scale: 1.08,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1.02,
-          }}
-          exit={{
-            opacity: 0,
-            y: 90,
-            scale: 1.12,
-          }}
+         initial={{
+  opacity: 0,
+  y: -40,
+}}
+
+animate={{
+  opacity: 1,
+  y: 0,
+}}
+
+exit={{}}
           transition={{
             duration: 1.8,
             ease: [0.22, 1, 0.36, 1],
           }}
         >
           {/* PARALLAX WRAPPER */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              scale: [1.02, 1.08],
-              y: [-12, 18],
-            }}
-            transition={{
-              duration: AUTO_DURATION / 1000,
-              ease: "linear",
-            }}
-          >
+         {/* VIDEO WRAPPER */}
+<div className="absolute inset-0">
 <div className="absolute inset-0 overflow-hidden">
   <video
     key={currentSlide.src}
     src={currentSlide.src}
     autoPlay
     muted
-    loop
     playsInline
     preload="auto"
     disablePictureInPicture
-    className="w-full h-full object-cover"
+   className="w-full h-full object-contain"
   />
 </div>
-          </motion.div>
+          </div>
 
           {/* ATMOSPHERIC OVERLAY */}
           <div

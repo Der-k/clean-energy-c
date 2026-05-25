@@ -334,7 +334,7 @@ export function HeroSection() {
   </div>
 
 </div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_62%,#f8fafc_100%)]" />
+      <div className="absolute inset-0 bg-white" />
       <div className="absolute inset-x-0 top-0 h-px bg-slate-200" />
 
       {/* ── ROW 1: heading + image ── */}
