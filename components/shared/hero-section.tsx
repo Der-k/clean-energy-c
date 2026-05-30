@@ -212,11 +212,10 @@ function ConferenceMomentsCarousel() {
         </div>
       </div>
 
-      <div
-        ref={wrapperRef}
-        className="relative py-4"
-        style={{ cursor: "grab", userSelect: "none", touchAction: "pan-y" }}
-      >
+     <div
+  ref={wrapperRef}
+  className="relative pt-2 pb-1"
+>
         <div className="overflow-hidden">
           <div
             ref={marqueeRef}
@@ -274,7 +273,7 @@ function ConferenceMomentsCarousel() {
         </button>
       </div>
 
-      <div ref={dotsRef} className="flex justify-center items-center gap-1.5 pb-4">
+      <div ref={dotsRef} className="flex justify-center items-center gap-1.5 pb-1">
         {carouselImages.map((_, i) => (
           <button
             key={i}
@@ -303,7 +302,7 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white min-h-[100svh] lg:min-h-[calc(100vh-96px)]">
+    <section className="relative overflow-hidden bg-white">
 
 {/* Decorative background layer */}
 <div className="absolute inset-x-0 top-0 h-[78%] z-[1] pointer-events-none overflow-hidden">
