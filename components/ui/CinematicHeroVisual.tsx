@@ -33,21 +33,17 @@ const slides = [
   
 ];
 
-const AUTO_DURATION = 5000;
+
 
 export function CinematicHeroVisual() {
   const [index, setIndex] = useState(0);
 
   const currentSlide = slides[index];
+  const nextSlide = () => {
+  setIndex((prev) => (prev + 1) % slides.length);
+};
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, AUTO_DURATION);
-
-    return () => clearInterval(id);
-  }, []);
-
+ 
   return (
     <div className="relative h-full w-full overflow-hidden">
       
@@ -78,7 +74,7 @@ export function CinematicHeroVisual() {
         }}
       />
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <motion.div
           key={index}
           className="absolute inset-0"
@@ -102,16 +98,17 @@ exit={{}}
          {/* VIDEO WRAPPER */}
 <div className="absolute inset-0">
 <div className="absolute inset-0 overflow-hidden">
-  <video
-    key={currentSlide.src}
-    src={currentSlide.src}
-    autoPlay
-    muted
-    playsInline
-    preload="auto"
-    disablePictureInPicture
-   className="w-full h-full object-contain"
-  />
+ <video
+  key={currentSlide.src}
+  src={currentSlide.src}
+  autoPlay
+  muted
+  playsInline
+  preload="auto"
+  disablePictureInPicture
+  className="w-full h-full object-contain"
+  onEnded={nextSlide}
+/>
 </div>
           </div>
 

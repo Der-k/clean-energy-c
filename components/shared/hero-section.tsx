@@ -522,9 +522,9 @@ export function HeroSection() {
           </div>
 
       <div className="relative flex justify-center lg:justify-end lg:pt-2">
-  <div className="w-full max-w-[900px] aspect-[16/13]">
-    <CinematicHeroVisual />
-  </div>
+ <div className="w-full max-w-[750px] aspect-[16/13]">
+  <CinematicHeroVisual />
+</div>
 </div>
 
         </div>
