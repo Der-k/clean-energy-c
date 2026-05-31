@@ -346,10 +346,10 @@ export function HeroSection() {
               Africa × Australia · Two 2026 Conference Editions
             </div>
 
-          <h1 className="order-2 font-heading mt-3 max-w-2xl text-[1.75rem] sm:text-[2.1rem] lg:text-[2.4rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-slate-950">
+          <h1 className="order-2 font-heading mt-3 max-w-2xl font-extrabold leading-[1.08] tracking-[-0.035em] text-slate-950">
   <span className="text-[#02026e]"> Clean Energy Conference</span>
 </h1>
-            <p className="order-5 lg:order-3 mt-3 max-w-xl text-[15px] leading-6 text-black/80">
+            <p className="order-5 lg:order-3 mt-3 max-w-xl leading-6 text-black/80">
   Kigali & Perth editions bringing together policymakers, investors, and
   industry leaders to accelerate clean energy transition and regional collaboration.
 </p>
@@ -522,9 +522,9 @@ export function HeroSection() {
           </div>
 
       <div className="relative flex justify-center lg:justify-end lg:pt-2">
- <div className="w-full max-w-[700px]">
-  <CinematicHeroVisual />
-</div>
+  <div className="w-full max-w-[900px] aspect-[16/13]">
+    <CinematicHeroVisual />
+  </div>
 </div>
 
         </div>
