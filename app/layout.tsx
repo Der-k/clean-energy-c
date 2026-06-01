@@ -3,6 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import ChatWidget from "@/components/chat/ChatWidget";
+import Script from "next/script";
 
 export const metadata = {
   title: "Clean Energy Conference",
@@ -34,6 +35,21 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${manrope.variable} bg-white text-[color:var(--text-main)]-900 antialiased`}
       >
+        <Script
+          id="viewport-zoom"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                window.addEventListener('resize', function() {
+                  var scale = window.innerWidth / 2560 ;
+                  document.documentElement.style.zoom = scale.toString();
+                });
+              })();
+            `,
+          }}
+        />
+
         <Header />
 
         <main>{children}</main>

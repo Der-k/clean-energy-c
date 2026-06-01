@@ -456,3 +456,6 @@ p {
 main {
   display: block;
 }
+html {
+  transform-origin: top left;
+}

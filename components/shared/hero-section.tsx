@@ -349,7 +349,7 @@ export function HeroSection() {
           <h1 className="order-2 font-heading mt-3 max-w-2xl font-extrabold leading-[1.08] tracking-[-0.035em] text-slate-950">
   <span className="text-[#02026e]"> Clean Energy Conference</span>
 </h1>
-            <p className="order-5 lg:order-3 mt-3 max-w-xl leading-6 text-black/80">
+            <p className="order-5 lg:order-3 mt-3 max-w-xl text-lg leading-7 text-black/80">
   Kigali & Perth editions bringing together policymakers, investors, and
   industry leaders to accelerate clean energy transition and regional collaboration.
 </p>
