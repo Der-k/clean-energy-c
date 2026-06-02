@@ -106,7 +106,7 @@ exit={{}}
   playsInline
   preload="auto"
   disablePictureInPicture
-  className="w-full h-full object-contain"
+  className="w-full h-full object-cover object-top"
   onEnded={nextSlide}
 />
 </div>
