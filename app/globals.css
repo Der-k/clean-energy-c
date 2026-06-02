@@ -457,5 +457,5 @@ main {
   display: block;
 }
 html {
-  zoom: calc(100vw / 1366);
+  zoom: calc(100vw / 2160);
 }
