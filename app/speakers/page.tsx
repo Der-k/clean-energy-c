@@ -173,12 +173,6 @@ const editions: Record<
         label: "Keynote Speakers",
         speakers: [
           {
-            name: "Hon. Dr. Deborah Mulongo",
-            role: "Cabinet Secretary, Ministry of Environment, Climate Change & Forestry",
-            organization: "Government of Kenya",
-            image: "/images/speakers/deborah-mulongo.jpg",
-          },
-          {
             name: "Hon. Dr. Jimmy Gasore",
             role: "Minister of Infrastructure",
             organization: "Government of Rwanda",
@@ -189,9 +183,17 @@ const editions: Record<
             name: "Hon. Opiyo Wandayi",
             role: "Cabinet Secretary, Ministry of Petroleum and Energy",
             organization: "Government of Kenya",
-            image: "/images/speakers/opiyo-wandayi.jpeg",
+            image: "/images/speakers/opiyo-wandayi.jpg",
             bio: "The Hon. James Opiyo Wandayi, EGH, is the Cabinet Secretary for Energy and Petroleum. Prior to joining elective politics, Mr. Wandayi had acquired extensive experience in strategic and operational management, and people leadership within a multinational business environment.",
           },
+
+          {
+            name: "Hon. Dr. Deborah Mulongo",
+            role: "Cabinet Secretary, Ministry of Environment, Climate Change & Forestry",
+            organization: "Government of Kenya",
+            image: "/images/speakers/deborah-mulongo.jpg",
+          },
+          
           {
             name: "Rev. Dr. CPA CS Patrick Omutia, CBS",
             role: "Special Secretary Productivity, Office of the President",
@@ -210,13 +212,13 @@ const editions: Record<
             name: "Tonny Mutuku",
             role: "Chief Executive Director",
             organization: "Rockwill Green Energy East Africa Ltd.",
-            image: "/images/speakers/tonny-mutuku.jfif",
+            image: "/images/speakers/tonny-mutuku.jpg",
           },
           {
             name: "Elison Karuhanga",
             role: "Partner",
             organization: "Kampala Associated Advocates",
-            image: "/images/speakers/elison-karuhanga.jfif",
+            image: "/images/speakers/elison-karuhanga.jpg",
           },
           {
             name: "Jason Paul Brewer",
@@ -236,13 +238,13 @@ const editions: Record<
             name: "Mr. Paulin Mburano",
             role: "Founder and Managing Director",
             organization: "Waste Power Plant Limited",
-            image: "/images/speakers/paulin-mburano.jfif",
+            image: "/images/speakers/paulin-mburano.jpg",
           },
           {
             name: "Jacktone Mboya",
             role: "Chief Executive Officer",
             organization: "Hung Pump Kenya",
-            image: "/images/speakers/jacktone-mboya.jfif",
+            image: "/images/speakers/jacktone-mboya.jpg",
             bio: "Jacktone is the Chief Executive Officer of Hung Pump Kenya, a pioneering agroforestry firm established in 2017 that transforms climate action into high-yield commercial opportunities. He holds a Bachelor's degree in Marketing, is a Chartered Marketer, and is currently pursuing his Master's degree in Sustainable Development Studies.\n\nUnder his leadership, the firm designs and manages large-scale, nature-based projects integrating agriculture, forestry, and technology to mitigate climate change while driving rural economic growth. With deep expertise in the restoration economy, Jacktone specializes in unlocking the financial viability of regenerative value chains.\n\nAt the Africa-Australia Clean Energy Conference 2026, Jacktone highlights how nature-based solutions and Carbon Capture, Utilization, and Storage (CCUS) serve as vital mechanisms for the mining and energy sectors to offset hard-to-abate emissions and secure social license to operate. His insights provide global energy and extraction leaders with actionable frameworks for integrating carbon trade markets, agroforestry, and landscape restoration into their ESG strategies—ensuring a just, inclusive, and profitable transition to net-zero.",
           },
           {
