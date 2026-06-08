@@ -23,7 +23,10 @@ const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-heading",
 });
-
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 export default function RootLayout({
   children,
 }: Readonly<{

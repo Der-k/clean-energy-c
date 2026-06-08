@@ -92,24 +92,9 @@ body {
   }
 }
 
-@keyframes pageZoomIn {
-  0% {
-    transform: scale(0.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 
-.site-zoom {
-  animation: pageZoomIn 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-   transform: scale(0.5);
-  transform-origin: top center;
-  width: 200%;
 
-  /* 🔥 critical fix */
-  height: 200%;
-}
+
 
 /* Primary button */
 .btn-glow {
@@ -282,40 +267,36 @@ body {
 /* ===== GLOBAL TYPOGRAPHY SCALE ===== */
 
 h1 {
-  font-size: clamp(2.1rem, 3.4vw, 3.4rem);
-  line-height: 0.95;
-  letter-spacing: -0.038em;
+  font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   font-weight: 700;
 }
 
 h2 {
-  font-size: clamp(1.6rem, 2.4vw, 2.6rem);
-  line-height: 1.02;
-  letter-spacing: -0.028em;
+  font-size: clamp(1.35rem, 1.8vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 
 h3 {
-  font-size: clamp(1.1rem, 1.35vw, 1.45rem);
-  line-height: 1.08;
+  font-size: clamp(1rem, 1.1vw, 1.25rem);
+  line-height: 1.2;
   font-weight: 650;
 }
+
 p {
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 @media (min-width: 768px) {
-  p {
-    font-size: 16px;
-  }
+  p { font-size: 15px; }
 }
 
 @media (min-width: 1280px) {
-  p {
-    font-size: 17px;
-    line-height: 1.6;
-  }
+  p { font-size: 16px; line-height: 1.6; }
 }
 
 /* Hero-specific typography tightening */
@@ -446,16 +427,11 @@ p {
   perspective: 1400px;
 }
 
-.landing-scale {
-  transform: scale(0.5);
-  transform-origin: top center;
-  width: 200%;
-  margin-left: -50%;
-}
 
 main {
   display: block;
 }
 html {
-  zoom: calc(100vw / 2160);
+  zoom: 0.67;
+  scroll-behavior: smooth;
 }
