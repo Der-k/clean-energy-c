@@ -115,13 +115,16 @@ function SpeakerCard({ speaker }: { speaker: Speaker }) {
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
             className="object-cover transition duration-500 group-hover:scale-[1.04]"
           />
-          {hasBio && (
-            <div className="absolute inset-0 bg-gradient-to-t from-[#02026e]/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end p-4">
-              <span className="text-xs font-semibold uppercase tracking-widest text-white/90">
-                View Profile →
-              </span>
-            </div>
-          )}
+         {hasBio && (
+  <div className="absolute inset-0 bg-gradient-to-t from-[#02026e]/92 via-[#02026e]/55 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-4 gap-2">
+    <p className="text-[12px] leading-[1.55] text-white/88 line-clamp-3">
+      {speaker.bio}
+    </p>
+    <span className="text-[11px] font-bold uppercase tracking-widest text-white flex items-center gap-1">
+      Read full bio →
+    </span>
+  </div>
+)}
         </div>
 
         {/* Info */}
@@ -248,11 +251,12 @@ const editions: Record<
             bio: "Jacktone is the Chief Executive Officer of Hung Pump Kenya, a pioneering agroforestry firm established in 2017 that transforms climate action into high-yield commercial opportunities. He holds a Bachelor's degree in Marketing, is a Chartered Marketer, and is currently pursuing his Master's degree in Sustainable Development Studies.\n\nUnder his leadership, the firm designs and manages large-scale, nature-based projects integrating agriculture, forestry, and technology to mitigate climate change while driving rural economic growth. With deep expertise in the restoration economy, Jacktone specializes in unlocking the financial viability of regenerative value chains.\n\nAt the Africa-Australia Clean Energy Conference 2026, Jacktone highlights how nature-based solutions and Carbon Capture, Utilization, and Storage (CCUS) serve as vital mechanisms for the mining and energy sectors to offset hard-to-abate emissions and secure social license to operate. His insights provide global energy and extraction leaders with actionable frameworks for integrating carbon trade markets, agroforestry, and landscape restoration into their ESG strategies—ensuring a just, inclusive, and profitable transition to net-zero.",
           },
           {
-            name: "Munyemana Jean Pierre",
-            role: "Speaker",
-            organization: "To be confirmed",
-            image: "/images/speakers/munyemana-jean-pierre.jpg",
-          },
+  name: "Munyemana Jean Pierre",
+  role: "Chief Executive Officer",
+  organization: "Egera Umuhinzi Initiative",
+  image: "/images/speakers/munyemana-jean-pierre.jpg",
+  bio: "Jean Pierre Munyemana is an agronomist and the founder of Egera Umuhinzi Initiative, a platform bridging agricultural research, policy, and on-the-ground farmer adoption in Rwanda. He is also the Managing Director of SMARTFARM Solutions Ltd, where he leads the deployment of practical, climate-smart agricultural solutions aimed at improving productivity and resilience for smallholder farmers.\n\nWith experience spanning regenerative agriculture, agroforestry, and farmer extension, Jean Pierre has worked with institutions including MINAGRI and RAB to translate policy into actionable practices at scale. His work focuses on integrating agriculture and energy systems through circular economy models, converting agricultural waste into organic fertilizers and biogas to reduce costs and improve sustainability for farmers.\n\nThrough his leadership, he continues to champion innovative approaches that strengthen food security, environmental stewardship, and rural economic development across Rwanda and the wider region."
+}
         ],
       },
     ],
