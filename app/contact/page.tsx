@@ -144,13 +144,7 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://aaemi.com.au/api/contact.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch("https://aaemi.com.au/api/ping.php");
 
       let result: any = null;
 
