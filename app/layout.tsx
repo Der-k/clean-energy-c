@@ -46,6 +46,7 @@ export default function RootLayout({
 
         {/* Floating AI Chatbot */}
         <ChatWidget />
+          <Analytics />
       </body>
     </html>
   );
