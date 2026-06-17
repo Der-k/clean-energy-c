@@ -4,6 +4,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import ChatWidget from "@/components/chat/ChatWidget";
 import { Analytics } from "@vercel/analytics/next"
+import { RoleProvider } from "@/context/role-context";
+
 
 export const metadata = {
   title: "Clean Energy Conference",
@@ -34,20 +36,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${manrope.variable} bg-white text-[color:var(--text-main)]-900 antialiased`}
-      >
+  <html lang="en">
+    <body
+      className={`${inter.variable} ${manrope.variable} bg-white text-[color:var(--text-main)]-900 antialiased`}
+    >
+      <RoleProvider>
         <Header />
 
         <main>{children}</main>
 
         <Footer />
 
-        {/* Floating AI Chatbot */}
         <ChatWidget />
-          <Analytics />
-      </body>
-    </html>
-  );
+        <Analytics />
+      </RoleProvider>
+    </body>
+  </html>
+);
 }

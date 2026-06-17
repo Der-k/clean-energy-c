@@ -6,6 +6,7 @@ import { VenuePreview } from "@/components/sections/venue-preview";
 import { PartnersPreview } from "@/components/sections/partners-preview";
 import { StatsBar } from "@/components/sections/stats-bar";
 import { ProgrammeCtaSection } from "@/components/sections/programme-cta-section";
+import { RoleEntrySection } from "@/components/sections/role-entry-section";
 
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
 
       <StatsBar />
       <ProgrammeCtaSection />
+        <RoleEntrySection />
       <ConferenceOverview />
 
   

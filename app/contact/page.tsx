@@ -144,51 +144,55 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://aaemi.com.au/api/contact.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+  const formData = new FormData();
 
-      let result: any = null;
+  formData.append("fullName", form.fullName);
+  formData.append("email", form.email);
+  formData.append("phone", form.phone);
+  formData.append("subject", form.subject);
+  formData.append("enquiryType", form.enquiryType);
+  formData.append("message", form.message);
 
-      try {
-        result = await response.json();
-      } catch {
-        result = null;
-      }
+  const response = await fetch("https://aaemi.com.au/api/contact.php", {
+    method: "POST",
+    body: formData,
+  });
 
-      if (!response.ok || !result?.ok) {
-        if (result?.errors) {
-          setErrors((prev) => ({
-            ...prev,
-            fullName: result.errors.fullName?.[0] ?? "",
-            email: result.errors.email?.[0] ?? "",
-            phone: result.errors.phone?.[0] ?? "",
-            subject: result.errors.subject?.[0] ?? "",
-            enquiryType: result.errors.enquiryType?.[0] ?? "",
-            message: result.errors.message?.[0] ?? "",
-          }));
-        }
+  let result: any = null;
 
-        setSubmitError(
-          result?.message || "Something went wrong. Please try again."
-        );
-        return;
-      }
-
-      setIsSubmitted(true);
-      setForm(initialForm);
-      setErrors({});
-    } catch (error) {
-      console.error("Contact enquiry failed:", error);
-      setSubmitError("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  try {
+    result = await response.json();
+  } catch {
+    result = null;
   }
+
+  if (!response.ok || !result?.ok) {
+    if (result?.errors) {
+      setErrors((prev) => ({
+        ...prev,
+        fullName: result.errors.fullName?.[0] ?? "",
+        email: result.errors.email?.[0] ?? "",
+        phone: result.errors.phone?.[0] ?? "",
+        subject: result.errors.subject?.[0] ?? "",
+        enquiryType: result.errors.enquiryType?.[0] ?? "",
+        message: result.errors.message?.[0] ?? "",
+      }));
+    }
+
+    setSubmitError(result?.message || "Something went wrong.");
+    return;
+  }
+
+  setIsSubmitted(true);
+  setForm(initialForm);
+  setErrors({});
+
+} catch (error) {
+  console.error(error);
+  setSubmitError("Something went wrong.");
+} finally {
+  setIsSubmitting(false);
+}}
 
   return (
     <main className="bg-white pt-24">
