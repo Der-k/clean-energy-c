@@ -153,10 +153,7 @@ export default function ContactPage() {
   formData.append("enquiryType", form.enquiryType);
   formData.append("message", form.message);
 
-  const response = await fetch("https://aaemi.com.au/api/contact.php", {
-    method: "POST",
-    body: formData,
-  });
+  const response = await fetch("https://aaemi.com.au/api/save-enquiry.php")
 
   let result: any = null;
 
