@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const PHP_ENDPOINT = "https://aaemi.com.au/api/save-enquiry.php";
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const response = await fetch("https://aaemi.com.au/api/contact.php", {
+    const response = await fetch(PHP_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,27 +16,25 @@ export async function POST(req: NextRequest) {
 
     const text = await response.text();
 
-    console.log("Status:", response.status);
-    console.log("Response:", text);
+    // Guard against PHP fatal errors / non-JSON output (e.g. HTML error pages)
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      console.error("Non-JSON response from PHP:", text);
+      return NextResponse.json(
+        { ok: false, message: "Unexpected server response." },
+        { status: 502 }
+      );
+    }
 
-    return new NextResponse(text, {
-      status: response.status,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+    return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error(error);
+    console.error("Contact route error:", error);
 
     return NextResponse.json(
-      {
-        ok: false,
-        message: "Server error.",
-      },
-      {
-        status: 500,
-      }
+      { ok: false, message: "Server error." },
+      { status: 500 }
     );
   }
 }

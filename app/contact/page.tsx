@@ -134,61 +134,52 @@ export default function ContactPage() {
     return Object.keys(nextErrors).length === 0;
   }
 
- async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-  setSubmitError("");
+    setSubmitError("");
 
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  setIsSubmitting(true);
+    setIsSubmitting(true);
 
-  try {
-    const formData = new FormData();
-
-    formData.append("fullName", form.fullName);
-    formData.append("email", form.email);
-    formData.append("phone", form.phone);
-    formData.append("subject", form.subject);
-    formData.append("enquiryType", form.enquiryType);
-    formData.append("message", form.message);
-
-    const response = await fetch(
-      "https://aaemi.com.au/api/save-enquiry.php",
-      {
+    try {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        if (result.errors) {
+          setErrors({
+            fullName: result.errors.fullName?.[0] || "",
+            email: result.errors.email?.[0] || "",
+            phone: result.errors.phone?.[0] || "",
+            subject: result.errors.subject?.[0] || "",
+            enquiryType: result.errors.enquiryType?.[0] || "",
+            message: result.errors.message?.[0] || "",
+          });
+        }
+
+        setSubmitError(result.message || "Something went wrong.");
+        return;
       }
-    );
 
-    const result = await response.json();
-
-    if (!response.ok || !result.ok) {
-      if (result.errors) {
-        setErrors({
-          fullName: result.errors.fullName?.[0] || "",
-          email: result.errors.email?.[0] || "",
-          phone: result.errors.phone?.[0] || "",
-          subject: result.errors.subject?.[0] || "",
-          enquiryType: result.errors.enquiryType?.[0] || "",
-          message: result.errors.message?.[0] || "",
-        });
-      }
-
-      setSubmitError(result.message || "Something went wrong.");
-      return;
+      setForm(initialForm);
+      setErrors({});
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setSubmitError("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setForm(initialForm);
-    setErrors({});
-    setIsSubmitted(true);
-  } catch (err) {
-    console.error(err);
-    setSubmitError("Something went wrong.");
-  } finally {
-    setIsSubmitting(false);
   }
-}
 
   return (
     <main className="bg-white pt-24">
