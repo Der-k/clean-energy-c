@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
+    // Get the multipart form exactly as sent by the browser
     const formData = await req.formData();
 
     const response = await fetch(
@@ -14,25 +15,24 @@ export async function POST(req: NextRequest) {
 
     const text = await response.text();
 
-    console.log("PHP Status:", response.status);
-    console.log("PHP Response:", text);
+    console.log("Status:", response.status);
+    console.log("Response:", text);
 
     return new NextResponse(text, {
       status: response.status,
       headers: {
         "Content-Type":
-          response.headers.get("content-type") ?? "application/json",
+          response.headers.get("content-type") ??
+          "application/json",
       },
     });
-
-  } catch (e) {
-    console.error("ROUTE ERROR");
-    console.error(e);
+  } catch (error) {
+    console.error(error);
 
     return NextResponse.json(
       {
         success: false,
-        error: String(e),
+        message: "Server error.",
       },
       {
         status: 500,
