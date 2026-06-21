@@ -91,15 +91,64 @@ export function VenuePreview() {
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/event/venue"
-            className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
-          >
-            View full venue details
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+      <div className="mt-10 flex justify-center">
+  <Link
+    href="/event/venue"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      overflow-hidden
+
+      rounded-full px-6 py-3 text-base font-semibold
+
+      text-[color:var(--text-main)]
+      bg-white
+
+      border border-zinc-300
+
+      shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+
+      transition-all duration-500 ease-out
+
+      hover:border-[#020266]/60
+      hover:scale-[1.04]
+      hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
+
+      active:scale-[0.97]
+
+      focus:outline-none
+      focus:ring-2
+      focus:ring-[#020266]/25
+      focus:ring-offset-2
+      focus:ring-offset-white
+    "
+  >
+    {/* blue sweep */}
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span
+        className="
+          absolute left-0 top-0 h-full w-0
+          bg-[#020266]
+          transition-all duration-500 ease-out
+          group-hover:w-full
+        "
+      />
+    </span>
+
+    {/* text turns white */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+      View full venue details
+    </span>
+
+    <ArrowRight
+      className="
+        relative z-10 h-4 w-4
+        transition-all duration-300
+        group-hover:translate-x-1
+        group-hover:text-white
+      "
+    />
+  </Link>
+</div>
       </div>
     </section>
   );

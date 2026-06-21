@@ -281,8 +281,7 @@ export default function HighlightsPage() {
 
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-90"
     style={{ background: accent.hex }}
   >

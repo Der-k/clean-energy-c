@@ -194,7 +194,7 @@ function ConferenceMomentsCarousel() {
 
   return (
     
-    <div className="relative w-full mt-10 overflow-hidden bg-[#003994]">
+    <div className="relative w-full mt-10 overflow-hidden bg-[#020266]">
 
       <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-white/10">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -244,13 +244,13 @@ function ConferenceMomentsCarousel() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-14 sm:w-20 bg-gradient-to-r from-[#003994] to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-14 sm:w-20 bg-gradient-to-r from-[#020266] to-transparent z-10" />
         <button
           onClick={() => nudgeRef.current("prev")}
           aria-label="Previous"
           className="pointer-events-auto absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20
             hidden sm:flex h-11 w-11 items-center justify-center rounded-full
-            bg-white text-[#003994] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
+            bg-white text-[#020266] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
             transition-all duration-150 active:scale-90 hover:scale-110 touch-manipulation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -258,13 +258,13 @@ function ConferenceMomentsCarousel() {
           </svg>
         </button>
 
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-14 sm:w-20 bg-gradient-to-l from-[#003994] to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-14 sm:w-20 bg-gradient-to-l from-[#020266] to-transparent z-10" />
         <button
           onClick={() => nudgeRef.current("next")}
           aria-label="Next"
           className="pointer-events-auto absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20
             hidden sm:flex h-11 w-11 items-center justify-center rounded-full
-            bg-white text-[#003994] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
+            bg-white text-[#020266] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
             transition-all duration-150 active:scale-90 hover:scale-110 touch-manipulation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -409,8 +409,7 @@ export function HeroSection() {
   {/* PRIMARY CTA */}
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="
       group relative inline-flex items-center justify-center gap-2
       rounded-full px-5 py-2.5 text-base font-semibold text-white

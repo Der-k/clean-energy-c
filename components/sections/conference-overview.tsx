@@ -79,29 +79,126 @@ export function ConferenceOverview() {
               energy transition outcomes across both markets.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/conference"
-                className="inline-flex items-center gap-2 rounded-full bg-[#003994] px-6 py-3 text-base font-semibold text-white transition hover:shadow-[0_0_30px_rgba(0,57,148,0.25)]"
-              >
-                Explore the conference
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+           <div className="mt-8 flex flex-wrap gap-4">
+  <Link
+    href="/conference"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      overflow-hidden
 
-              <Link
-                href="/event/programme"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-6 py-3 text-base font-semibold text-zinc-900 transition hover:border-[#003994] hover:text-[#003994]"
-              >
-                <CalendarDays className="h-4 w-4" />
-                View programme
-              </Link>
-            </div>
+      rounded-full px-6 py-3 text-base font-semibold
+
+      text-white
+      bg-[#020266]
+
+      border border-[#020266]
+
+      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+      transition-all duration-500 ease-out
+
+      hover:border-[#020266]/60
+      hover:scale-[1.04]
+      hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
+
+      active:scale-[0.97]
+
+      focus:outline-none
+      focus:ring-2
+      focus:ring-[#020266]/25
+      focus:ring-offset-2
+      focus:ring-offset-white
+    "
+  >
+    {/* white sweep */}
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span
+        className="
+          absolute left-0 top-0 h-full w-0
+          bg-white
+          transition-all duration-500 ease-out
+          group-hover:w-full
+        "
+      />
+    </span>
+
+    {/* text turns blue */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+      Explore the conference
+    </span>
+
+    <ArrowRight
+      className="
+        relative z-10 h-4 w-4
+        transition-all duration-300
+        group-hover:translate-x-1
+        group-hover:text-[#020266]
+      "
+    />
+  </Link>
+
+  <Link
+    href="/event/programme"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      overflow-hidden
+
+      rounded-full px-6 py-3 text-base font-semibold
+
+      text-zinc-900
+      bg-white
+
+      border border-zinc-300
+
+      shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+
+      transition-all duration-500 ease-out
+
+      hover:border-[#020266]/60
+      hover:scale-[1.04]
+      hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
+
+      active:scale-[0.97]
+
+      focus:outline-none
+      focus:ring-2
+      focus:ring-[#020266]/25
+      focus:ring-offset-2
+      focus:ring-offset-white
+    "
+  >
+    {/* blue sweep */}
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span
+        className="
+          absolute left-0 top-0 h-full w-0
+          bg-[#020266]
+          transition-all duration-500 ease-out
+          group-hover:w-full
+        "
+      />
+    </span>
+
+    <CalendarDays
+      className="
+        relative z-10 h-4 w-4
+        transition-colors duration-300
+        group-hover:text-white
+      "
+    />
+
+    {/* text turns white */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+      View programme
+    </span>
+  </Link>
+</div>
           </div>
 
          <div className="rounded-[32px] border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-8 shadow-[0_20px_60px_rgba(2,6,23,0.08)] sm:p-10 lg:p-12">
   <div className="flex items-center gap-3">
-    <div className="h-3 w-3 rounded-full bg-[#003994]" />
-    <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#003994] sm:text-xl
+    <div className="h-3 w-3 rounded-full bg-[#020266]" />
+    <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#020266] sm:text-xl
 ">
       Why it matters
     </p>
@@ -111,9 +208,9 @@ export function ConferenceOverview() {
     {outcomes.map((item, index) => (
       <div
         key={item}
-        className="group flex items-start gap-5 rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#003994]/20 hover:shadow-[0_18px_40px_rgba(0,57,148,0.08)] sm:p-7"
+        className="group flex items-start gap-5 rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#020266]/20 hover:shadow-[0_18px_40px_rgba(0,57,148,0.08)] sm:p-7"
       >
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#003994] text-xl
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#020266] text-xl
  font-semibold text-white shadow-[0_10px_24px_rgba(0,57,148,0.22)]">
           {index + 1}
         </div>
@@ -127,7 +224,7 @@ export function ConferenceOverview() {
   </div>
 
   <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
-    <div className="rounded-[28px] bg-[#003994] p-7 text-white shadow-[0_18px_40px_rgba(0,57,148,0.24)]">
+    <div className="rounded-[28px] bg-[#020266] p-7 text-white shadow-[0_18px_40px_rgba(0,57,148,0.24)]">
       <p className="text-5xl font-bold tracking-tight">600+</p>
       <p className="mt-3 text-base leading-7 text-blue-100">
         Expected delegates from government, investment, energy, mining,
@@ -155,7 +252,7 @@ export function ConferenceOverview() {
                 key={item.title}
                 className="rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(2,6,23,0.08)]"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-[22px] bg-gradient-to-br from-blue-100 to-blue-50 text-[#003994] shadow-[0_12px_30px_rgba(0,57,148,0.14)] ring-1 ring-blue-100 transition duration-300 group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(0,57,148,0.2)]">
+                <div className="flex h-16 w-16 items-center justify-center rounded-[22px] bg-gradient-to-br from-blue-100 to-blue-50 text-[#020266] shadow-[0_12px_30px_rgba(0,57,148,0.14)] ring-1 ring-blue-100 transition duration-300 group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(0,57,148,0.2)]">
   <Icon className="h-8 w-8 stroke-[2.2]" />
 </div>
                 <h3 className="mt-4 text-xl

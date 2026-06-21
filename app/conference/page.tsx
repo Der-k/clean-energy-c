@@ -294,8 +294,7 @@ export default function ConferenceOverviewPage() {
   {/* REGISTER NOW */}
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="
       group relative inline-flex items-center justify-center gap-2
       overflow-hidden

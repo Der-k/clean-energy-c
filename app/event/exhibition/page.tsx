@@ -586,16 +586,67 @@ export default function ExhibitionPage() {
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#02026e] px-5 py-3.5 text-base font-semibold text-white transition hover:bg-[#010150] disabled:cursor-not-allowed disabled:opacity-70"
-                  >
-                    <Send className="h-4 w-4" />
-                    {isSubmitting
-                      ? "Submitting..."
-                      : "Submit exhibition interest"}
-                  </button>
+               <button
+  type="submit"
+  disabled={isSubmitting}
+  className="
+    group relative inline-flex w-full items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-2xl px-5 py-3.5 text-base font-semibold
+
+    text-white
+    bg-[#020266]
+
+    border border-[#020266]
+
+    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    transition-all duration-500 ease-out
+
+    hover:border-[#020266]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
+
+    active:scale-[0.97]
+
+    disabled:cursor-not-allowed
+    disabled:opacity-70
+    disabled:hover:scale-100
+    disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#020266]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* white sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-2xl">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  <Send
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-[#020266]
+    "
+  />
+
+  {/* text turns blue */}
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+    {isSubmitting ? "Submitting..." : "Submit exhibition interest"}
+  </span>
+</button>
                 </form>
               </>
             )}

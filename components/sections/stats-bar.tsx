@@ -37,7 +37,7 @@ export function StatsBar() {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#003994] text-white">
+    <section className="relative w-full overflow-hidden bg-[#020266] text-white">
       {/* subtle gradient glow (same style as slider) */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(0,153,102,0.18),transparent_30%)]" />
 

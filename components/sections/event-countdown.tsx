@@ -82,7 +82,7 @@ function TimeCard({
 }) {
   const accentClasses =
     accent === "blue"
-      ? "border-blue-200 bg-blue-50 text-[#003994]"
+      ? "border-blue-200 bg-blue-50 text-[#020266]"
       : "border-emerald-200 bg-emerald-50 text-[#009966]";
 
   return (
@@ -124,7 +124,7 @@ function EventCountdownCard({ event }: { event: EventItem }) {
         <div>
           <p
             className={`text-base font-semibold uppercase tracking-[0.18em] ${
-              isBlue ? "text-[#003994]" : "text-[#009966]"
+              isBlue ? "text-[#020266]" : "text-[#009966]"
             }`}
           >
             Countdown to event
@@ -137,7 +137,7 @@ function EventCountdownCard({ event }: { event: EventItem }) {
         <div
           className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] ${
             isBlue
-              ? "bg-blue-50 text-[#003994]"
+              ? "bg-blue-50 text-[#020266]"
               : "bg-emerald-50 text-[#009966]"
           }`}
         >

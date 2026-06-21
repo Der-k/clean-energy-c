@@ -41,8 +41,7 @@ export function MobileNav({
 <div className="mt-5">
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     onClick={onClose}
     className="group relative block overflow-hidden rounded-full bg-[#ec0005] px-5 py-4 text-center text-base font-bold text-white shadow-[0_10px_30px_rgba(236,0,5,0.35)] transition duration-300 active:scale-[0.98]"
   >

@@ -28,13 +28,13 @@ const audienceContent: Record<
     image: "/images/conference/why-attend-sponsors.jpg",
     alt: "Sponsors and business leaders networking",
     intro:
-      "Build visibility, strengthen brand positioning, and connect directly with decision-makers across the clean energy ecosystem.",
+      "Position your brand at the centre of Africa and Australia's clean energy transition, with visibility and access designed around senior decision-makers from both regions.",
     benefits: [
-      "Unmatched brand visibility by positioning your organisation at the forefront of clean energy dialogue and innovation.",
-      "Targeted audience engagement with investors, policymakers, partners, and industry stakeholders.",
-      "Corporate social responsibility alignment through support for sustainability, transition, and long-term energy impact.",
-      "Thought leadership opportunities through speaking sessions, panels, workshops, and brand-led discussion spaces.",
-      "High-value ROI through premium networking access, media visibility, and strategic sponsorship benefits.",
+      "Brand visibility across the Conference Portal, online marketing materials, social media, and on-site signage seen by 600+ delegates.",
+      "Direct engagement with government ministries, investors, policy influencers, and Fortune 500 firms shaping Africa's energy future.",
+      "Thought-leadership platforms through speaking slots, panel sessions, and themed sponsorships aligned to your sector expertise.",
+      "Flagship moments available, including Lead, Platinum, and Cocktail Reception sponsorships offering exclusive recognition and high-level engagement time.",
+      "Reach beyond the room via 20,000+ email subscribers, 6,000+ social followers, and 100,000+ annual website views.",
     ],
   },
 
@@ -44,13 +44,13 @@ const audienceContent: Record<
     image: "/images/conference/why-attend-exhibitors.jpg",
     alt: "Exhibition booths at a conference",
     intro:
-      "Showcase your solutions directly to a qualified audience looking for technologies, services, and implementation partners.",
+      "Showcase your technology, products, and services on the Innovation Expo floor, in front of buyers, project developers, and policymakers actively sourcing clean energy solutions.",
     benefits: [
-      "Present products and services in a highly relevant clean energy business environment.",
-      "Generate qualified leads from delegates, buyers, investors, and institutional stakeholders.",
-      "Demonstrate innovation through live engagement and in-person product storytelling.",
-      "Increase credibility by exhibiting alongside respected brands and sector leaders.",
-      "Open doors to partnerships, procurement conversations, and long-term commercial opportunities.",
+      "Present innovations directly to decision-makers and project owners across renewable energy, mining, and critical minerals.",
+      "Generate qualified leads in a growing market — 91% of past exhibitors call exhibiting vital to connecting with industry leaders.",
+      "Connect with over 1,000 attendees, including government officials, Fortune 500 companies, and industry innovators.",
+      "Network through structured B2B meetings, deal rooms, and partnership sessions built into the programme.",
+      "Gain priority listing on the conference website and in the post-event directory, plus free entry to the opening cocktail.",
     ],
   },
 
@@ -60,13 +60,13 @@ const audienceContent: Record<
     image: "/images/conference/why-attend-delegates.jpg",
     alt: "Conference delegates in discussion",
     intro:
-      "Access strategic insight, senior-level networking, and practical industry conversations that support better decision-making.",
+      "Get senior-level insight into renewable energy, grid modernisation, and critical minerals — and leave with the contacts and intelligence to act on it.",
     benefits: [
-      "Gain direct insight into clean energy trends, investment priorities, and market developments.",
-      "Learn from senior speakers, policymakers, and operators across the value chain.",
-      "Build strong professional relationships with peers, partners, suppliers, and institutional actors.",
-      "Discover new technologies, solutions, and business models shaping the energy transition.",
-      "Leave with practical knowledge, useful contacts, and a stronger view of sector direction.",
+      "Hear from high-level plenaries and government ministries on energy diversification, green hydrogen, and regional cooperation.",
+      "Go deep in technical workshops covering energy storage, financing models, critical minerals, and regulatory reform.",
+      "Take part in investor roundtables and deal rooms connecting project developers directly with financiers.",
+      "Take home the Australia-Africa Clean Energy Report 2026, a full analysis of opportunities, challenges, and investment trends.",
+      "Build lasting relationships at a conference rated 90% for visitor satisfaction by past attendees.",
     ],
   },
 
@@ -76,13 +76,13 @@ const audienceContent: Record<
     image: "/images/conference/why-attend-learning.jpg",
     alt: "Academic and research participation at a conference",
     intro:
-      "Participate in the conference as a bridge between research, innovation, skills development, and industry application.",
+      "Bring research, talent, and innovation into direct conversation with the governments and companies building Africa's clean energy sector.",
     benefits: [
-      "Showcase research, training programmes, and institutional initiatives to industry and policy stakeholders.",
-      "Build relationships with companies, public institutions, and innovation partners.",
-      "Connect students, faculty, and researchers to real market conversations and opportunities.",
-      "Support thought leadership in sustainability, engineering, policy, and energy systems.",
-      "Identify collaboration opportunities around talent development, innovation, and sector advancement.",
+      "Present technical and research findings through dedicated Technical & Research Presentation sessions on energy, mining tech, and digital twins.",
+      "Connect students, faculty, and researchers to investors, policymakers, and industry practitioners shaping the sector.",
+      "Contribute to sessions on critical mineral research, including mineralization, resource mapping, and innovation.",
+      "Support capacity-building goals aligned with Rwanda's Vision 2050 and the conference's long-term workforce objectives.",
+      "Build institutional partnerships around technology transfer, talent development, and applied research.",
     ],
   },
 };
@@ -120,6 +120,11 @@ export default function WhyAttendPage() {
         <h1 className="text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
           Why Attend
         </h1>
+        <p className="mt-3 max-w-2xl text-base leading-7 text-[color:var(--text-main)]-600">
+          The Clean Energy Conference Africa Australia means something
+          different depending on why you're in the room. Choose your role
+          below to see what's in it for you.
+        </p>
 
         <div className="mt-8 rounded-sm border border-slate-200 bg-white p-0 shadow-sm">
           <div className="overflow-x-auto border-b border-slate-200">
@@ -183,101 +188,99 @@ export default function WhyAttendPage() {
                 ))}
               </div>
 
-           <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap gap-3">
+                {/* REGISTER NOW */}
+                <Link
+                  href="/tickets"
+                  className="
+                    group relative inline-flex items-center justify-center gap-2
+                    overflow-hidden
 
-  {/* REGISTER NOW */}
-  <Link
-    href="/tickets"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
+                    rounded-full px-6 py-3 text-base font-semibold text-white
 
-      rounded-full px-6 py-3 text-base font-semibold text-white
+                    bg-gradient-to-r from-[#007a55] via-[#009966] to-[#00b377]
+                    bg-[length:200%_100%] bg-left
 
-      bg-gradient-to-r from-[#007a55] via-[#009966] to-[#00b377]
-      bg-[length:200%_100%] bg-left
+                    shadow-[0_12px_35px_rgba(0,153,102,0.28)]
 
-      shadow-[0_12px_35px_rgba(0,153,102,0.28)]
+                    transition-all duration-500 ease-out
 
-      transition-all duration-500 ease-out
+                    hover:bg-right
+                    hover:shadow-[0_18px_55px_rgba(0,153,102,0.35)]
+                    hover:scale-[1.05]
 
-      hover:bg-right
-      hover:shadow-[0_18px_55px_rgba(0,153,102,0.35)]
-      hover:scale-[1.05]
+                    active:scale-[0.97]
 
-      active:scale-[0.97]
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-[#009966]/40
+                    focus:ring-offset-2
+                  "
+                >
+                  <span className="relative z-10">Register Now</span>
+                </Link>
 
-      focus:outline-none
-      focus:ring-2
-      focus:ring-[#009966]/40
-      focus:ring-offset-2
-    "
-  >
-    <span className="relative z-10">Register Now</span>
-  </Link>
+                {/* EXPLORE OPPORTUNITIES */}
+                <Link
+                  href="/partners"
+                  className="
+                    group relative inline-flex items-center justify-center gap-2
+                    overflow-hidden
 
-  {/* EXPLORE OPPORTUNITIES */}
-  <Link
-    href="/partners"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
+                    rounded-full px-6 py-3 text-base font-semibold
 
-      rounded-full px-6 py-3 text-base font-semibold
+                    text-[#02026e]
+                    bg-white
 
-      text-[#02026e]
-      bg-white
+                    border border-[#02026e]/30
 
-      border border-[#02026e]/30
+                    shadow-[0_10px_25px_rgba(15,23,42,0.10)]
 
-      shadow-[0_10px_25px_rgba(15,23,42,0.10)]
+                    transition-all duration-500 ease-out
 
-      transition-all duration-500 ease-out
+                    hover:text-white
+                    hover:border-[#009966]
 
-      hover:text-white
-      hover:border-[#009966]
+                    hover:shadow-[0_18px_55px_rgba(0,153,102,0.25)]
+                    hover:scale-[1.05]
 
-      hover:shadow-[0_18px_55px_rgba(0,153,102,0.25)]
-      hover:scale-[1.05]
+                    active:scale-[0.97]
 
-      active:scale-[0.97]
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-[#009966]/35
+                    focus:ring-offset-2
+                  "
+                >
+                  {/* white sweep */}
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span
+                      className="
+                        absolute left-0 top-0 h-full w-0
 
-      focus:outline-none
-      focus:ring-2
-      focus:ring-[#009966]/35
-      focus:ring-offset-2
-    "
-  >
-    {/* white sweep */}
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
+                        bg-white
 
-          bg-white
+                        transition-all duration-500 ease-out
 
-          transition-all duration-500 ease-out
+                        group-hover:w-full
+                      "
+                    />
+                  </span>
 
-          group-hover:w-full
-        "
-      />
-    </span>
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+                    Explore Opportunities
+                  </span>
 
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-      Explore Opportunities
-    </span>
-
-    <ArrowRight
-      className="
-        relative z-10 h-4 w-4
-        transition-all duration-300
-        group-hover:translate-x-1
-        group-hover:text-[#02026e]
-      "
-    />
-  </Link>
-
-</div>
+                  <ArrowRight
+                    className="
+                      relative z-10 h-4 w-4
+                      transition-all duration-300
+                      group-hover:translate-x-1
+                      group-hover:text-[#02026e]
+                    "
+                  />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

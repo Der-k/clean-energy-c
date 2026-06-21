@@ -416,8 +416,7 @@ export default function VenuePage() {
   {/* REGISTER NOW (PRIMARY) */}
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="
       group relative inline-flex items-center justify-center gap-2
       overflow-hidden

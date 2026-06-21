@@ -355,12 +355,58 @@ export default function ProgrammePage() {
                     )}
 
                     <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn-glow inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
-                    </button>
+  type="submit"
+  disabled={isSubmitting}
+  className="
+    group relative inline-flex w-full items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-full px-6 py-3 text-base font-semibold
+
+    text-white
+    bg-[#020266]
+
+    border border-[#020266]
+
+    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    transition-all duration-500 ease-out
+
+    hover:border-[#020266]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
+
+    active:scale-[0.97]
+
+    disabled:cursor-not-allowed
+    disabled:opacity-70
+    disabled:hover:scale-100
+    disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#020266]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* white sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  {/* text turns blue */}
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+    {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
+  </span>
+</button>
                   </form>
                 </>
               ) : (

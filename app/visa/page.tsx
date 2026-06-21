@@ -19,9 +19,9 @@ const editions = [
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     location: "Kigali, Rwanda",
-    accent: "border-[#003994]/20 bg-[#003994]/[0.03]",
+    accent: "border-[#020266]/20 bg-[#020266]/[0.03]",
     button:
-      "bg-[#003994] text-white hover:shadow-[0_0_30px_rgba(0,57,148,0.22)]",
+      "bg-[#020266] text-white hover:shadow-[0_0_30px_rgba(0,57,148,0.22)]",
     href: "/conference?edition=kigali",
     visaText:
       "Kenyan citizens do not need a visa to travel to Kigali, Rwanda for short business or conference travel. As EAC citizens, Kenyans can enter Rwanda for up to 6 months using a valid passport, national ID, or temporary Interstate Pass. Carry your invitation letter, accommodation details, return ticket, and yellow fever certificate where applicable.",
@@ -100,10 +100,10 @@ const timeline = [
 export default function VisaPage() {
   return (
     <main className="bg-white pt-24">
-      <section className="border-b border-zinc-200 bg-gradient-to-b from-[#003994]/[0.05] via-white to-white">
+      <section className="border-b border-zinc-200 bg-gradient-to-b from-[#020266]/[0.05] via-white to-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center rounded-full border border-[#003994]/15 bg-white px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994] shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-[#020266]/15 bg-white px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266] shadow-sm">
               Visa Planning
             </div>
 
@@ -129,7 +129,7 @@ export default function VisaPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="rounded-[32px] border border-[#009966]/25 bg-gradient-to-br from-[#009966]/[0.08] via-white to-[#003994]/[0.06] p-6 shadow-sm sm:p-8 lg:p-10">
+        <div className="rounded-[32px] border border-[#009966]/25 bg-gradient-to-br from-[#009966]/[0.08] via-white to-[#020266]/[0.06] p-6 shadow-sm sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <div className="inline-flex rounded-full bg-[#009966] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
@@ -153,22 +153,99 @@ export default function VisaPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href={australiaVisaGuideHref}
-                  target="_blank"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#009966] px-6 py-3 text-base font-semibold text-white transition hover:shadow-[0_0_32px_rgba(0,153,102,0.28)]"
-                >
-                  <Download className="h-4 w-4" />
-                  Download Australia visa guide
-                </Link>
+              <Link
+  href="/downloads/australia-visa-guide.pdf"
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+    rounded-full px-6 py-3 text-base font-semibold
+    text-white
+    bg-[#009966]
+    border border-[#009966]
+    shadow-[0_10px_30px_rgba(0,153,102,0.18)]
+    transition-all duration-500 ease-out
+    hover:border-[#009966]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(0,153,102,0.28)]
+    active:scale-[0.97]
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#009966]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* white sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
 
-                <a
-                  href="mailto:info@cleanenergyconference.com.au"
-                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white px-6 py-3 text-base font-semibold text-zinc-950 transition hover:border-[#009966]/40 hover:text-[#009966]"
-                >
-                  <Mail className="h-4 w-4" />
-                  Ask for support
-                </a>
+  <Download
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-[#009966]
+    "
+  />
+
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#009966]">
+    Download Australia visa guide
+  </span>
+</Link>
+
+<Link
+  href="mailto:info@cleanenergyconference.com.au"
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+    rounded-full px-6 py-3 text-base font-semibold
+    text-zinc-950
+    bg-white
+    border border-zinc-300
+    shadow-sm
+    transition-all duration-500 ease-out
+    hover:border-[#009966]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(0,153,102,0.18)]
+    active:scale-[0.97]
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#009966]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* green sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-[#009966]
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  <Mail
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-white
+    "
+  />
+
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+    Ask for support
+  </span>
+</Link>
               </div>
             </div>
 
@@ -204,14 +281,14 @@ export default function VisaPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-  <div className="rounded-[32px] border border-[#003994]/20 bg-gradient-to-br from-[#003994]/[0.06] via-white to-white p-6 shadow-sm sm:p-8 lg:p-10">
+  <div className="rounded-[32px] border border-[#020266]/20 bg-gradient-to-br from-[#020266]/[0.06] via-white to-white p-6 shadow-sm sm:p-8 lg:p-10">
     <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
       <div>
-        <div className="inline-flex rounded-full bg-[#003994] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+        <div className="inline-flex rounded-full bg-[#020266] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
           Kigali visa guidance
         </div>
 
-        <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+        <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
           Kigali edition travel support
         </p>
 
@@ -249,7 +326,7 @@ export default function VisaPage() {
             "Yellow fever certificate where applicable",
           ].map((item) => (
             <div key={item} className="flex items-start gap-3">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#003994]" />
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#020266]" />
               <span className="text-base leading-6 text-zinc-700">
                 {item}
               </span>
@@ -271,7 +348,7 @@ export default function VisaPage() {
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="rounded-[30px] border border-zinc-200 bg-zinc-50 p-6 shadow-sm sm:p-8 lg:p-10">
           <div className="max-w-3xl">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
               Recommended process
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-zinc-950">
@@ -293,7 +370,7 @@ export default function VisaPage() {
                   key={step.title}
                   className="rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#003994]/10 text-[#003994]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#020266]/10 text-[#020266]">
                     <Icon className="h-5 w-5" />
                   </div>
 
@@ -315,7 +392,7 @@ export default function VisaPage() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[28px] border border-zinc-200 bg-white p-7 shadow-sm">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#003994]">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
               Document checklist
             </p>
             <h2 className="mt-3 text-2xl font-bold tracking-[-0.02em] text-zinc-950">
@@ -409,7 +486,7 @@ export default function VisaPage() {
 
 
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
-        <div className="rounded-[30px] border border-[#003994]/20 bg-gradient-to-r from-[#003994] to-[#001b6e] px-6 py-8 text-white shadow-[0_18px_50px_rgba(0,57,148,0.22)] md:px-10 md:py-10">
+        <div className="rounded-[30px] border border-[#020266]/20 bg-gradient-to-r from-[#020266] to-[#001b6e] px-6 py-8 text-white shadow-[0_18px_50px_rgba(0,57,148,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-3xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
@@ -426,23 +503,110 @@ export default function VisaPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="mailto:info@cleanenergyconference.com.au"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-base font-semibold text-[#003994] transition hover:bg-white/90"
-              >
-                <Mail className="h-4 w-4" />
-                Contact conference team
-              </a>
+         <div className="flex flex-wrap gap-3">
+  <Link
+  href="mailto:info@cleanenergyconference.com.au"
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+    rounded-full px-5 py-3 text-base font-semibold
+    text-[#02026e]
+    bg-white
+    border border-white
+    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+    transition-all duration-500 ease-out
+    hover:border-white/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
+    active:scale-[0.97]
+    focus:outline-none
+    focus:ring-2
+    focus:ring-white/40
+    focus:ring-offset-2
+    focus:ring-offset-[#02026e]
+  "
+>
+  {/* blue sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-[#02026e]
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
 
-              <Link
-                href="/tickets"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/10"
-              >
-                View tickets
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+  <Mail
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-white
+    "
+  />
+
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+    Contact conference team
+  </span>
+</Link>
+ 
+
+  <Link
+    href="/tickets"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      overflow-hidden
+
+      rounded-full px-5 py-3 text-base font-semibold
+
+      text-white
+      bg-white/10 backdrop-blur-sm
+
+      border border-white/30
+
+      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+      transition-all duration-500 ease-out
+
+      hover:border-white/60
+      hover:scale-[1.04]
+      hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
+
+      active:scale-[0.97]
+
+      focus:outline-none
+      focus:ring-2
+      focus:ring-white/40
+      focus:ring-offset-2
+      focus:ring-offset-[#02026e]
+    "
+  >
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span
+        className="
+          absolute left-0 top-0 h-full w-0
+          bg-white
+          transition-all duration-500 ease-out
+          group-hover:w-full
+        "
+      />
+    </span>
+
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+      View tickets
+    </span>
+
+    <ArrowRight
+      className="
+        relative z-10 h-4 w-4
+        transition-all duration-300
+        group-hover:translate-x-1
+        group-hover:text-[#02026e]
+      "
+    />
+  </Link>
+</div>
           </div>
         </div>
       </section>

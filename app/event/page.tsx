@@ -317,8 +317,7 @@ export default function EventOverviewPage() {
   {/* REGISTER NOW */}
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="
       group relative inline-flex items-center justify-center gap-2
       overflow-hidden
@@ -542,8 +541,7 @@ export default function EventOverviewPage() {
   {/* REGISTER NOW */}
   <a
     href="/get-tickets"
-    target="_blank"
-    rel="noopener noreferrer"
+   
     className="
       group relative inline-flex items-center justify-center gap-2
       overflow-hidden
@@ -744,21 +742,118 @@ function ProgrammeCard({
 
         {/* Navigation Controls */}
         <div className="mt-6 flex items-center justify-between">
-          <button
-            onClick={goPrev}
-            className="flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 text-sm font-semibold text-[#02026e] shadow-sm hover:bg-[#02026e]/5"
-          >
-            <ChevronRight className="h-4 w-4 rotate-180" />
-            Previous
-          </button>
+         <button
+  onClick={goPrev}
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
 
-          <button
-            onClick={goNext}
-            className="flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 text-sm font-semibold text-[#02026e] shadow-sm hover:bg-[#02026e]/5"
-          >
-            Next
-            <ChevronRight className="h-4 w-4" />
-          </button>
+    rounded-full px-4 py-2 text-sm font-semibold
+
+    text-[#020266]
+    bg-white
+
+    border border-[#020266]/20
+
+    shadow-sm
+
+    transition-all duration-500 ease-out
+
+    hover:border-[#020266]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(2,2,102,0.18)]
+
+    active:scale-[0.97]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#020266]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* blue sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-[#020266]
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  <ChevronRight
+    className="
+      relative z-10 h-4 w-4 rotate-180
+      transition-colors duration-300
+      group-hover:text-white
+    "
+  />
+
+  {/* text turns white */}
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+    Previous
+  </span>
+</button>
+
+<button
+  onClick={goNext}
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-full px-4 py-2 text-sm font-semibold
+
+    text-[#020266]
+    bg-white
+
+    border border-[#020266]/20
+
+    shadow-sm
+
+    transition-all duration-500 ease-out
+
+    hover:border-[#020266]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(2,2,102,0.18)]
+
+    active:scale-[0.97]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#020266]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* blue sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-[#020266]
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  {/* text turns white */}
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+    Next
+  </span>
+
+  <ChevronRight
+    className="
+      relative z-10 h-4 w-4
+      transition-all duration-300
+      group-hover:translate-x-1
+      group-hover:text-white
+    "
+  />
+</button>
         </div>
       </div>
     </div>

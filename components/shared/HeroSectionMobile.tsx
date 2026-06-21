@@ -63,7 +63,7 @@ function MobileCarousel() {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative w-full overflow-hidden bg-[#003994]">
+    <div ref={wrapperRef} className="relative w-full overflow-hidden bg-[#020266]">
       {/* Header bar */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
@@ -106,8 +106,8 @@ function MobileCarousel() {
       </div>
 
       {/* Edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#003994] to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#003994] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#020266] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#020266] to-transparent z-10" />
     </div>
   );
 }

@@ -59,14 +59,55 @@ export function PartnersPreview() {
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/partners"
-            className="btn-glow rounded-full px-7 py-3 text-base font-semibold text-white"
-          >
-            View All Partners
-          </Link>
-        </div>
+      <div className="mt-10 flex justify-center">
+  <Link
+    href="/partners"
+    className="
+      group relative inline-flex items-center justify-center gap-2
+      overflow-hidden
+
+      rounded-full px-7 py-3 text-base font-semibold
+
+      text-white
+      bg-[#020266]
+
+      border border-[#020266]
+
+      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+      transition-all duration-500 ease-out
+
+      hover:border-[#020266]/60
+      hover:scale-[1.04]
+      hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
+
+      active:scale-[0.97]
+
+      focus:outline-none
+      focus:ring-2
+      focus:ring-[#020266]/25
+      focus:ring-offset-2
+      focus:ring-offset-white
+    "
+  >
+    {/* white sweep */}
+    <span className="absolute inset-0 overflow-hidden rounded-full">
+      <span
+        className="
+          absolute left-0 top-0 h-full w-0
+          bg-white
+          transition-all duration-500 ease-out
+          group-hover:w-full
+        "
+      />
+    </span>
+
+    {/* text turns blue */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+      View All Partners
+    </span>
+  </Link>
+</div>
       </div>
     </section>
   );

@@ -457,14 +457,67 @@ export default function ContactPage() {
                   )}
 
                   <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      {isSubmitting ? "Sending..." : "Send Enquiry"}
-                      <Send className="h-4 w-4" />
-                    </button>
+                   <button
+  type="submit"
+  disabled={isSubmitting}
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-full px-6 py-3 text-base font-semibold
+
+    text-white
+    bg-[#02026e]
+
+    border border-[#02026e]
+
+    shadow-[0_10px_30px_rgba(2,2,110,0.18)]
+
+    transition-all duration-500 ease-out
+
+    hover:border-[#02026e]/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(2,2,110,0.28)]
+
+    active:scale-[0.97]
+
+    disabled:cursor-not-allowed
+    disabled:opacity-70
+    disabled:hover:scale-100
+    disabled:hover:shadow-[0_10px_30px_rgba(2,2,110,0.18)]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#02026e]/25
+    focus:ring-offset-2
+    focus:ring-offset-white
+  "
+>
+  {/* white sweep */}
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  {/* text turns blue */}
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+    {isSubmitting ? "Sending..." : "Send Enquiry"}
+  </span>
+
+  <Send
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-[#02026e]
+    "
+  />
+</button>
                   </div>
                 </form>
               )}
@@ -490,22 +543,114 @@ export default function ContactPage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <a
-                href="https://cleanenergyconference.com.au"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/15"
-              >
-                <Globe className="h-4 w-4" />
-                Visit Website
-              </a>
-              <a
-                href="mailto:info@cleanenergyconference.com.au"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-base font-semibold text-white transition hover:bg-white/15"
-              >
-                <Mail className="h-4 w-4" />
-                Email Us
-              </a>
+           <a   href="https://cleanenergyconference.com.au"
+  target="_blank"
+  rel="noreferrer"
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-full px-5 py-3 text-base font-semibold
+
+    text-white
+    bg-white/10 backdrop-blur-sm
+
+    border border-white/20
+
+    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    transition-all duration-500 ease-out
+
+    hover:border-white/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
+
+    active:scale-[0.97]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-white/40
+    focus:ring-offset-2
+    focus:ring-offset-[#02026e]
+  "
+>
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  <Globe
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-[#02026e]
+    "
+  />
+
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+    Visit Website
+  </span>
+</a>
+
+<a
+  href="mailto:info@cleanenergyconference.com.au"
+  className="
+    group relative inline-flex items-center justify-center gap-2
+    overflow-hidden
+
+    rounded-full px-5 py-3 text-base font-semibold
+
+    text-white
+    bg-white/10 backdrop-blur-sm
+
+    border border-white/20
+
+    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+    transition-all duration-500 ease-out
+
+    hover:border-white/60
+    hover:scale-[1.04]
+    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
+
+    active:scale-[0.97]
+
+    focus:outline-none
+    focus:ring-2
+    focus:ring-white/40
+    focus:ring-offset-2
+    focus:ring-offset-[#02026e]
+  "
+>
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span
+      className="
+        absolute left-0 top-0 h-full w-0
+        bg-white
+        transition-all duration-500 ease-out
+        group-hover:w-full
+      "
+    />
+  </span>
+
+  <Mail
+    className="
+      relative z-10 h-4 w-4
+      transition-colors duration-300
+      group-hover:text-[#02026e]
+    "
+  />
+
+  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+    Email Us
+  </span>
+</a>
             </div>
           </div>
         </div>
