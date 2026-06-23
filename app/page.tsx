@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/shared/hero-section";
 import { ConferenceOverview } from "@/components/sections/conference-overview";
 import { EventCountdown } from "@/components/sections/event-countdown";
-import { TestimonialsPreview } from "@/components/sections/testimonials-preview";
+import { SpeakersPreview  } from "@/components/sections/speakers-preview";
 import { VenuePreview } from "@/components/sections/venue-preview";
 import { PartnersPreview } from "@/components/sections/partners-preview";
 import { StatsBar } from "@/components/sections/stats-bar";
@@ -16,14 +16,14 @@ export default function HomePage() {
     <HeroSection />
 
       <StatsBar />
-      
+      <RoleEntrySection/>
       <ProgrammeCtaSection />
        
       <ConferenceOverview />
 
   
 
-      <TestimonialsPreview />
+      <SpeakersPreview  />
       <VenuePreview />
       <EventCountdown />
       <PartnersPreview />

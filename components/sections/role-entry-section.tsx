@@ -137,8 +137,8 @@ export function RoleEntrySection({
           className="text-center mb-6 transition-opacity duration-200"
           style={{ opacity: phase === "idle" ? 1 : 0 }}
         >
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">I am…</h2>
-          <p className="text-gray-600 mt-2">Different visitors have different goals. Choose your path.</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#02026e]">I am…</h2>
+          <p className="text-xl font-bold text-black mt-2">Different visitors have different goals. Choose your path.</p>
         </div>
 
         {/* Grid */}
@@ -164,16 +164,16 @@ export function RoleEntrySection({
                     "text-left p-5 rounded-xl border",
                     isFlying ? "" : "transition-all duration-300",
                     isSelected
-                      ? "border-orange-500 bg-orange-50 scale-[1.08] shadow-[0_0_0_4px_rgba(249,115,22,0.15)]"
-                      : "border-gray-200 bg-white hover:shadow-md hover:-translate-y-0.5",
+                      ? "border-[#009966] bg-[#009966]/5 scale-[1.08] shadow-[0_0_0_4px_rgba(0,153,102,0.15)]"
+                      : "border-[#02026e]/10 bg-white hover:border-[#02026e]/40 hover:-translate-y-1 hover:shadow-[0_0_40px_12px_rgba(2,2,110,0.18),0_0_80px_24px_rgba(2,2,110,0.10)]",
                     isFading ? "opacity-0 scale-[0.97]" : "opacity-100",
                   ].join(" ")}
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <Icon className="w-7 h-7 text-orange-600" />
+                    <Icon className={`w-7 h-7 ${isSelected ? "text-[#009966]" : "text-[#02026e]"}`} />
                     <h3 className="font-semibold text-gray-900">{role.title}</h3>
                   </div>
-                  <p className="text-sm text-gray-600">{role.description}</p>
+                  <p className="text-sm text-zinc-500">{role.description}</p>
                 </button>
               );
             })}
@@ -187,37 +187,37 @@ export function RoleEntrySection({
             style={{ animation: "fadeInUp 350ms ease forwards" }}
           >
             {/* Icon */}
-            <div className="w-20 h-20 rounded-full bg-orange-50 border border-orange-200 flex items-center justify-center">
-              <selectedRole.icon className="w-10 h-10 text-orange-600" />
+            <div className="w-20 h-20 rounded-full bg-[#009966]/10 border border-[#009966]/30 flex items-center justify-center">
+              <selectedRole.icon className="w-10 h-10 text-[#009966]" />
             </div>
 
             {/* Role title */}
             <div>
-              <p className="text-sm font-medium text-orange-600 uppercase tracking-widest mb-2">
+              <p className="text-sm font-medium text-[#009966] uppercase tracking-widest mb-2">
                 You are a
               </p>
-              <h2 className="text-5xl font-bold text-gray-900 tracking-tight">
+              <h2 className="text-5xl font-bold text-[#02026e] tracking-tight">
                 {selectedRole.title}
               </h2>
             </div>
 
             {/* Role-specific paragraph */}
-            <p className="text-gray-500 text-base max-w-md leading-relaxed">
+            <p className="text-zinc-500 text-base max-w-md leading-relaxed">
               {selectedRole.preparing}
             </p>
 
             {/* Animated loader */}
-            <div className="flex items-center gap-2 text-sm text-gray-400">
+            <div className="flex items-center gap-2 text-sm text-zinc-400">
               <span
-                className="block w-1.5 h-1.5 rounded-full bg-orange-400"
+                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
                 style={{ animation: "bounce 1s ease-in-out infinite" }}
               />
               <span
-                className="block w-1.5 h-1.5 rounded-full bg-orange-400"
+                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
                 style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }}
               />
               <span
-                className="block w-1.5 h-1.5 rounded-full bg-orange-400"
+                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
                 style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }}
               />
               <span className="ml-1">Preparing your experience</span>
@@ -226,7 +226,7 @@ export function RoleEntrySection({
             {/* Back button */}
             <button
               onClick={reset}
-              className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 bg-white hover:border-gray-300 hover:text-gray-900 hover:shadow-sm transition-all duration-150"
+              className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-[#02026e] bg-white hover:border-[#02026e]/40 hover:shadow-sm transition-all duration-150"
             >
               ← Choose a different role
             </button>
