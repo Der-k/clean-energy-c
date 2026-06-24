@@ -3,17 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Download, FileText, CheckCircle2 } from "lucide-react";
-import { Resend } from 'resend';
-
-
-const resend = new Resend('re_3e8j7GuT_BeDkvB7hWLTo3aQ7uKs6wwaJ');
-
-resend.emails.send({
-  from: 'onboarding@resend.dev',
-  to: 'derekgk0@gmail.com',
-  subject: 'Hello World',
-  html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-});
 
 type EventOption = "kigali" | "perth" | "both";
 
@@ -25,20 +14,30 @@ type FormState = {
   eventChoice: EventOption;
 };
 
-const programmeFiles: Record<EventOption, { label: string; href: string }> = {
+const programmeFiles: Record<EventOption, { label: string; href: string; hrefAlt?: string }> = {
   kigali: {
     label: "Kigali Edition Programme",
-    href: "/documents/clean-energy-conference-programme-2026.pdf",
+    href: "/documents/conference programme Kigali Rwanda.pdf",
   },
   perth: {
     label: "Perth Edition Programme",
-    href: "/documents/clean-energy-conference-programme-2026.pdf",
+    href: "/documents/conference programme Perth Australia.pdf",
   },
   both: {
-    label: "Full 2026 Programme",
-    href: "/documents/clean-energy-conference-programme-2026.pdf",
+    label: "Kigali Edition Programme + Perth Edition Programme",
+    href: "/documents/conference programme Kigali Rwanda.pdf",
+    hrefAlt: "/documents/conference programme Perth Australia.pdf",
   },
 };
+
+function triggerDownload(href: string) {
+  const link = document.createElement("a");
+  link.href = href;
+  link.download = "";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
 
 export default function ProgrammePage() {
   const [form, setForm] = useState<FormState>({
@@ -49,9 +48,7 @@ export default function ProgrammePage() {
     eventChoice: "both",
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>(
-    {}
-  );
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -93,27 +90,20 @@ export default function ProgrammePage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setSubmitError("");
-
     if (!validateForm()) return;
-
     setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/programme-request", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       const result = await response.json();
 
       if (!response.ok || !result.ok) {
-        console.error("Programme request failed:", result);
-
         if (result?.errors) {
           setErrors((prev) => ({
             ...prev,
@@ -124,19 +114,17 @@ export default function ProgrammePage() {
             eventChoice: result.errors.eventChoice?.[0] ?? "",
           }));
         }
-
         setSubmitError(result?.message || "Something went wrong. Please try again.");
         return;
       }
 
       setIsSubmitted(true);
 
-      const link = document.createElement("a");
-      link.href = selectedProgramme.href;
-      link.download = "";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      const programme = programmeFiles[form.eventChoice];
+      triggerDownload(programme.href);
+      if (programme.hrefAlt) {
+        setTimeout(() => triggerDownload(programme.hrefAlt!), 300);
+      }
     } catch (error) {
       console.error("Programme request failed:", error);
       setSubmitError("Something went wrong. Please try again.");
@@ -152,13 +140,9 @@ export default function ProgrammePage() {
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-[#02026e]">
-              Home
-            </Link>
+            <Link href="/" className="hover:text-[#02026e]">Home</Link>
             <ChevronRight className="h-4 w-4" />
-            <Link href="/event" className="hover:text-[#02026e]">
-              Event
-            </Link>
+            <Link href="/event" className="hover:text-[#02026e]">Event</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-[color:var(--text-main)]-700">Programme</span>
           </div>
@@ -173,8 +157,7 @@ export default function ProgrammePage() {
                 Request the conference programme
               </h1>
 
-              <p className="mt-5 max-w-2xl text-xl
- leading-8 text-[color:var(--text-main)]-600">
+              <p className="mt-5 max-w-2xl text-xl leading-8 text-[color:var(--text-main)]-600">
                 Select the edition you are interested in, submit your details,
                 and access the relevant programme document for the conference.
               </p>
@@ -185,14 +168,12 @@ export default function ProgrammePage() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
                       <FileText className="h-5 w-5" />
                     </div>
-
                     <div>
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Available programme options
                       </p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
-                        Kigali Edition, Perth Edition, or the combined 2026
-                        programme document.
+                        Kigali Edition, Perth Edition, or both programmes downloaded together.
                       </p>
                     </div>
                   </div>
@@ -203,14 +184,12 @@ export default function ProgrammePage() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
                       <Download className="h-5 w-5" />
                     </div>
-
                     <div>
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Download after submission
                       </p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
-                        Once submitted, the selected programme file will open or
-                        download automatically.
+                        Once submitted, the selected programme file(s) will open or download automatically.
                       </p>
                     </div>
                   </div>
@@ -233,10 +212,7 @@ export default function ProgrammePage() {
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
-                        <label
-                          htmlFor="firstName"
-                          className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
-                        >
+                        <label htmlFor="firstName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
                           First name
                         </label>
                         <input
@@ -253,10 +229,7 @@ export default function ProgrammePage() {
                       </div>
 
                       <div>
-                        <label
-                          htmlFor="secondName"
-                          className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
-                        >
+                        <label htmlFor="secondName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
                           Second name
                         </label>
                         <input
@@ -274,10 +247,7 @@ export default function ProgrammePage() {
                     </div>
 
                     <div>
-                      <label
-                        htmlFor="email"
-                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
-                      >
+                      <label htmlFor="email" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
                         Email
                       </label>
                       <input
@@ -294,10 +264,7 @@ export default function ProgrammePage() {
                     </div>
 
                     <div>
-                      <label
-                        htmlFor="organization"
-                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
-                      >
+                      <label htmlFor="organization" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
                         Organization
                       </label>
                       <input
@@ -309,25 +276,18 @@ export default function ProgrammePage() {
                         placeholder="Enter organization"
                       />
                       {errors.organization && (
-                        <p className="mt-2 text-xs text-red-600">
-                          {errors.organization}
-                        </p>
+                        <p className="mt-2 text-xs text-red-600">{errors.organization}</p>
                       )}
                     </div>
 
                     <div>
-                      <label
-                        htmlFor="eventChoice"
-                        className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800"
-                      >
+                      <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
                         Which event do you want?
                       </label>
                       <select
                         id="eventChoice"
                         value={form.eventChoice}
-                        onChange={(e) =>
-                          updateField("eventChoice", e.target.value as EventOption)
-                        }
+                        onChange={(e) => updateField("eventChoice", e.target.value as EventOption)}
                         className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
                       >
                         <option value="kigali">Kigali Edition</option>
@@ -335,15 +295,13 @@ export default function ProgrammePage() {
                         <option value="both">Both Editions</option>
                       </select>
                       {errors.eventChoice && (
-                        <p className="mt-2 text-xs text-red-600">
-                          {errors.eventChoice}
-                        </p>
+                        <p className="mt-2 text-xs text-red-600">{errors.eventChoice}</p>
                       )}
                     </div>
 
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                        Selected file
+                        Selected file{form.eventChoice === "both" ? "s" : ""}
                       </p>
                       <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                         {selectedProgramme.label}
@@ -355,58 +313,31 @@ export default function ProgrammePage() {
                     )}
 
                     <button
-  type="submit"
-  disabled={isSubmitting}
-  className="
-    group relative inline-flex w-full items-center justify-center gap-2
-    overflow-hidden
-
-    rounded-full px-6 py-3 text-base font-semibold
-
-    text-white
-    bg-[#020266]
-
-    border border-[#020266]
-
-    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-    transition-all duration-500 ease-out
-
-    hover:border-[#020266]/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
-
-    active:scale-[0.97]
-
-    disabled:cursor-not-allowed
-    disabled:opacity-70
-    disabled:hover:scale-100
-    disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-    focus:outline-none
-    focus:ring-2
-    focus:ring-[#020266]/25
-    focus:ring-offset-2
-    focus:ring-offset-white
-  "
->
-  {/* white sweep */}
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-white
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
-
-  {/* text turns blue */}
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
-    {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
-  </span>
-</button>
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="
+                        group relative inline-flex w-full items-center justify-center gap-2
+                        overflow-hidden rounded-full px-6 py-3 text-base font-semibold
+                        text-white bg-[#020266] border border-[#020266]
+                        shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+                        transition-all duration-500 ease-out
+                        hover:border-[#020266]/60 hover:scale-[1.04]
+                        hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
+                        active:scale-[0.97]
+                        disabled:cursor-not-allowed disabled:opacity-70
+                        disabled:hover:scale-100
+                        disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+                        focus:outline-none focus:ring-2 focus:ring-[#020266]/25
+                        focus:ring-offset-2 focus:ring-offset-white
+                      "
+                    >
+                      <span className="absolute inset-0 overflow-hidden rounded-full">
+                        <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                      </span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+                        {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
+                      </span>
+                    </button>
                   </form>
                 </>
               ) : (
@@ -420,13 +351,12 @@ export default function ProgrammePage() {
                   </h2>
 
                   <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
-                    Thank you, {form.firstName}. Your selected programme should
-                    begin downloading automatically.
+                    Thank you, {form.firstName}. Your selected programme{form.eventChoice === "both" ? "s" : ""} should begin downloading automatically.
                   </p>
 
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                     <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                      Downloaded file
+                      Downloaded file{form.eventChoice === "both" ? "s" : ""}
                     </p>
                     <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                       {selectedProgramme.label}
@@ -437,6 +367,11 @@ export default function ProgrammePage() {
                     <a
                       href={selectedProgramme.href}
                       download
+                      onClick={
+                        selectedProgramme.hrefAlt
+                          ? () => setTimeout(() => triggerDownload(selectedProgramme.hrefAlt!), 300)
+                          : undefined
+                      }
                       className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
                     >
                       Download again
