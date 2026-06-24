@@ -16,9 +16,9 @@ export default function HomePage() {
     <HeroSection />
 
       <StatsBar />
-      <RoleEntrySection/>
+      
       <ProgrammeCtaSection />
-       
+       <RoleEntrySection/>
       <ConferenceOverview />
 
   
