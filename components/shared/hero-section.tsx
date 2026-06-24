@@ -320,12 +320,7 @@ export function HeroSection() {
             <Image src="/images/logo.png" alt="Background Logo" fill priority className="object-contain" />
           </div>
         </div>
-        {/* BOTTOM RIGHT */}
-        <div className="absolute bottom-10 right-[-80px]">
-          <div className="relative h-[420px] w-[420px] opacity-[0.07]">
-            <Image src="/images/bg_1.png" alt="Background Accent" fill className="object-contain" />
-          </div>
-        </div>
+      
       </div>
 
       <div className="absolute inset-0 bg-white" />
