@@ -46,14 +46,14 @@ const roles: Role[] = [
   },
   {
     key: "media",
-    title: "Media",
+    title: "Media Personnel",
     description: "Press access, interviews, and media accreditation.",
     preparing: "We're getting your press pass information, interview scheduling, and media kit ready for accreditation.",
     icon: Newspaper,
   },
   {
     key: "government",
-    title: "Government",
+    title: "Government Official",
     description: "Policy engagement and strategic collaboration.",
     preparing: "We're preparing the policy briefs, strategic sessions, and bilateral engagement opportunities relevant to your office.",
     icon: Landmark,
