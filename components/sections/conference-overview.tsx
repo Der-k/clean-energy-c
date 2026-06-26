@@ -265,81 +265,62 @@ export function ConferenceOverview() {
           })}
         </div>
       
-<div
-  className="mt-8 overflow-hidden rounded-[28px] border border-emerald-200 p-[1px] shadow-[0_18px_50px_rgba(0,57,148,0.15)]"
-  style={{
-    background: "conic-gradient(from var(--angle), #020266, #0047B3, #009966, #0047B3, #020266)",
-    backgroundSize: "300% 300%",
-    animation: "spin 4s linear infinite, gradientSpin 5s ease infinite",
-  }}
->
-  <style>{`
-    @property --angle {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes spin {
-      to { --angle: 360deg; }
-    }
-    @keyframes gradientSpin {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-  `}</style>
+<div className="mt-8 overflow-hidden rounded-[28px] bg-emerald-900 p-8 lg:p-10">
+  <div className="flex gap-8 items-stretch">
+    {/* Left content */}
+    <div className="flex-1 min-w-0">
+      <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">
+        2026 Conference Theme
+      </p>
 
-  <div className="rounded-[27px] bg-white px-8 py-7">
-    <div className="flex gap-8 items-stretch">
-      {/* Left content */}
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">
-          2026 Conference Theme
-        </p>
+      <h3 className="mt-3 text-4xl font-semibold text-emerald-50">
+        Turning Ambition Into Action
+      </h3>
 
-        <h3 className="mt-3 text-4xl font-semibold text-zinc-950">
-          Turning Ambition Into Action
-        </h3>
+      <p className="mt-5 text-lg leading-8 text-emerald-200">
+        The 2026 editions focus on delivering measurable outcomes through
+        investment-ready projects, regional cooperation, technology transfer,
+        clean energy deployment, and sustainable infrastructure development
+        across Africa and Australia.
+      </p>
 
-        <p className="mt-5 text-lg leading-8 text-zinc-700">
-          The 2026 editions focus on delivering measurable outcomes through
-          investment-ready projects, regional cooperation, technology transfer,
-          clean energy deployment, and sustainable infrastructure development
-          across Africa and Australia.
-        </p>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {[
-            { title: "Investment Mobilisation", text: "Connecting projects with investors and development finance." },
-            { title: "Technology Deployment", text: "Accelerating renewable energy, storage and smart grids." },
-            { title: "Regional Partnerships", text: "Strengthening Africa–Australia collaboration." },
-            { title: "Sustainable Growth", text: "Driving long-term economic and climate impact." },
-          ].map((item) => (
-            <div key={item.title} className="rounded-3xl bg-white p-6 shadow-sm">
-              <h4 className="font-semibold text-zinc-900">{item.title}</h4>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{item.text}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          {["Investment", "Innovation", "Partnerships", "Implementation", "Climate Action"].map((item) => (
-            <span key={item} className="rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-[#020266]">
-              {item}
-            </span>
-          ))}
-        </div>
+      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {[
+          { title: "Investment Mobilisation", text: "Connecting projects with investors and development finance." },
+          { title: "Technology Deployment", text: "Accelerating renewable energy, storage and smart grids." },
+          { title: "Regional Partnerships", text: "Strengthening Africa–Australia collaboration." },
+          { title: "Sustainable Growth", text: "Driving long-term economic and climate impact." },
+        ].map((item) => (
+          <div
+            key={item.title}
+            className="rounded-3xl bg-white/10 border border-emerald-200/20 p-6"
+          >
+            <h4 className="font-semibold text-emerald-50">{item.title}</h4>
+            <p className="mt-3 text-sm leading-7 text-emerald-300">{item.text}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Right image */}
-      <div className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
-        <div className="h-full rounded-2xl overflow-hidden">
-          <img
-            src="/conference-image.jpg"
-            alt="2026 Conference"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      <div className="mt-6 flex flex-wrap gap-3">
+        {["Investment", "Innovation", "Partnerships", "Implementation", "Climate Action"].map((item) => (
+          <span
+            key={item}
+            className="rounded-full bg-white/10 border border-emerald-200/25 px-4 py-2 text-sm font-medium text-emerald-200"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    {/* Right image */}
+    <div className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
+      <div className="h-full rounded-2xl overflow-hidden">
+        <img
+          src="/conference-image.jpg"
+          alt="2026 Conference"
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   </div>

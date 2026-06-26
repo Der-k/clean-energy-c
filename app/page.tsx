@@ -18,7 +18,7 @@ export default function HomePage() {
       <StatsBar />
       
       <ProgrammeCtaSection />
-       <RoleEntrySection/>
+      
       <ConferenceOverview />
 
   
