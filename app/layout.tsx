@@ -5,7 +5,8 @@ import { Footer } from "@/components/layout/footer";
 import ChatWidget from "@/components/chat/ChatWidget";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { RoleProvider } from "@/context/role-context";
+import { RoleProvider } from "@/context/RoleContext";
+
 
 export const metadata = {
   title: "Clean Energy Conference",
