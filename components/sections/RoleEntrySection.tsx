@@ -4,8 +4,7 @@ import { useState, useRef } from "react";
 import {
   User, Mic, HandCoins, Store, Newspaper, Landmark, TrendingUp,
 } from "lucide-react";
-
-type RoleKey = "delegate" | "speaker" | "sponsor" | "exhibitor" | "media" | "government" | "investor";
+import { useRole, type RoleKey } from "@/context/RoleContext";
 
 type Role = {
   key: RoleKey;
@@ -74,6 +73,8 @@ export function RoleEntrySection({
 }: {
   onRoleSelect?: (role: RoleKey) => void;
 }) {
+  const { setRole, clearRole } = useRole();
+
   const [selected, setSelected] = useState<RoleKey | null>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [flyStyle, setFlyStyle] = useState<React.CSSProperties>({});
@@ -114,6 +115,9 @@ export function RoleEntrySection({
     setTimeout(() => {
       setPhase("preparing");
       setFlyStyle({});
+
+      // Save to context (→ localStorage + DB) after animation completes
+      setRole(role.key);
       onRoleSelect?.(role.key);
     }, 1000);
   };
@@ -122,6 +126,10 @@ export function RoleEntrySection({
     setPhase("idle");
     setSelected(null);
     setFlyStyle({});
+    // Note: we clear local animation state but do NOT call clearRole() here —
+    // the visitor's role persists in localStorage/DB. If you want to fully
+    // clear the role on reset, replace the line below with clearRole().
+    // clearRole();
   };
 
   const selectedRole = roles.find((r) => r.key === selected);
@@ -208,18 +216,9 @@ export function RoleEntrySection({
 
             {/* Animated loader */}
             <div className="flex items-center gap-2 text-sm text-zinc-400">
-              <span
-                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
-                style={{ animation: "bounce 1s ease-in-out infinite" }}
-              />
-              <span
-                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
-                style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }}
-              />
-              <span
-                className="block w-1.5 h-1.5 rounded-full bg-[#009966]"
-                style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }}
-              />
+              <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out infinite" }} />
+              <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
+              <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }} />
               <span className="ml-1">Preparing your experience</span>
             </div>
 

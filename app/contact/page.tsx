@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   Send,
 } from "lucide-react";
+import { useRole } from "@/context/RoleContext";
 
 type EnquiryType =
   | "general"
@@ -101,10 +102,10 @@ const initialForm: FormState = {
 };
 
 export default function ContactPage() {
+  const { visitorUuid } = useRole();
+
   const [form, setForm] = useState<FormState>(initialForm);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>(
-    {}
-  );
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -136,20 +137,20 @@ export default function ContactPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     setSubmitError("");
-
     if (!validateForm()) return;
-
     setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/contact-enquiry", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          // Include visitor UUID so PHP can link this submission
+          // to the visitor profile. Null-safe — works even if no role picked.
+          visitorUuid: visitorUuid ?? null,
+        }),
       });
 
       const result = await response.json();
@@ -165,7 +166,6 @@ export default function ContactPage() {
             message: result.errors.message?.[0] || "",
           });
         }
-
         setSubmitError(result.message || "Something went wrong.");
         return;
       }
@@ -191,9 +191,7 @@ export default function ContactPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
           <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-black">
-            <Link href="/" className="hover:text-[#02026e]">
-              Home
-            </Link>
+            <Link href="/" className="hover:text-[#02026e]">Home</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-black">Contact Us</span>
           </div>
@@ -205,8 +203,7 @@ export default function ContactPage() {
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-black sm:text-5xl">
               Get in touch with the conference team
             </h1>
-            <p className="mt-5 max-w-3xl text-xl
- leading-8 text-black">
+            <p className="mt-5 max-w-3xl text-xl leading-8 text-black">
               Reach the right team for enquiries related to speakers, partnerships,
               media, delegates, venue information, or general conference support.
             </p>
@@ -215,108 +212,55 @@ export default function ContactPage() {
       </section>
 
       <section className="bg-gradient-to-br from-[#02026e] via-[#0b0b8f] to-[#010150]">
-  <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16 text-white">
-    
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {contactCards.map((card) => {
-        const Icon = card.icon;
-
-        return (
-          <article
-            key={card.title}
-            className="
-              group rounded-[22px]
-              border border-[#06895b]/25
-              bg-[#06895b]/10
-              p-6
-              backdrop-blur-sm
-              transition-all duration-300
-              hover:-translate-y-1
-              hover:border-[#06895b]/50
-              hover:bg-[#06895b]/15
-              hover:shadow-[0_18px_40px_rgba(6,137,91,0.18)]
-            "
-          >
-            {/* Icon container (bigger + more visible) */}
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#06895b] text-white shadow-[0_10px_25px_rgba(6,137,91,0.35)] ring-2 ring-white/10">
-              <Icon className="h-7 w-7" />
-            </div>
-
-            <h2 className="mt-5 text-xl font-semibold text-white">
-              {card.title}
-            </h2>
-
-            <p className="mt-3 text-base leading-7 text-white/85">
-              {card.description}
-            </p>
-
-            <div className="mt-5 space-y-3 text-base text-white/90">
-              <p className="font-medium text-white">
-                {card.person}
-              </p>
-
-              <div className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
-                <a
-                  href={`mailto:${card.email}`}
-                  className="hover:text-[#06895b] transition-colors"
+        <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16 text-white">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {contactCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <article
+                  key={card.title}
+                  className="group rounded-[22px] border border-[#06895b]/25 bg-[#06895b]/10 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#06895b]/50 hover:bg-[#06895b]/15 hover:shadow-[0_18px_40px_rgba(6,137,91,0.18)]"
                 >
-                  {card.email}
-                </a>
-              </div>
-
-              {card.phone ? (
-                <div className="flex items-start gap-3">
-                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
-                  <a
-                    href={`tel:${card.phone}`}
-                    className="hover:text-[#06895b] transition-colors"
-                  >
-                    {card.phone}
-                  </a>
-                </div>
-              ) : null}
-            </div>
-          </article>
-        );
-      })}
-    </div>
-
-  </div>
-</section>
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#06895b] text-white shadow-[0_10px_25px_rgba(6,137,91,0.35)] ring-2 ring-white/10">
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <h2 className="mt-5 text-xl font-semibold text-white">{card.title}</h2>
+                  <p className="mt-3 text-base leading-7 text-white/85">{card.description}</p>
+                  <div className="mt-5 space-y-3 text-base text-white/90">
+                    <p className="font-medium text-white">{card.person}</p>
+                    <div className="flex items-start gap-3">
+                      <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
+                      <a href={`mailto:${card.email}`} className="hover:text-[#06895b] transition-colors">{card.email}</a>
+                    </div>
+                    {card.phone ? (
+                      <div className="flex items-start gap-3">
+                        <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
+                        <a href={`tel:${card.phone}`} className="hover:text-[#06895b] transition-colors">{card.phone}</a>
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
-                Send an Enquiry
-              </p>
-              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-black">
-                Contact form
-              </h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">Send an Enquiry</p>
+              <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-black">Contact form</h2>
               <p className="mt-5 text-base leading-8 text-black">
-                Use the form to send a message to the conference team and we will
-                direct it to the right department.
+                Use the form to send a message to the conference team and we will direct it to the right department.
               </p>
-
               <div className="mt-8 rounded-[20px] border border-[#02026e]/20 bg-white p-5 shadow-sm">
-                <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">
-                  Primary Contact
-                </p>
+                <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">Primary Contact</p>
                 <div className="mt-4 space-y-3 text-base text-black">
-                  <p>
-                    <span className="font-semibold text-black">Phone:</span>{" "}
-                    +254 725 707 557
-                  </p>
-                  <p>
-                    <span className="font-semibold text-black">Email:</span>{" "}
-                    dorah.simiyu@cleanenergyconference.com.au
-                  </p>
-                  <p>
-                    <span className="font-semibold text-black">Website:</span>{" "}
-                    www.cleanenergyconference.com.au
-                  </p>
+                  <p><span className="font-semibold text-black">Phone:</span> +254 725 707 557</p>
+                  <p><span className="font-semibold text-black">Email:</span> dorah.simiyu@cleanenergyconference.com.au</p>
+                  <p><span className="font-semibold text-black">Website:</span> www.cleanenergyconference.com.au</p>
                 </div>
               </div>
             </div>
@@ -327,23 +271,13 @@ export default function ContactPage() {
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#02026e]/10 text-[#02026e]">
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
-
-                  <h3 className="mt-6 text-2xl font-bold text-black">
-                    Enquiry sent successfully
-                  </h3>
-
+                  <h3 className="mt-6 text-2xl font-bold text-black">Enquiry sent successfully</h3>
                   <p className="mt-3 max-w-md text-base leading-7 text-black">
-                    Thank you for contacting the conference team. We will review
-                    your message and get back to you shortly.
+                    Thank you for contacting the conference team. We will review your message and get back to you shortly.
                   </p>
-
                   <button
                     type="button"
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setSubmitError("");
-                      setErrors({});
-                    }}
+                    onClick={() => { setIsSubmitted(false); setSubmitError(""); setErrors({}); }}
                     className="mt-8 rounded-full bg-[#02026e] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#010150]"
                   >
                     Send another enquiry
@@ -360,11 +294,8 @@ export default function ContactPage() {
                         onChange={(e) => updateField("fullName", e.target.value)}
                         className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
-                      {errors.fullName && (
-                        <p className="mt-2 text-xs text-red-600">{errors.fullName}</p>
-                      )}
+                      {errors.fullName && <p className="mt-2 text-xs text-red-600">{errors.fullName}</p>}
                     </div>
-
                     <div>
                       <input
                         type="email"
@@ -373,9 +304,7 @@ export default function ContactPage() {
                         onChange={(e) => updateField("email", e.target.value)}
                         className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
-                      {errors.email && (
-                        <p className="mt-2 text-xs text-red-600">{errors.email}</p>
-                      )}
+                      {errors.email && <p className="mt-2 text-xs text-red-600">{errors.email}</p>}
                     </div>
                   </div>
 
@@ -388,11 +317,8 @@ export default function ContactPage() {
                         onChange={(e) => updateField("phone", e.target.value)}
                         className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
-                      {errors.phone && (
-                        <p className="mt-2 text-xs text-red-600">{errors.phone}</p>
-                      )}
+                      {errors.phone && <p className="mt-2 text-xs text-red-600">{errors.phone}</p>}
                     </div>
-
                     <div>
                       <input
                         type="text"
@@ -401,18 +327,14 @@ export default function ContactPage() {
                         onChange={(e) => updateField("subject", e.target.value)}
                         className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                       />
-                      {errors.subject && (
-                        <p className="mt-2 text-xs text-red-600">{errors.subject}</p>
-                      )}
+                      {errors.subject && <p className="mt-2 text-xs text-red-600">{errors.subject}</p>}
                     </div>
                   </div>
 
                   <div>
                     <select
                       value={form.enquiryType}
-                      onChange={(e) =>
-                        updateField("enquiryType", e.target.value as EnquiryType)
-                      }
+                      onChange={(e) => updateField("enquiryType", e.target.value as EnquiryType)}
                       className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-black outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                     >
                       <option value="">Enquiry Type</option>
@@ -423,9 +345,7 @@ export default function ContactPage() {
                       <option value="delegate">Delegate / Exhibition</option>
                       <option value="venue">Venue / Logistics</option>
                     </select>
-                    {errors.enquiryType && (
-                      <p className="mt-2 text-xs text-red-600">{errors.enquiryType}</p>
-                    )}
+                    {errors.enquiryType && <p className="mt-2 text-xs text-red-600">{errors.enquiryType}</p>}
                   </div>
 
                   <div>
@@ -436,9 +356,7 @@ export default function ContactPage() {
                       onChange={(e) => updateField("message", e.target.value)}
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base outline-none transition focus:border-[#02026e]/40 focus:bg-white"
                     />
-                    {errors.message && (
-                      <p className="mt-2 text-xs text-red-600">{errors.message}</p>
-                    )}
+                    {errors.message && <p className="mt-2 text-xs text-red-600">{errors.message}</p>}
                   </div>
 
                   {submitError && (
@@ -448,67 +366,19 @@ export default function ContactPage() {
                   )}
 
                   <div className="pt-2">
-                   <button
-  type="submit"
-  disabled={isSubmitting}
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-
-    rounded-full px-6 py-3 text-base font-semibold
-
-    text-white
-    bg-[#02026e]
-
-    border border-[#02026e]
-
-    shadow-[0_10px_30px_rgba(2,2,110,0.18)]
-
-    transition-all duration-500 ease-out
-
-    hover:border-[#02026e]/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(2,2,110,0.28)]
-
-    active:scale-[0.97]
-
-    disabled:cursor-not-allowed
-    disabled:opacity-70
-    disabled:hover:scale-100
-    disabled:hover:shadow-[0_10px_30px_rgba(2,2,110,0.18)]
-
-    focus:outline-none
-    focus:ring-2
-    focus:ring-[#02026e]/25
-    focus:ring-offset-2
-    focus:ring-offset-white
-  "
->
-  {/* white sweep */}
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-white
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
-
-  {/* text turns blue */}
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-    {isSubmitting ? "Sending..." : "Send Enquiry"}
-  </span>
-
-  <Send
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-[#02026e]
-    "
-  />
-</button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 text-base font-semibold text-white bg-[#02026e] border border-[#02026e] shadow-[0_10px_30px_rgba(2,2,110,0.18)] transition-all duration-500 ease-out hover:border-[#02026e]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(2,2,110,0.28)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 disabled:hover:shadow-[0_10px_30px_rgba(2,2,110,0.18)] focus:outline-none focus:ring-2 focus:ring-[#02026e]/25 focus:ring-offset-2 focus:ring-offset-white"
+                    >
+                      <span className="absolute inset-0 overflow-hidden rounded-full">
+                        <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                      </span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+                        {isSubmitting ? "Sending..." : "Send Enquiry"}
+                      </span>
+                      <Send className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-[#02026e]" />
+                    </button>
                   </div>
                 </form>
               )}
@@ -521,127 +391,31 @@ export default function ContactPage() {
         <div className="rounded-[28px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-                Follow our social network
-              </p>
-              <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
-                Stay connected with the conference
-              </h2>
-              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
-                Follow the conference across social channels for updates,
-                announcements, programme news, and speaker releases.
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Follow our social network</p>
+              <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">Stay connected with the conference</h2>
+              <p className="mt-3 text-base leading-7 text-white/80">
+                Follow the conference across social channels for updates, announcements, programme news, and speaker releases.
               </p>
             </div>
-
             <div className="flex flex-wrap gap-3">
-           <a   href="https://cleanenergyconference.com.au"
-  target="_blank"
-  rel="noreferrer"
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-
-    rounded-full px-5 py-3 text-base font-semibold
-
-    text-white
-    bg-white/10 backdrop-blur-sm
-
-    border border-white/20
-
-    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-    transition-all duration-500 ease-out
-
-    hover:border-white/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-
-    active:scale-[0.97]
-
-    focus:outline-none
-    focus:ring-2
-    focus:ring-white/40
-    focus:ring-offset-2
-    focus:ring-offset-[#02026e]
-  "
->
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-white
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
-
-  <Globe
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-[#02026e]
-    "
-  />
-
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-    Visit Website
-  </span>
-</a>
-
-<a
-  href="mailto:info@cleanenergyconference.com.au"
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-
-    rounded-full px-5 py-3 text-base font-semibold
-
-    text-white
-    bg-white/10 backdrop-blur-sm
-
-    border border-white/20
-
-    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-    transition-all duration-500 ease-out
-
-    hover:border-white/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-
-    active:scale-[0.97]
-
-    focus:outline-none
-    focus:ring-2
-    focus:ring-white/40
-    focus:ring-offset-2
-    focus:ring-offset-[#02026e]
-  "
->
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-white
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
-
-  <Mail
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-[#02026e]
-    "
-  />
-
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-    Email Us
-  </span>
-</a>
+              <a href="https://cleanenergyconference.com.au" target="_blank" rel="noreferrer"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-5 py-3 text-base font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-white/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+              >
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                </span>
+                <Globe className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-[#02026e]" />
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">Visit Website</span>
+              </a>
+              <a href="mailto:info@cleanenergyconference.com.au"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-5 py-3 text-base font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-white/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+              >
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                </span>
+                <Mail className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-[#02026e]" />
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">Email Us</span>
+              </a>
             </div>
           </div>
         </div>
