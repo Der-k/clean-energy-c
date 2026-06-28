@@ -73,11 +73,13 @@ export function RoleEntrySection({
 }: {
   onRoleSelect?: (role: RoleKey) => void;
 }) {
-  const { setRole, clearRole } = useRole();
+  const { role: savedRole, loading, setRole, clearRole } = useRole();
 
   const [selected, setSelected] = useState<RoleKey | null>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [flyStyle, setFlyStyle] = useState<React.CSSProperties>({});
+  // Controls whether the user is switching away from a saved role
+  const [isSwitching, setIsSwitching] = useState(false);
 
   const cardRefs = useRef<Partial<Record<RoleKey, HTMLButtonElement>>>({});
   const gridRef = useRef<HTMLDivElement>(null);
@@ -115,8 +117,8 @@ export function RoleEntrySection({
     setTimeout(() => {
       setPhase("preparing");
       setFlyStyle({});
+      setIsSwitching(false);
 
-      // Save to context (→ localStorage + DB) after animation completes
       setRole(role.key);
       onRoleSelect?.(role.key);
     }, 1000);
@@ -126,13 +128,86 @@ export function RoleEntrySection({
     setPhase("idle");
     setSelected(null);
     setFlyStyle({});
-    // Note: we clear local animation state but do NOT call clearRole() here —
-    // the visitor's role persists in localStorage/DB. If you want to fully
-    // clear the role on reset, replace the line below with clearRole().
-    // clearRole();
+    setIsSwitching(false);
   };
 
   const selectedRole = roles.find((r) => r.key === selected);
+
+  // ── If context is still reading localStorage, show nothing to avoid flash ──
+  if (loading) {
+    return (
+      <section className="w-full pt-8 pb-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6 flex justify-center py-12">
+          <div className="flex items-center gap-2 text-sm text-zinc-400">
+            <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out infinite" }} />
+            <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
+            <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }} />
+          </div>
+        </div>
+        <style>{`
+          @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-4px); }
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  // ── Returning visitor: role already saved and not switching ──────────
+  if (savedRole && !isSwitching && phase === "idle") {
+    const currentRole = roles.find((r) => r.key === savedRole);
+    if (!currentRole) return null;
+
+    const Icon = currentRole.icon;
+
+    return (
+      <section className="w-full pt-8 pb-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div
+            className="flex flex-col items-center text-center pt-4 pb-12 gap-6"
+            style={{ animation: "fadeInUp 350ms ease forwards" }}
+          >
+            {/* Icon */}
+            <div className="w-20 h-20 rounded-full bg-[#009966]/10 border border-[#009966]/30 flex items-center justify-center">
+              <Icon className="w-10 h-10 text-[#009966]" />
+            </div>
+
+            {/* Welcome back */}
+            <div>
+              <p className="text-sm font-medium text-[#009966] uppercase tracking-widest mb-2">
+                Welcome back
+              </p>
+              <h2 className="text-5xl font-bold text-[#02026e] tracking-tight">
+                {currentRole.title}
+              </h2>
+            </div>
+
+            <p className="text-zinc-500 text-base max-w-md leading-relaxed">
+              {currentRole.preparing}
+            </p>
+
+            {/* Switch role button */}
+            <button
+              onClick={() => setIsSwitching(true)}
+              className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-[#02026e] bg-white hover:border-[#02026e]/40 hover:shadow-sm transition-all duration-150"
+            >
+              ← Choose a different role
+            </button>
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  // ── First-time visitor or switching: show the full picker ────────────
   const showGrid = phase !== "preparing";
   const gridFading = phase === "fading-grid";
 
@@ -145,8 +220,12 @@ export function RoleEntrySection({
           className="text-center mb-6 transition-opacity duration-200"
           style={{ opacity: phase === "idle" ? 1 : 0 }}
         >
-          <h2 className="text-3xl md:text-4xl font-semibold text-[#02026e]">I am…</h2>
-          <p className="text-xl font-bold text-black mt-2">Different visitors have different goals. Choose your path.</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#02026e]">
+            {isSwitching ? "Choose a new role" : "I am…"}
+          </h2>
+          <p className="text-xl font-bold text-black mt-2">
+            Different visitors have different goals. Choose your path.
+          </p>
         </div>
 
         {/* Grid */}
@@ -188,18 +267,28 @@ export function RoleEntrySection({
           </div>
         )}
 
-        {/* Preparing screen */}
+        {/* Cancel switch button — only shown when switching from a saved role */}
+        {isSwitching && phase === "idle" && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={reset}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-zinc-500 bg-white hover:border-slate-300 hover:shadow-sm transition-all duration-150"
+            >
+              ← Keep my current role
+            </button>
+          </div>
+        )}
+
+        {/* Preparing screen — shown after picking a new role */}
         {phase === "preparing" && selectedRole && (
           <div
             className="flex flex-col items-center text-center pt-4 pb-12 gap-6"
             style={{ animation: "fadeInUp 350ms ease forwards" }}
           >
-            {/* Icon */}
             <div className="w-20 h-20 rounded-full bg-[#009966]/10 border border-[#009966]/30 flex items-center justify-center">
               <selectedRole.icon className="w-10 h-10 text-[#009966]" />
             </div>
 
-            {/* Role title */}
             <div>
               <p className="text-sm font-medium text-[#009966] uppercase tracking-widest mb-2">
                 You are a
@@ -209,12 +298,10 @@ export function RoleEntrySection({
               </h2>
             </div>
 
-            {/* Role-specific paragraph */}
             <p className="text-zinc-500 text-base max-w-md leading-relaxed">
               {selectedRole.preparing}
             </p>
 
-            {/* Animated loader */}
             <div className="flex items-center gap-2 text-sm text-zinc-400">
               <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out infinite" }} />
               <span className="block w-1.5 h-1.5 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
@@ -222,7 +309,6 @@ export function RoleEntrySection({
               <span className="ml-1">Preparing your experience</span>
             </div>
 
-            {/* Back button */}
             <button
               onClick={reset}
               className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-[#02026e] bg-white hover:border-[#02026e]/40 hover:shadow-sm transition-all duration-150"

@@ -12,16 +12,14 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import { useRole } from "@/context/RoleContext";
 
 type FormState = {
-  // Package
   selectedPackage: string;
-  // Exhibitor Info
   companyName: string;
   websiteUrl: string;
   companyDescription: string;
   companyLogo: File | null;
-  // Contact Details
   firstName: string;
   lastName: string;
   email: string;
@@ -66,18 +64,15 @@ const exhibitionPackages = [
 const infoCards = [
   {
     title: "Exhibition opportunities",
-    description:
-      "The exhibition programme is currently being finalized. Exhibitors and showcases will be announced soon.",
+    description: "The exhibition programme is currently being finalized. Exhibitors and showcases will be announced soon.",
   },
   {
     title: "Who should exhibit",
-    description:
-      "Ideal for companies in renewable energy, clean tech, critical minerals, mobility, infrastructure, and sustainability.",
+    description: "Ideal for companies in renewable energy, clean tech, critical minerals, mobility, infrastructure, and sustainability.",
   },
   {
     title: "Why register now",
-    description:
-      "Early registration ensures priority updates and early access to booth allocations once released.",
+    description: "Early registration ensures priority updates and early access to booth allocations once released.",
   },
 ];
 
@@ -85,6 +80,8 @@ const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/gif"
 const MAX_FILE_SIZE_MB = 30;
 
 export default function ExhibitionPage() {
+  const { visitorUuid } = useRole();
+
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -150,6 +147,7 @@ export default function ExhibitionPage() {
 
     try {
       const formData = new FormData();
+
       Object.entries(form).forEach(([key, value]) => {
         if (value instanceof File) {
           formData.append(key, value);
@@ -157,6 +155,11 @@ export default function ExhibitionPage() {
           formData.append(key, value as string);
         }
       });
+
+      // Append visitor UUID so PHP can link to visitor_profiles
+      if (visitorUuid) {
+        formData.append("visitorUuid", visitorUuid);
+      }
 
       const response = await fetch("/api/exhibitor-interest", {
         method: "POST",
@@ -234,33 +237,26 @@ export default function ExhibitionPage() {
               now to receive early updates, booth information, and priority communication when
               exhibition opportunities are released.
             </p>
-
             <div className="mt-8 space-y-4">
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
                   <p className="text-base font-semibold text-black">Early access to exhibition updates</p>
-                  <p className="mt-1 text-base leading-7 text-black">
-                    Get notified when exhibition categories, pricing, and booth allocations are announced.
-                  </p>
+                  <p className="mt-1 text-base leading-7 text-black">Get notified when exhibition categories, pricing, and booth allocations are announced.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
                   <p className="text-base font-semibold text-black">Strong sector visibility</p>
-                  <p className="mt-1 text-base leading-7 text-black">
-                    Position your company alongside clean energy stakeholders, investors, developers, and decision-makers.
-                  </p>
+                  <p className="mt-1 text-base leading-7 text-black">Position your company alongside clean energy stakeholders, investors, developers, and decision-makers.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <Globe2 className="mt-0.5 h-5 w-5 shrink-0 text-[#02026e]" />
                 <div>
                   <p className="text-base font-semibold text-black">Kigali and Perth editions</p>
-                  <p className="mt-1 text-base leading-7 text-black">
-                    Indicate whether you are interested in Kigali, Perth, or both editions.
-                  </p>
+                  <p className="mt-1 text-base leading-7 text-black">Indicate whether you are interested in Kigali, Perth, or both editions.</p>
                 </div>
               </div>
             </div>
@@ -275,8 +271,7 @@ export default function ExhibitionPage() {
                 </div>
                 <h3 className="mt-6 text-2xl font-bold text-black">Interest received</h3>
                 <p className="mt-3 max-w-md text-base leading-7 text-black">
-                  Thank you for registering your exhibition interest. We will reach out once exhibition
-                  opportunities and booth options are available.
+                  Thank you for registering your exhibition interest. We will reach out once exhibition opportunities and booth options are available.
                 </p>
                 <button
                   type="button"
@@ -291,14 +286,11 @@ export default function ExhibitionPage() {
                 <div className="mb-6">
                   <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">Register Now</p>
                   <h3 className="mt-2 text-2xl font-bold tracking-[-0.02em] text-black">Exhibitor interest form</h3>
-                  <p className="mt-2 text-base leading-7 text-black">
-                    Complete the form below and our team will keep you informed.
-                  </p>
+                  <p className="mt-2 text-base leading-7 text-black">Complete the form below and our team will keep you informed.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
-
-                  {/* ── Exhibition Package ── */}
+                  {/* Exhibition Package */}
                   <div>
                     <h4 className="mb-3 text-lg font-semibold text-black">Exhibition Package</h4>
                     <div className="space-y-3">
@@ -333,12 +325,8 @@ export default function ExhibitionPage() {
                             </div>
                             <div className="text-right">
                               <span className="text-2xl font-bold text-[#02026e]">{pkg.price}</span>
-                              <div className={`mt-2 h-5 w-5 rounded-full border-2 ml-auto flex items-center justify-center ${
-                                form.selectedPackage === pkg.id ? "border-[#02026e]" : "border-slate-300"
-                              }`}>
-                                {form.selectedPackage === pkg.id && (
-                                  <div className="h-2.5 w-2.5 rounded-full bg-[#02026e]" />
-                                )}
+                              <div className={`mt-2 h-5 w-5 rounded-full border-2 ml-auto flex items-center justify-center ${form.selectedPackage === pkg.id ? "border-[#02026e]" : "border-slate-300"}`}>
+                                {form.selectedPackage === pkg.id && <div className="h-2.5 w-2.5 rounded-full bg-[#02026e]" />}
                               </div>
                             </div>
                           </div>
@@ -347,60 +335,32 @@ export default function ExhibitionPage() {
                     </div>
                   </div>
 
-                  {/* ── Exhibitor Information ── */}
+                  {/* Exhibitor Information */}
                   <div>
                     <h4 className="mb-4 text-lg font-semibold text-black">Exhibitor Information</h4>
                     <div className="space-y-5">
                       <div>
-                        <label className="mb-2 block text-base font-medium text-black">
-                          Company Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Enter company name"
-                          value={form.companyName}
-                          onChange={(e) => updateField("companyName", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                        />
+                        <label className="mb-2 block text-base font-medium text-black">Company Name <span className="text-red-500">*</span></label>
+                        <input type="text" placeholder="Enter company name" value={form.companyName} onChange={(e) => updateField("companyName", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         {errors.companyName && <p className="mt-2 text-xs text-red-600">{errors.companyName}</p>}
                       </div>
-
                       <div>
-                        <label className="mb-2 block text-base font-medium text-black">
-                          Website URL <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="https://yourcompany.com"
-                          value={form.websiteUrl}
-                          onChange={(e) => updateField("websiteUrl", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                        />
+                        <label className="mb-2 block text-base font-medium text-black">Website URL <span className="text-red-500">*</span></label>
+                        <input type="text" placeholder="https://yourcompany.com" value={form.websiteUrl} onChange={(e) => updateField("websiteUrl", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         {errors.websiteUrl && <p className="mt-2 text-xs text-red-600">{errors.websiteUrl}</p>}
                       </div>
-
                       <div>
-                        <label className="mb-2 block text-base font-medium text-black">
-                          Company Short Description
-                        </label>
-                        <textarea
-                          rows={3}
-                          placeholder="Brief description of your company and what you do"
-                          value={form.companyDescription}
-                          onChange={(e) => updateField("companyDescription", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                        />
+                        <label className="mb-2 block text-base font-medium text-black">Company Short Description</label>
+                        <textarea rows={3} placeholder="Brief description of your company and what you do" value={form.companyDescription} onChange={(e) => updateField("companyDescription", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                       </div>
 
                       {/* Logo Upload */}
                       <div>
-                        <label className="mb-2 block text-base font-medium text-black">
-                          Company Logo <span className="text-red-500">*</span>
-                        </label>
-                        <p className="mb-3 text-sm text-zinc-500">
-                          File size: Up to {MAX_FILE_SIZE_MB} MB · Supported: JPG, JPEG, PNG, GIF, WEBP
-                        </p>
-
+                        <label className="mb-2 block text-base font-medium text-black">Company Logo <span className="text-red-500">*</span></label>
+                        <p className="mb-3 text-sm text-zinc-500">File size: Up to {MAX_FILE_SIZE_MB} MB · Supported: JPG, JPEG, PNG, GIF, WEBP</p>
                         {form.companyLogo ? (
                           <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#02026e]/10">
@@ -410,11 +370,7 @@ export default function ExhibitionPage() {
                               <p className="truncate text-sm font-medium text-black">{form.companyLogo.name}</p>
                               <p className="text-xs text-zinc-500">{(form.companyLogo.size / 1024 / 1024).toFixed(2)} MB</p>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => updateField("companyLogo", null)}
-                              className="rounded-full p-1 text-zinc-400 transition hover:bg-slate-200 hover:text-zinc-700"
-                            >
+                            <button type="button" onClick={() => updateField("companyLogo", null)} className="rounded-full p-1 text-zinc-400 transition hover:bg-slate-200 hover:text-zinc-700">
                               <X className="h-4 w-4" />
                             </button>
                           </div>
@@ -424,108 +380,60 @@ export default function ExhibitionPage() {
                             onDragLeave={() => setIsDragging(false)}
                             onDrop={handleDrop}
                             onClick={() => fileInputRef.current?.click()}
-                            className={`cursor-pointer rounded-2xl border-2 border-dashed px-6 py-8 text-center transition ${
-                              isDragging
-                                ? "border-[#02026e] bg-[#02026e]/5"
-                                : "border-slate-300 bg-slate-50 hover:border-[#02026e]/50 hover:bg-[#02026e]/5"
-                            }`}
+                            className={`cursor-pointer rounded-2xl border-2 border-dashed px-6 py-8 text-center transition ${isDragging ? "border-[#02026e] bg-[#02026e]/5" : "border-slate-300 bg-slate-50 hover:border-[#02026e]/50 hover:bg-[#02026e]/5"}`}
                           >
                             <Upload className="mx-auto h-8 w-8 text-slate-400" />
                             <p className="mt-2 text-sm font-medium text-black">Drop or Upload Your File Here</p>
                             <p className="mt-1 text-xs text-zinc-500">Drop Here</p>
                           </div>
                         )}
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept=".jpg,.jpeg,.png,.gif,.webp"
-                          className="sr-only"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) handleFileSelect(file);
-                            e.target.value = "";
-                          }}
-                        />
+                        <input ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png,.gif,.webp" className="sr-only"
+                          onChange={(e) => { const file = e.target.files?.[0]; if (file) handleFileSelect(file); e.target.value = ""; }} />
                         {errors.companyLogo && <p className="mt-2 text-xs text-red-600">{errors.companyLogo}</p>}
                       </div>
                     </div>
                   </div>
 
-                  {/* ── Contact Details ── */}
+                  {/* Contact Details */}
                   <div>
                     <h4 className="mb-4 text-lg font-semibold text-black">Contact Details</h4>
                     <div className="space-y-5">
                       <div className="grid gap-5 sm:grid-cols-2">
                         <div>
-                          <label className="mb-2 block text-base font-medium text-black">
-                            First Name <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="First name"
-                            value={form.firstName}
-                            onChange={(e) => updateField("firstName", e.target.value)}
-                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          />
+                          <label className="mb-2 block text-base font-medium text-black">First Name <span className="text-red-500">*</span></label>
+                          <input type="text" placeholder="First name" value={form.firstName} onChange={(e) => updateField("firstName", e.target.value)}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                           {errors.firstName && <p className="mt-2 text-xs text-red-600">{errors.firstName}</p>}
                         </div>
                         <div>
                           <label className="mb-2 block text-base font-medium text-black">Last Name</label>
-                          <input
-                            type="text"
-                            placeholder="Last name"
-                            value={form.lastName}
-                            onChange={(e) => updateField("lastName", e.target.value)}
-                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          />
+                          <input type="text" placeholder="Last name" value={form.lastName} onChange={(e) => updateField("lastName", e.target.value)}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         </div>
                       </div>
-
                       <div>
-                        <label className="mb-2 block text-base font-medium text-black">
-                          Email <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          placeholder="your@email.com"
-                          value={form.email}
-                          onChange={(e) => updateField("email", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                        />
+                        <label className="mb-2 block text-base font-medium text-black">Email <span className="text-red-500">*</span></label>
+                        <input type="email" placeholder="your@email.com" value={form.email} onChange={(e) => updateField("email", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         {errors.email && <p className="mt-2 text-xs text-red-600">{errors.email}</p>}
                       </div>
-
                       <div className="grid gap-5 sm:grid-cols-2">
                         <div>
                           <label className="mb-2 block text-base font-medium text-black">Company Name</label>
-                          <input
-                            type="text"
-                            placeholder="Company name"
-                            value={form.contactCompanyName}
-                            onChange={(e) => updateField("contactCompanyName", e.target.value)}
-                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          />
+                          <input type="text" placeholder="Company name" value={form.contactCompanyName} onChange={(e) => updateField("contactCompanyName", e.target.value)}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         </div>
                         <div>
                           <label className="mb-2 block text-base font-medium text-black">Designation</label>
-                          <input
-                            type="text"
-                            placeholder="e.g. CEO, Marketing Manager"
-                            value={form.designation}
-                            onChange={(e) => updateField("designation", e.target.value)}
-                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          />
+                          <input type="text" placeholder="e.g. CEO, Marketing Manager" value={form.designation} onChange={(e) => updateField("designation", e.target.value)}
+                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         </div>
                       </div>
-
                       <div>
                         <label className="mb-2 block text-base font-medium text-black">Phone</label>
                         <div className="flex gap-2">
-                          <select
-                            value={form.phoneCountryCode}
-                            onChange={(e) => updateField("phoneCountryCode", e.target.value)}
-                            className="w-28 shrink-0 rounded-2xl border border-slate-200 bg-white px-3 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          >
+                          <select value={form.phoneCountryCode} onChange={(e) => updateField("phoneCountryCode", e.target.value)}
+                            className="w-28 shrink-0 rounded-2xl border border-slate-200 bg-white px-3 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10">
                             <option value="+254">+254</option>
                             <option value="+1">+1</option>
                             <option value="+44">+44</option>
@@ -540,42 +448,19 @@ export default function ExhibitionPage() {
                             <option value="+91">+91</option>
                             <option value="+86">+86</option>
                           </select>
-                          <input
-                            type="tel"
-                            placeholder="700 000 000"
-                            value={form.phone}
-                            onChange={(e) => updateField("phone", e.target.value)}
-                            className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10"
-                          />
+                          <input type="tel" placeholder="700 000 000" value={form.phone} onChange={(e) => updateField("phone", e.target.value)}
+                            className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-black outline-none transition focus:border-[#02026e] focus:ring-4 focus:ring-[#02026e]/10" />
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {submitError && (
-                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-base text-red-700">
-                      {submitError}
-                    </div>
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-base text-red-700">{submitError}</div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="
-                      group relative inline-flex w-full items-center justify-center gap-2
-                      overflow-hidden rounded-2xl px-5 py-3.5 text-base font-semibold
-                      text-white bg-[#020266] border border-[#020266]
-                      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-                      transition-all duration-500 ease-out
-                      hover:border-[#020266]/60 hover:scale-[1.04]
-                      hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
-                      active:scale-[0.97]
-                      disabled:cursor-not-allowed disabled:opacity-70
-                      disabled:hover:scale-100
-                      disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-                      focus:outline-none focus:ring-2 focus:ring-[#020266]/25
-                      focus:ring-offset-2 focus:ring-offset-white
-                    "
+                  <button type="submit" disabled={isSubmitting}
+                    className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl px-5 py-3.5 text-base font-semibold text-white bg-[#020266] border border-[#020266] shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-[#020266]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-2 focus:ring-[#020266]/25 focus:ring-offset-2 focus:ring-offset-white"
                   >
                     <span className="absolute inset-0 overflow-hidden rounded-2xl">
                       <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />

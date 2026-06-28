@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Download, FileText, CheckCircle2 } from "lucide-react";
+import { useRole } from "@/context/RoleContext";
 
 type EventOption = "kigali" | "perth" | "both";
 
@@ -40,6 +41,8 @@ function triggerDownload(href: string) {
 }
 
 export default function ProgrammePage() {
+  const { visitorUuid } = useRole();
+
   const [form, setForm] = useState<FormState>({
     firstName: "",
     secondName: "",
@@ -98,7 +101,10 @@ export default function ProgrammePage() {
       const response = await fetch("/api/programme-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          visitorUuid: visitorUuid ?? null,
+        }),
       });
 
       const result = await response.json();
@@ -107,11 +113,11 @@ export default function ProgrammePage() {
         if (result?.errors) {
           setErrors((prev) => ({
             ...prev,
-            firstName: result.errors.firstName?.[0] ?? "",
-            secondName: result.errors.secondName?.[0] ?? "",
-            email: result.errors.email?.[0] ?? "",
+            firstName:    result.errors.firstName?.[0]    ?? "",
+            secondName:   result.errors.secondName?.[0]   ?? "",
+            email:        result.errors.email?.[0]        ?? "",
             organization: result.errors.organization?.[0] ?? "",
-            eventChoice: result.errors.eventChoice?.[0] ?? "",
+            eventChoice:  result.errors.eventChoice?.[0]  ?? "",
           }));
         }
         setSubmitError(result?.message || "Something went wrong. Please try again.");
@@ -152,11 +158,9 @@ export default function ProgrammePage() {
               <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 Programme Access
               </p>
-
               <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
                 Request the conference programme
               </h1>
-
               <p className="mt-5 max-w-2xl text-xl leading-8 text-[color:var(--text-main)]-600">
                 Select the edition you are interested in, submit your details,
                 and access the relevant programme document for the conference.
@@ -169,9 +173,7 @@ export default function ProgrammePage() {
                       <FileText className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                        Available programme options
-                      </p>
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Available programme options</p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
                         Kigali Edition, Perth Edition, or both programmes downloaded together.
                       </p>
@@ -185,9 +187,7 @@ export default function ProgrammePage() {
                       <Download className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                        Download after submission
-                      </p>
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Download after submission</p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
                         Once submitted, the selected programme file(s) will open or download automatically.
                       </p>
@@ -201,9 +201,7 @@ export default function ProgrammePage() {
               {!isSubmitted ? (
                 <>
                   <div className="mb-6">
-                    <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">
-                      Request Form
-                    </p>
+                    <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">Request Form</p>
                     <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
                       Get the programme schedule
                     </h2>
@@ -212,124 +210,59 @@ export default function ProgrammePage() {
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
-                        <label htmlFor="firstName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                          First name
-                        </label>
-                        <input
-                          id="firstName"
-                          type="text"
-                          value={form.firstName}
-                          onChange={(e) => updateField("firstName", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-                          placeholder="Enter first name"
-                        />
-                        {errors.firstName && (
-                          <p className="mt-2 text-xs text-red-600">{errors.firstName}</p>
-                        )}
+                        <label htmlFor="firstName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">First name</label>
+                        <input id="firstName" type="text" value={form.firstName} onChange={(e) => updateField("firstName", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter first name" />
+                        {errors.firstName && <p className="mt-2 text-xs text-red-600">{errors.firstName}</p>}
                       </div>
-
                       <div>
-                        <label htmlFor="secondName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                          Second name
-                        </label>
-                        <input
-                          id="secondName"
-                          type="text"
-                          value={form.secondName}
-                          onChange={(e) => updateField("secondName", e.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-                          placeholder="Enter second name"
-                        />
-                        {errors.secondName && (
-                          <p className="mt-2 text-xs text-red-600">{errors.secondName}</p>
-                        )}
+                        <label htmlFor="secondName" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Second name</label>
+                        <input id="secondName" type="text" value={form.secondName} onChange={(e) => updateField("secondName", e.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                          placeholder="Enter second name" />
+                        {errors.secondName && <p className="mt-2 text-xs text-red-600">{errors.secondName}</p>}
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => updateField("email", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-                        placeholder="Enter email address"
-                      />
-                      {errors.email && (
-                        <p className="mt-2 text-xs text-red-600">{errors.email}</p>
-                      )}
+                      <label htmlFor="email" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Email</label>
+                      <input id="email" type="email" value={form.email} onChange={(e) => updateField("email", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        placeholder="Enter email address" />
+                      {errors.email && <p className="mt-2 text-xs text-red-600">{errors.email}</p>}
                     </div>
 
                     <div>
-                      <label htmlFor="organization" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                        Organization
-                      </label>
-                      <input
-                        id="organization"
-                        type="text"
-                        value={form.organization}
-                        onChange={(e) => updateField("organization", e.target.value)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-                        placeholder="Enter organization"
-                      />
-                      {errors.organization && (
-                        <p className="mt-2 text-xs text-red-600">{errors.organization}</p>
-                      )}
+                      <label htmlFor="organization" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Organization</label>
+                      <input id="organization" type="text" value={form.organization} onChange={(e) => updateField("organization", e.target.value)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                        placeholder="Enter organization" />
+                      {errors.organization && <p className="mt-2 text-xs text-red-600">{errors.organization}</p>}
                     </div>
 
                     <div>
-                      <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                        Which event do you want?
-                      </label>
-                      <select
-                        id="eventChoice"
-                        value={form.eventChoice}
-                        onChange={(e) => updateField("eventChoice", e.target.value as EventOption)}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
-                      >
+                      <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Which event do you want?</label>
+                      <select id="eventChoice" value={form.eventChoice} onChange={(e) => updateField("eventChoice", e.target.value as EventOption)}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
                         <option value="kigali">Kigali Edition</option>
                         <option value="perth">Perth Edition</option>
                         <option value="both">Both Editions</option>
                       </select>
-                      {errors.eventChoice && (
-                        <p className="mt-2 text-xs text-red-600">{errors.eventChoice}</p>
-                      )}
+                      {errors.eventChoice && <p className="mt-2 text-xs text-red-600">{errors.eventChoice}</p>}
                     </div>
 
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Selected file{form.eventChoice === "both" ? "s" : ""}
                       </p>
-                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">
-                        {selectedProgramme.label}
-                      </p>
+                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgramme.label}</p>
                     </div>
 
-                    {submitError && (
-                      <p className="text-base text-red-600">{submitError}</p>
-                    )}
+                    {submitError && <p className="text-base text-red-600">{submitError}</p>}
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="
-                        group relative inline-flex w-full items-center justify-center gap-2
-                        overflow-hidden rounded-full px-6 py-3 text-base font-semibold
-                        text-white bg-[#020266] border border-[#020266]
-                        shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-                        transition-all duration-500 ease-out
-                        hover:border-[#020266]/60 hover:scale-[1.04]
-                        hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)]
-                        active:scale-[0.97]
-                        disabled:cursor-not-allowed disabled:opacity-70
-                        disabled:hover:scale-100
-                        disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-                        focus:outline-none focus:ring-2 focus:ring-[#020266]/25
-                        focus:ring-offset-2 focus:ring-offset-white
-                      "
+                    <button type="submit" disabled={isSubmitting}
+                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 text-base font-semibold text-white bg-[#020266] border border-[#020266] shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-[#020266]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(2,2,102,0.25)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 disabled:hover:shadow-[0_10px_30px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-2 focus:ring-[#020266]/25 focus:ring-offset-2 focus:ring-offset-white"
                     >
                       <span className="absolute inset-0 overflow-hidden rounded-full">
                         <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
@@ -345,52 +278,32 @@ export default function ProgrammePage() {
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#02026e]/5 text-[#02026e]">
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
-
                   <h2 className="font-heading mt-6 text-2xl font-bold text-[color:var(--text-main)]-900">
                     Programme request submitted
                   </h2>
-
                   <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
                     Thank you, {form.firstName}. Your selected programme{form.eventChoice === "both" ? "s" : ""} should begin downloading automatically.
                   </p>
-
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                     <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                       Downloaded file{form.eventChoice === "both" ? "s" : ""}
                     </p>
-                    <p className="mt-1 text-base text-[color:var(--text-main)]-600">
-                      {selectedProgramme.label}
-                    </p>
+                    <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgramme.label}</p>
                   </div>
-
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
-                    <a
-                      href={selectedProgramme.href}
-                      download
-                      onClick={
-                        selectedProgramme.hrefAlt
-                          ? () => setTimeout(() => triggerDownload(selectedProgramme.hrefAlt!), 300)
-                          : undefined
-                      }
+                    <a href={selectedProgramme.href} download
+                      onClick={selectedProgramme.hrefAlt ? () => setTimeout(() => triggerDownload(selectedProgramme.hrefAlt!), 300) : undefined}
                       className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
                     >
                       Download again
                       <Download className="h-4 w-4" />
                     </a>
-
-                    <button
-                      type="button"
+                    <button type="button"
                       onClick={() => {
                         setIsSubmitted(false);
                         setSubmitError("");
                         setErrors({});
-                        setForm({
-                          firstName: "",
-                          secondName: "",
-                          email: "",
-                          organization: "",
-                          eventChoice: "both",
-                        });
+                        setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both" });
                       }}
                       className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
                     >
