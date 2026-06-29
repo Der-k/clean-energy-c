@@ -146,7 +146,7 @@ function useAutoAdvance(count: number, interval = 6000) {
 }
 
 // ─── 👇 Change this path to match your video file in /public ──────────────────
-const VIDEO_SRC = "/videos/c_banner.mp4";
+const VIDEO_SRC = "/videos/c_banner.mp4?v=2";
 // ──────────────────────────────────────────────────────────────────────────────
 
 // ─── component ─────────────────────────────────────────────────────────────────
