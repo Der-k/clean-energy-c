@@ -1,541 +1,505 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
-import { CinematicHeroVisual } from "@/components/ui/CinematicHeroVisual";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 
-const categoryImages = {
-  solar: [
-    { src: "/gifs/solar-1.gif", alt: "Solar energy" },
-    { src: "/gifs/solar-2.gif", alt: "Solar panels" },
-    { src: "/gifs/solar-3.gif", alt: "Solar farm" },
-    { src: "/gifs/solar-4.gif", alt: "Solar farm" },
-  ],
-  geothermal: [
-    { src: "/gifs/geo-1.gif", alt: "Geothermal energy" },
-    { src: "/gifs/geo-2.gif", alt: "Hydrothermal plant" },
-    { src: "/gifs/geo-3.gif", alt: "Geothermal steam" },
-    { src: "/gifs/geo-4.gif", alt: "Geothermal steam" },
-  ],
-  mining: [
-    { src: "/gifs/mining-1.gif", alt: "Mining operations" },
-    { src: "/gifs/mining-2.gif", alt: "Mine site" },
-    { src: "/gifs/mining-3.gif", alt: "Clean mining" },
-    { src: "/gifs/mining-4.gif", alt: "Clean mining" },
-  ],
+// ─── types ─────────────────────────────────────────────────────────────────────
+type TextSlide = {
+  kind: "text";
+  id: number;
+  eyebrow: string;
+  headline: string;
+  sub: string;
+  cta: string;
+  href: string;
+  accent: string;
 };
 
-const carouselImages = [
-  { src: "/images/hero-carousel-1.jpeg", alt: "Delegates networking" },
-  { src: "/images/hero-carousel-2.jpeg", alt: "Panel session" },
-  { src: "/images/hero-carousel-3.jpeg", alt: "Audience keynote" },
-  { src: "/images/hero-carousel-4.jpeg", alt: "Exhibition area" },
-  { src: "/images/hero-carousel-5.jpeg", alt: "Speaker presentation" },
-  { src: "/images/hero-carousel-6.jpeg", alt: "Networking event" },
-  { src: "/images/hero-carousel-7.jpeg", alt: "Conference hall" },
-  { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
+type CardsSlide = {
+  kind: "cards";
+  id: number;
+  eyebrow: string;
+  headline: string;
+  sub: string;
+  accent: string;
+  editions: { name: string; date: string; venue: string; country: string; href: string; color: string }[];
+  buttons: { label: string; href: string }[];
+};
+
+type Slide = TextSlide | CardsSlide;
+
+// ─── slide data ────────────────────────────────────────────────────────────────
+const slides: Slide[] = [
+  {
+    kind: "text",
+    id: 0,
+    eyebrow: "Africa · Australia · 2026",
+    headline: "Clean Energy\nConference\n2026",
+    sub: "Kigali & Perth editions bringing together policymakers, investors, and industry leaders to accelerate clean energy transition.",
+    cta: "Register Now",
+    href: "/get-tickets",
+    accent: "#fad202",
+  },
+  {
+    kind: "cards",
+    id: 1,
+    eyebrow: "Two Editions · One Mission",
+    headline: "Two Editions.\nOne Mission.",
+    sub: "Choose your destination and be part of Africa and Australia's leading clean energy event.",
+    accent: "#a5b4fc",
+    editions: [
+      { name: "Kigali Edition", date: "6–7 August 2026", venue: "Kigali Marriott Hotel, Rwanda", country: "RWA", href: "/conference?edition=kigali", color: "#a5b4fc" },
+      { name: "Perth Edition", date: "31 Aug – 1 Sept 2026", venue: "Novotel Hotel Perth, Australia", country: "AUS", href: "/conference?edition=perth", color: "#6ee7b7" },
+    ],
+    buttons: [
+      { label: "Register Now", href: "/get-tickets" },
+      { label: "View Programme", href: "/event/programme" },
+      { label: "Become a Partner", href: "/partners/become-a-partner" },
+    ],
+  },
+  {
+    kind: "text",
+    id: 2,
+    eyebrow: "Programme · 2026",
+    headline: "Solar,\nGeothermal\n& Clean Mining",
+    sub: "Three focused tracks covering the sectors driving Africa and Australia's energy future.",
+    cta: "View Programme",
+    href: "/event/programme",
+    accent: "#6ee7b7",
+  },
+  {
+    kind: "text",
+    id: 3,
+    eyebrow: "World-Class Speakers",
+    headline: "80+ Speakers\n40+\nCountries",
+    sub: "World-class keynotes, panel debates and executive dialogues shaping the clean energy agenda.",
+    cta: "See Speakers",
+    href: "/speakers",
+    accent: "#fad202",
+  },
+  {
+    kind: "text",
+    id: 4,
+    eyebrow: "Networking · 2026",
+    headline: "Unrivalled\nNetworking\nOpportunities",
+    sub: "Two days of high-level meetings, deal-making sessions and networking events across both editions.",
+    cta: "Register Now",
+    href: "/get-tickets",
+    accent: "#f9a8d4",
+  },
+  {
+    kind: "text",
+    id: 5,
+    eyebrow: "Partnership · 2026",
+    headline: "Become a\nConference\nPartner",
+    sub: "Align your brand with Africa and Australia's most important clean energy gathering of 2026.",
+    cta: "Partner With Us",
+    href: "/partners/become-a-partner",
+    accent: "#fbbf24",
+  },
+  {
+    kind: "text",
+    id: 6,
+    eyebrow: "Global Collaboration",
+    headline: "Africa ×\nAustralia\nEnergy",
+    sub: "Building bridges between two continents to accelerate the global clean energy transition.",
+    cta: "Learn More",
+    href: "/about",
+    accent: "#6ee7b7",
+  },
+  {
+    kind: "text",
+    id: 7,
+    eyebrow: "2,000+ Delegates Expected",
+    headline: "Join\nLeaders\nWorldwide",
+    sub: "Join government ministers, CEOs, and investors from across the clean energy value chain.",
+    cta: "Register Now",
+    href: "/get-tickets",
+    accent: "#fad202",
+  },
 ];
 
-// ─── Inject Ken Burns + animation keyframes once, client-side only ─────────────
-const injectSlotStyles = (() => {
-  let done = false;
-  return () => {
-    if (done || typeof document === "undefined") return;
-    done = true;
-    const el = document.createElement("style");
-    el.id = "__slot-styles";
-    el.textContent = [
-      // Ken Burns
-      "@keyframes kb0{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate(-1.6%,-1.6%)}}",
-      "@keyframes kb1{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate( 1.6%, 1.6%)}}",
-      "@keyframes kb2{0%{transform:scale(1) translate(0%,0%)}100%{transform:scale(1.09) translate( 1.6%,-1.6%)}}",
-      // Entrance animations
-      "@keyframes heroFadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}",
-      "@keyframes heroFadeIn{from{opacity:0}to{opacity:1}}",
-      // Card shimmer sweep
-      "@keyframes cardShimmer{0%{left:-120%}100%{left:120%}}",
-      // CTA glow pulse
-      "@keyframes ctaPulseGlow{0%,100%{box-shadow:0 12px 35px rgba(2,2,110,.35)}50%{box-shadow:0 18px 55px rgba(17,64,196,.55)}}",
-      "@keyframes ctaGoldPulse{0%,100%{box-shadow:0 12px 35px rgba(250,210,2,.30)}50%{box-shadow:0 18px 60px rgba(250,210,2,.50)}}",
-      // Edition card border pulse
-      "@keyframes borderPulseBlue{0%,100%{border-color:#93a4ff}50%{border-color:#4a60ff}}",
-      "@keyframes borderPulseGreen{0%,100%{border-color:#6ee7b7}50%{border-color:#10b981}}",
-    ].join("");
-    document.head.appendChild(el);
+// ─── helpers ───────────────────────────────────────────────────────────────────
+function useAutoAdvance(count: number, interval = 6000) {
+  const [active, setActive] = useState(0);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const jumpTo = (next: number) => {
+    if (timer.current) clearInterval(timer.current);
+    setActive(next);
+    timer.current = setInterval(
+      () => setActive((p) => (p + 1) % count),
+      interval
+    );
   };
-})();
-
-const editions = [
-  {
-    name: "Kigali Edition",
-    date: "6–7 August 2026",
-    venue: "Kigali Marriott Hotel, Rwanda",
-    accent: "text-[#02026e]",
-    href: "/conference?edition=kigali",
-  },
-  {
-    name: "Perth Edition",
-    date: "31 Aug – 1 Sept 2026",
-    venue: "Novotel Hotel Perth, Western Australia",
-    accent: "text-emerald-600",
-    href: "/conference?edition=perth",
-  },
-];
-
-// ─── Global coordinator ───────────────────────────────────────────────────────
-const slotCallbacks: Array<(() => void) | null> = [null, null, null];
-function registerSlot(index: number, cb: () => void) {
-  slotCallbacks[index] = cb;
-}
-
-// ─── ConferenceMomentsCarousel ─────────────────────────────────────────────────
-const MARQUEE_BASE_SPEED = 0.7;
-const MOMENTUM_DECAY     = 0.90;
-const MIN_VELOCITY       = 0.15;
-
-function ConferenceMomentsCarousel() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const dotsRef    = useRef<HTMLDivElement>(null);
-  const nudgeRef   = useRef<(dir: "prev" | "next") => void>(() => {});
 
   useEffect(() => {
-    const wrapper = wrapperRef.current;
-    const strip   = marqueeRef.current;
-    const dotsCtr = dotsRef.current;
-    if (!wrapper || !strip || !dotsCtr) return;
+    timer.current = setInterval(
+      () => setActive((p) => (p + 1) % count),
+      interval
+    );
+    return () => { if (timer.current) clearInterval(timer.current); };
+  }, [count, interval]);
 
-    let pos        = 0;
-    let vel        = 0;
-    let dragging   = false;
-    let lastX      = 0;
-    let lastT      = 0;
-    let halfW      = 0;
-    let cardW      = 0;
-    let activeIdx  = 0;
-    let raf: number;
-
-    const measure = () => {
-      halfW = strip.scrollWidth / 2;
-      if (strip.children.length >= 2) {
-        const a = strip.children[0] as HTMLElement;
-        const b = strip.children[1] as HTMLElement;
-        cardW = b.offsetLeft - a.offsetLeft;
-      }
-    };
-    requestAnimationFrame(measure);
-
-    const updateDots = (idx: number) => {
-      const dots = dotsCtr.children;
-      for (let i = 0; i < dots.length; i++) {
-        const d = dots[i] as HTMLElement;
-        d.style.width      = i === idx ? "22px" : "6px";
-        d.style.background = i === idx ? "white" : "rgba(255,255,255,0.3)";
-      }
-    };
-
-    const tick = () => {
-      if (!halfW) measure();
-      vel = Math.abs(vel) > MIN_VELOCITY ? vel * MOMENTUM_DECAY : 0;
-      if (!dragging) pos -= MARQUEE_BASE_SPEED + vel;
-      if (pos <= -halfW) pos += halfW;
-      if (pos > 0)       pos -= halfW;
-      strip.style.transform = `translateX(${pos}px)`;
-      if (cardW > 0) {
-        const n   = carouselImages.length;
-        const raw = Math.round((-pos + window.innerWidth / 2 - cardW / 2) / cardW);
-        const idx = ((raw % n) + n) % n;
-        if (idx !== activeIdx) { activeIdx = idx; updateDots(idx); }
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    nudgeRef.current = (dir) => { vel = dir === "prev" ? 6 : -6; };
-
-    const onTouchStart = (e: TouchEvent) => {
-      dragging = true; lastX = e.touches[0].clientX; lastT = performance.now(); vel = 0;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (!dragging) return;
-      const now = performance.now();
-      const dx  = e.touches[0].clientX - lastX;
-      pos += dx; vel = -(dx / Math.max(now - lastT, 1)) * 16;
-      lastX = e.touches[0].clientX; lastT = now;
-    };
-    const onTouchEnd = () => { dragging = false; };
-
-    const onMouseDown = (e: MouseEvent) => {
-      dragging = true; lastX = e.clientX; lastT = performance.now(); vel = 0;
-      wrapper.style.cursor = "grabbing";
-    };
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragging) return;
-      const now = performance.now();
-      const dx  = e.clientX - lastX;
-      pos += dx; vel = -(dx / Math.max(now - lastT, 1)) * 16;
-      lastX = e.clientX; lastT = now;
-    };
-    const onMouseUp = () => { dragging = false; wrapper.style.cursor = "grab"; };
-
-    wrapper.addEventListener("touchstart",  onTouchStart, { passive: true });
-    wrapper.addEventListener("touchmove",   onTouchMove,  { passive: true });
-    wrapper.addEventListener("touchend",    onTouchEnd,   { passive: true });
-    wrapper.addEventListener("touchcancel", onTouchEnd,   { passive: true });
-    wrapper.addEventListener("mousedown",   onMouseDown);
-    window.addEventListener("mousemove",    onMouseMove);
-    window.addEventListener("mouseup",      onMouseUp);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      wrapper.removeEventListener("touchstart",  onTouchStart);
-      wrapper.removeEventListener("touchmove",   onTouchMove);
-      wrapper.removeEventListener("touchend",    onTouchEnd);
-      wrapper.removeEventListener("touchcancel", onTouchEnd);
-      wrapper.removeEventListener("mousedown",   onMouseDown);
-      window.removeEventListener("mousemove",    onMouseMove);
-      window.removeEventListener("mouseup",      onMouseUp);
-    };
-  }, []);
-
-  return (
-    <div className="relative w-full mt-10 overflow-hidden bg-[#020266]">
-      <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-white/10">
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] sm:tracking-[0.22em] text-white/60 shrink-0">
-            Conference Moments
-          </span>
-          <span className="hidden sm:block h-px w-8 bg-white/20 shrink-0" />
-          <span className="hidden md:block text-[10px] text-white/40 truncate">
-            Highlights from previous editions and industry gatherings
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[10px] text-white/50 uppercase tracking-widest">Live 2026</span>
-        </div>
-      </div>
-
-      <div ref={wrapperRef} className="relative pt-2 pb-1">
-        <div className="overflow-hidden">
-          <div
-            ref={marqueeRef}
-            className="flex w-max will-change-transform"
-            style={{ gap: "clamp(10px, 1.5vw, 16px)", paddingLeft: 16, paddingRight: 16 }}
-          >
-            {[...carouselImages, ...carouselImages].map((image, index) => (
-              <div
-                key={`${image.src}-${index}`}
-                className="relative shrink-0 overflow-hidden rounded-2xl"
-                style={{ width: "clamp(260px, 38vw, 520px)", height: "clamp(174px, 25.3vw, 347px)" }}
-              >
-                <Image
-                  src={image.src} alt={image.alt} fill
-                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 38vw, 520px"
-                  className="object-cover pointer-events-none"
-                  draggable={false}
-                  priority={index < 3}
-                />
-                <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
-                <span className="absolute bottom-2.5 left-3.5 text-[10px] font-semibold text-white/75 tracking-widest uppercase pointer-events-none">
-                  {image.alt}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-14 sm:w-20 bg-gradient-to-r from-[#020266] to-transparent z-10" />
-        <button
-          onClick={() => nudgeRef.current("prev")}
-          aria-label="Previous"
-          className="pointer-events-auto absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20
-            hidden sm:flex h-11 w-11 items-center justify-center rounded-full
-            bg-white text-[#020266] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
-            transition-all duration-150 active:scale-90 hover:scale-110 touch-manipulation"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-14 sm:w-20 bg-gradient-to-l from-[#020266] to-transparent z-10" />
-        <button
-          onClick={() => nudgeRef.current("next")}
-          aria-label="Next"
-          className="pointer-events-auto absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20
-            hidden sm:flex h-11 w-11 items-center justify-center rounded-full
-            bg-white text-[#020266] shadow-[0_4px_20px_rgba(0,0,0,0.4)]
-            transition-all duration-150 active:scale-90 hover:scale-110 touch-manipulation"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      <div ref={dotsRef} className="flex justify-center items-center gap-1.5 pb-1">
-        {carouselImages.map((_, i) => (
-          <button
-            key={i}
-            aria-label={`Image ${i + 1}`}
-            className="touch-manipulation"
-            style={{
-              width: i === 0 ? "22px" : "6px", height: "6px",
-              borderRadius: "3px",
-              background: i === 0 ? "white" : "rgba(255,255,255,0.3)",
-              border: "none", padding: 0, cursor: "pointer", flexShrink: 0,
-              transition: "width 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s ease",
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  return { active, setActive: jumpTo };
 }
 
-// ─── HeroSection ──────────────────────────────────────────────────────────────
+// ─── 👇 Change this path to match your video file in /public ──────────────────
+const VIDEO_SRC = "/videos/c_banner.mp4";
+// ──────────────────────────────────────────────────────────────────────────────
+
+// ─── component ─────────────────────────────────────────────────────────────────
 export function HeroSection() {
-  // Inject all keyframes on mount
-  useEffect(() => {
-    injectSlotStyles();
-  }, []);
+  const videoSrc = VIDEO_SRC;
+  const { active, setActive } = useAutoAdvance(slides.length);
+  const slide = slides[active];
 
-  const slots = [
-    { images: categoryImages.solar,      label: "Solar",                     cardPosition: "top-left"     as const },
-    { images: categoryImages.geothermal, label: "Geothermal & Hydrothermal", cardPosition: "bottom-right" as const },
-    { images: categoryImages.mining,     label: "Mining",                    cardPosition: "bottom-left"  as const },
-  ];
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [muted, setMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Toggle video sound
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !muted;
+      setMuted((m) => !m);
+    }
+  };
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section
+      className="relative w-full min-h-screen overflow-hidden flex flex-col"
+      style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+    >
+      {/* ── background: video (if provided) OR gradient fallback ── */}
+      {videoSrc ? (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 z-0 w-full h-full object-cover"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(135deg, #02026e 0%, #1140c4 50%, #02026e 100%)",
+          }}
+        />
+      )}
 
-      {/* Decorative background layer */}
-      <div className="absolute inset-x-0 top-0 h-[78%] z-[1] pointer-events-none overflow-hidden">
-        {/* TOP LEFT */}
-        <div className="absolute -top-20 -left-32">
-          <div className="relative h-[700px] w-[700px] opacity-[0.08]">
-            <Image src="/images/logo.png" alt="Background Logo" fill priority className="object-contain" />
-          </div>
-        </div>
-      
-      </div>
+      {/* ── dark scrim so text stays readable over any video ── */}
+      <div className="absolute inset-0 z-[1] bg-black/35" />
 
-      <div className="absolute inset-0 bg-white" />
-      <div className="absolute inset-x-0 top-0 h-px bg-slate-200" />
+      {/* ── subtle vignette at edges ── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%)",
+        }}
+      />
 
-      {/* ── ROW 1: heading + image ── */}
-      <div className="relative z-20 mx-auto max-w-[1700px] px-4 pt-4 md:px-6 lg:px-10 lg:pt-5">
-        <div className="flex flex-col lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(720px,1fr)] lg:gap-14 items-start gap-8">
+      {/* ── noise grain ── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.06]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
+        }}
+      />
 
-          {/* LEFT — staggered entrance animations */}
-          <div className="max-w-3xl pt-2 flex flex-col">
+      {/* ── nav (logo + sun dot only — no nav links as requested) ── */}
+      <nav className="relative z-20 flex items-center justify-between px-8 py-6 md:px-14">
+        <span
+          className="text-white text-xl font-semibold"
+          style={{ letterSpacing: "-0.02em" }}
+        >
+          {/* Replace with your logo/wordmark */}
+          Clean Energy Conference
+        </span>
 
-            {/* Badge — fades in first */}
-            <div
-              className="order-1 inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.24em] text-[#010150] shadow-[0_6px_18px_rgba(15,23,42,0.05)]"
-              style={{
-                animation: "heroFadeIn 0.5s ease both",
-                animationDelay: "0.1s",
-              }}
-            >
-              Africa × Australia · Two 2026 Conference Editions
-            </div>
+        {/* pulsing accent dot */}
+        <motion.div
+          className="absolute left-1/2 top-5 -translate-x-1/2 rounded-full"
+          style={{ background: slide.accent, width: 14, height: 14 }}
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-            {/* Heading — slides up */}
-            <h1
-              className="order-2 font-heading mt-3 max-w-2xl font-extrabold leading-[1.08] tracking-[-0.035em] text-slate-950"
-              style={{
-                animation: "heroFadeUp 0.65s cubic-bezier(0.22,1,0.36,1) both",
-                animationDelay: "0.2s",
-              }}
-            >
-              <span className="text-[#02026e]">Clean Energy Conference</span>
-            </h1>
+        {/* Register CTA in nav */}
+        <a
+          href="/get-tickets"
+          className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
+          style={{
+            background: slide.accent,
+            color: "#0a0800",
+            letterSpacing: "0.04em",
+          }}
+        >
+          Register Now
+        </a>
+      </nav>
 
-            {/* Paragraph — slides up after heading */}
-            <p
-              className="order-5 lg:order-3 mt-3 max-w-xl leading-6 text-black/80"
-              style={{
-                animation: "heroFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
-                animationDelay: "0.38s",
-              }}
-            >
-              Kigali & Perth editions bringing together policymakers, investors, and
-              industry leaders to accelerate clean energy transition and regional collaboration.
-            </p>
+      {/* ── white-bordered adaptive wrapper ── */}
+      <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-10 md:px-14">
+        <motion.div
+          className="w-full max-w-lg rounded-3xl border-2 border-white"
+          style={{ background: "rgba(0,0,0,0.08)" }}
+          layout
+          transition={{ layout: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
+        >
+          <div ref={contentRef} className="p-8 md:p-14">
 
-            {/* Edition cards — slides up with shimmer hover */}
-            <div
-              className="order-3 lg:order-4 mt-5 grid grid-cols-2 gap-3"
-              style={{
-                animation: "heroFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
-                animationDelay: "0.5s",
-              }}
-            >
-              {editions.map((edition) => {
-                const isPerth = edition.name.includes("Perth");
-                return (
-                  <Link
-                    key={edition.name}
-                    href={edition.href}
-                    className="group relative block rounded-xl bg-white px-4 py-2.5 border transition-all duration-300 hover:scale-[1.02] overflow-hidden"
-                    style={{
-                      borderColor: isPerth ? "#6ee7b7" : "#93a4ff",
-                      boxShadow: isPerth
-                        ? "0 10px 28px rgba(16,185,129,0.14)"
-                        : "0 10px 28px rgba(17,64,196,0.16)",
-                    }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLElement;
-                      el.style.animation = isPerth
-                        ? "borderPulseGreen 1.4s ease infinite"
-                        : "borderPulseBlue 1.4s ease infinite";
-                      el.style.boxShadow = isPerth
-                        ? "0 20px 60px rgba(16,185,129,0.30)"
-                        : "0 20px 60px rgba(17,64,196,0.32)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLElement;
-                      el.style.animation = "";
-                      el.style.boxShadow = isPerth
-                        ? "0 10px 28px rgba(16,185,129,0.14)"
-                        : "0 10px 28px rgba(17,64,196,0.16)";
-                      el.style.borderColor = isPerth ? "#6ee7b7" : "#93a4ff";
-                    }}
+            {/* eyebrow */}
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`eye-${active}`}
+                className="text-xs uppercase tracking-[0.18em] mb-5"
+                style={{ color: slide.accent }}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.35 }}
+              >
+                {slide.eyebrow}
+              </motion.p>
+            </AnimatePresence>
+
+            {/* headline */}
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={`h-${active}`}
+                className="text-white font-bold leading-[1.05] mb-8"
+                style={{
+                  fontSize: "clamp(2.4rem, 6vw, 5rem)",
+                  letterSpacing: "-0.03em",
+                  whiteSpace: "pre-line",
+                }}
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {slide.headline}
+              </motion.h1>
+            </AnimatePresence>
+
+            {/* ── CARDS slide content ── */}
+            {slide.kind === "cards" ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`cards-${active}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  {/* sub */}
+                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[340px]">
+                    {slide.sub}
+                  </p>
+
+                  {/* edition cards */}
+                  <div className="flex flex-col sm:flex-row gap-3 mb-5">
+                    {slide.editions.map((ed) => (
+                      <a
+                        key={ed.name}
+                        href={ed.href}
+                        className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03]"
+                        style={{
+                          background: "rgba(255,255,255,0.08)",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          minWidth: "160px",
+                          flex: 1,
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.18)";
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
+                        }}
+                      >
+                        {/* top colour accent */}
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "12px",
+                            right: "12px",
+                            height: "2px",
+                            background: ed.color,
+                            borderRadius: "0 0 2px 2px",
+                            opacity: 0.8,
+                          }}
+                        />
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>
+                            {ed.name.replace(" Edition", "")}
+                          </span>
+                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+                            {ed.country}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+                          <CalendarDays className="h-3 w-3 shrink-0" style={{ color: "rgba(255,255,255,0.45)" }} />
+                          {ed.date}
+                        </div>
+                        <div className="mt-0.5 flex items-center gap-1.5 text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+                          <MapPin className="h-3 w-3 shrink-0" />
+                          {ed.venue.split(",")[0]}
+                        </div>
+                        <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold" style={{ color: ed.color }}>
+                          Details <ArrowRight className="h-3 w-3" />
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* action buttons */}
+                  <div className="flex flex-wrap gap-2">
+                    {slide.buttons.map((btn) => (
+                      <a
+                        key={btn.label}
+                        href={btn.href}
+                        className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+                        style={{
+                          borderColor: slide.accent,
+                          background: "rgba(255,255,255,0.08)",
+                        }}
+                      >
+                        {btn.label}
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              /* ── TEXT slide content ── */
+              <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`cta-${active}`}
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.92 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                   >
-                    {/* Shimmer sweep overlay */}
-                    <span
-                      className="pointer-events-none absolute top-0 h-full w-[55%] rotate-12 bg-white/40 blur-md opacity-0 group-hover:opacity-100"
+                    <a
+                      href={slide.href}
+                      className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
                       style={{
-                        transition: "opacity 0.3s ease",
+                        borderColor: slide.accent,
+                        background: "rgba(255,255,255,0.08)",
                       }}
-                      onAnimationEnd={() => {}}
-                      aria-hidden
-                    />
-                    {/* Animated shimmer via JS */}
-                    <span
-                      className="pointer-events-none absolute top-0 h-full w-[55%] rotate-12 bg-white/35 blur-md"
-                      style={{
-                        left: "-120%",
-                        transition: "none",
-                      }}
-                      ref={(node) => {
-                        if (!node) return;
-                        const parent = node.parentElement;
-                        if (!parent) return;
-                        parent.addEventListener("mouseenter", () => {
-                          node.style.transition = "left 0.65s ease";
-                          node.style.left = "120%";
-                        });
-                        parent.addEventListener("mouseleave", () => {
-                          node.style.transition = "none";
-                          node.style.left = "-120%";
-                        });
-                      }}
-                      aria-hidden
-                    />
+                    >
+                      {slide.cta}
+                    </a>
+                  </motion.div>
+                </AnimatePresence>
 
-                    {/* Header row */}
-                    <div className="flex items-center justify-between">
-                      <p className={`text-[10px] font-bold uppercase tracking-[0.25em] ${edition.accent}`}>
-                        {edition.name.split(" ")[0]}
-                      </p>
-                      <span className="text-[12px] text-slate-400">
-                        {isPerth ? "AUS" : "RWA"}
-                      </span>
-                    </div>
-
-                    {/* Compact details */}
-                    <div className="mt-2 space-y-1 text-[13px] text-black/80 leading-snug">
-                      <div className="truncate">{edition.date}</div>
-                      <div className="truncate text-slate-500">{edition.venue.split(",")[0]}</div>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="mt-2 flex items-center justify-between text-[12px] font-medium text-black/80">
-                      <span>Details</span>
-                      <span className="text-[#1140c4] transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* CTA buttons — slides up last */}
-            <div
-              className="order-4 lg:order-5 mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3"
-              style={{
-                animation: "heroFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both",
-                animationDelay: "0.64s",
-              }}
-            >
-              {/* PRIMARY CTA */}
-              <a
-                href="/get-tickets"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold text-white bg-gradient-to-r from-[#02026e] via-[#1140c4] to-[#02026e] bg-[length:200%_100%] bg-left shadow-[0_12px_35px_rgba(2,2,110,0.35)] transition-all duration-500 ease-out hover:bg-right hover:scale-[1.05] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#1140c4]/60 focus:ring-offset-2"
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.animation =
-                    "ctaPulseGlow 2s ease infinite";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.animation = "";
-                }}
-              >
-                {/* Light sweep */}
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span className="absolute -left-[120%] top-0 h-full w-[60%] rotate-12 bg-white/20 blur-md transition-all duration-700 group-hover:left-[120%]" />
-                </span>
-                <span className="relative z-10">Register Now</span>
-                <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-
-              {/* SECONDARY CTA */}
-              <a
-                href="/event/programme"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold text-[#02026e] bg-white/70 backdrop-blur-md border border-[#02026e]/20 shadow-[0_10px_30px_rgba(2,2,110,0.12)] transition-all duration-300 hover:bg-white hover:border-[#02026e]/40 hover:shadow-[0_14px_45px_rgba(2,2,110,0.18)] hover:scale-[1.04] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#02026e]/40 focus:ring-offset-2"
-              >
-                View Programme
-              </a>
-
-              {/* TERTIARY CTA */}
-              <Link
-                href="/partners/become-a-partner"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold text-[#1f1f1f] bg-gradient-to-r from-[#d4af00] via-[#fad202] to-[#d4af00] bg-[length:200%_100%] bg-left shadow-[0_12px_35px_rgba(250,210,2,0.30)] transition-all duration-500 ease-out hover:bg-right hover:scale-[1.05] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#fad202]/50 focus:ring-offset-2"
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.animation =
-                    "ctaGoldPulse 2s ease infinite";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.animation = "";
-                }}
-              >
-                {/* Light sweep */}
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span className="absolute -left-[120%] top-0 h-full w-[60%] rotate-12 bg-white/25 blur-md transition-all duration-700 group-hover:left-[120%]" />
-                </span>
-                <span className="relative z-10">Become a Partner</span>
-                <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </div>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`sub-${active}`}
+                    className="text-white/70 text-sm leading-relaxed max-w-[260px]"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.4, delay: 0.15 }}
+                  >
+                    {slide.sub}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            )}
           </div>
-
-          {/* RIGHT — cinematic visual */}
-          <div className="relative flex justify-center lg:justify-end lg:pt-2">
-            <div className="w-full max-w-[1100px] aspect-[18/9]">
-              <CinematicHeroVisual />
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* ── CONFERENCE MOMENTS ── */}
-      <div className="-mt-2 lg:-mt-6">
-        <ConferenceMomentsCarousel />
+      {/* ── bottom bar ── */}
+      <div className="relative z-20 flex items-center justify-between px-8 md:px-14 pb-8">
+        {/* progress dots */}
+        <div className="flex items-center gap-3">
+          {slides.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => setActive(i)}
+              className="relative h-[3px] rounded-full overflow-hidden transition-all duration-300"
+              style={{
+                width: active === i ? 40 : 16,
+                background: "rgba(255,255,255,0.25)",
+              }}
+            >
+              {active === i && (
+                <motion.span
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{ background: slide.accent }}
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 6, ease: "linear" }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* slide counter */}
+        <div className="flex items-center gap-6">
+          <span
+            className="text-white/40 text-xs font-mono"
+            style={{ letterSpacing: "0.18em" }}
+          >
+            {String(active + 1).padStart(2, "0")}&nbsp;/&nbsp;{String(slides.length).padStart(2, "0")}
+          </span>
+
+          {/* sound toggle — only active when a video is provided */}
+          <button
+            onClick={videoSrc ? toggleSound : undefined}
+            className="flex items-center gap-3 text-white/60 text-xs hover:text-white/90 transition-colors"
+            style={{ cursor: videoSrc ? "pointer" : "default" }}
+          >
+            <span>Sound</span>
+            <div className="w-10 h-[2px] rounded-full bg-white/30 relative overflow-hidden">
+              {!muted && videoSrc && (
+                <motion.span
+                  className="absolute inset-y-0 left-0 bg-white/70 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </div>
+            <div
+              className="w-7 h-7 rounded-full border flex items-center justify-center transition-colors"
+              style={{
+                borderColor: muted || !videoSrc ? "rgba(255,255,255,0.2)" : slide.accent,
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                {muted || !videoSrc ? (
+                  <>
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </>
+                ) : (
+                  <>
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                  </>
+                )}
+              </svg>
+            </div>
+          </button>
+        </div>
       </div>
     </section>
   );
