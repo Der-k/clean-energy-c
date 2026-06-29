@@ -4,39 +4,75 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 
-// ─── types ─────────────────────────────────────────────────────────────────────
-type TextSlide = {
-  kind: "text";
-  id: number;
-  eyebrow: string;
-  headline: string;
-  sub: string;
-  cta: string;
-  href: string;
-  accent: string;
-};
+// ─── STATS BAR ─────────────────────────────────────────────────────────────────
 
-type CardsSlide = {
-  kind: "cards";
-  id: number;
-  eyebrow: string;
-  headline: string;
-  sub: string;
-  accent: string;
-  editions: { name: string; date: string; venue: string; country: string; href: string; color: string }[];
-  buttons: { label: string; href: string }[];
-};
+const stats = [
+  { value: "600+", label: "Expected Delegates" },
+  { value: "5,000+", label: "Past Participants" },
+  { value: "8", label: "Successful Editions" },
+  { value: "USD 2.2T", label: "Global Clean Energy Investment" },
+  { value: "585 GW", label: "2024 Renewable Capacity Added" },
+  { value: "600M", label: "Africans Without Electricity" },
+  { value: "90%", label: "Rwanda Renewable Target by 2030" },
+  { value: "$16B", label: "Rwanda Energy Investment Pipeline" },
+];
 
-type Slide = TextSlide | CardsSlide;
+export function StatsBar() {
+  const scrollRef = useRef(null);
 
-// ─── slide data ────────────────────────────────────────────────────────────────
-const slides: Slide[] = [
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let scrollAmount = 0;
+
+    const interval = setInterval(() => {
+      scrollAmount += 0.5;
+      container.scrollTo({ left: scrollAmount });
+
+      if (scrollAmount > container.scrollWidth / 2) {
+        scrollAmount = 0;
+      }
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="relative w-full overflow-hidden bg-[#020266] text-white">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(0,153,102,0.18),transparent_30%)]" />
+
+      <div
+        ref={scrollRef}
+        className="relative flex gap-12 overflow-x-auto whitespace-nowrap px-6 py-5 scrollbar-none"
+      >
+        {[...stats, ...stats].map((stat, index) => (
+          <div
+            key={index}
+            className="flex min-w-max items-center gap-4 border-r border-white/15 pr-12 last:border-none"
+          >
+            <span className="text-2xl font-extrabold tracking-[-0.02em] text-emerald-300 sm:text-3xl">
+              {stat.value}
+            </span>
+            <span className="text-base font-semibold uppercase tracking-[0.18em] text-white/75">
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── HERO SECTION ──────────────────────────────────────────────────────────────
+
+const slides = [
   {
     kind: "text",
     id: 0,
     eyebrow: "Africa · Australia · 2026",
     headline: "Clean Energy\nConference\n2026",
-    sub: "Kigali & Perth editions bringing together policymakers, investors, and industry leaders to accelerate clean energy transition.",
+    sub: "Kigali & Perth editions bringing together policymakers, investors, and industry leaders to accelerate Africa's clean energy transition.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#fad202",
@@ -49,8 +85,22 @@ const slides: Slide[] = [
     sub: "Choose your destination and be part of Africa and Australia's leading clean energy event.",
     accent: "#a5b4fc",
     editions: [
-      { name: "Kigali Edition", date: "6–7 August 2026", venue: "Kigali Marriott Hotel, Rwanda", country: "RWA", href: "/conference?edition=kigali", color: "#a5b4fc" },
-      { name: "Perth Edition", date: "31 Aug – 1 Sept 2026", venue: "Novotel Hotel Perth, Australia", country: "AUS", href: "/conference?edition=perth", color: "#6ee7b7" },
+      {
+        name: "Kigali Edition",
+        date: "6–7 August 2026",
+        venue: "Kigali Marriott Hotel, Rwanda",
+        country: "RWA",
+        href: "/conference?edition=kigali",
+        color: "#a5b4fc",
+      },
+      {
+        name: "Perth Edition",
+        date: "31 Aug – 1 Sept 2026",
+        venue: "Novotel Hotel Perth, Australia",
+        country: "AUS",
+        href: "/conference?edition=perth",
+        color: "#6ee7b7",
+      },
     ],
     buttons: [
       { label: "Register Now", href: "/get-tickets" },
@@ -63,7 +113,7 @@ const slides: Slide[] = [
     id: 2,
     eyebrow: "Programme · 2026",
     headline: "Solar,\nGeothermal\n& Clean Mining",
-    sub: "Three focused tracks covering the sectors driving Africa and Australia's energy future.",
+    sub: "Focused tracks covering renewable energy, critical minerals, green hydrogen, and sustainable infrastructure across Africa and Australia.",
     cta: "View Programme",
     href: "/event/programme",
     accent: "#6ee7b7",
@@ -72,8 +122,8 @@ const slides: Slide[] = [
     kind: "text",
     id: 3,
     eyebrow: "World-Class Speakers",
-    headline: "80+ Speakers\n40+\nCountries",
-    sub: "World-class keynotes, panel debates and executive dialogues shaping the clean energy agenda.",
+    headline: "Governments.\nInvestors.\nInnovators.",
+    sub: "High-level plenaries, technical workshops, investor roundtables, and panel discussions shaping Africa's clean energy agenda.",
     cta: "See Speakers",
     href: "/speakers",
     accent: "#fad202",
@@ -83,7 +133,7 @@ const slides: Slide[] = [
     id: 4,
     eyebrow: "Networking · 2026",
     headline: "Unrivalled\nNetworking\nOpportunities",
-    sub: "Two days of high-level meetings, deal-making sessions and networking events across both editions.",
+    sub: "Deal rooms, B2B meetings, investor roundtables, and partnership sessions across both the Kigali and Perth editions.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#f9a8d4",
@@ -93,7 +143,7 @@ const slides: Slide[] = [
     id: 5,
     eyebrow: "Partnership · 2026",
     headline: "Become a\nConference\nPartner",
-    sub: "Align your brand with Africa and Australia's most important clean energy gathering of 2026.",
+    sub: "Gain visibility across African and Australian energy networks, access curated investment matchmaking, and help shape Africa's clean energy agenda.",
     cta: "Partner With Us",
     href: "/partners/become-a-partner",
     accent: "#fbbf24",
@@ -101,9 +151,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 6,
-    eyebrow: "Global Collaboration",
-    headline: "Africa ×\nAustralia\nEnergy",
-    sub: "Building bridges between two continents to accelerate the global clean energy transition.",
+    eyebrow: "Rwanda's Vision 2050",
+    headline: "Rwanda:\nClean Energy\nHub",
+    sub: "Rwanda's Vision 2050 targets 90% renewable energy by 2030 — Kigali is emerging as the continent's leading hub for clean energy and innovation.",
     cta: "Learn More",
     href: "/about",
     accent: "#6ee7b7",
@@ -111,21 +161,42 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 7,
-    eyebrow: "2,000+ Delegates Expected",
+    eyebrow: "600+ Delegates Expected",
     headline: "Join\nLeaders\nWorldwide",
-    sub: "Join government ministers, CEOs, and investors from across the clean energy value chain.",
+    sub: "Join government ministers, Fortune 500 firms, investors, utility companies, and innovators from across the clean energy value chain.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#fad202",
   },
 ];
 
-// ─── helpers ───────────────────────────────────────────────────────────────────
-function useAutoAdvance(count: number, interval = 6000) {
-  const [active, setActive] = useState(0);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+const TICKER_ITEMS = [
+  "Join us for the Clean Energy 2026 Conference",
+  "Connecting minds, powering a cleaner future",
+  "Building solar infrastructure across continents",
+  "Collaboration between engineers and investors driving solar adoption",
+  "Preserving Africa's wildlife through sustainable energy",
+  "Celebrating nature's power — water as a renewable resource",
+  "Global leaders driving clean energy conversations",
+  "Powering future cities with clean, reliable energy",
+  "Harnessing hydrothermal potential across Africa and Australia",
+  "Inclusive discussions on diversity and clean energy innovation",
+  "Solar energy transforming rural and urban landscapes",
+  "Training the next generation of solar engineers",
+  "Empowering communities for a brighter, cleaner tomorrow",
+  "Harnessing the wind for Africa–Australia energy needs",
+  "Smart cities powered by clean tech solutions",
+  "Transforming transportation for a net-zero future",
+  "Africa's cities embracing clean energy innovation",
+  "Networking for climate action and energy collaboration",
+  "A global gathering for a clean energy future",
+];
 
-  const jumpTo = (next: number) => {
+function useAutoAdvance(count, interval = 6000) {
+  const [active, setActive] = useState(0);
+  const timer = useRef(null);
+
+  const jumpTo = (next) => {
     if (timer.current) clearInterval(timer.current);
     setActive(next);
     timer.current = setInterval(
@@ -145,21 +216,138 @@ function useAutoAdvance(count: number, interval = 6000) {
   return { active, setActive: jumpTo };
 }
 
-// ─── 👇 Change this path to match your video file in /public ──────────────────
-const VIDEO_SRC = true;
-// ──────────────────────────────────────────────────────────────────────────────
+function RotatingTicker({ accent, active, total, muted, videoSrc, onToggleSound }) {
+  // Advances strictly in order from index 0 — caption 0 = opening image, rest follow video scenes.
+  const indexRef = useRef(0);
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
-// ─── component ─────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        indexRef.current = (indexRef.current + 1) % TICKER_ITEMS.length;
+        setIndex(indexRef.current);
+        setVisible(true);
+      }, 500);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute z-20 bottom-8 right-8 md:right-14 flex flex-col items-end gap-4">
+      <div className="flex items-center gap-6">
+        <span
+          className="text-white/40 text-xs font-mono"
+          style={{ letterSpacing: "0.18em" }}
+        >
+          {String(active + 1).padStart(2, "0")}&nbsp;/&nbsp;{String(total).padStart(2, "0")}
+        </span>
+
+        <button
+          onClick={onToggleSound}
+          className="flex items-center gap-3 text-white/60 text-xs hover:text-white/90 transition-colors"
+          style={{ cursor: videoSrc ? "pointer" : "default" }}
+        >
+          <span>Sound</span>
+          <div className="w-10 h-[2px] rounded-full bg-white/30 relative overflow-hidden">
+            {!muted && videoSrc && (
+              <motion.span
+                className="absolute inset-y-0 left-0 bg-white/70 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+            )}
+          </div>
+          <div
+            className="w-7 h-7 rounded-full border flex items-center justify-center transition-colors"
+            style={{
+              borderColor: muted || !videoSrc ? "rgba(255,255,255,0.2)" : accent,
+            }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {muted || !videoSrc ? (
+                <>
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </>
+              ) : (
+                <>
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </>
+              )}
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div className="flex flex-col items-end gap-3 pointer-events-none">
+        <AnimatePresence mode="wait">
+          {visible && (
+            <motion.span
+              key={TICKER_ITEMS[index]}
+              className="text-white font-black text-right"
+              style={{
+                fontSize: "clamp(1.2rem, 2.4vw, 2rem)",
+                letterSpacing: "-0.015em",
+                lineHeight: 1.2,
+                whiteSpace: "pre-line",
+                textAlign: "right",
+                textTransform: "none",
+                textShadow: "0 2px 40px rgba(0,0,0,0.5)",
+                maxWidth: "500px",
+              }}
+              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+              transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              {TICKER_ITEMS[index]}
+            </motion.span>
+          )}
+        </AnimatePresence>
+
+        <motion.div
+          key={`line-${index}`}
+          style={{ height: 3, background: accent, borderRadius: 2, alignSelf: "stretch" }}
+          initial={{ scaleX: 0, originX: 1 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 3.5, ease: "linear" }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function HeroSection() {
-  const videoSrc = VIDEO_SRC;
   const { active, setActive } = useAutoAdvance(slides.length);
   const slide = slides[active];
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef(null);
   const [muted, setMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef(null);
 
-  // Toggle video sound
+  const [sweeping, setSweeping] = useState(false);
+  const [sweepDone, setSweepDone] = useState(false);
+  const [imageVisible, setImageVisible] = useState(true);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => { setImageVisible(false); setSweeping(true); setShowVideo(true); }, 3000);
+    const t2 = setTimeout(() => setSweepDone(true), 6500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
+
   const toggleSound = () => {
     if (videoRef.current) {
       videoRef.current.muted = !muted;
@@ -172,76 +360,72 @@ export function HeroSection() {
       className="relative w-full min-h-screen overflow-hidden flex flex-col"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
     >
-      {/* ── background: video (if provided) OR gradient fallback ── */}
-      {videoSrc ? (
-        <video
-  ref={videoRef}
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="metadata"
-  poster="/images/hero.jpg"
-  className="absolute inset-0 z-0 w-full h-full object-cover"
->
-  <source
-    media="(max-width: 768px)"
-    src="/videos/c_banner-mobile.mp4"
-    type="video/mp4"
-  />
-
-  <source
-    src="/videos/c_banner.webm"
-    type="video/webm"
-  />
-
-  <source
-    src="/videos/c_banner-compressed.mp4"
-    type="video/mp4"
-  />
-</video>
-      ) : (
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            background:
-              "linear-gradient(135deg, #02026e 0%, #1140c4 50%, #02026e 100%)",
-          }}
-        />
-      )}
-
-      {/* ── dark scrim so text stays readable over any video ── */}
-      <div className="absolute inset-0 z-[1] bg-black/35" />
-
-      {/* ── subtle vignette at edges ── */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
+      <motion.div
+        className="absolute inset-0 z-0"
+        animate={{ opacity: imageVisible ? 1 : 0 }}
+        transition={{ duration: 1.0, ease: "easeInOut" }}
         style={{
-          background:
-            "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%)",
+          backgroundImage: "url('/images/hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
 
-      {/* ── noise grain ── */}
+      <motion.video
+        ref={videoRef}
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 z-[1] w-full h-full object-cover"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showVideo ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
+        <source media="(max-width: 768px)" src="/videos/c_banner-mobile.mp4" type="video/mp4" />
+        <source src="/videos/c_banner.webm" type="video/webm" />
+        <source src="/videos/c_banner-compressed.mp4" type="video/mp4" />
+      </motion.video>
+
+      <AnimatePresence>
+        {sweeping && !sweepDone && (
+          <motion.div
+            className="absolute inset-0 z-[3] pointer-events-none overflow-hidden"
+            initial={{ x: "-100%" }}
+            animate={{ x: "100%" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 3.5, ease: [0.4, 0, 0.2, 1] }}
+            style={{ width: "200%", left: "-50%", display: "flex", flexDirection: "row" }}
+          >
+            <div style={{ flex: 1, background: "#0F0F76" }} />
+            <div style={{ width: 1, background: "rgba(255,255,255,0.4)", flexShrink: 0 }} />
+            <div style={{ flex: 1, background: "#009966" }} />
+            <div style={{ width: 1, background: "rgba(255,255,255,0.4)", flexShrink: 0 }} />
+            <div style={{ flex: 1, background: "#F2CB01" }} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="absolute inset-0 z-[2] bg-black/35" />
+
       <div
-        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.06]"
+        className="absolute inset-0 z-[2] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%)" }}
+      />
+
+      <div
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
           backgroundSize: "200px 200px",
         }}
       />
 
-      {/* ── nav (logo + sun dot only — no nav links as requested) ── */}
       <nav className="relative z-20 flex items-center justify-between px-8 py-6 md:px-14">
-        <span
-          className="text-white text-xl font-semibold"
-          style={{ letterSpacing: "-0.02em" }}
-        >
-          {/* Replace with your logo/wordmark */}
+        <span className="text-white text-xl font-semibold" style={{ letterSpacing: "-0.02em" }}>
           Clean Energy Conference
         </span>
 
-        {/* pulsing accent dot */}
         <motion.div
           className="absolute left-1/2 top-5 -translate-x-1/2 rounded-full"
           style={{ background: slide.accent, width: 14, height: 14 }}
@@ -249,21 +433,15 @@ export function HeroSection() {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Register CTA in nav */}
         <a
           href="/get-tickets"
           className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
-          style={{
-            background: slide.accent,
-            color: "#0a0800",
-            letterSpacing: "0.04em",
-          }}
+          style={{ background: slide.accent, color: "#0a0800", letterSpacing: "0.04em" }}
         >
           Register Now
         </a>
       </nav>
 
-      {/* ── white-bordered adaptive wrapper ── */}
       <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-10 md:px-14">
         <motion.div
           className="w-full max-w-lg rounded-3xl border-2 border-white"
@@ -273,7 +451,6 @@ export function HeroSection() {
         >
           <div ref={contentRef} className="p-8 md:p-14">
 
-            {/* eyebrow */}
             <AnimatePresence mode="wait">
               <motion.p
                 key={`eye-${active}`}
@@ -288,16 +465,11 @@ export function HeroSection() {
               </motion.p>
             </AnimatePresence>
 
-            {/* headline */}
             <AnimatePresence mode="wait">
               <motion.h1
                 key={`h-${active}`}
                 className="text-white font-bold leading-[1.05] mb-8"
-                style={{
-                  fontSize: "clamp(2.4rem, 6vw, 5rem)",
-                  letterSpacing: "-0.03em",
-                  whiteSpace: "pre-line",
-                }}
+                style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)", letterSpacing: "-0.03em", whiteSpace: "pre-line" }}
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -307,7 +479,6 @@ export function HeroSection() {
               </motion.h1>
             </AnimatePresence>
 
-            {/* ── CARDS slide content ── */}
             {slide.kind === "cards" ? (
               <AnimatePresence mode="wait">
                 <motion.div
@@ -317,53 +488,28 @@ export function HeroSection() {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  {/* sub */}
-                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[340px]">
-                    {slide.sub}
-                  </p>
+                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[340px]">{slide.sub}</p>
 
-                  {/* edition cards */}
                   <div className="flex flex-col sm:flex-row gap-3 mb-5">
                     {slide.editions.map((ed) => (
                       <a
                         key={ed.name}
                         href={ed.href}
                         className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03]"
-                        style={{
-                          background: "rgba(255,255,255,0.08)",
-                          border: "1px solid rgba(255,255,255,0.15)",
-                          minWidth: "160px",
-                          flex: 1,
-                        }}
+                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", minWidth: "160px", flex: 1 }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.18)";
-                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
+                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
-                          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
+                          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
                         }}
                       >
-                        {/* top colour accent */}
-                        <span
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: "12px",
-                            right: "12px",
-                            height: "2px",
-                            background: ed.color,
-                            borderRadius: "0 0 2px 2px",
-                            opacity: 0.8,
-                          }}
-                        />
+                        <span style={{ position: "absolute", top: 0, left: "12px", right: "12px", height: "2px", background: ed.color, borderRadius: "0 0 2px 2px", opacity: 0.8 }} />
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>
-                            {ed.name.replace(" Edition", "")}
-                          </span>
-                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
-                            {ed.country}
-                          </span>
+                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>{ed.name.replace(" Edition", "")}</span>
+                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>{ed.country}</span>
                         </div>
                         <div className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
                           <CalendarDays className="h-3 w-3 shrink-0" style={{ color: "rgba(255,255,255,0.45)" }} />
@@ -380,17 +526,13 @@ export function HeroSection() {
                     ))}
                   </div>
 
-                  {/* action buttons */}
                   <div className="flex flex-wrap gap-2">
                     {slide.buttons.map((btn) => (
                       <a
                         key={btn.label}
                         href={btn.href}
                         className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
-                        style={{
-                          borderColor: slide.accent,
-                          background: "rgba(255,255,255,0.08)",
-                        }}
+                        style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
                       >
                         {btn.label}
                       </a>
@@ -399,7 +541,6 @@ export function HeroSection() {
                 </motion.div>
               </AnimatePresence>
             ) : (
-              /* ── TEXT slide content ── */
               <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -412,10 +553,7 @@ export function HeroSection() {
                     <a
                       href={slide.href}
                       className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
-                      style={{
-                        borderColor: slide.accent,
-                        background: "rgba(255,255,255,0.08)",
-                      }}
+                      style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
                     >
                       {slide.cta}
                     </a>
@@ -440,19 +578,14 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* ── bottom bar ── */}
-      <div className="relative z-20 flex items-center justify-between px-8 md:px-14 pb-8">
-        {/* progress dots */}
+      <div className="relative z-20 flex items-center px-8 md:px-14 pb-8">
         <div className="flex items-center gap-3">
           {slides.map((s, i) => (
             <button
               key={s.id}
               onClick={() => setActive(i)}
               className="relative h-[3px] rounded-full overflow-hidden transition-all duration-300"
-              style={{
-                width: active === i ? 40 : 16,
-                background: "rgba(255,255,255,0.25)",
-              }}
+              style={{ width: active === i ? 40 : 16, background: "rgba(255,255,255,0.25)" }}
             >
               {active === i && (
                 <motion.span
@@ -466,58 +599,16 @@ export function HeroSection() {
             </button>
           ))}
         </div>
-
-        {/* slide counter */}
-        <div className="flex items-center gap-6">
-          <span
-            className="text-white/40 text-xs font-mono"
-            style={{ letterSpacing: "0.18em" }}
-          >
-            {String(active + 1).padStart(2, "0")}&nbsp;/&nbsp;{String(slides.length).padStart(2, "0")}
-          </span>
-
-          {/* sound toggle — only active when a video is provided */}
-          <button
-           onClick={toggleSound}
-            className="flex items-center gap-3 text-white/60 text-xs hover:text-white/90 transition-colors"
-            style={{ cursor: videoSrc ? "pointer" : "default" }}
-          >
-            <span>Sound</span>
-            <div className="w-10 h-[2px] rounded-full bg-white/30 relative overflow-hidden">
-              {!muted && videoSrc && (
-                <motion.span
-                  className="absolute inset-y-0 left-0 bg-white/70 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-            </div>
-            <div
-              className="w-7 h-7 rounded-full border flex items-center justify-center transition-colors"
-              style={{
-                borderColor: muted || !videoSrc ? "rgba(255,255,255,0.2)" : slide.accent,
-              }}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                {muted || !videoSrc ? (
-                  <>
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
-                  </>
-                ) : (
-                  <>
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                  </>
-                )}
-              </svg>
-            </div>
-          </button>
-        </div>
       </div>
+
+      <RotatingTicker
+        accent={slide.accent}
+        active={active}
+        total={slides.length}
+        muted={muted}
+        videoSrc={true}
+        onToggleSound={toggleSound}
+      />
     </section>
   );
 }

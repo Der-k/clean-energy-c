@@ -3,14 +3,14 @@
 import { useEffect, useRef } from "react";
 
 const stats = [
-  { value: "600+", label: "Delegates" },
-  { value: "5,000+", label: "Participants" },
-  { value: "8", label: "Editions" },
-  { value: "USD 2.2T", label: "Global Investment" },
-  { value: "585 GW", label: "Renewable Capacity" },
-  { value: "600M", label: "Without Electricity" },
-  { value: "90%", label: "Renewable Target" },
-  { value: "$16B", label: "Energy Investment" },
+  { value: "600+", label: "Expected Delegates" },
+  { value: "5,000+", label: "Past Participants" },
+  { value: "8", label: "Successful Editions" },
+  { value: "USD 2.2T", label: "Global Clean Energy Investment" },
+  { value: "585 GW", label: "2024 Renewable Capacity Added" },
+  { value: "600M", label: "Africans Without Electricity" },
+  { value: "90%", label: "Rwanda Renewable Target by 2030" },
+  { value: "$16B", label: "Rwanda Energy Investment Pipeline" },
 ];
 
 export function StatsBar() {
@@ -38,7 +38,7 @@ export function StatsBar() {
 
   return (
     <section className="relative w-full overflow-hidden bg-[#020266] text-white">
-      {/* subtle gradient glow (same style as slider) */}
+      {/* subtle gradient glow */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(0,153,102,0.18),transparent_30%)]" />
 
       <div
