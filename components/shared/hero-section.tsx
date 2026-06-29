@@ -146,7 +146,7 @@ function useAutoAdvance(count: number, interval = 6000) {
 }
 
 // ─── 👇 Change this path to match your video file in /public ──────────────────
-const VIDEO_SRC = "/videos/c_banner.mp4?v=2";
+const VIDEO_SRC = true;
 // ──────────────────────────────────────────────────────────────────────────────
 
 // ─── component ─────────────────────────────────────────────────────────────────
@@ -175,14 +175,31 @@ export function HeroSection() {
       {/* ── background: video (if provided) OR gradient fallback ── */}
       {videoSrc ? (
         <video
-          ref={videoRef}
-          src={videoSrc}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 z-0 w-full h-full object-cover"
-        />
+  ref={videoRef}
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="metadata"
+  poster="/images/hero.jpg"
+  className="absolute inset-0 z-0 w-full h-full object-cover"
+>
+  <source
+    media="(max-width: 768px)"
+    src="/videos/c_banner-mobile.mp4"
+    type="video/mp4"
+  />
+
+  <source
+    src="/videos/c_banner.webm"
+    type="video/webm"
+  />
+
+  <source
+    src="/videos/c_banner-compressed.mp4"
+    type="video/mp4"
+  />
+</video>
       ) : (
         <div
           className="absolute inset-0 z-0"
@@ -461,7 +478,7 @@ export function HeroSection() {
 
           {/* sound toggle — only active when a video is provided */}
           <button
-            onClick={videoSrc ? toggleSound : undefined}
+           onClick={toggleSound}
             className="flex items-center gap-3 text-white/60 text-xs hover:text-white/90 transition-colors"
             style={{ cursor: videoSrc ? "pointer" : "default" }}
           >
