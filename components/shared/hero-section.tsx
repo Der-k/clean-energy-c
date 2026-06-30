@@ -18,7 +18,7 @@ const stats = [
 ];
 
 export function StatsBar() {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -28,7 +28,11 @@ export function StatsBar() {
 
     const interval = setInterval(() => {
       scrollAmount += 0.5;
-      container.scrollTo({ left: scrollAmount });
+
+      container.scrollTo({
+        left: scrollAmount,
+        behavior: "auto",
+      });
 
       if (scrollAmount > container.scrollWidth / 2) {
         scrollAmount = 0;
@@ -40,8 +44,6 @@ export function StatsBar() {
 
   return (
     <section className="relative w-full overflow-hidden bg-[#020266] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(0,153,102,0.18),transparent_30%)]" />
-
       <div
         ref={scrollRef}
         className="relative flex gap-12 overflow-x-auto whitespace-nowrap px-6 py-5 scrollbar-none"
@@ -49,11 +51,12 @@ export function StatsBar() {
         {[...stats, ...stats].map((stat, index) => (
           <div
             key={index}
-            className="flex min-w-max items-center gap-4 border-r border-white/15 pr-12 last:border-none"
+            className="flex min-w-max items-center gap-4 border-r border-white/15 pr-12"
           >
-            <span className="text-2xl font-extrabold tracking-[-0.02em] text-emerald-300 sm:text-3xl">
+            <span className="text-2xl font-extrabold text-emerald-300">
               {stat.value}
             </span>
+
             <span className="text-base font-semibold uppercase tracking-[0.18em] text-white/75">
               {stat.label}
             </span>
@@ -192,9 +195,9 @@ const TICKER_ITEMS = [
   "A global gathering for a clean energy future",
 ];
 
-function useAutoAdvance(count, interval = 6000) {
+function useAutoAdvance(count: number, interval = 6000) {
   const [active, setActive] = useState(0);
-  const timer = useRef(null);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const jumpTo = (next) => {
     if (timer.current) clearInterval(timer.current);
@@ -327,10 +330,10 @@ export function HeroSection() {
   const { active, setActive } = useAutoAdvance(slides.length);
   const slide = slides[active];
 
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const [muted, setMuted] = useState(true);
   const [showVideo, setShowVideo] = useState(false);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [sweeping, setSweeping] = useState(false);
   const [sweepDone, setSweepDone] = useState(false);
