@@ -69,7 +69,40 @@ export function StatsBar() {
 
 // ─── HERO SECTION ──────────────────────────────────────────────────────────────
 
-const slides = [
+type TextSlide = {
+  kind: "text";
+  id: number;
+  eyebrow: string;
+  headline: string;
+  sub: string;
+  cta: string;
+  href: string;
+  accent: string;
+};
+
+type Edition = {
+  name: string;
+  date: string;
+  venue: string;
+  country: string;
+  href: string;
+  color: string;
+};
+
+type CardsSlide = {
+  kind: "cards";
+  id: number;
+  eyebrow: string;
+  headline: string;
+  sub: string;
+  accent: string;
+  editions: Edition[];
+  buttons: { label: string; href: string }[];
+};
+
+type Slide = TextSlide | CardsSlide;
+
+const slides: Slide[] = [
   {
     kind: "text",
     id: 0,
@@ -199,7 +232,7 @@ function useAutoAdvance(count: number, interval = 6000) {
   const [active, setActive] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const jumpTo = (next) => {
+  const jumpTo = (next: number): void => {
     if (timer.current) clearInterval(timer.current);
     setActive(next);
     timer.current = setInterval(
@@ -213,13 +246,31 @@ function useAutoAdvance(count: number, interval = 6000) {
       () => setActive((p) => (p + 1) % count),
       interval
     );
-    return () => { if (timer.current) clearInterval(timer.current); };
+    return () => {
+      if (timer.current) clearInterval(timer.current);
+    };
   }, [count, interval]);
 
   return { active, setActive: jumpTo };
 }
 
-function RotatingTicker({ accent, active, total, muted, videoSrc, onToggleSound }) {
+interface RotatingTickerProps {
+  accent: string;
+  active: number;
+  total: number;
+  muted: boolean;
+  videoSrc: boolean;
+  onToggleSound: () => void;
+}
+
+function RotatingTicker({
+  accent,
+  active,
+  total,
+  muted,
+  videoSrc,
+  onToggleSound,
+}: RotatingTickerProps) {
   // Advances strictly in order from index 0 — caption 0 = opening image, rest follow video scenes.
   const indexRef = useRef(0);
   const [index, setIndex] = useState(0);
@@ -340,9 +391,16 @@ export function HeroSection() {
   const [imageVisible, setImageVisible] = useState(true);
 
   useEffect(() => {
-    const t1 = setTimeout(() => { setImageVisible(false); setSweeping(true); setShowVideo(true); }, 3000);
+    const t1 = setTimeout(() => {
+      setImageVisible(false);
+      setSweeping(true);
+      setShowVideo(true);
+    }, 3000);
     const t2 = setTimeout(() => setSweepDone(true), 6500);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
   useEffect(() => {
@@ -453,7 +511,6 @@ export function HeroSection() {
           transition={{ layout: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
         >
           <div ref={contentRef} className="p-8 md:p-14">
-
             <AnimatePresence mode="wait">
               <motion.p
                 key={`eye-${active}`}
@@ -511,8 +568,12 @@ export function HeroSection() {
                       >
                         <span style={{ position: "absolute", top: 0, left: "12px", right: "12px", height: "2px", background: ed.color, borderRadius: "0 0 2px 2px", opacity: 0.8 }} />
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>{ed.name.replace(" Edition", "")}</span>
-                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>{ed.country}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>
+                            {ed.name.replace(" Edition", "")}
+                          </span>
+                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+                            {ed.country}
+                          </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
                           <CalendarDays className="h-3 w-3 shrink-0" style={{ color: "rgba(255,255,255,0.45)" }} />
