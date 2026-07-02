@@ -271,7 +271,7 @@ export function SpeakersPreview() {
 
           {/* Primary — white fill with blue sweep */}
           <Link
-            href="/conference/speakers"
+            href="/speakers"
             className="
               group relative inline-flex items-center justify-center gap-2
               overflow-hidden rounded-full
