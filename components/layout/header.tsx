@@ -2,35 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { navItems } from "@/lib/nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { useHideOnScroll } from "@/hooks/use-hide-on-scroll";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 10) {
-        setVisible(true);
-      } else if (currentScrollY > lastScrollY.current) {
-        setVisible(false);
-        setMobileOpen(false);
-      } else {
-        setVisible(true);
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const visible = useHideOnScroll(() => setMobileOpen(false));
 
   return (
    <header
@@ -138,7 +118,7 @@ export function Header() {
       />
     </span>
 
-    <span className="relative z-10">Get Tickets</span>
+    <span className="relative z-10">Join Conference</span>
 
     <ArrowRight
       className="

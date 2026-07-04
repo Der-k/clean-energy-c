@@ -418,7 +418,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative w-full min-h-screen overflow-hidden flex flex-col"
+      className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[152px]"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
     >
       <motion.div
@@ -482,13 +482,13 @@ export function HeroSection() {
         }}
       />
 
-      <nav className="relative z-20 flex items-center justify-between px-8 py-6 md:px-14">
+      <nav className="relative z-20 flex items-center justify-between px-8 pt-[168px] pb-6 md:px-14">
         <span className="text-white text-xl font-semibold" style={{ letterSpacing: "-0.02em" }}>
           Clean Energy Conference
         </span>
 
         <motion.div
-          className="absolute left-1/2 top-5 -translate-x-1/2 rounded-full"
+          className="absolute left-1/2 top-[177px] -translate-x-1/2 rounded-full"
           style={{ background: slide.accent, width: 14, height: 14 }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -505,7 +505,7 @@ export function HeroSection() {
 
       <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-10 md:px-14">
         <motion.div
-          className="w-full max-w-lg rounded-3xl border-2 border-white"
+          className="inline-block w-fit min-w-[280px] max-w-[92vw] sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-3xl border-2 border-white"
           style={{ background: "rgba(0,0,0,0.08)" }}
           layout
           transition={{ layout: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
@@ -529,13 +529,13 @@ export function HeroSection() {
               <motion.h1
                 key={`h-${active}`}
                 className="text-white font-bold leading-[1.05] mb-8"
-                style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)", letterSpacing: "-0.03em", whiteSpace: "pre-line" }}
+                style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)", letterSpacing: "-0.03em" }}
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                {slide.headline}
+                {slide.headline.replace(/\n/g, " ")}
               </motion.h1>
             </AnimatePresence>
 
@@ -548,7 +548,7 @@ export function HeroSection() {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[340px]">{slide.sub}</p>
+                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[420px]">{slide.sub}</p>
 
                   <div className="flex flex-col sm:flex-row gap-3 mb-5">
                     {slide.editions.map((ed) => (
@@ -627,7 +627,7 @@ export function HeroSection() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`sub-${active}`}
-                    className="text-white/70 text-sm leading-relaxed max-w-[260px]"
+                    className="text-white/70 text-sm leading-relaxed max-w-[320px]"
                     initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -16 }}

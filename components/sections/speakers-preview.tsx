@@ -60,7 +60,7 @@ const featuredSpeakers = [
   role: "Professor of Applied Mathematics and Higher Education Leader",
   organization: "To be confirmed",
   image: "/images/speakers/george-kimathi.jpg",
-  bio: "Professor George Kimathi is a distinguished academic, researcher, and higher education leader with extensive experience in teaching, research, university administration, and institutional governance. He holds a Doctor of Philosophy (PhD) in Applied Mathematics and a Master of Science in Applied Mathematics from the University of Nairobi, as well as a Bachelor of Science in Mathematics with Education (Physics and Chemistry) from the University of Eastern Africa, Baraton, where he graduated summa cum laude. He also holds a Postgraduate Certificate in Academic Practice from York St. John’s University in the United Kingdom and is a Fellow of the Higher Education Academy (UK).\n\nA Certified Bioethicist, Professor Kimathi has played a key role in establishing and managing Institutional Scientific Research Ethics Review Boards, ensuring the highest ethical standards throughout research processes. His scholarly work spans multiple disciplines, including Applied Mathematics, Psychology, Ecology, Dynamical Systems, Disease Modelling, Species Competition, and the application of Artificial Intelligence in teaching and learning. He has published extensively and presented research at numerous international conferences.\n\nThroughout his distinguished career, Professor Kimathi has held several senior leadership positions, including Acting Vice Chancellor, Deputy Vice Chancellor, University Registrar, Faculty Dean, Head of Department, and University Examinations Officer. In these roles, he has successfully led initiatives that enhanced institutional effectiveness, academic quality, governance, and operational efficiency across higher education institutions.\n\nProfessor Kimathi is deeply committed to mentorship and academic development, having supervised numerous Master's and PhD students to successful completion. His innovative teaching methods, dedication to student success, and passion for research have earned him widespread recognition within the academic community.\n\nIn addition to his academic leadership, Professor Kimathi is a highly skilled data analyst with expertise in big data analytics and business intelligence platforms, including Power BI. His ability to transform complex datasets into actionable insights has supported evidence-based decision-making and strengthened research outcomes across diverse fields.\n\nRecognized for his contributions to education, research, and institutional leadership, Professor Kimathi continues to be a respected voice in higher education, research ethics, data analytics, and academic innovation, inspiring students, scholars, and professionals across the region and beyond."
+  bio: "Professor George Kimathi is a distinguished academic, researcher, and higher education leader with extensive experience in teaching, research, university administration, and institutional governance."
 },
   {
     name: "Umutoniwase Anitha",
@@ -96,8 +96,6 @@ function RotatingQuote() {
 
   return (
     <div className="relative border-t border-b border-white/10 py-20 my-16 overflow-hidden">
-
-      {/* Opening quote mark — large, visible, top-left */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute -top-8 -left-4 select-none font-serif leading-none text-white/20 md:-left-2"
@@ -105,8 +103,6 @@ function RotatingQuote() {
       >
         &ldquo;
       </span>
-
-      {/* Closing quote mark — large, visible, bottom-right */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-16 -right-4 select-none font-serif leading-none text-white/20 md:-right-2"
@@ -141,7 +137,6 @@ function RotatingQuote() {
           <span className="h-px w-10 bg-[#10b981]" />
         </div>
 
-        {/* Dot indicators */}
         <div className="mt-8 flex items-center justify-center gap-2">
           {speakerQuotes.map((_, i) => (
             <button
@@ -160,11 +155,12 @@ function RotatingQuote() {
 }
 
 export function SpeakersPreview() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section className="bg-[#020266] py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
 
-        {/* ── Header ── */}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#10b981]">
@@ -179,7 +175,6 @@ export function SpeakersPreview() {
             </p>
           </div>
 
-          {/* Edition pills */}
           <div className="flex flex-col gap-2 md:items-end shrink-0">
             {editions.map((e) => (
               <div
@@ -197,79 +192,80 @@ export function SpeakersPreview() {
           </div>
         </div>
 
-        {/* ── Speaker grid ── */}
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredSpeakers.map((speaker) => (
-            <article
-              key={speaker.name}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] transition-all duration-500 hover:-translate-y-2 hover:border-[#10b981]/40 hover:shadow-[0_28px_56px_rgba(0,0,0,0.5),0_0_0_1px_rgba(16,185,129,0.15)]"
-            >
-              {/* Emerald glow that blooms on hover */}
-              <div
-                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.12) 0%, transparent 70%)" }}
-              />
+          {featuredSpeakers.map((speaker, i) => {
+            const isHovered = hoveredIndex === i;
+            const isDimmed = hoveredIndex !== null && !isHovered;
 
-              {/* Image */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-white/[0.05]">
-                <Image
-                  src={speaker.image}
-                  alt={speaker.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+            return (
+              <article
+                key={speaker.name}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`relative overflow-hidden rounded-2xl border bg-white/[0.06] transition-all duration-500 ease-out ${
+                  isHovered
+                    ? "z-10 -translate-y-2 scale-[1.04] border-[#10b981]/40 shadow-[0_28px_56px_rgba(0,0,0,0.5),0_0_0_1px_rgba(16,185,129,0.15)]"
+                    : "border-white/10"
+                } ${isDimmed ? "opacity-60 blur-[2px] scale-[0.98]" : "opacity-100"}`}
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-500"
+                  style={{
+                    background: "radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.12) 0%, transparent 70%)",
+                    opacity: isHovered ? 1 : 0,
+                  }}
                 />
 
-                {/* Dark scrim — only on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020266]/80 via-[#020266]/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                {/* Image — grows and stays sharp when its own card is hovered */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-white/[0.05]">
+                  <Image
+                    src={speaker.image}
+                    alt={speaker.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className={`object-cover object-top transition-transform duration-500 ease-out ${
+                      isHovered ? "scale-[1.12]" : "scale-100"
+                    }`}
+                  />
 
-                {/* Name + role slides up from bottom on hover */}
-                <div className="absolute inset-x-0 bottom-0 translate-y-2 p-5 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                  <p className="text-[15px] font-bold leading-tight text-white drop-shadow">
+                  {/* Edition badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-block rounded-full border border-[#10b981]/25 bg-[#10b981]/15 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[#10b981] backdrop-blur-sm">
+                      {speaker.edition}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Info — always visible, accent brightens when its card is hovered */}
+                <div className="p-4">
+                  <p className="text-[13px] font-bold leading-tight text-white">
                     {speaker.name}
                   </p>
-                  <p className="mt-1 text-[12px] leading-snug text-white/75">
+                  <p className="mt-1 text-[11px] leading-snug text-white/55">
                     {speaker.role}
                   </p>
-                  <p className="mt-1 text-[12px] font-semibold text-[#10b981]">
+                  <p
+                    className={`mt-1 text-[11px] font-semibold transition-colors duration-500 ${
+                      isHovered ? "text-[#34d399]" : "text-[#10b981]"
+                    }`}
+                  >
                     {speaker.organization}
                   </p>
                 </div>
 
-                {/* Edition badge */}
-                <div className="absolute top-3 left-3">
-                  <span className="inline-block rounded-full border border-[#10b981]/25 bg-[#10b981]/15 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[#10b981] backdrop-blur-sm">
-                    {speaker.edition}
-                  </span>
-                </div>
-              </div>
-
-              {/* Info — visible at rest, fades out on hover */}
-              <div className="p-4 transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-1">
-                <p className="text-[13px] font-bold leading-tight text-white">
-                  {speaker.name}
-                </p>
-                <p className="mt-1 text-[11px] leading-snug text-white/55">
-                  {speaker.role}
-                </p>
-                <p className="mt-1 text-[11px] font-semibold text-[#10b981]">
-                  {speaker.organization}
-                </p>
-              </div>
-
-              {/* Emerald bottom bar sweeps in on hover */}
-              <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-[#10b981] to-[#34d399] transition-all duration-500 ease-out group-hover:w-full" />
-            </article>
-          ))}
+                <div
+                  className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#10b981] to-[#34d399] transition-all duration-500 ease-out"
+                  style={{ width: isHovered ? "100%" : "0%" }}
+                />
+              </article>
+            );
+          })}
         </div>
 
-        {/* ── Rotating speaker quote ── */}
         <RotatingQuote />
 
-        {/* ── CTAs ── */}
         <div className="flex flex-wrap items-center justify-center gap-4">
 
-          {/* Primary — white fill with blue sweep */}
           <Link
             href="/speakers"
             className="
@@ -294,7 +290,6 @@ export function SpeakersPreview() {
             <ArrowRight className="relative z-10 h-4 w-4 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white" />
           </Link>
 
-          {/* Secondary — ghost with white sweep */}
           <Link
             href="/contact"
             className="
