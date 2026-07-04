@@ -394,9 +394,10 @@ export function RoleSubNav({
         <button
           type="button"
           onClick={() => setPickerDismissed(false)}
-          className="text-sm font-semibold text-white/60 hover:text-white transition-colors duration-150 whitespace-nowrap"
+          className="group inline-flex items-center gap-1.5 text-sm font-semibold text-white/60 hover:text-white transition-colors duration-150 whitespace-nowrap underline underline-offset-4 decoration-white/30 hover:decoration-white"
         >
           Who will you be attending as?
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
         </button>
       </div>
     );
@@ -418,12 +419,12 @@ export function RoleSubNav({
           }
         }}
         aria-label="Close role selection"
-        className="absolute -top-1 right-0 flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-colors duration-150"
+        className="absolute -top-1 right-0 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white/70 hover:text-white hover:border-white/60 hover:bg-white/10 transition-colors duration-150"
       >
-        <X className="h-4 w-4" />
+        <X className="h-5 w-5" />
       </button>
 
-      <h2 className="w-full text-center text-xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight px-8">
+      <h2 className="w-full text-center text-xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight px-10">
         Who will you be attending as?
       </h2>
 
