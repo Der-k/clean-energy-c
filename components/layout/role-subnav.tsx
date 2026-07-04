@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import {
-  User, Mic, HandCoins, Store, Newspaper, Landmark, TrendingUp, ArrowRight,
+  User, Mic, HandCoins, Store, Newspaper, Landmark, TrendingUp, ArrowRight, X,
 } from "lucide-react";
 import { useRole, type RoleKey } from "@/context/RoleContext";
 import { useHideOnScroll } from "@/hooks/use-hide-on-scroll";
@@ -89,7 +89,7 @@ function HandDrawnUnderline({ className }: { className?: string }) {
 }
 
 // How long to wait before the bar makes its first appearance.
-const ENTRANCE_DELAY_MS = 2500;
+const ENTRANCE_DELAY_MS = 5000;
 // How long the "preparing" message stays up before the bar shrinks down.
 const COLLAPSE_DELAY_MS = 2800;
 
@@ -114,6 +114,9 @@ export function RoleSubNav({
   const [phase, setPhase] = useState<Phase>("idle");
   const [flyStyle, setFlyStyle] = useState<React.CSSProperties>({});
   const [isSwitching, setIsSwitching] = useState(false);
+  // Tracks whether the user closed the role-picker content with the X,
+  // while keeping the rest of the bar (CTA buttons) visible.
+  const [pickerDismissed, setPickerDismissed] = useState(false);
 
   const cardRefs = useRef<Partial<Record<RoleKey, HTMLButtonElement>>>({});
   const rowRef = useRef<HTMLDivElement>(null);
@@ -198,18 +201,18 @@ export function RoleSubNav({
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div
           className={[
-            "flex items-center gap-6 transition-[padding,min-height] duration-300",
-            compact ? "pt-4 pb-3 min-h-[56px]" : "pt-10 pb-8 min-h-[128px]",
+            "flex flex-col md:flex-row md:items-center gap-4 md:gap-6 transition-[padding,min-height] duration-300",
+            compact ? "py-3 md:pt-4 md:pb-3 min-h-[56px]" : "pt-8 pb-6 md:pt-10 md:pb-8 min-h-[128px]",
           ].join(" ")}
         >
           <div className="flex-1 min-w-0">{children}</div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 sm:gap-3 shrink-0 w-full md:w-auto">
             <a
               href={viewProgrammeHref}
               className={[
                 "group relative inline-flex items-center justify-center gap-2",
-                "rounded-full font-semibold",
+                "rounded-full font-semibold whitespace-nowrap",
                 "text-[#02026e] bg-white",
                 "border border-[#02026e]/20",
                 "shadow-[0_10px_30px_rgba(2,2,110,0.12)]",
@@ -218,7 +221,7 @@ export function RoleSubNav({
                 "hover:shadow-[0_14px_45px_rgba(2,2,110,0.18)]",
                 "hover:scale-[1.04] active:scale-[0.98]",
                 "focus:outline-none focus:ring-2 focus:ring-[#02026e]/40 focus:ring-offset-2",
-                compact ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-base",
+                compact ? "px-3.5 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm" : "px-4 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base",
               ].join(" ")}
             >
               View Programme
@@ -230,7 +233,7 @@ export function RoleSubNav({
               rel="noopener noreferrer"
               className={[
                 "group relative inline-flex items-center justify-center gap-2",
-                "rounded-full font-semibold text-white",
+                "rounded-full font-semibold text-white whitespace-nowrap",
                 "bg-gradient-to-r from-[#02026e] via-[#1140c4] to-[#02026e]",
                 "bg-[length:200%_100%] bg-left",
                 "border border-white/40",
@@ -239,7 +242,7 @@ export function RoleSubNav({
                 "hover:bg-right hover:shadow-[0_18px_60px_rgba(17,64,196,0.45)]",
                 "hover:scale-[1.05] active:scale-[0.97]",
                 "focus:outline-none focus:ring-2 focus:ring-[#1140c4]/60 focus:ring-offset-2",
-                compact ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-base",
+                compact ? "px-3.5 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm" : "px-4 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base",
               ].join(" ")}
             >
               <span className="absolute inset-0 overflow-hidden rounded-full">
@@ -261,7 +264,7 @@ export function RoleSubNav({
                 "hover:bg-right hover:shadow-[0_18px_60px_rgba(250,210,2,0.42)]",
                 "hover:scale-[1.05] active:scale-[0.97]",
                 "focus:outline-none focus:ring-2 focus:ring-[#fad202]/50 focus:ring-offset-2",
-                compact ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-base",
+                compact ? "px-3.5 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm" : "px-4 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base",
               ].join(" ")}
             >
               <span className="absolute inset-0 overflow-hidden rounded-full">
@@ -345,13 +348,13 @@ export function RoleSubNav({
 
     return barShell(
       <div
-        className="flex items-center justify-between gap-4 w-full"
+        className="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-4 w-full"
         style={{ animation: "fadeInUp 300ms ease forwards" }}
       >
-        <div className="flex items-center gap-5 min-w-0">
-          <Icon className="h-12 w-12 shrink-0 text-[#009966]" strokeWidth={1.5} />
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <Icon className="h-8 w-8 sm:h-12 sm:w-12 shrink-0 text-[#009966]" strokeWidth={1.5} />
 
-          <p className="text-2xl font-bold text-white whitespace-nowrap">
+          <p className="text-lg sm:text-2xl font-bold text-white whitespace-nowrap">
             You are a {selectedRoleObj.title}
           </p>
 
@@ -362,11 +365,11 @@ export function RoleSubNav({
           </p>
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
           <span className="flex items-center gap-2">
-            <span className="block w-3 h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out infinite" }} />
-            <span className="block w-3 h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
-            <span className="block w-3 h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }} />
+            <span className="block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out infinite" }} />
+            <span className="block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
+            <span className="block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#009966]" style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }} />
           </span>
           <span className="hidden sm:block text-lg text-white/55 whitespace-nowrap">
             Preparing your experience
@@ -375,11 +378,26 @@ export function RoleSubNav({
           <button
             type="button"
             onClick={reset}
-            className="text-lg font-semibold text-white/60 hover:text-white transition-colors duration-150 whitespace-nowrap"
+            className="text-sm sm:text-lg font-semibold text-white/60 hover:text-white transition-colors duration-150 whitespace-nowrap"
           >
             Change
           </button>
         </div>
+      </div>
+    );
+  }
+
+  // ── Picker was dismissed with the X: keep the bar, hide the picker ───
+  if (pickerDismissed && !savedRole && !isSwitching && phase === "idle") {
+    return barShell(
+      <div className="flex items-center justify-center w-full">
+        <button
+          type="button"
+          onClick={() => setPickerDismissed(false)}
+          className="text-sm font-semibold text-white/60 hover:text-white transition-colors duration-150 whitespace-nowrap"
+        >
+          Who will you be attending as?
+        </button>
       </div>
     );
   }
@@ -389,15 +407,30 @@ export function RoleSubNav({
   const rowFading = phase === "fading-grid";
 
   return barShell(
-    <div className="flex flex-col items-center gap-4 w-full">
-      <h2 className="w-full text-center text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+    <div className="relative flex flex-col items-center gap-3 sm:gap-4 w-full">
+      <button
+        type="button"
+        onClick={() => {
+          if (isSwitching) {
+            setIsSwitching(false);
+          } else {
+            setPickerDismissed(true);
+          }
+        }}
+        aria-label="Close role selection"
+        className="absolute -top-1 right-0 flex h-8 w-8 items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-colors duration-150"
+      >
+        <X className="h-4 w-4" />
+      </button>
+
+      <h2 className="w-full text-center text-xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight px-8">
         Who will you be attending as?
       </h2>
 
       {showRow && (
         <div
           ref={rowRef}
-          className="flex flex-wrap items-center justify-center gap-3 w-full transition-opacity duration-300"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full transition-opacity duration-300"
           style={{ opacity: rowFading ? 0 : 1 }}
         >
           {roles.map((role) => {
@@ -416,8 +449,8 @@ export function RoleSubNav({
                 style={isFlying ? flyStyle : undefined}
                 className={[
                   "group relative flex items-center gap-2.5 shrink-0",
-                  "rounded-full pl-3 pr-5 py-2.5",
-                  "text-base font-semibold whitespace-nowrap",
+                  "rounded-full pl-2.5 pr-4 py-2 sm:pl-3 sm:pr-5 sm:py-2.5",
+                  "text-sm sm:text-base font-semibold whitespace-nowrap",
                   isFlying ? "" : "transition-all duration-300",
                   isSelected
                     ? "bg-[#009966]/20 text-white"
@@ -426,7 +459,7 @@ export function RoleSubNav({
                 ].join(" ")}
               >
                 <Icon
-                  className={`h-6 w-6 shrink-0 ${isSelected ? "text-[#009966]" : "text-white/80"}`}
+                  className={`h-5 w-5 sm:h-6 sm:w-6 shrink-0 ${isSelected ? "text-[#009966]" : "text-white/80"}`}
                   strokeWidth={1.75}
                 />
                 {role.title}
