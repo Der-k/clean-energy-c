@@ -494,13 +494,7 @@ export function HeroSection() {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <a
-          href="/get-tickets"
-          className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
-          style={{ background: slide.accent, color: "#0a0800", letterSpacing: "0.04em" }}
-        >
-          Register Now
-        </a>
+    
       </nav>
 
       <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-10 md:px-14">
