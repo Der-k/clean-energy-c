@@ -89,9 +89,9 @@ function TimeCard({
     <div
       className={`rounded-2xl border px-4 py-5 text-center shadow-sm ${accentClasses}`}
     >
-      <div className="text-3xl font-semibold sm:text-4xl">
-        {String(value).padStart(2, "0")}
-      </div>
+     <div className="text-3xl font-semibold sm:text-4xl" suppressHydrationWarning>
+  {String(value).padStart(2, "0")}
+</div>
       <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-600">
         {label}
       </div>
