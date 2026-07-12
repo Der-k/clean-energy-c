@@ -37,7 +37,7 @@ const roles: RoleConfig[] = [
   { key: "students-young-professionals",   title: "Students & Young Professionals",       preparing: "We're curating mentorship sessions, career fair opportunities, and networking highlights for you.",                icon: Users     },
 ];
 
-const ENTRANCE_DELAY_MS = 5000;
+const ENTRANCE_DELAY_MS = 10000;
 const COLLAPSE_DELAY_MS = 2800;
 
 export function RoleSubNav({

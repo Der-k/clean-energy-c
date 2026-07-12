@@ -62,6 +62,57 @@ const articles = [
   },
 ];
 
+const africaEnergyEvents = [
+  {
+    title: "Top Africa Energy Events in 2026: The Ultimate Guide to Clean Energy Conferences, Summits & Investment Forums",
+    date: "January 2026",
+    image: "/images/top-events-2026-hero.png",
+    href: "/media/news/blogs/top-africa-energy-events-2026",
+  },
+  {
+    title: "Energy Investment in Africa: Opportunities, Trends and Why 2026 Could Be a Defining Year",
+    date: "July 2026",
+    image: "/images/clean-energy-collage.png",
+    href: "/media/news/blogs/energy-investment-africa-2026",
+  },
+  {
+    title: "Renewable Energy Conferences in Africa: The Essential Guide for Industry Professionals",
+    date: "July 2026",
+    image: "/images/conference-guide-hero.png",
+    href: "/media/news/blogs/renewable-energy-conferences-africa",
+  },
+  {
+    title: "Energy Policy in Africa: How Government Decisions Are Shaping the Future of Clean Energy",
+    date: "July 2026",
+    image: "/images/energy-policy-hero.png",
+    href: "/media/news/blogs/energy-policy-africa-2026",
+  },
+  {
+    title: "Renewable Energy Policy in Africa: How Governments Are Accelerating Clean Energy Growth",
+    date: "July 2026",
+    image: "/images/renewable-policy-growth.png",
+    href: "/media/news/blogs/renewable-energy-policy-africa",
+  },
+  {
+    title: "Green Hydrogen in Africa: Opportunities, Investment and the Future of a Clean Hydrogen Economy",
+    date: "July 2026",
+    image: "/images/green-hydrogen-africa.png",
+    href: "/media/news/blogs/green-hydrogen-africa-2026",
+  },
+  {
+    title: "Geothermal Energy in Africa: Unlocking One of the Continent's Most Reliable Renewable Resources",
+    date: "July 2026",
+    image: "/images/geothermal-energy-africa.png",
+    href: "/media/news/blogs/geothermal-energy-africa-2026",
+  },
+  {
+    title: "Why Africa Is the Next Global Clean Energy Investment Destination",
+    date: "July 2026",
+    image: "/images/global-investment-destination.png",
+    href: "/media/news/blogs/global-clean-energy-destination",
+  },
+];
+
 export default function BlogPage() {
   return (
     <main className="pt-24 bg-white">
@@ -151,7 +202,64 @@ export default function BlogPage() {
         </article>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-12 md:px-6 lg:pb-16">
+      {/* --- AFRICA ENERGY EVENTS SECTION --- */}
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 border-t border-b border-slate-100 bg-slate-50/50 rounded-[32px] my-6">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#02026e]">
+            Regional Spotlights
+          </p>
+          <h2 className="text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900 mt-2">
+            Africa Energy Events
+          </h2>
+          <p className="mt-4 text-base leading-8 text-[color:var(--text-main)]-600">
+            Critical analysis and structural summaries directly connected to operations, forums, and clean technology acceleration milestones.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {africaEnergyEvents.map((event) => (
+            <article
+              key={event.title}
+              className="group overflow-hidden rounded-[22px] border border-[#02026e]/15 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(2,2,110,0.08)]"
+            >
+              <div className="relative aspect-[4/2.7] w-full overflow-hidden bg-slate-100">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                />
+              </div>
+
+              <div className="p-5 flex flex-col justify-between min-h-[220px]">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-base text-[color:var(--text-main)]-500">
+                    <CalendarDays className="h-4 w-4 text-[#02026e]" />
+                    <span>{event.date}</span>
+                  </div>
+
+                  <h3 className="mt-4 text-lg font-semibold leading-7 text-[color:var(--text-main)]-900 group-hover:text-[#02026e] transition-colors line-clamp-3">
+                    {event.title}
+                  </h3>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-slate-100">
+                  <Link
+                    href={event.href}
+                    className="inline-flex items-center gap-2 text-base font-semibold text-[#02026e] transition hover:text-[#010150]"
+                  >
+                    View Analysis
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-12 pt-12 md:px-6 lg:pb-16">
         <div className="max-w-3xl">
           <h2 className="text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
             More blogs and articles

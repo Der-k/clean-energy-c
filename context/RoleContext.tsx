@@ -89,8 +89,10 @@ export function RoleProvider({ children }: { children: ReactNode }) {
     try {
       const uuid = getOrCreateUUID();
       setVisitorUuid(uuid);
+
       const raw = localStorage.getItem(STORAGE_ROLE_KEY);
       const savedRole = migrateRole(raw);
+
       if (savedRole) {
         setRoleState(savedRole);
         // Write migrated key back so localStorage stays clean
@@ -99,6 +101,18 @@ export function RoleProvider({ children }: { children: ReactNode }) {
         // Unrecognised key with no migration — clear it
         localStorage.removeItem(STORAGE_ROLE_KEY);
       }
+
+      // First-visit ping — ensures a row exists in visitors table even if
+      // this person never picks a role. Role is null until they choose one.
+      fetch("/api/visitor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          visitorUuid: uuid,
+          role: savedRole ?? null,
+        }),
+      }).catch(() => {});
+
     } catch {
       // localStorage unavailable
     } finally {

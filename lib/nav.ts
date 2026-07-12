@@ -33,6 +33,7 @@ export const navItems: NavItem[] = [
     { label: "Gallery", href: "/media/gallery" },
     { label: "Highlights", href: "/media/highlights" },
     { label: "Blogs and Articles", href: "/media/news" },
+     { label: "Social Wall", href: "/media/social-wall" },
   ],
 },
   {
