@@ -1,6 +1,5 @@
-// app/blogs/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import { rolesContent, editions } from "@/data/rolesData";
+import { rolesContent } from "@/data/rolesData";
 import RoleClientPage from "./RoleClientPage";
 
 interface PageProps {
@@ -20,19 +19,17 @@ export async function generateStaticParams() {
 /**
  * 2. Route Controller
  * Pulls URL params dynamically and safe-checks them against your dataset.
+ * Only the slug (a plain string) crosses the server/client boundary —
+ * the actual data lookup (including icon components) happens inside
+ * the client component to avoid passing functions as props.
  */
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  
-  // Look up the requested dataset matching the slug path
-  const pageData = rolesContent[slug];
 
   // If a visitor requests a path that doesn't exist, instantly trigger a 404 page
-  if (!pageData) {
+  if (!rolesContent[slug]) {
     notFound();
   }
 
-  return (
-    <RoleClientPage data={pageData} editions={editions} />
-  );
+  return <RoleClientPage slug={slug} />;
 }

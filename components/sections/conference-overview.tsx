@@ -36,7 +36,7 @@ const STACK_OFFSET_X = [0, -64, 72]; // px sideways fan per depth
 const STACK_SCALE_STEP = 0.05; // size reduction per depth
 const STACK_ROTATIONS = [0, -6, 7]; // subtle natural tilt per depth
 const SHUFFLE_INTERVAL = 3600; // ms between automatic shuffles
-const SHUFFLE_DURATION = 0.85; // seconds for the leaving card's journey to the back
+const SHUFFLE_DURATION = 0.95; // seconds for the leaving card's journey to the back
 const SETTLE_DURATION = 0.6; // seconds for cards settling into a new spot
 const VISIBLE_STACK_SIZE = 3; // max cards shown in the stack at once
 
@@ -102,18 +102,20 @@ function OutcomeCardStack({ items }: { items: string[] }) {
             animate={
               isLeaving
                 ? {
-                    // One continuous arc from front to back — no repeated
-                    // keyframe values, so there's no mid-flight "hold" that
-                    // reads as a pause-then-drop. It lifts, arcs sideways,
-                    // and settles into place in a single smooth motion.
-                    x: [0, 34, target.x],
-                    y: [0, -30, target.y],
-                    rotate: [0, 8, target.rotate],
-                    scale: [1, 1.03, target.scale],
+                    // Five sample points along a gentle swooping arc (rise,
+                    // peak, begin descending, settle) instead of a sharp
+                    // two-segment path — reads as one continuous curve
+                    // rather than a card visibly changing direction.
+                    x: [0, 20, 34, 28, target.x],
+                    y: [0, -18, -30, -20, target.y],
+                    rotate: [0, 4, 8, 5, target.rotate],
+                    scale: [1, 1.015, 1.03, 1.015, target.scale],
                     boxShadow: [
                       "0 20px 45px rgba(0,57,148,0.15), 0 6px 14px rgba(0,57,148,0.08)",
-                      "0 32px 60px rgba(0,57,148,0.22), 0 12px 20px rgba(0,57,148,0.12)",
-                      "0 10px 24px rgba(2,6,23,0.08)",
+                      "0 28px 55px rgba(0,57,148,0.2), 0 10px 18px rgba(0,57,148,0.1)",
+                      "0 34px 62px rgba(0,57,148,0.24), 0 13px 22px rgba(0,57,148,0.13)",
+                      "0 20px 40px rgba(0,57,148,0.15), 0 8px 16px rgba(0,57,148,0.08)",
+                      "0 10px 24px rgba(2,6,23,0.08), 0 4px 8px rgba(2,6,23,0.04)",
                     ] as unknown as string,
                   }
                 : {
@@ -132,8 +134,8 @@ function OutcomeCardStack({ items }: { items: string[] }) {
               isLeaving
                 ? {
                     duration: SHUFFLE_DURATION,
-                    times: [0, 0.4, 1],
-                    ease: [0.4, 0, 0.2, 1],
+                    times: [0, 0.25, 0.5, 0.75, 1],
+                    ease: "easeInOut",
                   }
                 : { duration: SETTLE_DURATION, ease: [0.22, 1, 0.36, 1] }
             }

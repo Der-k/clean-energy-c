@@ -4,14 +4,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CalendarDays } from "lucide-react";
-import type { RoleContent } from "@/data/rolesData";
+import { rolesContent, editions } from "@/data/rolesData";
 
 interface RoleClientPageProps {
-  data: RoleContent;
-  editions: any[];
+  slug: string;
 }
 
-export default function RoleClientPage({ data, editions }: RoleClientPageProps) {
+export default function RoleClientPage({ slug }: RoleClientPageProps) {
+  // Lookup happens client-side now, so icon components (functions) never
+  // need to be serialized across the server -> client boundary.
+  const data = rolesContent[slug];
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 py-16 px-6 max-w-7xl mx-auto space-y-16">
       
