@@ -128,12 +128,12 @@ export const rolesContent: Record<string, RoleContent> = {
       {
         value: "600M+",
         description: "People across Africa still without reliable electricity access — the scale of the opportunity ahead.",
-        color: "bg-amber-500/10 text-amber-600 border-amber-200"
+        color: "#020266"
       },
       {
         value: "2",
         description: "Strategic 2026 editions in Kigali and Perth, connecting Africa's resources with Australia's expertise.",
-        color: "bg-blue-500/10 text-blue-600 border-blue-200"
+        color: "#009966"
       },
     ],
     audienceLabel: "Who should attend",
@@ -250,11 +250,13 @@ export const rolesContent: Record<string, RoleContent> = {
       value: "600+",
       description:
         "Delegates from government, regulatory bodies, development finance institutions and industry.",
+      color: "#020266",
     },
     {
       value: "2",
       description:
         "Strategic 2026 editions connecting African policymakers with Australian expertise.",
+      color: "#009966",
     },
   ],
 
