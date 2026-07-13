@@ -3,59 +3,29 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, CalendarDays, Globe, Leaf, Users, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  type LucideIcon,
+} from "lucide-react";
+import { useRole, type RoleKey } from "@/context/RoleContext";
+import {
+  rolesContent,
+  editions,
+  type Highlight,
+  type AudienceItem,
+} from "@/data/rolesData";
 
-const highlights = [
-  {
-    icon: Globe,
-    title: "Africa–Australia platform",
-    description:
-      "A cross-continental meeting point for governments, investors, utilities, innovators, and industry leaders shaping the clean energy future.",
-  },
-  {
-    icon: Zap,
-    title: "Energy, mining and infrastructure",
-    description:
-      "Focused on renewable energy, critical minerals, grid modernization, green industrialization, climate innovation, and sustainable infrastructure.",
-  },
-  {
-    icon: Users,
-    title: "High-level connections",
-    description:
-      "Designed to accelerate partnerships, policy dialogue, investment matchmaking, and knowledge exchange across Africa and Australia.",
-  },
-  {
-    icon: Leaf,
-    title: "Practical outcomes",
-    description:
-      "Built around investment commitments, strategic collaboration, capacity building, and long-term sector growth.",
-  },
-];
-
-const editions = [
-  {
-    name: "Kigali Edition",
-    date: "6–7 August 2026",
-    venue: "Kigali Marriott Hotel, Rwanda",
-    description:
-      "Focused on East Africa’s energy transition, regional integration, decentralized energy systems, climate finance, clean mobility, and innovation-led policy.",
-    accent: "from-blue-600/15 to-cyan-400/10 border-blue-200",
-  },
-  {
-    name: "Perth Edition",
-    date: "31 Aug – 1 Sept 2026",
-    venue: "Novotel Hotel Perth, Western Australia",
-    description:
-      "Connecting African priorities to Australian capital markets, advanced mining technologies, green hydrogen, storage innovation, and ESG leadership.",
-    accent: "from-emerald-600/15 to-teal-400/10 border-emerald-200",
-  },
-];
-
-const outcomes = [
-  "Secure investment momentum across solar, wind, hydrogen, storage, and grid development.",
-  "Strengthen Africa–Australia cooperation through partnerships, policy dialogue, and institutional collaboration.",
-  "Create a premium platform for technology showcase, investor engagement, and sector matchmaking.",
-];
+/* ----------------------------------------------------------------------- */
+/* All role-specific copy (headings, highlights, stats, outcomes,          */
+/* audience cards, CTA words, banner paragraph) and the edition logistics  */
+/* now live in data/rolesData.ts. This file only handles rendering + the   */
+/* interactive bits (the shuffling card stack, typewriter reveal, role     */
+/* tabs, rotating word, etc). To add/edit a role's content, edit           */
+/* rolesData.ts — nothing in this component needs to change.               */
+/* ----------------------------------------------------------------------- */
 
 /* ----------------------------------------------------------------------- */
 /* Stacked "deck of cards" shuffle for the outcomes list                   */
@@ -66,8 +36,9 @@ const STACK_OFFSET_X = [0, -64, 72]; // px sideways fan per depth
 const STACK_SCALE_STEP = 0.05; // size reduction per depth
 const STACK_ROTATIONS = [0, -6, 7]; // subtle natural tilt per depth
 const SHUFFLE_INTERVAL = 3600; // ms between automatic shuffles
-const SHUFFLE_DURATION = 0.7; // seconds for the leaving card's journey
+const SHUFFLE_DURATION = 0.85; // seconds for the leaving card's journey to the back
 const SETTLE_DURATION = 0.6; // seconds for cards settling into a new spot
+const VISIBLE_STACK_SIZE = 3; // max cards shown in the stack at once
 
 function stackTransform(depth: number, total: number) {
   return {
@@ -83,6 +54,13 @@ function OutcomeCardStack({ items }: { items: string[] }) {
   const [order, setOrder] = useState<number[]>(items.map((_, i) => i));
   const [leavingIndex, setLeavingIndex] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+
+  // Reset the stack whenever the underlying item list changes (e.g. the
+  // person switches roles and the outcomes text swaps out).
+  useEffect(() => {
+    setOrder(items.map((_, i) => i));
+    setLeavingIndex(null);
+  }, [items]);
 
   useEffect(() => {
     if (isHovered) return;
@@ -108,6 +86,11 @@ function OutcomeCardStack({ items }: { items: string[] }) {
         const isLeaving = leavingIndex === originalIndex;
         const target = stackTransform(depth, items.length);
 
+        // Only render the front VISIBLE_STACK_SIZE cards; the rest wait
+        // off-stage in the rotation until it's their turn, keeping the
+        // stack looking tidy instead of a tall pile.
+        if (depth >= VISIBLE_STACK_SIZE && !isLeaving) return null;
+
         return (
           <motion.div
             key={originalIndex}
@@ -119,14 +102,17 @@ function OutcomeCardStack({ items }: { items: string[] }) {
             animate={
               isLeaving
                 ? {
-                    x: [0, 34, 34, target.x],
-                    y: [0, -26, -26, target.y],
-                    rotate: [0, 7, 7, target.rotate],
-                    scale: [1, 1.02, 1.02, target.scale],
+                    // One continuous arc from front to back — no repeated
+                    // keyframe values, so there's no mid-flight "hold" that
+                    // reads as a pause-then-drop. It lifts, arcs sideways,
+                    // and settles into place in a single smooth motion.
+                    x: [0, 34, target.x],
+                    y: [0, -30, target.y],
+                    rotate: [0, 8, target.rotate],
+                    scale: [1, 1.03, target.scale],
                     boxShadow: [
                       "0 20px 45px rgba(0,57,148,0.15), 0 6px 14px rgba(0,57,148,0.08)",
-                      "0 30px 55px rgba(0,57,148,0.2), 0 10px 18px rgba(0,57,148,0.1)",
-                      "0 30px 55px rgba(0,57,148,0.2), 0 10px 18px rgba(0,57,148,0.1)",
+                      "0 32px 60px rgba(0,57,148,0.22), 0 12px 20px rgba(0,57,148,0.12)",
                       "0 10px 24px rgba(2,6,23,0.08)",
                     ] as unknown as string,
                   }
@@ -146,8 +132,8 @@ function OutcomeCardStack({ items }: { items: string[] }) {
               isLeaving
                 ? {
                     duration: SHUFFLE_DURATION,
-                    times: [0, 0.35, 0.55, 1],
-                    ease: [0.22, 1, 0.36, 1],
+                    times: [0, 0.4, 1],
+                    ease: [0.4, 0, 0.2, 1],
                   }
                 : { duration: SETTLE_DURATION, ease: [0.22, 1, 0.36, 1] }
             }
@@ -211,25 +197,37 @@ function GeneratingText({
   );
 }
 
+const HIGHLIGHT_LOGOS = [
+  "/images/highlight-logo-1.png",
+  "/images/highlight-logo-2.png",
+  "/images/highlight-logo-3.png",
+  "/images/highlight-logo-4.png",
+];
+
 function HighlightCard({
   item,
   index,
   fromLeft,
   autoGenerate = false,
 }: {
-  item: (typeof highlights)[number];
+  item: Highlight;
   index: number;
   fromLeft: boolean;
   autoGenerate?: boolean;
 }) {
-  const Icon = item.icon;
+  const logoSrc = (item as { logoSrc?: string }).logoSrc ?? HIGHLIGHT_LOGOS[index % HIGHLIGHT_LOGOS.length];
+  const logoAlt = (item as { logoAlt?: string }).logoAlt ?? `${item.title} logo`;
+  const [logoFailed, setLogoFailed] = useState(false);
   const [runId, setRunId] = useState(0);
   const started = runId > 0;
 
+  // Re-arm the auto-generate + reset typed text whenever the item itself
+  // changes (e.g. the visitor switched roles and this slot now shows
+  // different copy).
   useEffect(() => {
-    if (!autoGenerate) return;
-    setRunId((prev) => (prev === 0 ? 1 : prev));
-  }, [autoGenerate]);
+    setRunId(autoGenerate ? 1 : 0);
+    setLogoFailed(false);
+  }, [item, autoGenerate]);
 
   return (
     <motion.div
@@ -274,13 +272,18 @@ function HighlightCard({
           ease: [0.16, 1, 0.3, 1],
         }}
       />
-
-      <div className="flex h-16 w-16 items-center justify-center rounded-[22px] bg-gradient-to-br from-blue-100 to-blue-50 text-[#020266] shadow-[0_12px_30px_rgba(0,57,148,0.14)] ring-1 ring-blue-100 transition duration-300 group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(0,57,148,0.2)]">
-        <Icon className="h-8 w-8 stroke-[2.2]" />
+      <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-[24px]">
+        <img
+          src={item.imageSrc}
+          alt={item.imageAlt ?? item.title}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+        />
       </div>
       <h3 className="mt-4 text-xl font-semibold text-[#020266]">{item.title}</h3>
 
-      <div className="mt-3 min-h-[6.5rem] sm:min-h-[5.5rem]">
+      {/* No fixed/max height here on purpose — longer descriptions just
+          grow the card instead of getting clipped or overflowing. */}
+      <div className="mt-3 min-h-[3rem]">
         {started ? (
           <GeneratingText
             text={item.description}
@@ -298,6 +301,196 @@ function HighlightCard({
 }
 
 /* ----------------------------------------------------------------------- */
+/* Audience card — matches HighlightCard's spring entrance + accent reveal */
+/* ----------------------------------------------------------------------- */
+
+// Solid "logo" brand colors for the card backgrounds — matches the tri-
+// color banner elsewhere on the page (deep blue, green, gold).
+const CARD_COLORS = ["#0F0F76", "#009966", "#B8860B"];
+// Each card's sweep bar uses the *next* brand color in the sequence, so it
+// always reads as a distinct accent against its own background.
+const SWEEP_COLORS = ["#009966", "#F2CB01", "#0F0F76"];
+
+// Default palette for the "Why it matters" stat cards. A role can override
+// any individual stat's color in rolesData.ts via `color`; otherwise stats
+// cycle through this palette in order.
+const STAT_COLORS = ["#020266", "#009966", "#B8860B", "#0F0F76"];
+
+function AudienceCard({ item, index }: { item: AudienceItem; index: number }) {
+  const Icon = item.icon;
+  // A role can set its own color/sweepColor per card in rolesData.ts; if it
+  // doesn't, cards fall back to cycling through the default brand palette.
+  const cardColor = item.color ?? CARD_COLORS[index % CARD_COLORS.length];
+  const sweepColor = item.sweepColor ?? SWEEP_COLORS[index % SWEEP_COLORS.length];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{
+        type: "spring",
+        stiffness: 90,
+        damping: 18,
+        delay: index * 0.06,
+      }}
+      whileHover={{ y: -5 }}
+      className="group relative overflow-hidden rounded-2xl border border-black p-5 shadow-[0_8px_22px_rgba(2,6,23,0.14)] transition-shadow duration-300 hover:shadow-[0_16px_34px_rgba(2,6,23,0.24)]"
+      style={{ backgroundColor: cardColor }}
+    >
+      {/* accent bar sweeps in from the left on hover, in a contrasting color */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        style={{ backgroundColor: sweepColor }}
+      />
+
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-black bg-white/15 text-black transition-transform duration-300 group-hover:scale-105">
+        <Icon className="h-5 w-5 stroke-[2.2]" />
+      </div>
+
+      <h4 className="mt-3 text-base font-semibold leading-snug text-black">{item.title}</h4>
+      <p className="mt-1.5 text-sm leading-5 text-black">{item.description}</p>
+    </motion.div>
+  );
+}
+
+/* ----------------------------------------------------------------------- */
+/* Audience carousel — keeps "who this is for" to a single horizontal row. */
+/* If there are more cards than fit in that row, prev/next arrows and dots */
+/* appear, and the row auto-advances through the extra cards on its own    */
+/* (pausing while the person's mouse is over it).                         */
+/* ----------------------------------------------------------------------- */
+
+const AUDIENCE_CARDS_PER_PAGE_BREAKPOINTS = [
+  { minWidth: 1280, count: 4 }, // xl
+  { minWidth: 1024, count: 3 }, // lg
+  { minWidth: 640, count: 2 }, // sm
+  { minWidth: 0, count: 1 }, // mobile
+];
+
+function useAudienceCardsPerPage() {
+  const [count, setCount] = useState(4);
+
+  useEffect(() => {
+    function updateCount() {
+      const width = window.innerWidth;
+      const match =
+        AUDIENCE_CARDS_PER_PAGE_BREAKPOINTS.find((bp) => width >= bp.minWidth) ??
+        AUDIENCE_CARDS_PER_PAGE_BREAKPOINTS[AUDIENCE_CARDS_PER_PAGE_BREAKPOINTS.length - 1];
+      setCount(match.count);
+    }
+    updateCount();
+    window.addEventListener("resize", updateCount);
+    return () => window.removeEventListener("resize", updateCount);
+  }, []);
+
+  return count;
+}
+
+const AUDIENCE_AUTOROTATE_INTERVAL = 4500; // ms between automatic page flips
+
+function AudienceCarousel({ items }: { items: AudienceItem[] }) {
+  const cardsPerPage = useAudienceCardsPerPage();
+  const pageCount = Math.max(1, Math.ceil(items.length / cardsPerPage));
+  const hasExcess = items.length > cardsPerPage;
+
+  const [page, setPage] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Keep the current page in range whenever the item list or the number of
+  // cards-per-row changes (e.g. the person resizes the window, or switches
+  // roles and the new role has fewer/more audience cards).
+  useEffect(() => {
+    setPage((prev) => Math.min(prev, pageCount - 1));
+  }, [pageCount]);
+
+  // Auto-rotate through pages only when there's more than one row's worth
+  // of cards, and pause while the person is interacting with the row.
+  useEffect(() => {
+    if (!hasExcess || isHovered) return;
+    const timer = setInterval(() => {
+      setPage((prev) => (prev + 1) % pageCount);
+    }, AUDIENCE_AUTOROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, [hasExcess, isHovered, pageCount]);
+
+  const goToPrevPage = () => setPage((prev) => (prev - 1 + pageCount) % pageCount);
+  const goToNextPage = () => setPage((prev) => (prev + 1) % pageCount);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="flex items-center gap-3">
+        {hasExcess && (
+          <button
+            type="button"
+            onClick={goToPrevPage}
+            aria-label="Show previous audience cards"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-700 transition-all duration-300 hover:border-[#020266] hover:bg-[#020266] hover:text-white"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+        )}
+
+        <div className="flex-1 overflow-hidden">
+          <motion.div
+            className="flex"
+            animate={{ x: `-${page * 100}%` }}
+            transition={{ type: "spring", stiffness: 80, damping: 20 }}
+          >
+            {Array.from({ length: pageCount }).map((_, pageIndex) => (
+              <div
+                key={pageIndex}
+                className="grid w-full shrink-0 gap-4"
+                style={{ gridTemplateColumns: `repeat(${cardsPerPage}, minmax(0, 1fr))` }}
+              >
+                {items
+                  .slice(pageIndex * cardsPerPage, pageIndex * cardsPerPage + cardsPerPage)
+                  .map((item, i) => (
+                    <AudienceCard
+                      key={item.title}
+                      item={item}
+                      index={pageIndex * cardsPerPage + i}
+                    />
+                  ))}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {hasExcess && (
+          <button
+            type="button"
+            onClick={goToNextPage}
+            aria-label="Show more audience cards"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-700 transition-all duration-300 hover:border-[#020266] hover:bg-[#020266] hover:text-white"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+
+      {hasExcess && (
+        <div className="mt-4 flex items-center justify-center gap-1.5">
+          {Array.from({ length: pageCount }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setPage(i)}
+              aria-label={`Go to audience cards page ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === page ? "w-6 bg-[#020266]" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ----------------------------------------------------------------------- */
 /* Rotating word swap                                                      */
@@ -313,6 +506,10 @@ function RotatingWord({
   className?: string;
 }) {
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [words]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -344,201 +541,285 @@ function RotatingWord({
 }
 
 /* ----------------------------------------------------------------------- */
+/* Text labels for the manual "read as a different role" switcher. Keeps   */
+/* the automatic role-context behaviour as the default, but lets anyone    */
+/* browse how this section reads for other roles without changing their   */
+/* saved role in the nav.                                                  */
+/*                                                                          */
+/* IMPORTANT: only roles that currently have an entry in rolesData.ts are  */
+/* listed here. Add a tab once its content is added to rolesContent.       */
+/* ----------------------------------------------------------------------- */
+
+const ROLE_TABS: { id: string; label: string }[] = [
+  { id: "default", label: "Overview" },
+  { id: "government-policymakers", label: "Government & Policymakers" },
+  { id: "investors-financial", label: "Investors & Financial Institutions" },
+  { id: "energy-companies-utilities", label: "Energy Companies & Utilities" },
+  { id: "researchers-academia", label: "Researchers & Academia" },
+  { id: "startups-entrepreneurs", label: "Startups & Entrepreneurs" },
+  { id: "technology-solution-providers", label: "Technology & Solution Providers" },
+  { id: "development-partners-ngos", label: "Development Partners & NGOs" },
+  { id: "industry-associations-chambers", label: "Industry Associations & Chambers" },
+  { id: "media-communications", label: "Media & Communications" },
+];
+
+// Keys that actually exist in rolesData.ts, used to validate the saved
+// role from RoleContext against the content we actually have.
+const AVAILABLE_ROLE_IDS = new Set(ROLE_TABS.map((tab) => tab.id));
+
+/* ----------------------------------------------------------------------- */
 
 export function ConferenceOverview() {
+  // The saved role from RoleSubNav still decides what shows by default —
+  // picking a role there automatically swaps the content here, same as
+  // before. On top of that, `previewId` lets anyone manually browse how
+  // this section reads for a *different* role via plain text links,
+  // without touching their actual saved role.
+  const { role } = useRole();
+  const [previewId, setPreviewId] = useState<string | null>(null);
+
+  // If the person's saved role changes (e.g. they pick a new one in the
+  // nav), drop any manual preview so the section snaps back to reflecting
+  // their real selection.
+  useEffect(() => {
+    setPreviewId(null);
+  }, [role]);
+
+  // Fall back to "default" whenever the resolved id isn't one we actually
+  // have content for yet (e.g. RoleContext still knows about a role that
+  // hasn't been added to rolesData.ts).
+  const rawActiveId: string = previewId ?? role ?? "default";
+  const activeId = AVAILABLE_ROLE_IDS.has(rawActiveId) ? rawActiveId : "default";
+  const isPreviewing = previewId !== null && previewId !== (role ?? "default");
+  const c = rolesContent[activeId] ?? rolesContent.default;
+
   return (
-    <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+    <section
+      key={activeId}
+      className="relative overflow-hidden bg-white py-20 sm:py-24"
+      style={{ animation: "overviewFadeIn 500ms ease forwards" }}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,57,148,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,153,102,0.08),transparent_35%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-sm">
+          <span className="font-semibold text-zinc-500">Read this as:</span>
+          {ROLE_TABS.map((tab, i) => {
+            const isActive = tab.id === activeId;
+            return (
+              <span key={tab.id} className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPreviewId(tab.id)}
+                  className={
+                    isActive
+                      ? "font-semibold text-[#020266] underline underline-offset-4"
+                      : "text-zinc-500 underline decoration-zinc-300 underline-offset-4 transition-colors hover:text-[#020266] hover:decoration-[#020266]"
+                  }
+                >
+                  {tab.label}
+                </button>
+                {i < ROLE_TABS.length - 1 && <span className="text-zinc-300">·</span>}
+              </span>
+            );
+          })}
+
+          {isPreviewing && (
+            <button
+              type="button"
+              onClick={() => setPreviewId(null)}
+              className="ml-1 font-semibold text-[#009966] underline underline-offset-4 hover:text-[#007a52]"
+            >
+              Back to your role
+            </button>
+          )}
+        </div>
+
+        <div className="mt-8 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div>
             <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-              Conference Overview
+              {c.eyebrow}
             </div>
 
             <h2 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl lg:text-5xl">
-              A flagship clean energy platform linking Africa and Australia
+              {c.heading}
             </h2>
 
-            <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-700 sm:text-xl
-">
-              The Clean Energy Conference & Exhibition brings together policy leaders,
-              investors, utilities, project developers, innovators, and development
-              partners to accelerate renewable energy, critical minerals, climate
-              innovation, and sustainable infrastructure. The 2026 editions are positioned
-              to deepen regional collaboration, unlock investment, and support practical
-              energy transition outcomes across both markets.
+            <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-700 sm:text-xl">
+              {c.paragraph}
             </p>
 
-           <div className="mt-8 flex flex-wrap gap-4">
-  <Link
-    href="/conference"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/conference"
+                className="
+                  group relative inline-flex items-center justify-center gap-2
+                  overflow-hidden
 
-      rounded-full px-6 py-3 text-base font-semibold
+                  rounded-full px-6 py-3 text-base font-semibold
 
-      text-white
-      bg-[#020266]
+                  text-white
+                  bg-[#020266]
 
-      border border-[#020266]
+                  border border-[#020266]
 
-      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+                  shadow-[0_10px_30px_rgba(0,0,0,0.12)]
 
-      transition-all duration-500 ease-out
+                  transition-all duration-500 ease-out
 
-      hover:border-[#020266]/60
-      hover:scale-[1.04]
-      hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
+                  hover:border-[#020266]/60
+                  hover:scale-[1.04]
+                  hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
 
-      active:scale-[0.97]
+                  active:scale-[0.97]
 
-      focus:outline-none
-      focus:ring-2
-      focus:ring-[#020266]/25
-      focus:ring-offset-2
-      focus:ring-offset-white
-    "
-  >
-    {/* white sweep */}
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
-          bg-white
-          transition-all duration-500 ease-out
-          group-hover:w-full
-        "
-      />
-    </span>
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-[#020266]/25
+                  focus:ring-offset-2
+                  focus:ring-offset-white
+                "
+              >
+                {/* white sweep */}
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span
+                    className="
+                      absolute left-0 top-0 h-full w-0
+                      bg-white
+                      transition-all duration-500 ease-out
+                      group-hover:w-full
+                    "
+                  />
+                </span>
 
-    {/* text turns blue */}
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
-      Explore the conference
-    </span>
+                {/* text turns blue */}
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+                  Explore the conference
+                </span>
 
-    <ArrowRight
-      className="
-        relative z-10 h-4 w-4
-        transition-all duration-300
-        group-hover:translate-x-1
-        group-hover:text-[#020266]
-      "
-    />
-  </Link>
+                <ArrowRight
+                  className="
+                    relative z-10 h-4 w-4
+                    transition-all duration-300
+                    group-hover:translate-x-1
+                    group-hover:text-[#020266]
+                  "
+                />
+              </Link>
 
-  <Link
-    href="/event/programme"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
+              <Link
+                href="/event/programme"
+                className="
+                  group relative inline-flex items-center justify-center gap-2
+                  overflow-hidden
 
-      rounded-full px-6 py-3 text-base font-semibold
+                  rounded-full px-6 py-3 text-base font-semibold
 
-      text-zinc-900
-      bg-white
+                  text-zinc-900
+                  bg-white
 
-      border border-zinc-300
+                  border border-zinc-300
 
-      shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+                  shadow-[0_10px_30px_rgba(0,0,0,0.08)]
 
-      transition-all duration-500 ease-out
+                  transition-all duration-500 ease-out
 
-      hover:border-[#020266]/60
-      hover:scale-[1.04]
-      hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
+                  hover:border-[#020266]/60
+                  hover:scale-[1.04]
+                  hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
 
-      active:scale-[0.97]
+                  active:scale-[0.97]
 
-      focus:outline-none
-      focus:ring-2
-      focus:ring-[#020266]/25
-      focus:ring-offset-2
-      focus:ring-offset-white
-    "
-  >
-    {/* blue sweep */}
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
-          bg-[#020266]
-          transition-all duration-500 ease-out
-          group-hover:w-full
-        "
-      />
-    </span>
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-[#020266]/25
+                  focus:ring-offset-2
+                  focus:ring-offset-white
+                "
+              >
+                {/* blue sweep */}
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span
+                    className="
+                      absolute left-0 top-0 h-full w-0
+                      bg-[#020266]
+                      transition-all duration-500 ease-out
+                      group-hover:w-full
+                    "
+                  />
+                </span>
 
-    <CalendarDays
-      className="
-        relative z-10 h-4 w-4
-        transition-colors duration-300
-        group-hover:text-white
-      "
-    />
+                <CalendarDays
+                  className="
+                    relative z-10 h-4 w-4
+                    transition-colors duration-300
+                    group-hover:text-white
+                  "
+                />
 
-    {/* text turns white */}
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-      View programme
-    </span>
-  </Link>
-</div>
+                {/* text turns white */}
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                  View programme
+                </span>
+              </Link>
+            </div>
           </div>
 
-         <div className="rounded-[32px] border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-8 shadow-[0_20px_60px_rgba(2,6,23,0.08)] sm:p-10 lg:p-12">
-  <div className="flex items-center gap-3">
-    <div className="h-3 w-3 rounded-full bg-[#020266]" />
+          <div className="rounded-[32px] border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-8 shadow-[0_20px_60px_rgba(2,6,23,0.08)] sm:p-10 lg:p-12">
+            <div className="flex items-center gap-3">
+              <div className="h-3 w-3 rounded-full bg-[#020266]" />
 
-    <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#020266] sm:text-xl
-">
-      Why it matters
-    </p>
-  </div>
+              <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#020266] sm:text-xl">
+                Why it matters
+              </p>
+            </div>
 
-  <div className="mt-8">
-    <OutcomeCardStack items={outcomes} />
-  </div>
+            <p className="mt-4 text-lg font-semibold text-zinc-900 sm:text-xl">
+              {c.whyMattersSubheading}
+            </p>
 
-  <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
-    <motion.div
-      initial={{ x: -72, opacity: 0 }}
-      whileInView={{ x: 0, opacity: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ type: "spring", stiffness: 60, damping: 18, mass: 1, delay: 0 }}
-      className="rounded-[28px] bg-[#020266] p-7 text-white shadow-[0_18px_40px_rgba(0,57,148,0.24)]"
-    >
-      <p className="text-5xl font-bold tracking-tight">600+</p>
-      <p className="mt-3 text-base leading-7 text-blue-100">
-        Expected delegates from government, investment, energy, mining,
-        infrastructure, and climate sectors.
-      </p>
-    </motion.div>
+            <div
+              className={`mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 ${
+                c.stats.length >= 3 ? "lg:grid-cols-3" : ""
+              }`}
+            >
+              {c.stats.map((stat, index) => {
+                const fromLeft = index % 2 === 0;
+                const bg = stat.color ?? STAT_COLORS[index % STAT_COLORS.length];
+                return (
+                  <motion.div
+                    key={`${stat.value}-${index}`}
+                    initial={{ x: fromLeft ? -72 : 72, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 60,
+                      damping: 18,
+                      mass: 1,
+                      delay: index * 0.15,
+                    }}
+                    className="rounded-[28px] p-7 text-white shadow-[0_18px_40px_rgba(2,6,23,0.22)]"
+                    style={{ backgroundColor: bg }}
+                  >
+                    <p className="text-5xl font-bold tracking-tight">{stat.value}</p>
+                    <p className="mt-3 text-base leading-7 text-white/85">{stat.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
 
-    <motion.div
-      initial={{ x: 72, opacity: 0 }}
-      whileInView={{ x: 0, opacity: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-      transition={{ type: "spring", stiffness: 60, damping: 18, mass: 1, delay: 0.5 }}
-      className="rounded-[28px] bg-[#009966] p-7 text-white shadow-[0_18px_40px_rgba(0,153,102,0.22)]"
-    >
-      <p className="text-5xl font-bold tracking-tight">2</p>
-      <p className="mt-3 text-base leading-7 text-emerald-100">
-        Strategic 2026 editions connecting African priorities with Australian
-        innovation, capital, and technology.
-      </p>
-    </motion.div>
-  </div>
-</div>
+            <div className="mt-10">
+              <OutcomeCardStack items={c.outcomes} />
+            </div>
+          </div>
         </div>
 
         <div
           className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
           style={{ perspective: "1400px" }}
         >
-
-          {highlights.map((item, index) => (
+          {c.highlights.map((item, index) => (
             <HighlightCard
               key={item.title}
               item={item}
@@ -547,6 +828,16 @@ export function ConferenceOverview() {
               autoGenerate={index === 0}
             />
           ))}
+        </div>
+
+        {/* Who this is for */}
+        <div className="mt-14">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">
+            {c.audienceLabel}
+          </p>
+          <div className="mt-5">
+            <AudienceCarousel items={c.audience} />
+          </div>
         </div>
       </div>
 
@@ -568,10 +859,7 @@ export function ConferenceOverview() {
             </h2>
             <h2 className="mt-3 text-[17px] font-semibold text-zinc-800">
               With{" "}
-              <RotatingWord
-                words={["Investment", "Technology", "Partnership", "Growth"]}
-                className="text-[#009966]"
-              />
+              <RotatingWord words={c.ctaWords} className="text-[#009966]" />
             </h2>
 
             <div className="mt-8 grid grid-cols-2 sm:grid-cols-4">
@@ -592,10 +880,7 @@ export function ConferenceOverview() {
             </div>
 
             <p className="mx-auto mt-8 max-w-3xl text-center text-lg leading-8 text-zinc-700">
-              The 2026 editions focus on delivering measurable outcomes through
-              investment-ready projects, regional cooperation, technology transfer,
-              clean energy deployment, and sustainable infrastructure development
-              across Africa and Australia.
+              {c.bannerParagraph}
             </p>
           </div>
         </div>
@@ -611,22 +896,21 @@ export function ConferenceOverview() {
               <p className="text-base font-semibold uppercase tracking-[0.18em] text-zinc-600">
                 2026 Edition
               </p>
-              <h3 className="mt-3 text-2xl font-semibold text-zinc-950">
-                {edition.name}
-              </h3>
+              <h3 className="mt-3 text-2xl font-semibold text-zinc-950">{edition.name}</h3>
               <p className="mt-4 text-base font-medium text-zinc-800">{edition.date}</p>
               <p className="mt-1 text-base text-zinc-600">{edition.venue}</p>
               <p className="mt-5 text-base leading-7 text-zinc-700">{edition.description}</p>
             </div>
-
-
-
           ))}
         </div>
-
       </div>
 
-
+      <style>{`
+        @keyframes overviewFadeIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 }

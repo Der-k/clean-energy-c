@@ -89,28 +89,28 @@ export const rolesContent: Record<string, RoleContent> = {
       "Africa's energy transition is entering a defining decade. The conference brings together governments, investors, utilities and innovators to turn ideas into partnerships — and partnerships into real projects. Hosted in Kigali, Rwanda and Perth, Australia, it connects Africa's renewable energy potential with Australia's technology and investment expertise.",
     highlights: [
       {
-        imageSrc: "/images/highlights/africa-australia.jpg",
+        imageSrc: "/images/highlights/aa.png",
         imageAlt: "Africa Australia partnership",
         icon: Globe,
         title: "Africa–Australia platform",
         description: "A meeting point for governments, investors, utilities and innovators working to speed up Africa's clean energy transition."
       },
       {
-        imageSrc: "/images/highlights/default-energy-mining-infrastructure.jpg",
+        imageSrc: "/images/highlights/energy.png",
         imageAlt: "Energy, mining and infrastructure",
         icon: Zap,
         title: "Energy, mining & infrastructure",
         description: "Covering renewable energy, critical minerals, grid modernisation, green hydrogen and sustainable infrastructure."
       },
       {
-        imageSrc: "/images/highlights/default-real-connections.jpg",
+        imageSrc: "/images/highlights/cooperation.png",
         imageAlt: "Networking and connections",
         icon: Users,
         title: "Real connections",
         description: "Meet ministers, regulators, investors, utilities and technology leaders shaping the region's energy future."
       },
       {
-        imageSrc: "/images/highlights/default-practical-outcomes.jpg",
+        imageSrc: "/images/highlights/future.png",
         imageAlt: "Practical industry outcomes",
         icon: Leaf,
         title: "Practical outcomes",
@@ -176,7 +176,7 @@ export const rolesContent: Record<string, RoleContent> = {
       "Through strategic partnerships, investment mobilisation, knowledge exchange and collaborative leadership, the 2026 editions are committed to building resilient energy systems, unlocking new economic opportunities and delivering a cleaner, more sustainable future for both regions.",
   },
 
- "government-policymakers": {
+"government-policymakers": {
   eyebrow: "Government & Policymakers",
 
   heading:
@@ -187,43 +187,44 @@ export const rolesContent: Record<string, RoleContent> = {
 
   highlights: [
     {
-      imageSrc: "/images/highlights/gov-ministerial-dialogue-platform.jpg",
+      imageSrc:
+      "/images/highlights/dialogue.png",
       icon: Landmark,
       title: "Ministerial dialogue platform",
       description:
         "Engage directly with governments, investors, development partners and industry leaders accelerating renewable energy deployment and regional cooperation.",
     },
     {
-      imageSrc: "/images/highlights/gov-policy-regulatory-reform.jpg",
-      icon: Zap,
+      imageSrc:
+      "/images/highlights/policy.png", icon: Zap,
       title: "Policy & regulatory reform",
       description:
         "Explore regulatory reform, energy market development, climate finance and infrastructure planning that create investment-ready environments.",
     },
     {
-      imageSrc: "/images/highlights/gov-public-private-partnerships.jpg",
-      icon: Users,
+      imageSrc:
+      "/images/highlights/patnership.png",icon: Users,
       title: "Public-private partnerships",
       description:
         "Learn how successful PPP models reduce implementation risk while accelerating delivery of critical energy infrastructure.",
     },
     {
-      imageSrc: "/images/highlights/gov-regional-energy-cooperation.jpg",
-      icon: Globe,
+     imageSrc:
+      "/images/highlights/cooperation.png", icon: Globe,
       title: "Regional energy cooperation",
       description:
         "Strengthen cross-border collaboration, regional power integration and institutional partnerships supporting long-term energy security.",
     },
     {
-      imageSrc: "/images/highlights/gov-best-practice-exchange.jpg",
-      icon: BookOpen,
+    imageSrc:
+      "/images/highlights/int.png",  icon: BookOpen,
       title: "International best practice",
       description:
         "Gain practical insights from governments, utilities and industry leaders delivering measurable progress across renewable energy and electricity market reform.",
     },
     {
-      imageSrc: "/images/highlights/gov-policy-to-delivery.jpg",
-      icon: Leaf,
+      imageSrc:
+      "/images/highlights/target.png",icon: Leaf,
       title: "From policy to delivery",
       description:
         "Move beyond ambitious targets through coordinated governance, strategic investment and practical implementation.",
@@ -337,7 +338,7 @@ export const rolesContent: Record<string, RoleContent> = {
     'Guided by the 2026 theme, "Turning Ambition into Action," the conference empowers governments to move beyond policy discussions toward practical implementation. By connecting policymakers, investors, utilities and development partners, it accelerates governance, strategic investment and regional collaboration that deliver measurable national outcomes.',
 },
 
-  "investors-financial": {
+ "investors-financial": {
   eyebrow: "Investors & Financial Institutions",
 
   heading:
@@ -346,50 +347,51 @@ export const rolesContent: Record<string, RoleContent> = {
   paragraph:
     "The Clean Energy Conference Africa Australia connects investors, financial institutions, governments and project developers through a strategic marketplace designed to accelerate investment across Africa's clean energy sector. Bringing together capital, policy and industry leaders from Africa and Australia, the conference provides direct access to investment-ready projects, market intelligence and long-term commercial partnerships.",
 
-highlights: [
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?renewable-energy,solar,investment",
-    icon: TrendingUp,
-    title: "Investment-ready projects",
-    description:
-      "Discover bankable opportunities across renewable energy, transmission, storage, green hydrogen, sustainable mining and critical minerals.",
-  },
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?government,business,meeting",
-    icon: Landmark,
-    title: "Direct government engagement",
-    description:
-      "Meet policymakers creating investment-ready regulatory environments and accelerating project development.",
-  },
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?solar-farm,wind-farm,infrastructure",
-    icon: Building2,
-    title: "Project showcases",
-    description:
-      "Engage with developers advancing infrastructure projects and seeking strategic capital for implementation.",
-  },
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?finance,business,investment",
-    icon: Globe,
-    title: "Finance & investment structures",
-    description:
-      "Explore blended finance, climate finance, ESG frameworks and public-private partnership models that improve project bankability.",
-  },
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?analytics,data,business",
-    icon: BookOpen,
-    title: "Market intelligence",
-    description:
-      "Gain insight into emerging market trends, regulatory developments and investment strategies shaping Africa's energy economy.",
-  },
-  {
-    imageSrc: "https://source.unsplash.com/1200x800/?business,partnership,handshake",
-    icon: Users,
-    title: "Africa–Australia partnerships",
-    description:
-      "Connect African project opportunities with Australian investment expertise, technology and commercial partnerships.",
-  },
-],
+  highlights: [
+    {
+       imageSrc:
+      "/images/highlights/invesment.png",
+      icon: TrendingUp,
+      title: "Investment-ready projects",
+      description:
+        "Discover bankable opportunities across renewable energy, transmission, storage, green hydrogen, sustainable mining and critical minerals.",
+    },
+    {
+     imageSrc:
+      "/images/highlights/dialogue.png",icon: Landmark,
+      title: "Direct government engagement",
+      description:
+        "Meet policymakers creating investment-ready regulatory environments and accelerating project development.",
+    },
+    {
+    imageSrc:
+      "/images/highlights/project.png",icon: Building2,
+      title: "Project showcases",
+      description:
+        "Engage with developers advancing infrastructure projects and seeking strategic capital for implementation.",
+    },
+    {
+      imageSrc:
+      "/images/highlights/finance.png",  icon: Globe,
+      title: "Finance & investment structures",
+      description:
+        "Explore blended finance, climate finance, ESG frameworks and public-private partnership models that improve project bankability.",
+    },
+    {
+     imageSrc:
+      "/images/highlights/intelligence.png",icon: BookOpen,
+      title: "Market intelligence",
+      description:
+        "Gain insight into emerging market trends, regulatory developments and investment strategies shaping Africa's energy economy.",
+    },
+    {
+     imageSrc:
+      "/images/highlights/aa.png",icon: Users,
+      title: "Africa–Australia partnerships",
+      description:
+        "Connect African project opportunities with Australian investment expertise, technology and commercial partnerships.",
+    },
+  ],
 
   whyMattersSubheading:
     "Turning capital into sustainable growth",
@@ -525,43 +527,43 @@ highlights: [
 
   highlights: [
     {
-      imageSrc: "/images/highlights/energy-infrastructure-projects.jpg",
-      icon: Zap,
+    imageSrc:
+      "/images/highlights/energy.png", icon: Zap,
       title: "Future energy infrastructure",
       description:
         "Discover upcoming renewable energy, transmission, distribution and large-scale infrastructure projects across Africa.",
     },
     {
-      imageSrc: "/images/highlights/energy-grid-modernisation.jpg",
-      icon: Globe,
+     imageSrc:
+      "/images/highlights/grid.png", icon: Globe,
       title: "Grid modernisation",
       description:
         "Explore smart grids, battery storage, digitalisation and advanced energy management systems strengthening network resilience.",
     },
     {
-      imageSrc: "/images/highlights/energy-industry-partnerships.jpg",
-      icon: Users,
+    imageSrc:
+      "/images/highlights/patnership.png", icon: Users,
       title: "Strategic partnerships",
       description:
         "Connect with governments, investors, project developers and technology providers shaping Africa's energy future.",
     },
     {
-      imageSrc: "/images/highlights/energy-renewable-integration.jpg",
-      icon: Leaf,
+    imageSrc:
+      "/images/highlights/renewable.png", icon: Leaf,
       title: "Renewable integration",
       description:
         "Learn practical approaches to integrating renewable generation while improving operational efficiency and energy security.",
     },
     {
-      imageSrc: "/images/highlights/energy-emerging-technologies.jpg",
-      icon: Lightbulb,
+      imageSrc:
+      "/images/highlights/tech.png", icon: Lightbulb,
       title: "Emerging technologies",
       description:
         "Explore hydrogen, sustainable mining, critical minerals and next-generation clean energy technologies transforming the sector.",
     },
     {
-      imageSrc: "/images/highlights/energy-commercial-growth.jpg",
-      icon: TrendingUp,
+      imageSrc:
+      "/images/highlights/growth.png",icon: TrendingUp,
       title: "Commercial growth",
       description:
         "Identify procurement opportunities, infrastructure investment priorities and partnerships that support long-term business expansion.",
@@ -702,43 +704,43 @@ highlights: [
 
   highlights: [
     {
-      imageSrc: "/images/highlights/research-policy-impact.jpg",
-      icon: BookOpen,
+      imageSrc:
+      "/images/highlights/research.png", icon: BookOpen,
       title: "Research influencing policy",
       description:
         "Share evidence-based research that informs energy policy, infrastructure planning and sustainable development strategies.",
     },
     {
-      imageSrc: "/images/highlights/research-global-collaboration.jpg",
-      icon: Globe,
+    imageSrc:
+      "/images/highlights/int.png", icon: Globe,
       title: "International collaboration",
       description:
         "Build long-term research partnerships connecting African and Australian universities, institutes and innovation centres.",
     },
     {
-      imageSrc: "/images/highlights/research-commercialisation.jpg",
-      icon: TrendingUp,
+   imageSrc:
+      "/images/highlights/research.png", icon: TrendingUp,
       title: "Research to commercialisation",
       description:
         "Connect with industry partners seeking applied research, technology development and commercial innovation.",
     },
     {
-      imageSrc: "/images/highlights/research-emerging-technologies.jpg",
-      icon: Lightbulb,
+    imageSrc:
+      "/images/highlights/tech.png",  icon: Lightbulb,
       title: "Emerging technologies",
       description:
         "Explore renewable energy, battery storage, hydrogen, smart grids, sustainable mining and digital energy systems.",
     },
     {
-      imageSrc: "/images/highlights/research-knowledge-exchange.jpg",
-      icon: Users,
+      imageSrc:
+      "/images/highlights/knowledge.png",  icon: Users,
       title: "Knowledge exchange",
       description:
         "Participate in technical forums, expert panels and collaborative workshops with leading researchers and industry experts.",
     },
     {
-      imageSrc: "/images/highlights/research-workforce-development.jpg",
-      icon: GraduationCap,
+      imageSrc:
+      "/images/highlights/future.png", icon: GraduationCap,
       title: "Future workforce development",
       description:
         "Support the next generation of clean energy professionals through collaboration, education and capacity building.",
@@ -879,43 +881,43 @@ highlights: [
 
   highlights: [
     {
-      imageSrc: "/images/highlights/startups-investor-access.jpg",
-      icon: TrendingUp,
+    imageSrc:
+      "/images/highlights/invesment.png", icon: TrendingUp,
       title: "Investor access",
       description:
         "Connect with investors and funding partners actively seeking scalable clean energy technologies and innovative businesses.",
     },
     {
-      imageSrc: "/images/highlights/startups-market-expansion.jpg",
-      icon: Globe,
+     imageSrc:
+      "/images/highlights/target.png",  icon: Globe,
       title: "Regional market expansion",
       description:
         "Access new African markets while building strategic partnerships with Australian organisations and international stakeholders.",
     },
     {
-      imageSrc: "/images/highlights/startups-technology-showcase.jpg",
-      icon: Lightbulb,
+      imageSrc:
+      "/images/highlights/tech.png", icon: Lightbulb,
       title: "Technology showcase",
       description:
         "Present products, platforms and solutions directly to governments, utilities, project developers and industry leaders.",
     },
     {
-      imageSrc: "/images/highlights/startups-commercial-partnerships.jpg",
-      icon: Users,
+      imageSrc:
+      "/images/highlights/patnership.png", icon: Users,
       title: "Commercial partnerships",
       description:
         "Build relationships with organisations capable of supporting pilot projects, commercial deployments and long-term business growth.",
     },
     {
-      imageSrc: "/images/highlights/startups-industry-insights.jpg",
-      icon: BookOpen,
+      imageSrc:
+      "/images/highlights/intelligence.png", icon: BookOpen,
       title: "Industry & market insights",
       description:
         "Gain valuable insight into regulatory developments, customer needs, investment priorities and emerging clean energy markets.",
     },
     {
-      imageSrc: "/images/highlights/startups-scale-innovation.jpg",
-      icon: Zap,
+      imageSrc:
+      "/images/highlights/inn.png",icon: Zap,
       title: "Scaling innovation",
       description:
         "Explore opportunities across renewable energy, AI, smart grids, battery storage, hydrogen, mobility and sustainable infrastructure.",
@@ -1037,6 +1039,167 @@ highlights: [
     'Guided by the 2026 theme, "Turning Ambition into Action," the conference connects entrepreneurs with investors, governments, utilities and industry leaders to accelerate commercial growth, strategic partnerships and the deployment of innovative clean energy solutions across Africa and Australia.',
 },
 
+"technology-solution-providers": {
+  eyebrow: "Technology & Solution Providers",
+
+  heading:
+    "Delivering the technologies powering Africa's clean energy future",
+
+  paragraph:
+    "The Clean Energy Conference Africa Australia connects technology companies, equipment manufacturers, engineering firms, software developers and solution providers with governments, utilities, investors and infrastructure leaders driving Africa's energy transition. Hosted in Kigali and Perth, the conference creates opportunities to showcase innovation, establish strategic partnerships and expand into rapidly growing clean energy markets across Africa and Australia.",
+
+  highlights: [
+    {
+      imageSrc: "/images/highlights/tech.png",
+      icon: Lightbulb,
+      title: "Next-generation technologies",
+      description:
+        "Discover and demonstrate solutions spanning renewable energy, battery storage, smart grids, AI, hydrogen and digital energy systems.",
+    },
+    {
+      imageSrc: "/images/highlights/market.png",
+      icon: Globe,
+      title: "Market expansion",
+      description:
+        "Access high-growth African energy markets through direct engagement with governments, utilities and project developers.",
+    },
+    {
+      imageSrc: "/images/highlights/patnership.png",
+      icon: Users,
+      title: "Commercial partnerships",
+      description:
+        "Build strategic relationships with investors, EPC contractors, engineering firms and infrastructure owners.",
+    },
+    {
+      imageSrc: "/images/highlights/Procurement.png",
+      icon: TrendingUp,
+      title: "Procurement opportunities",
+      description:
+        "Gain insight into procurement pipelines, infrastructure priorities and technology investment trends across African markets.",
+    },
+    {
+      imageSrc: "/images/highlights/globe.png",
+      icon: Zap,
+      title: "Real-world deployment",
+      description:
+        "Show how integrated technologies improve efficiency, reliability, operational performance and long-term infrastructure resilience.",
+    },
+    {
+      imageSrc: "/images/highlights/growth.png",
+      icon: BookOpen,
+      title: "Long-term strategic growth",
+      description:
+        "Position your organisation as a trusted technology partner supporting national energy transition and sustainable industrial development.",
+    },
+  ],
+
+  whyMattersSubheading:
+    "Turning innovation into real-world deployment",
+
+  outcomes: [
+    "Showcase innovative technologies and integrated solutions to governments, utilities, investors and project developers.",
+    "Connect directly with decision-makers responsible for procuring energy infrastructure and engineering solutions.",
+    "Identify commercial opportunities across renewable energy, battery storage, hydrogen, transmission, distribution and smart grids.",
+    "Build partnerships with EPC contractors, engineering firms, utilities, distributors and implementation partners.",
+    "Understand procurement priorities, regulatory developments and technology trends shaping future infrastructure investment.",
+    "Demonstrate how your solutions improve operational performance, increase efficiency and strengthen system resilience.",
+    "Position your organisation as a trusted long-term technology partner supporting national energy transition goals.",
+    "Expand into emerging African markets through collaboration with governments, investors and industry leaders.",
+  ],
+
+  stats: [
+    {
+      value: "600+",
+      description:
+        "Government, utility, investor and infrastructure leaders seeking proven clean energy technologies.",
+    },
+    {
+      value: "2",
+      description:
+        "Strategic conference editions connecting African markets with Australian innovation and engineering expertise.",
+    },
+  ],
+
+  audienceLabel: "Who this is for",
+
+  audience: [
+    {
+      icon: Lightbulb,
+      title: "Renewable technology companies",
+      description:
+        "Businesses developing renewable energy equipment and clean energy technologies.",
+      color: "#EFF6FF",
+      sweepColor: "#2563EB",
+    },
+    {
+      icon: Zap,
+      title: "Equipment manufacturers",
+      description:
+        "Solar, wind, hydro, battery storage and electrical equipment manufacturers.",
+      color: "#ECFDF5",
+      sweepColor: "#10B981",
+    },
+    {
+      icon: Monitor,
+      title: "Software & AI providers",
+      description:
+        "Energy software, AI platforms, digital solutions, IoT and analytics providers.",
+      color: "#FFF7ED",
+      sweepColor: "#F97316",
+    },
+    {
+      icon: Globe,
+      title: "Smart grid specialists",
+      description:
+        "Grid automation, digital energy management and transmission technology providers.",
+      color: "#F5F3FF",
+      sweepColor: "#8B5CF6",
+    },
+    {
+      icon: Building2,
+      title: "Engineering & EPC firms",
+      description:
+        "Engineering, procurement, construction and technology integration organisations.",
+      color: "#ECFEFF",
+      sweepColor: "#0891B2",
+    },
+    {
+      icon: Leaf,
+      title: "Hydrogen & clean mobility",
+      description:
+        "Green hydrogen, EV charging, industrial automation and energy efficiency specialists.",
+      color: "#FEFCE8",
+      sweepColor: "#CA8A04",
+    },
+    {
+      icon: TrendingUp,
+      title: "Infrastructure solution providers",
+      description:
+        "System integrators, distributors and organisations delivering scalable energy infrastructure solutions.",
+      color: "#FDF2F8",
+      sweepColor: "#DB2777",
+    },
+    {
+      icon: BookOpen,
+      title: "Sustainability technology providers",
+      description:
+        "Environmental monitoring, climate technology and sustainability solution companies.",
+      color: "#F3F4F6",
+      sweepColor: "#4B5563",
+    },
+  ],
+
+  ctaWords: [
+    "Innovation",
+    "Technology",
+    "Deployment",
+    "Growth",
+  ],
+
+  bannerParagraph:
+    'Guided by the 2026 theme, "Turning Ambition into Action," the conference helps technology providers transform innovation into commercial deployment by connecting them with the governments, utilities, investors and infrastructure leaders building Africa\'s next generation of clean energy systems.',
+},
+
 "development-partners-ngos": {
   eyebrow: "Development Partners & NGOs",
 
@@ -1048,43 +1211,37 @@ highlights: [
 
   highlights: [
     {
-      imageSrc: "/images/highlights/dev-cross-sector-partnerships.jpg",
-      icon: Users,
+       imageSrc: "/images/highlights/patnership.png",  icon: Users,
       title: "Cross-sector partnerships",
       description:
         "Collaborate with governments, investors, utilities and industry leaders delivering Africa's clean energy transition.",
     },
     {
-      imageSrc: "/images/highlights/dev-energy-access.jpg",
-      icon: Globe,
+        imageSrc: "/images/highlights/globe.png", icon: Globe,
       title: "Energy access & inclusion",
       description:
         "Support programmes expanding reliable energy access, community development and inclusive economic growth.",
     },
     {
-      imageSrc: "/images/highlights/dev-climate-finance.jpg",
-      icon: TrendingUp,
+        imageSrc: "/images/highlights/future.png",icon: TrendingUp,
       title: "Climate & development finance",
       description:
         "Explore blended finance, concessional funding and project preparation mechanisms that improve implementation.",
     },
     {
-      imageSrc: "/images/highlights/dev-capacity-building.jpg",
-      icon: GraduationCap,
+        imageSrc: "/images/highlights/Procurement.png", icon: GraduationCap,
       title: "Capacity building",
       description:
         "Strengthen institutions, workforce development and technical capabilities supporting long-term energy transition.",
     },
     {
-      imageSrc: "/images/highlights/dev-policy-collaboration.jpg",
-      icon: Landmark,
+       imageSrc: "/images/highlights/Procurement.png",icon: Landmark,
       title: "Policy & institutional support",
       description:
         "Share expertise on policy reform, institutional strengthening and sustainable programme delivery.",
     },
     {
-      imageSrc: "/images/highlights/dev-lasting-impact.jpg",
-      icon: Leaf,
+       imageSrc: "/images/highlights/leaf.png",  icon: Leaf,
       title: "Sustainable impact",
       description:
         "Develop programmes that improve livelihoods, climate resilience and long-term economic development.",
@@ -1223,50 +1380,52 @@ highlights: [
   paragraph:
     "The Clean Energy Conference Africa Australia brings together industry associations, professional bodies and chambers of commerce with governments, investors, utilities, technology providers and project developers to strengthen collaboration across Africa's clean energy sector. By connecting Africa's expanding energy markets with Australia's expertise in renewable technologies, engineering, mining and infrastructure, the conference helps industry organisations create partnerships that benefit their members while supporting sustainable economic growth.",
 
-  highlights: [
-    {
-      imageSrc: "/images/highlights/associations-industry-networking.jpg",
-      icon: Users,
-      title: "Industry collaboration",
-      description:
-        "Connect industry associations, business chambers and professional bodies with key decision-makers across the clean energy ecosystem.",
-    },
-    {
-      imageSrc: "/images/highlights/associations-policy-dialogue.jpg",
-      icon: Landmark,
-      title: "Policy & industry dialogue",
-      description:
-        "Engage directly with policymakers, regulators and industry leaders shaping the future of Africa's energy sector.",
-    },
-    {
-      imageSrc: "/images/highlights/associations-cross-border-partnerships.jpg",
-      icon: Globe,
-      title: "Cross-border partnerships",
-      description:
-        "Strengthen collaboration between African and Australian businesses, institutions and industry organisations.",
-    },
-    {
-      imageSrc: "/images/highlights/associations-business-growth.jpg",
-      icon: TrendingUp,
-      title: "Member business growth",
-      description:
-        "Help members access new markets, investment opportunities and strategic commercial partnerships.",
-    },
-    {
-      imageSrc: "/images/highlights/associations-best-practice.jpg",
-      icon: BookOpen,
-      title: "Knowledge & best practice",
-      description:
-        "Exchange insights on regulation, standards, workforce development, innovation and sustainable industry growth.",
-    },
-    {
-      imageSrc: "/images/highlights/associations-industry-advocacy.jpg",
-      icon: Building2,
-      title: "Industry advocacy",
-      description:
-        "Strengthen industry representation while supporting policies that encourage investment and long-term competitiveness.",
-    },
-  ],
+ highlights: [
+  {
+    imageSrc:
+      "/images/highlights/cooperation.png",
+    // Engineers inspecting wind turbines together
+    icon: Users,
+    title: "Industry collaboration",
+    description:
+      "Connect industry associations, business chambers and professional bodies with key decision-makers across the clean energy ecosystem.",
+  },
+  {
+      imageSrc: "/images/highlights/dialogue.png",
+    icon: Landmark,
+    title: "Policy & industry dialogue",
+    description:
+      "Engage directly with policymakers, regulators and industry leaders shaping the future of Africa's energy sector.",
+  },
+  {
+      imageSrc: "/images/highlights/globe.png",
+    icon: Globe,
+    title: "Cross-border partnerships",
+    description:
+      "Strengthen collaboration between African and Australian businesses, institutions and industry organisations.",
+  },
+  {
+      imageSrc: "/images/highlights/future.png",
+    icon: TrendingUp,
+    title: "Member business growth",
+    description:
+      "Help members access new markets, investment opportunities and strategic commercial partnerships.",
+  },
+  {
+     imageSrc: "/images/highlights/knowledge.png",
+    icon: BookOpen,
+    title: "Knowledge & best practice",
+    description:
+      "Exchange insights on regulation, standards, workforce development, innovation and sustainable industry growth.",
+  },
+  {
+      imageSrc: "/images/highlights/industry.png",
+    icon: Building2,
+    title: "Industry advocacy",
+    description:
+      "Strengthen industry representation while supporting policies that encourage investment and long-term competitiveness.",
+  },
+],
 
   whyMattersSubheading:
     "Creating stronger industries through strategic collaboration",
@@ -1395,80 +1554,71 @@ highlights: [
   eyebrow: "Media & Communications",
 
   heading:
-    "Telling the stories driving Africa's clean energy future",
+    "Telling the stories driving the clean energy transition",
 
   paragraph:
-    "The Clean Energy Conference Africa Australia brings together journalists, editors, broadcasters and communications professionals with ministers, policymakers, investors, utilities, technology leaders and researchers shaping Africa's energy transition. Hosted in Kigali and Perth, the conference provides direct access to the announcements, partnerships and industry developments influencing the future of clean energy across Africa and Australia.",
+    "The Clean Energy Conference brings together journalists, editors, broadcasters, and communications professionals with global ministers, policymakers, institutional investors, utilities, technology leaders, and researchers. The event provides direct access to the major announcements, international partnerships, and industrial developments defining the future of global renewable energy, infrastructure, and climate technology.",
 
   highlights: [
     {
-      imageSrc: "/images/highlights/media-exclusive-access.jpg",
-      icon: Newspaper,
+       imageSrc: "/images/highlights/exc.png", icon: Newspaper,
       title: "Exclusive access",
       description:
-        "Meet ministers, CEOs, policymakers, investors and industry leaders driving Africa's clean energy transformation.",
+        "Engage directly with global ministers, corporate executives, policymakers, and key institutional investors leading the energy transition.",
     },
     {
-      imageSrc: "/images/highlights/media-breaking-announcements.jpg",
-      icon: Landmark,
+       imageSrc: "/images/highlights/policy.png",icon: Landmark,
       title: "Policy & investment announcements",
       description:
-        "Report on major policy reforms, investment commitments and strategic partnerships announced throughout the conference.",
+        "Break exclusive coverage on major policy reforms, capital allocations, and strategic cross-border partnerships announced live.",
     },
     {
-      imageSrc: "/images/highlights/media-energy-innovation.jpg",
-      icon: Lightbulb,
+      imageSrc: "/images/highlights/tech.png", icon: Lightbulb,
       title: "Emerging technologies",
       description:
-        "Discover innovations in renewable energy, hydrogen, battery storage, AI, smart grids and sustainable infrastructure.",
+        "Discover real-world applications of utility-scale renewables, hydrogen, battery storage solutions, smart grids, and AI integration.",
     },
     {
-      imageSrc: "/images/highlights/media-global-perspectives.jpg",
-      icon: Globe,
-      title: "Africa–Australia collaboration",
+       imageSrc: "/images/highlights/globe.png",icon: Globe,
+      title: "International collaboration",
       description:
-        "Cover the partnerships connecting African opportunities with Australian expertise in clean energy, mining and infrastructure.",
+        "Analyze the cross-border trade pipelines, supply chains, and international joint ventures scaling sustainable infrastructure globally.",
     },
     {
-      imageSrc: "/images/highlights/media-interviews-networking.jpg",
-      icon: Users,
+       imageSrc: "/images/highlights/cooperation.png",icon: Users,
       title: "Interviews & networking",
       description:
-        "Build relationships with government leaders, researchers, utilities and businesses for future reporting and collaboration.",
+        "Establish direct channels with utility executives, public sector officials, and research directors for long-term reporting insights.",
     },
     {
-      imageSrc: "/images/highlights/media-storytelling-impact.jpg",
-      icon: BookOpen,
+        imageSrc: "/images/highlights/knowledge.png", icon: BookOpen,
       title: "Stories that matter",
       description:
-        "Capture the people, partnerships and projects driving Africa's clean energy transition beyond the headlines.",
+        "Uncover complex, data-driven insights behind infrastructure scaling, climate finance deployments, and technological breakthroughs.",
     },
   ],
 
   whyMattersSubheading:
-    "Connecting media with the leaders shaping the energy transition",
+    "Connecting modern media with the executives shaping global infrastructure",
 
   outcomes: [
-    "Conduct interviews with ministers, policymakers, CEOs, investors and internationally recognised industry experts.",
-    "Report on policy announcements, investment commitments and strategic partnerships emerging from the conference.",
-    "Discover renewable energy projects, infrastructure developments and clean technology innovations transforming African markets.",
-    "Gain expert insight into renewable energy, climate finance, hydrogen, critical minerals and sustainable mining.",
-    "Access evidence-based perspectives that strengthen reporting and industry analysis.",
-    "Build long-term relationships with organisations seeking trusted media and communications partners.",
-    "Produce compelling stories highlighting innovation, collaboration and sustainable development.",
-    "Expand professional networks with media organisations, communications specialists and industry stakeholders.",
+    "Conduct structured interviews with high-level ministers, energy CEOs, and institutional fund managers.",
+    "Report on market-moving policy changes, major infrastructure projects, and strategic joint ventures.",
+    "Gain exclusive insight into grid monetization, carbon markets, green hydrogen, and critical supply chain frameworks.",
+    "Access verified, evidence-based research and technical analysis to strengthen editorial depth.",
+    "Build resilient corporate connections with cross-industry communication teams and media leads.",
   ],
 
   stats: [
     {
       value: "600+",
       description:
-        "Decision-makers, policymakers, investors and industry experts available for interviews and coverage.",
+        "Industry delegates, public officials, financial leaders, and sector experts accessible for targeted coverage.",
     },
     {
-      value: "2",
+      value: "Enterprise",
       description:
-        "International conference editions connecting African and Australian clean energy leaders.",
+        "An international forum designed to bridge global capital with scalable renewable energy projects.",
     },
   ],
 
@@ -1477,78 +1627,47 @@ highlights: [
   audience: [
     {
       icon: Newspaper,
-      title: "Journalists & reporters",
+      title: "Journalists & editors",
       description:
-        "Energy, infrastructure, business and environmental journalists covering the sector.",
+        "Energy, infrastructure, commodity markets, and climate technology reporters.",
       color: "#EFF6FF",
       sweepColor: "#2563EB",
     },
     {
-      icon: BookOpen,
-      title: "Editors & news organisations",
-      description:
-        "Editorial teams and publishers delivering news and industry analysis.",
-      color: "#ECFDF5",
-      sweepColor: "#10B981",
-    },
-    {
       icon: Monitor,
-      title: "Broadcast & digital media",
+      title: "Broadcast & digital networks",
       description:
-        "Television, radio, podcast and digital media professionals.",
+        "Television, radio, corporate podcast networks, and financial news syndicates.",
       color: "#FFF7ED",
       sweepColor: "#F97316",
     },
     {
       icon: TrendingUp,
-      title: "Business & financial media",
+      title: "Financial & market analysts",
       description:
-        "Journalists covering investment, finance, infrastructure and economic development.",
+        "Industry analysts, institutional researchers, and market intelligence publishers.",
       color: "#F5F3FF",
       sweepColor: "#8B5CF6",
     },
     {
-      icon: Leaf,
-      title: "Climate & sustainability media",
-      description:
-        "Professionals reporting on climate action, renewable energy and environmental issues.",
-      color: "#ECFEFF",
-      sweepColor: "#0891B2",
-    },
-    {
       icon: Users,
-      title: "Communications professionals",
+      title: "Communications directors",
       description:
-        "Corporate communications, public relations and stakeholder engagement specialists.",
+        "Corporate public relations, utility communications teams, and investor relations officers.",
       color: "#FEFCE8",
       sweepColor: "#CA8A04",
-    },
-    {
-      icon: Globe,
-      title: "Government communications",
-      description:
-        "Public sector communications teams supporting policy and infrastructure initiatives.",
-      color: "#FDF2F8",
-      sweepColor: "#DB2777",
-    },
-    {
-      icon: Lightbulb,
-      title: "Content creators & filmmakers",
-      description:
-        "Documentary producers, creators and storytellers showcasing innovation and impact.",
-      color: "#F3F4F6",
-      sweepColor: "#4B5563",
     },
   ],
 
   ctaWords: [
-    "Stories",
-    "Insight",
+    "Coverage",
+    "Insights",
     "Access",
-    "Impact",
+    "Analysis",
   ],
 
   bannerParagraph:
-    'Guided by the 2026 theme, "Turning Ambition into Action," the conference gives media professionals a front-row seat to the people, partnerships and projects transforming Africa\'s clean energy future, enabling accurate reporting, stronger industry connections and meaningful storytelling.',
-},
+    'Anchored in the operational reality of moving "From Strategy to Execution," this event provides global media professionals, analysts, and enterprise communicators a front-row view into the capital investments and technical engineering defining the next era of clean energy infrastructure.',
+}
+
 };
