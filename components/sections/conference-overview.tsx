@@ -85,18 +85,32 @@ function OutcomeCardStack({ items }: { items: string[] }) {
         const isFront = depth === 0;
         const isLeaving = leavingIndex === originalIndex;
         const target = stackTransform(depth, items.length);
+        // While leaving, aim for the back-most *visible* slot rather than
+        // the card's true new depth — with more items than VISIBLE_STACK_SIZE,
+        // that true depth sits below/behind the visible stack, which made the
+        // card visibly dip below the other cards right before it vanished.
+        // Landing exactly on the last visible slot (where the next card is
+        // already sitting) makes the hand-off invisible.
+        const leavingTarget = stackTransform(VISIBLE_STACK_SIZE - 1, items.length);
 
         // Only render the front VISIBLE_STACK_SIZE cards; the rest wait
         // off-stage in the rotation until it's their turn, keeping the
         // stack looking tidy instead of a tall pile.
         if (depth >= VISIBLE_STACK_SIZE && !isLeaving) return null;
 
+        // While leaving, the card must stay ABOVE the whole stack for the
+        // entire rise/arc so it visually lifts off and flies over the top
+        // cards. It only drops to its true (low) z-index right at the very
+        // end, once it's back in the fanned position — otherwise it ducks
+        // beneath the opaque front cards mid-flight and seems to vanish.
+        const elevatedZIndex = items.length + 1;
+
         return (
           <motion.div
             key={originalIndex}
             className="col-start-1 row-start-1 flex items-start gap-5 rounded-[24px] border border-zinc-200 bg-white p-6 sm:p-7"
             style={{
-              zIndex: isLeaving ? 1 : target.zIndex,
+              zIndex: isLeaving ? elevatedZIndex : target.zIndex,
               transformOrigin: "50% 100%",
             }}
             animate={
@@ -106,10 +120,34 @@ function OutcomeCardStack({ items }: { items: string[] }) {
                     // peak, begin descending, settle) instead of a sharp
                     // two-segment path — reads as one continuous curve
                     // rather than a card visibly changing direction.
-                    x: [0, 20, 34, 28, target.x],
-                    y: [0, -18, -30, -20, target.y],
-                    rotate: [0, 4, 8, 5, target.rotate],
-                    scale: [1, 1.015, 1.03, 1.015, target.scale],
+                    //
+                    // IMPORTANT: this must end at `leavingTarget`, not
+                    // `target`. `target` is built from the card's real new
+                    // depth after the shuffle (often far below/smaller than
+                    // the visible stack once there are more than
+                    // VISIBLE_STACK_SIZE items), so animating to it sent the
+                    // card arcing down to an off-stage position that then
+                    // vanished outright once the render after completion
+                    // re-evaluated its (now off-stage) depth. `leavingTarget`
+                    // is pinned to the last *visible* slot, which is exactly
+                    // where the next card is already sitting, so the hand-off
+                    // is seamless.
+                    x: [0, 20, 34, 28, leavingTarget.x],
+                    y: [0, -18, -30, -20, leavingTarget.y],
+                    rotate: [0, 4, 8, 5, leavingTarget.rotate],
+                    scale: [1, 1.015, 1.03, 1.015, leavingTarget.scale],
+                    // Stay above the stack through the whole arc; only drop
+                    // to the back-of-stack z-index on the final sample
+                    // point, once it's actually settled into place. This is
+                    // what keeps the card visible/on-top during the lift and
+                    // arc instead of ducking under the stack early.
+                    zIndex: [
+                      elevatedZIndex,
+                      elevatedZIndex,
+                      elevatedZIndex,
+                      elevatedZIndex,
+                      leavingTarget.zIndex,
+                    ],
                     boxShadow: [
                       "0 20px 45px rgba(0,57,148,0.15), 0 6px 14px rgba(0,57,148,0.08)",
                       "0 28px 55px rgba(0,57,148,0.2), 0 10px 18px rgba(0,57,148,0.1)",
@@ -792,8 +830,7 @@ export function ConferenceOverview() {
                   <motion.div
                     key={`${stat.value}-${index}`}
                     initial={{ x: fromLeft ? -72 : 72, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    animate={{ x: 0, opacity: 1 }}
                     transition={{
                       type: "spring",
                       stiffness: 60,
