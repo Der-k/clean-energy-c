@@ -181,23 +181,23 @@ export function RoleSubNav({
         Who will you be attending as?
       </h2>
 
-      <div className="flex flex-wrap items-center justify-between gap-y-2 w-full">
-        {roles.map((role) => (
-          <button
-            key={role.key}
-            type="button"
-            onClick={() => handleSelect(role.key)}
-            className={`group flex items-center gap-3 rounded-full pl-3 pr-5 py-2.5 sm:pl-4 sm:pr-6 sm:py-3 text-sm sm:text-base font-semibold whitespace-nowrap transition-all duration-200 ${
-              selected === role.key
-                ? "bg-[#009966]/20 text-white border border-white scale-[1.08]"
-                : "bg-white/5 text-white/75 border border-transparent hover:text-white hover:bg-white/10 hover:border-white hover:scale-[1.08]"
-            }`}
-          >
-            <role.icon className={`h-7 w-7 sm:h-8 sm:w-8 shrink-0 transition-all duration-200 group-hover:scale-110 ${selected === role.key ? "text-[#009966]" : "text-white/80 group-hover:text-white"}`} strokeWidth={1.75} />
-            {role.title}
-          </button>
-        ))}
-      </div>
+     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 w-full max-w-5xl mx-auto">
+  {roles.map((role) => (
+    <button
+      key={role.key}
+      type="button"
+      onClick={() => handleSelect(role.key)}
+      className={`group flex items-center gap-2.5 rounded-full pl-3 pr-5 py-2.5 sm:pl-4 sm:pr-6 sm:py-3 text-sm sm:text-base font-semibold whitespace-nowrap transition-all duration-200 ${
+        selected === role.key
+          ? "bg-[#009966]/20 text-white border border-white scale-[1.05]"
+          : "bg-white/5 text-white/75 border border-transparent hover:text-white hover:bg-white/10 hover:border-white hover:scale-[1.05]"
+      }`}
+    >
+      <role.icon className={`h-6 w-6 sm:h-7 sm:w-7 shrink-0 transition-all duration-200 group-hover:scale-110 ${selected === role.key ? "text-[#009966]" : "text-white/80 group-hover:text-white"}`} strokeWidth={1.75} />
+      {role.title}
+    </button>
+  ))}
+</div>
 
       {isSwitching && (
         <button onClick={() => setIsSwitching(false)} className="text-sm text-white/55 hover:text-white transition-colors">

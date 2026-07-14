@@ -71,14 +71,15 @@ const POSTS: Post[] = [
   {
     id: "p1",
     platform: "instagram",
-    name: "Clean Energy Conference",
-    handle: "@cleanenergyconf",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
     caption:
       "Delegates arriving in Kigali for the opening keynote — energy in the room already.",
     stats: "♥ 842 · 💬 61",
     time: "2h ago",
     size: "tall",
     mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DaiLnJbjNAS/" },
   },
   {
     id: "p2",
@@ -90,6 +91,10 @@ const POSTS: Post[] = [
     stats: "👍 316 · 💬 24",
     time: "5h ago",
     mediaTint: "",
+    embed: {
+      platform: "linkedin",
+      html: `<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7470523314604597248?collapsed=1" height="567" width="504" frameborder="0" allowfullscreen title="Embedded post"></iframe>`,
+    },
   },
   {
     id: "p3",
@@ -105,13 +110,14 @@ const POSTS: Post[] = [
   {
     id: "p4",
     platform: "instagram",
-    name: "Marula Mining Plc",
-    handle: "@marulamining",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
     caption: "Exhibition floor setup at Kigali Marriott — see you at Booth 14.",
     stats: "♥ 1.2k · 💬 88",
     time: "9h ago",
     size: "wide",
     mediaTint: "linear-gradient(160deg,#DCEFE6,#E2E4F7)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/Daf9PtlEYD0/" },
   },
   {
     id: "p5",
@@ -123,6 +129,10 @@ const POSTS: Post[] = [
     stats: "👍 204 · 💬 19",
     time: "11h ago",
     mediaTint: "",
+    embed: {
+      platform: "linkedin",
+      html: `<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7470774903638581249?collapsed=1" height="745" width="504" frameborder="0" allowfullscreen title="Embedded post"></iframe>`,
+    },
   },
   {
     id: "p6",
@@ -139,12 +149,13 @@ const POSTS: Post[] = [
   {
     id: "p7",
     platform: "instagram",
-    name: "Hon. Dr. Deborah Mulongo",
-    handle: "@dr.d.mulongo",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
     caption: "Honored to open the climate finance track today in Kigali.",
     stats: "♥ 967 · 💬 71",
     time: "1d ago",
     mediaTint: "linear-gradient(160deg,#E9F6EF,#DEE1F6)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DaLJA1ol8l0/" },
   },
   {
     id: "p8",
