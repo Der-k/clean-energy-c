@@ -252,14 +252,10 @@ function Stat({ label, target }: { label: string; target: number }) {
 }
 
 function PostCard({ post }: { post: Post }) {
-  const spanClass =
-    post.size === "tall" ? "row-span-2" : post.size === "wide" ? "col-span-2" : "";
   const mediaAspect = post.size === "tall" ? "aspect-[4/5.4]" : post.size === "wide" ? "aspect-[16/8]" : "aspect-[4/3]";
 
   return (
-    <article
-      className={`hover-glow-card sw-surface flex flex-col overflow-hidden rounded-[14px] ${spanClass}`}
-    >
+    <article className="hover-glow-card sw-surface mb-[18px] flex w-full flex-col overflow-hidden rounded-[14px] break-inside-avoid">
       <div className="flex items-center gap-2.5 px-4 pb-3 pt-3.5">
         <AvatarBadge platform={post.platform} />
         <div className="min-w-0 flex-1">
@@ -386,7 +382,7 @@ export function SocialWall() {
           </div>
         </div>
 
-        <div className="grid auto-rows-auto grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="columns-1 gap-[18px] sm:columns-2 lg:columns-3">
           {filtered.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
