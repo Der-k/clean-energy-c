@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -35,8 +36,8 @@ const STACK_OFFSET_Y = 14; // px between each card in the resting stack
 const STACK_OFFSET_X = [0, -64, 72]; // px sideways fan per depth
 const STACK_SCALE_STEP = 0.05; // size reduction per depth
 const STACK_ROTATIONS = [0, -6, 7]; // subtle natural tilt per depth
-const SHUFFLE_INTERVAL = 3600; // ms between automatic shuffles
-const SHUFFLE_DURATION = 0.95; // seconds for the leaving card's journey to the back
+const SHUFFLE_INTERVAL = 8000; // ms between automatic shuffles
+const SHUFFLE_DURATION = 0.45; // seconds for the leaving card's clean exit
 const SETTLE_DURATION = 0.6; // seconds for cards settling into a new spot
 const VISIBLE_STACK_SIZE = 3; // max cards shown in the stack at once
 
@@ -91,26 +92,17 @@ function OutcomeCardStack({ items }: { items: string[] }) {
         // card visibly dip below the other cards right before it vanished.
         // Landing exactly on the last visible slot (where the next card is
         // already sitting) makes the hand-off invisible.
-        const leavingTarget = stackTransform(VISIBLE_STACK_SIZE - 1, items.length);
-
         // Only render the front VISIBLE_STACK_SIZE cards; the rest wait
         // off-stage in the rotation until it's their turn, keeping the
         // stack looking tidy instead of a tall pile.
         if (depth >= VISIBLE_STACK_SIZE && !isLeaving) return null;
-
-        // While leaving, the card must stay ABOVE the whole stack for the
-        // entire rise/arc so it visually lifts off and flies over the top
-        // cards. It only drops to its true (low) z-index right at the very
-        // end, once it's back in the fanned position — otherwise it ducks
-        // beneath the opaque front cards mid-flight and seems to vanish.
-        const elevatedZIndex = items.length + 1;
 
         return (
           <motion.div
             key={originalIndex}
             className="col-start-1 row-start-1 flex items-start gap-5 rounded-[24px] border border-zinc-200 bg-white p-6 sm:p-7"
             style={{
-              zIndex: isLeaving ? elevatedZIndex : target.zIndex,
+              zIndex: isLeaving ? items.length + 1 : target.zIndex,
               transformOrigin: "50% 100%",
             }}
             animate={
@@ -120,47 +112,17 @@ function OutcomeCardStack({ items }: { items: string[] }) {
                     // peak, begin descending, settle) instead of a sharp
                     // two-segment path — reads as one continuous curve
                     // rather than a card visibly changing direction.
-                    //
-                    // IMPORTANT: this must end at `leavingTarget`, not
-                    // `target`. `target` is built from the card's real new
-                    // depth after the shuffle (often far below/smaller than
-                    // the visible stack once there are more than
-                    // VISIBLE_STACK_SIZE items), so animating to it sent the
-                    // card arcing down to an off-stage position that then
-                    // vanished outright once the render after completion
-                    // re-evaluated its (now off-stage) depth. `leavingTarget`
-                    // is pinned to the last *visible* slot, which is exactly
-                    // where the next card is already sitting, so the hand-off
-                    // is seamless.
-                    x: [0, 20, 34, 28, leavingTarget.x],
-                    y: [0, -18, -30, -20, leavingTarget.y],
-                    rotate: [0, 4, 8, 5, leavingTarget.rotate],
-                    scale: [1, 1.015, 1.03, 1.015, leavingTarget.scale],
-                    // Stay above the stack through the whole arc; only drop
-                    // to the back-of-stack z-index on the final sample
-                    // point, once it's actually settled into place. This is
-                    // what keeps the card visible/on-top during the lift and
-                    // arc instead of ducking under the stack early.
-                    zIndex: [
-                      elevatedZIndex,
-                      elevatedZIndex,
-                      elevatedZIndex,
-                      elevatedZIndex,
-                      leavingTarget.zIndex,
-                    ],
-                    boxShadow: [
-                      "0 20px 45px rgba(0,57,148,0.15), 0 6px 14px rgba(0,57,148,0.08)",
-                      "0 28px 55px rgba(0,57,148,0.2), 0 10px 18px rgba(0,57,148,0.1)",
-                      "0 34px 62px rgba(0,57,148,0.24), 0 13px 22px rgba(0,57,148,0.13)",
-                      "0 20px 40px rgba(0,57,148,0.15), 0 8px 16px rgba(0,57,148,0.08)",
-                      "0 10px 24px rgba(2,6,23,0.08), 0 4px 8px rgba(2,6,23,0.04)",
-                    ] as unknown as string,
+                    y: -16,
+                    rotate: 1.5,
+                    scale: 0.985,
+                    opacity: 0,
                   }
                 : {
                     x: target.x,
                     y: isFront && isHovered ? target.y - 8 : target.y,
                     rotate: target.rotate,
                     scale: target.scale,
+                    opacity: 1,
                     boxShadow: isFront
                       ? isHovered
                         ? "0 30px 60px rgba(0,57,148,0.22), 0 10px 20px rgba(0,57,148,0.12)"
@@ -172,8 +134,7 @@ function OutcomeCardStack({ items }: { items: string[] }) {
               isLeaving
                 ? {
                     duration: SHUFFLE_DURATION,
-                    times: [0, 0.25, 0.5, 0.75, 1],
-                    ease: "easeInOut",
+                    ease: [0.22, 1, 0.36, 1],
                   }
                 : { duration: SETTLE_DURATION, ease: [0.22, 1, 0.36, 1] }
             }
@@ -195,153 +156,135 @@ function OutcomeCardStack({ items }: { items: string[] }) {
 }
 
 /* ----------------------------------------------------------------------- */
-/* Click-triggered "generating" text reveal for the highlight cards        */
+/* Auto-triggered "generating" text reveal — types out on mount, so each   */
+/* new card that flips into view automatically types its description       */
+/* rather than needing a click.                                            */
 /* ----------------------------------------------------------------------- */
 
-function GeneratingText({
-  text,
-  runId,
-  className,
-}: {
-  text: string;
-  runId: number;
-  className?: string;
-}) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (runId === 0) return;
-    setCount(0);
-    const interval = setInterval(() => {
-      setCount((prev) => {
-        if (prev >= text.length) {
-          clearInterval(interval);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 14);
-    return () => clearInterval(interval);
-  }, [runId, text]);
-
-  const started = runId > 0;
-  const isDone = started && count >= text.length;
-
-  return (
-    <p className={className}>
-      {started ? text.slice(0, count) : ""}
-      {started && !isDone && (
-        <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-[#020266]" />
-      )}
-    </p>
-  );
+function GeneratingText({ text, className }: { text: string; className?: string }) {
+  return <p className={className}>{text}</p>;
 }
 
-const HIGHLIGHT_LOGOS = [
-  "/images/highlight-logo-1.png",
-  "/images/highlight-logo-2.png",
-  "/images/highlight-logo-3.png",
-  "/images/highlight-logo-4.png",
-];
+/* ----------------------------------------------------------------------- */
+/* Highlight flip carousel — shows one central highlight card at a time.   */
+/* Every few seconds (or via the arrows/dots) it flips to the next card    */
+/* like a page turning, looping back to the first after the last one.      */
+/* ----------------------------------------------------------------------- */
 
-function HighlightCard({
-  item,
-  index,
-  fromLeft,
-  autoGenerate = false,
-}: {
-  item: Highlight;
-  index: number;
-  fromLeft: boolean;
-  autoGenerate?: boolean;
-}) {
-  const logoSrc = (item as { logoSrc?: string }).logoSrc ?? HIGHLIGHT_LOGOS[index % HIGHLIGHT_LOGOS.length];
-  const logoAlt = (item as { logoAlt?: string }).logoAlt ?? `${item.title} logo`;
-  const [logoFailed, setLogoFailed] = useState(false);
-  const [runId, setRunId] = useState(0);
-  const started = runId > 0;
+const HIGHLIGHT_AUTOROTATE_INTERVAL = 9500; // ms between automatic flips
+const HIGHLIGHT_FLIP_DURATION = 0.55; // seconds for the card transition
 
-  // Re-arm the auto-generate + reset typed text whenever the item itself
-  // changes (e.g. the visitor switched roles and this slot now shows
-  // different copy).
+function HighlightFlipCarousel({ items }: { items: Highlight[] }) {
+  const [index, setIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Reset to the first card whenever the underlying item list changes (e.g.
+  // the person switches roles and the highlights swap out).
   useEffect(() => {
-    setRunId(autoGenerate ? 1 : 0);
-    setLogoFailed(false);
-  }, [item, autoGenerate]);
+    setIndex(0);
+  }, [items]);
+
+  useEffect(() => {
+    if (isHovered || items.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % items.length);
+    }, HIGHLIGHT_AUTOROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, [isHovered, items.length]);
+
+  const goToPrev = () => {
+    setIndex((prev) => (prev - 1 + items.length) % items.length);
+  };
+  const goToNext = () => {
+    setIndex((prev) => (prev + 1) % items.length);
+  };
+  const goToIndex = (target: number) => {
+    setIndex(target);
+  };
+
+  const item = items[index];
+  const hasMultiple = items.length > 1;
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: fromLeft ? -60 : 60,
-        rotateY: fromLeft ? -55 : 55,
-        scale: 0.82,
-      }}
-      whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{
-        type: "spring",
-        stiffness: 70,
-        damping: 14,
-        delay: index * 0.15,
-      }}
-      whileHover={{ y: -6 }}
-      whileTap={{ scale: 0.97 }}
-      style={{ transformStyle: "preserve-3d" }}
-      onClick={() => setRunId((prev) => prev + 1)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          setRunId((prev) => prev + 1);
-        }
-      }}
-      className="group relative cursor-pointer overflow-hidden rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm outline-none transition-shadow duration-300 hover:border-[#020266]/30 hover:shadow-[0_18px_45px_rgba(2,6,23,0.1)] focus-visible:ring-2 focus-visible:ring-[#020266]/40"
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* light sweep across the card once it lands */}
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent"
-        initial={{ x: "-120%" }}
-        whileInView={{ x: "420%" }}
-        viewport={{ once: true, amount: 0.4 }}
-        transition={{
-          duration: 0.9,
-          delay: index * 0.15 + 0.35,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-      />
-      <div className="relative -mx-6 -mt-6 mb-6 h-48 overflow-hidden rounded-t-[24px]">
-        <img
-          src={item.imageSrc}
-          alt={item.imageAlt ?? item.title}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
-        />
-      </div>
-      <h3 className="mt-4 text-xl font-semibold text-[#020266]">{item.title}</h3>
+      <div className="mx-auto flex max-w-sm items-center gap-4">
+        {hasMultiple && (
+          <button
+            type="button"
+            onClick={goToPrev}
+            aria-label="Show previous highlight"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-700 transition-all duration-300 hover:border-[#020266] hover:bg-[#020266] hover:text-white"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+        )}
 
-      {/* No fixed/max height here on purpose — longer descriptions just
-          grow the card instead of getting clipped or overflowing. */}
-      <div className="mt-3 min-h-[3rem]">
-        {started ? (
-          <GeneratingText
-            text={item.description}
-            runId={runId}
-            className="text-base leading-7 text-zinc-600"
-          />
-        ) : (
-          <div className="flex h-full items-center">
-            <ArrowRight className="h-10 w-10 stroke-[2.5] text-emerald-500 transition-transform duration-300 group-hover:translate-x-1.5" />
-          </div>
+        <div className="relative flex-1" style={{ perspective: "1600px" }}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={index}
+              initial={{ y: 14, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -14, opacity: 0 }}
+              transition={{
+                duration: HIGHLIGHT_FLIP_DURATION,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{ willChange: "transform, opacity" }}
+              className="overflow-hidden rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm"
+            >
+              <div className="relative -mx-6 -mt-6 mb-6 h-48 w-[calc(100%+3rem)] overflow-hidden">
+                <img
+                  src={item.imageSrc}
+                  alt={item.imageAlt ?? item.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold text-[#020266]">{item.title}</h3>
+              <GeneratingText
+                text={item.description}
+                className="mt-3 min-h-[5rem] text-base leading-7 text-zinc-600"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {hasMultiple && (
+          <button
+            type="button"
+            onClick={goToNext}
+            aria-label="Show next highlight"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-700 transition-all duration-300 hover:border-[#020266] hover:bg-[#020266] hover:text-white"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         )}
       </div>
-    </motion.div>
+
+      {hasMultiple && (
+        <div className="mt-5 flex items-center justify-center gap-1.5">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => goToIndex(i)}
+              aria-label={`Go to highlight ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? "w-6 bg-[#020266]" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
 /* ----------------------------------------------------------------------- */
-/* Audience card — matches HighlightCard's spring entrance + accent reveal */
+/* Audience card — colored block cards with icon, title, description */
 /* ----------------------------------------------------------------------- */
 
 // Solid "logo" brand colors for the card backgrounds — matches the tri-
@@ -355,6 +298,88 @@ const SWEEP_COLORS = ["#009966", "#F2CB01", "#0F0F76"];
 // any individual stat's color in rolesData.ts via `color`; otherwise stats
 // cycle through this palette in order.
 const STAT_COLORS = ["#020266", "#009966", "#B8860B", "#0F0F76"];
+
+const OVERVIEW_ANIMATION_VIDEOS = [
+  {
+  src: "/videos/mine2.mp4",
+  title: "Critical",
+  keyword: "Minerals & Sustainable Mining",
+},
+{
+  src: "/videos/solar.mp4",
+  title: "Accelerating",
+  keyword: "Solar Energy",
+},
+{
+  src: "/videos/turbine.mp4",
+  title: "Harnessing",
+  keyword: "Geothermal & Hydrothermal Energy",
+},
+{
+  src: "/videos/join.mp4",
+  title: "Join the",
+  keyword: "Clean Energy Conference Africa Australia",
+},
+];
+
+const TITLE_TRANSITIONS = [
+  { initial: { y: 56, opacity: 0 }, exit: { y: -56, opacity: 0 } },
+  { initial: { y: -56, opacity: 0 }, exit: { y: 56, opacity: 0 } },
+  { initial: { x: -80, opacity: 0 }, exit: { x: 80, opacity: 0 } },
+  { initial: { x: 80, opacity: 0 }, exit: { x: -80, opacity: 0 } },
+];
+
+function OverviewAnimationPlayer() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeVideo, setActiveVideo] = useState(0);
+  const titleTransition = TITLE_TRANSITIONS[activeVideo % TITLE_TRANSITIONS.length];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.load();
+    void video.play().catch(() => undefined);
+  }, [activeVideo]);
+
+  return (
+    <div>
+      <div className="relative z-10 -mx-4 -my-3 mb-6 overflow-hidden px-4 py-3 text-center sm:mb-8">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.h3
+            key={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src}
+            initial={titleTransition.initial}
+            animate={{ y: 0, x: 0, opacity: 1 }}
+            exit={titleTransition.exit}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="!text-3xl font-semibold leading-[1.05] tracking-tight !text-zinc-950 sm:!text-4xl lg:!text-5xl"
+          >
+            {OVERVIEW_ANIMATION_VIDEOS[activeVideo].title}{" "}
+            <span className="text-[#009966]">
+              {OVERVIEW_ANIMATION_VIDEOS[activeVideo].keyword}
+            </span>
+          </motion.h3>
+        </AnimatePresence>
+      </div>
+      <video
+        ref={videoRef}
+        key={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src}
+        autoPlay
+        muted
+        playsInline
+        preload="auto"
+        onEnded={() =>
+          setActiveVideo((current) =>
+            (current + 1) % OVERVIEW_ANIMATION_VIDEOS.length
+          )
+        }
+        className="block min-h-[360px] w-full object-cover sm:min-h-[460px] lg:min-h-[560px]"
+      >
+        <source src={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src} type="video/mp4" />
+        Your browser does not support MP4 playback.
+      </video>
+    </div>
+  );
+}
 
 function AudienceCard({ item, index }: { item: AudienceItem; index: number }) {
   const Icon = item.icon;
@@ -607,6 +632,32 @@ const ROLE_TABS: { id: string; label: string }[] = [
 // role from RoleContext against the content we actually have.
 const AVAILABLE_ROLE_IDS = new Set(ROLE_TABS.map((tab) => tab.id));
 
+const CONFERENCE_INSIGHTS = [
+  {
+    title: "How Clean Energy Finance is Reshaping Investment Strategies Across Africa",
+    date: "March 2026",
+    excerpt:
+      "From blended finance to green bonds, discover the capital shaping Africa's energy transition.",
+    image: "/images/blog/blog-featured.jpg",
+    href: "/media/blog/how-clean-energy-finance-is-reshaping-investment-strategies-across-africa",
+    featured: true,
+  },
+  {
+    title: "Energy Investment in Africa: Opportunities, Trends and Why 2026 Could Be a Defining Year",
+    date: "July 2026",
+    excerpt: "The market signals, capital flows, and opportunities shaping the year ahead.",
+    image: "/images/clean-energy-collage.png",
+    href: "/media/news/blogs/energy-investment-africa-2026",
+  },
+  {
+    title: "The Case for Geothermal: Africa's Untapped Power Source",
+    date: "March 2026",
+    excerpt: "A closer look at one of the continent's most dependable renewable resources.",
+    image: "/images/blog/blog-1.jpg",
+    href: "/media/blog/the-case-for-geothermal-africas-untapped-power-source",
+  },
+];
+
 /* ----------------------------------------------------------------------- */
 
 export function ConferenceOverview() {
@@ -854,30 +905,92 @@ export function ConferenceOverview() {
           </div>
         </div>
 
-        <div
-          className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
-          style={{ perspective: "1400px" }}
-        >
-          {c.highlights.map((item, index) => (
-            <HighlightCard
-              key={item.title}
-              item={item}
-              index={index}
-              fromLeft={index % 2 === 0}
-              autoGenerate={index === 0}
-            />
-          ))}
+        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center">
+          <div>
+            <HighlightFlipCarousel items={c.highlights} />
+          </div>
+          <OverviewAnimationPlayer />
         </div>
 
-        {/* Who this is for */}
-        <div className="mt-14">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500">
-            {c.audienceLabel}
-          </p>
-          <div className="mt-5">
-            <AudienceCarousel items={c.audience} />
+        <section className="relative mt-16 overflow-hidden rounded-[32px] border border-[#020266]/10 bg-zinc-50 p-6 shadow-[0_18px_50px_rgba(2,6,23,0.06)] sm:p-8 lg:p-10">
+          <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#009966]/10 blur-3xl" />
+          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#009966]">
+                Latest insights
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
+                News, ideas, and industry perspectives
+              </h2>
+              <p className="mt-3 text-base leading-7 text-zinc-600 sm:text-lg">
+                Explore the latest thinking on energy investment, policy, technology, and Africa’s clean-energy future.
+              </p>
+            </div>
+            <Link
+              href="/media/blog"
+              className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-[#020266]/20 bg-white px-5 py-3 text-sm font-semibold text-[#020266] shadow-sm transition hover:border-[#020266] hover:bg-[#020266] hover:text-white sm:self-auto"
+            >
+              Explore all articles
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
-        </div>
+
+          <div className="relative mt-9 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+            <article className="group relative min-h-[360px] overflow-hidden rounded-[26px] bg-[#020266] shadow-[0_16px_36px_rgba(2,6,23,0.16)]">
+              <Image
+                src={CONFERENCE_INSIGHTS[0].image}
+                alt={CONFERENCE_INSIGHTS[0].title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover opacity-70 transition duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020266] via-[#020266]/65 to-transparent" />
+              <div className="relative flex min-h-[360px] flex-col justify-end p-6 text-white sm:p-8">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm">
+                  <CalendarDays className="h-3.5 w-3.5" />
+                  {CONFERENCE_INSIGHTS[0].date}
+                </div>
+                <h3 className="mt-4 text-2xl font-semibold leading-tight sm:text-3xl">
+                  {CONFERENCE_INSIGHTS[0].title}
+                </h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-white/80 sm:text-base">
+                  {CONFERENCE_INSIGHTS[0].excerpt}
+                </p>
+                <Link href={CONFERENCE_INSIGHTS[0].href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                  Read article <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </article>
+
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+              {CONFERENCE_INSIGHTS.slice(1).map((article) => (
+                <article key={article.href} className="group overflow-hidden rounded-[24px] border border-zinc-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(2,6,23,0.12)] lg:grid lg:grid-cols-[150px_1fr]">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100 lg:aspect-auto">
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 22vw"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-col p-5">
+                    <p className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500">
+                      <CalendarDays className="h-3.5 w-3.5 text-[#009966]" />
+                      {article.date}
+                    </p>
+                    <h3 className="mt-3 text-lg font-semibold leading-6 text-zinc-900 transition-colors group-hover:text-[#020266]">
+                      {article.title}
+                    </h3>
+                    <Link href={article.href} className="mt-auto pt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#020266]">
+                      Read more <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
 
       {/* Full-width banner with a static, hard-edged 3-color border */}

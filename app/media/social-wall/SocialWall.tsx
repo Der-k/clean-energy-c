@@ -65,6 +65,13 @@ interface Post {
     | { platform: "instagram"; url: string }
     | { platform: "x"; html: string }
     | { platform: "linkedin"; html: string };
+  /**
+   * The real, human-visitable post URL — used for the "View on Instagram/
+   * LinkedIn/X" link on the card and in the focus modal. Optional: if you
+   * don't have it (e.g. LinkedIn's embed code doesn't include one), the
+   * link just won't render.
+   */
+  permalink?: string;
 }
 
 const POSTS: Post[] = [
@@ -80,6 +87,7 @@ const POSTS: Post[] = [
     size: "tall",
     mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaiLnJbjNAS/" },
+    permalink: "https://www.instagram.com/p/DaiLnJbjNAS/",
   },
   {
     id: "p2",
@@ -118,6 +126,7 @@ const POSTS: Post[] = [
     size: "wide",
     mediaTint: "linear-gradient(160deg,#DCEFE6,#E2E4F7)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/Daf9PtlEYD0/" },
+    permalink: "https://www.instagram.com/p/Daf9PtlEYD0/",
   },
   {
     id: "p5",
@@ -156,6 +165,7 @@ const POSTS: Post[] = [
     time: "1d ago",
     mediaTint: "linear-gradient(160deg,#E9F6EF,#DEE1F6)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaLJA1ol8l0/" },
+    permalink: "https://www.instagram.com/p/DaLJA1ol8l0/",
   },
   {
     id: "p8",
@@ -251,11 +261,24 @@ function Stat({ label, target }: { label: string; target: number }) {
   );
 }
 
-function PostCard({ post }: { post: Post }) {
+function ExternalLinkIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
+}
+
+function PostCard({ post, onOpen }: { post: Post; onOpen: (post: Post) => void }) {
   const mediaAspect = post.size === "tall" ? "aspect-[4/5.4]" : post.size === "wide" ? "aspect-[16/8]" : "aspect-[4/3]";
 
   return (
-    <article className="hover-glow-card sw-surface mb-[18px] flex w-full flex-col overflow-hidden rounded-[14px] break-inside-avoid">
+    <article
+      onClick={() => onOpen(post)}
+      className="hover-glow-card sw-surface mb-[18px] flex w-full cursor-pointer flex-col overflow-hidden rounded-[14px] break-inside-avoid"
+    >
       <div className="flex items-center gap-2.5 px-4 pb-3 pt-3.5">
         <AvatarBadge platform={post.platform} />
         <div className="min-w-0 flex-1">
@@ -266,11 +289,32 @@ function PostCard({ post }: { post: Post }) {
             {post.handle}
           </div>
         </div>
+        {post.permalink && (
+          <a
+            href={post.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            title={`View original post`}
+            className="sw-muted flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors hover:!text-[#02026e]"
+            style={{ border: "1px solid #d0d4f0" }}
+          >
+            <ExternalLinkIcon />
+          </a>
+        )}
       </div>
 
       {post.embed ? (
-        <div className="px-4 pb-2">
-          <SocialEmbed {...post.embed} />
+        // The overlay below sits above the embed purely to catch clicks —
+        // iframes (LinkedIn, and Instagram once its script runs) are a
+        // separate browsing context, so a click inside one never bubbles
+        // up to this card's onClick. The overlay intercepts it first, then
+        // its own click bubbles normally to open the focus modal.
+        <div className="relative px-4 pb-2">
+          <div className="relative">
+            <div className="absolute inset-0 z-10" />
+            <SocialEmbed {...post.embed} />
+          </div>
         </div>
       ) : (
         post.mediaTint && (
@@ -294,9 +338,107 @@ function PostCard({ post }: { post: Post }) {
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+/**
+ * Focus view: opened when a card is clicked. Shows the full post — real
+ * embeds are rendered directly here (not behind a click-catcher), so they're
+ * genuinely interactive, and a "View on [platform]" link is always available
+ * for anyone who wants the original page instead.
+ */
+function PostModal({ post, onClose }: { post: Post; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  const platformLabel = post.platform === "instagram" ? "Instagram" : post.platform === "linkedin" ? "LinkedIn" : "X";
+
+  return (
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 py-10 sm:p-8"
+      style={{ background: "rgba(2,2,102,0.45)", backdropFilter: "blur(2px)" }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="sw-surface relative w-full max-w-[560px] rounded-[16px]"
+        style={{ boxShadow: "0 24px 64px rgba(2,2,102,0.28)" }}
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="sw-dark absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white"
+          style={{ border: "1px solid #d0d4f0" }}
+        >
+          <CloseIcon />
+        </button>
+
+        <div className="flex items-center gap-3 px-5 pb-3 pt-5">
+          <AvatarBadge platform={post.platform} />
+          <div className="min-w-0 flex-1">
+            <div className="sw-dark text-[15px] font-semibold">{post.name}</div>
+            <div className="sw-muted text-[13px] font-medium">{post.handle}</div>
+          </div>
+        </div>
+
+        <div className="px-5 pb-2">
+          {post.embed ? (
+            <SocialEmbed {...post.embed} />
+          ) : (
+            post.mediaTint && (
+              <div
+                className="w-full rounded-[10px] bg-cover bg-center aspect-[4/3]"
+                style={{ backgroundImage: post.mediaTint }}
+              />
+            )
+          )}
+        </div>
+
+        <div className="flex flex-col gap-3 px-5 pb-6 pt-2">
+          <p className="sw-dark text-[14.5px] leading-[1.6]">
+            {post.caption} <span className="sw-green" style={{ fontWeight: 600 }}>#CleanEnergy2026</span>
+          </p>
+          <div className="sw-muted flex items-center justify-between text-[12.5px] font-medium">
+            <span>{post.stats}</span>
+            <span>{post.time}</span>
+          </div>
+
+          {post.permalink && (
+            <a
+              href={post.permalink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sw-navy mt-1 inline-flex w-fit items-center gap-1.5 text-[13.5px] font-semibold"
+            >
+              View on {platformLabel} <ExternalLinkIcon />
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function SocialWall() {
   const [filter, setFilter] = useState<Platform | "all">("all");
   const [loadedAll, setLoadedAll] = useState(false);
+  const [activePost, setActivePost] = useState<Post | null>(null);
 
   const filtered = filter === "all" ? POSTS : POSTS.filter((p) => p.platform === filter);
 
@@ -384,7 +526,7 @@ export function SocialWall() {
 
         <div className="columns-1 gap-[18px] sm:columns-2 lg:columns-3">
           {filtered.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post} onOpen={setActivePost} />
           ))}
         </div>
 
@@ -419,6 +561,8 @@ export function SocialWall() {
           </a>
         </div>
       </div>
+
+      {activePost && <PostModal post={activePost} onClose={() => setActivePost(null)} />}
     </div>
   );
 }
