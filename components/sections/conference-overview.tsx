@@ -300,9 +300,26 @@ const SWEEP_COLORS = ["#009966", "#F2CB01", "#0F0F76"];
 const STAT_COLORS = ["#020266", "#009966", "#B8860B", "#0F0F76"];
 
 const OVERVIEW_ANIMATION_VIDEOS = [
-  { src: "/videos/conference-overview-01.mp4", title: "Powering the", keyword: "future" },
-  { src: "/videos/conference-overview-02.mp4", title: "Connecting ideas to", keyword: "action" },
-  { src: "/videos/conference-overview-03.mp4", title: "Building lasting", keyword: "partnerships" },
+  {
+  src: "/videos/mine2.mp4",
+  title: "Critical",
+  keyword: "Minerals & Sustainable Mining",
+},
+{
+  src: "/videos/solar.mp4",
+  title: "Accelerating",
+  keyword: "Solar Energy",
+},
+{
+  src: "/videos/turbine.mp4",
+  title: "Harnessing",
+  keyword: "Geothermal & Hydrothermal Energy",
+},
+{
+  src: "/videos/join.mp4",
+  title: "Join the",
+  keyword: "Clean Energy Conference Africa Australia",
+},
 ];
 
 const TITLE_TRANSITIONS = [

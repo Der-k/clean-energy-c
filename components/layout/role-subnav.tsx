@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   Landmark, TrendingUp, Zap, BookOpen, Star, Monitor,
   Globe, Building2, Newspaper, Users, ArrowRight, X,
@@ -37,8 +38,24 @@ const roles: RoleConfig[] = [
   { key: "students-young-professionals",   title: "Students & Young Professionals",       preparing: "We're curating mentorship sessions, career fair opportunities, and networking highlights for you.",                icon: Users     },
 ];
 
+// Timer-based entrance (non-homepage pages)
 const ENTRANCE_DELAY_MS = 10000;
+// How often the picker re-surfaces on non-homepage pages if the user
+// dismissed it and still hasn't picked a role
+const REPEAT_INTERVAL_MS = 30000;
 const COLLAPSE_DELAY_MS = 2800;
+
+// On the homepage, once the sentinel scrolls into view, we wait this long
+// (while it stays in view) before revealing the picker.
+const HOMEPAGE_SECTION_DWELL_MS = 5000;
+
+// Id of a thin (e.g. 1px) sentinel element the homepage places at the TOP
+// of the Conference Overview section — NOT a wrapper around the whole
+// section. RoleSubNav watches this sentinel and reveals itself once it's
+// been in view for HOMEPAGE_SECTION_DWELL_MS. Using a thin sentinel (rather
+// than measuring visibility of the full section) means this works no matter
+// how tall the section is.
+export const ROLE_NAV_TRIGGER_ID = "role-nav-trigger";
 
 export function RoleSubNav({
   getTicketsHref = "/get-tickets",
@@ -52,6 +69,8 @@ export function RoleSubNav({
 }) {
   const { role: savedRole, loading, setRole } = useRole();
   const headerVisible = useHeaderVisible();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
 
   const [entered, setEntered] = useState(false);
   const [selected, setSelected] = useState<RoleKey | null>(null);
@@ -60,11 +79,93 @@ export function RoleSubNav({
   const [isSwitching, setIsSwitching] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
+  // --- Entrance trigger ---
+  // Homepage: reveal 5s after the Conference Overview section scrolls into
+  // view (the 5s timer cancels/resets if the user scrolls away before it fires).
+  // Everywhere else: reveal after a fixed delay, same as before.
   useEffect(() => {
     if (loading) return;
+
+    if (isHomepage) {
+      // Retry a few times in case the sentinel isn't in the DOM yet on the
+      // very first paint (e.g. it's inside something that mounts async).
+      let attempts = 0;
+      let cancelled = false;
+      let dwellTimer: ReturnType<typeof setTimeout> | null = null;
+      let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+      let observer: IntersectionObserver | null = null;
+
+      const setup = () => {
+        if (cancelled) return;
+        const target = document.getElementById(ROLE_NAV_TRIGGER_ID);
+
+        if (!target) {
+          attempts += 1;
+          if (attempts < 20) {
+            // try again shortly — DOM may not have the sentinel yet
+            fallbackTimer = setTimeout(setup, 250);
+          } else {
+            // Give up waiting for the sentinel; fall back to a fixed delay
+            // so the nav still shows up eventually.
+            fallbackTimer = setTimeout(() => setEntered(true), ENTRANCE_DELAY_MS);
+          }
+          return;
+        }
+
+        // IMPORTANT: `target` should be a thin sentinel (e.g. a 1px div) placed
+        // at the top of the Conference Overview section — not a wrapper around
+        // the whole section. Wrapping the whole section and requiring a visible
+        // percentage (the old `threshold: 0.3` approach) never fires for tall
+        // sections, since the visible ratio of a tall element rarely reaches 30%.
+        observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              // Start (or restart) the 5s dwell countdown once the sentinel is in view
+              dwellTimer = setTimeout(() => {
+                setEntered(true);
+                observer?.disconnect();
+              }, HOMEPAGE_SECTION_DWELL_MS);
+            } else if (dwellTimer) {
+              // User scrolled away before the dwell time elapsed — cancel it
+              clearTimeout(dwellTimer);
+              dwellTimer = null;
+            }
+          },
+          { threshold: 0 }
+        );
+
+        observer.observe(target);
+      };
+
+      setup();
+
+      return () => {
+        cancelled = true;
+        observer?.disconnect();
+        if (dwellTimer) clearTimeout(dwellTimer);
+        if (fallbackTimer) clearTimeout(fallbackTimer);
+      };
+    }
+
     const t = setTimeout(() => setEntered(true), ENTRANCE_DELAY_MS);
     return () => clearTimeout(t);
-  }, [loading]);
+  }, [loading, isHomepage]);
+
+  // --- Regular re-surfacing on non-homepage pages ---
+  // If the user dismissed the prompt and still hasn't picked a role,
+  // bring the full picker back periodically instead of leaving it hidden.
+  useEffect(() => {
+    if (isHomepage) return;
+    if (!entered) return;
+    if (savedRole) return;
+    if (!dismissed) return;
+
+    const t = setInterval(() => {
+      setDismissed(false);
+    }, REPEAT_INTERVAL_MS);
+
+    return () => clearInterval(t);
+  }, [isHomepage, entered, savedRole, dismissed]);
 
   const handleSelect = (key: RoleKey) => {
     setSelected(key);
