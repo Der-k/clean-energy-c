@@ -192,7 +192,7 @@ export default function ChatWidget() {
             <div className="p-5">
               <div className="overflow-hidden rounded-[30px] bg-white shadow-sm">
                 <div className="relative h-40 sm:h-52 overflow-hidden">
-                  <img src="/hero.webp" alt="Conference" className="h-full w-full object-cover" />
+                  <img src="/images/hero_2.png" alt="Conference" className="h-full w-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
                   <div className="absolute bottom-5 left-5 text-white">
                     <div className="text-2xl font-bold leading-tight tracking-tight">Clean Energy Conference</div>

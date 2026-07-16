@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
+import { ROLE_NAV_TRIGGER_ID } from "@/components/layout/role-subnav"; // adjust to wherever RoleSubNav lives
 
 // ─── STATS BAR ─────────────────────────────────────────────────────────────────
 
@@ -418,6 +419,7 @@ export function HeroSection() {
 
   return (
     <section
+      id={ROLE_NAV_TRIGGER_ID}
       className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[152px]"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
     >
