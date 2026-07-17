@@ -47,18 +47,18 @@ export function StatsBar() {
     <section className="relative w-full overflow-hidden bg-[#020266] text-white">
       <div
         ref={scrollRef}
-        className="relative flex gap-12 overflow-x-auto whitespace-nowrap px-6 py-5 scrollbar-none"
+        className="relative flex gap-8 md:gap-12 overflow-x-auto whitespace-nowrap px-4 md:px-6 py-4 md:py-5 scrollbar-none"
       >
         {[...stats, ...stats].map((stat, index) => (
           <div
             key={index}
-            className="flex min-w-max items-center gap-4 border-r border-white/15 pr-12"
+            className="flex min-w-max items-center gap-3 md:gap-4 border-r border-white/15 pr-8 md:pr-12"
           >
-            <span className="text-2xl font-extrabold text-emerald-300">
+            <span className="text-lg md:text-2xl font-extrabold text-emerald-300">
               {stat.value}
             </span>
 
-            <span className="text-base font-semibold uppercase tracking-[0.18em] text-white/75">
+            <span className="text-xs md:text-base font-semibold uppercase tracking-[0.14em] md:tracking-[0.18em] text-white/75">
               {stat.label}
             </span>
           </div>
@@ -290,10 +290,10 @@ function RotatingTicker({
   }, []);
 
   return (
-    <div className="absolute z-20 bottom-8 right-8 md:right-14 flex flex-col items-end gap-4">
-      <div className="flex items-center gap-6">
+    <div className="absolute z-20 bottom-4 inset-x-4 md:inset-x-auto md:bottom-8 md:right-14 flex flex-col items-end gap-2 md:gap-4">
+      <div className="flex items-center gap-4 md:gap-6">
         <span
-          className="text-white/40 text-xs font-mono"
+          className="text-white/40 text-[10px] md:text-xs font-mono"
           style={{ letterSpacing: "0.18em" }}
         >
           {String(active + 1).padStart(2, "0")}&nbsp;/&nbsp;{String(total).padStart(2, "0")}
@@ -301,11 +301,11 @@ function RotatingTicker({
 
         <button
           onClick={onToggleSound}
-          className="flex items-center gap-3 text-white/60 text-xs hover:text-white/90 transition-colors"
+          className="flex items-center gap-2 md:gap-3 text-white/60 text-[10px] md:text-xs hover:text-white/90 transition-colors"
           style={{ cursor: videoSrc ? "pointer" : "default" }}
         >
-          <span>Sound</span>
-          <div className="w-10 h-[2px] rounded-full bg-white/30 relative overflow-hidden">
+          <span className="hidden sm:inline">Sound</span>
+          <div className="w-8 md:w-10 h-[2px] rounded-full bg-white/30 relative overflow-hidden">
             {!muted && videoSrc && (
               <motion.span
                 className="absolute inset-y-0 left-0 bg-white/70 rounded-full"
@@ -316,12 +316,12 @@ function RotatingTicker({
             )}
           </div>
           <div
-            className="w-7 h-7 rounded-full border flex items-center justify-center transition-colors"
+            className="w-6 h-6 md:w-7 md:h-7 rounded-full border flex items-center justify-center transition-colors shrink-0"
             style={{
               borderColor: muted || !videoSrc ? "rgba(255,255,255,0.2)" : accent,
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               {muted || !videoSrc ? (
                 <>
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
@@ -340,21 +340,21 @@ function RotatingTicker({
         </button>
       </div>
 
-      <div className="flex flex-col items-end gap-3 pointer-events-none">
+      <div className="flex flex-col items-end gap-2 md:gap-3 pointer-events-none w-full">
         <AnimatePresence mode="wait">
           {visible && (
             <motion.span
               key={TICKER_ITEMS[index]}
-              className="text-white font-black text-right"
+              className="text-white font-black text-right ml-auto"
               style={{
-                fontSize: "clamp(1.2rem, 2.4vw, 2rem)",
+                fontSize: "clamp(0.95rem, 3.6vw, 2rem)",
                 letterSpacing: "-0.015em",
                 lineHeight: 1.2,
                 whiteSpace: "pre-line",
                 textAlign: "right",
                 textTransform: "none",
                 textShadow: "0 2px 40px rgba(0,0,0,0.5)",
-                maxWidth: "500px",
+                maxWidth: "min(100%, 500px)",
               }}
               initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -420,7 +420,7 @@ export function HeroSection() {
   return (
     <section
       id={ROLE_NAV_TRIGGER_ID}
-      className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[152px]"
+      className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[90px] md:-mt-[152px]"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
     >
       <motion.div
@@ -484,33 +484,41 @@ export function HeroSection() {
         }}
       />
 
-      <nav className="relative z-20 flex items-center justify-between px-8 pt-[168px] pb-6 md:px-14">
-        <span className="text-white text-xl font-semibold" style={{ letterSpacing: "-0.02em" }}>
+      {/* Nav is now a 3-col grid so the pulsing dot centers itself relative to
+          this row's own height, instead of a hardcoded pixel `top` that only
+          matched the desktop nav height. */}
+      <nav className="relative z-20 grid grid-cols-[1fr_auto_1fr] items-center px-4 pt-[90px] pb-4 md:px-14 md:pt-[168px] md:pb-6">
+        <span
+          className="text-white text-base md:text-xl font-semibold truncate"
+          style={{ letterSpacing: "-0.02em" }}
+        >
           Clean Energy Conference
         </span>
 
         <motion.div
-          className="absolute left-1/2 top-[177px] -translate-x-1/2 rounded-full"
-          style={{ background: slide.accent, width: 14, height: 14 }}
+          className="rounded-full justify-self-center"
+          style={{ background: slide.accent, width: 10, height: 10 }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
 
-    
+        <div />
       </nav>
 
-      <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-10 md:px-14">
+      {/* Extra bottom padding on mobile reserves room for the ticker so the
+          card never grows into the same space it occupies. */}
+      <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-40 md:px-14 md:pb-10">
         <motion.div
-          className="inline-block w-fit min-w-[280px] max-w-[92vw] sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-3xl border-2 border-white"
+          className="w-full md:w-fit md:min-w-[280px] max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-2xl md:rounded-3xl border-2 border-white"
           style={{ background: "rgba(0,0,0,0.08)" }}
           layout
           transition={{ layout: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
         >
-          <div ref={contentRef} className="p-8 md:p-14">
+          <div ref={contentRef} className="p-5 md:p-14">
             <AnimatePresence mode="wait">
               <motion.p
                 key={`eye-${active}`}
-                className="text-xs uppercase tracking-[0.18em] mb-5"
+                className="text-[10px] md:text-xs uppercase tracking-[0.14em] md:tracking-[0.18em] mb-3 md:mb-5"
                 style={{ color: slide.accent }}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -524,8 +532,8 @@ export function HeroSection() {
             <AnimatePresence mode="wait">
               <motion.h1
                 key={`h-${active}`}
-                className="text-white font-bold leading-[1.05] mb-8"
-                style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)", letterSpacing: "-0.03em" }}
+                className="text-white font-bold leading-[1.1] md:leading-[1.05] mb-5 md:mb-8"
+                style={{ fontSize: "clamp(1.8rem, 8vw, 5rem)", letterSpacing: "-0.03em" }}
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -544,15 +552,15 @@ export function HeroSection() {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
-                  <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-[420px]">{slide.sub}</p>
+                  <p className="text-white/70 text-sm leading-relaxed mb-4 md:mb-5 max-w-full md:max-w-[420px]">{slide.sub}</p>
 
-                  <div className="flex flex-col sm:flex-row gap-3 mb-5">
+                  <div className="flex flex-col sm:flex-row gap-3 mb-4 md:mb-5">
                     {slide.editions.map((ed) => (
                       <a
                         key={ed.name}
                         href={ed.href}
-                        className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03]"
-                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", minWidth: "160px", flex: 1 }}
+                        className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03] w-full sm:min-w-[160px] sm:flex-1"
+                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.background = "rgba(255,255,255,0.18)";
                           e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
@@ -591,7 +599,7 @@ export function HeroSection() {
                       <a
                         key={btn.label}
                         href={btn.href}
-                        className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+                        className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
                         style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
                       >
                         {btn.label}
@@ -601,7 +609,7 @@ export function HeroSection() {
                 </motion.div>
               </AnimatePresence>
             ) : (
-              <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+              <div className="flex flex-col md:flex-row md:items-end gap-5 md:gap-16">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`cta-${active}`}
@@ -612,7 +620,7 @@ export function HeroSection() {
                   >
                     <a
                       href={slide.href}
-                      className="inline-block px-7 py-3 rounded-xl border text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+                      className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
                       style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
                     >
                       {slide.cta}
@@ -623,7 +631,7 @@ export function HeroSection() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={`sub-${active}`}
-                    className="text-white/70 text-sm leading-relaxed max-w-[320px]"
+                    className="text-white/70 text-sm leading-relaxed max-w-full md:max-w-[320px]"
                     initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -16 }}
@@ -638,8 +646,8 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="relative z-20 flex items-center px-8 md:px-14 pb-8">
-        <div className="flex items-center gap-3">
+      <div className="relative z-20 flex items-center px-4 md:px-14 pb-6 md:pb-8">
+        <div className="flex items-center gap-2 md:gap-3">
           {slides.map((s, i) => (
             <button
               key={s.id}

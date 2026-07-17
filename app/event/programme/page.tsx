@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Download, FileText, CheckCircle2 } from "lucide-react";
+import { ChevronRight, Download, FileText, CheckCircle2, BookOpen } from "lucide-react";
 import { useRole } from "@/context/RoleContext";
 
 type EventOption = "kigali" | "perth" | "both";
@@ -13,9 +13,10 @@ type FormState = {
   email: string;
   organization: string;
   eventChoice: EventOption;
+  includeProspectus: boolean;
 };
 
-const programmeFiles: Record<EventOption, { label: string; href: string; hrefAlt?: string }> = {
+const programmeFiles: Record<EventOption, { label: string; href: string }> = {
   kigali: {
     label: "Kigali Edition Programme",
     href: "/documents/conference programme Kigali Rwanda.pdf",
@@ -25,10 +26,14 @@ const programmeFiles: Record<EventOption, { label: string; href: string; hrefAlt
     href: "/documents/conference programme Perth Australia.pdf",
   },
   both: {
-    label: "Kigali Edition Programme + Perth Edition Programme",
-    href: "/documents/conference programme Kigali Rwanda.pdf",
-    hrefAlt: "/documents/conference programme Perth Australia.pdf",
+    label: "Combined Programme (Kigali + Perth)",
+    href: "/documents/conference programme Kigali and Perth combined.pdf",
   },
+};
+
+const prospectusFile = {
+  label: "Event Prospectus",
+  href: "/documents/Clean Energy Conference Australia Africa 2026 Prospectus.pdf",
 };
 
 function triggerDownload(href: string) {
@@ -49,12 +54,14 @@ export default function ProgrammePage() {
     email: "",
     organization: "",
     eventChoice: "both",
+    includeProspectus: false,
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [prospectusDownloaded, setProspectusDownloaded] = useState(false);
 
   const selectedProgramme = useMemo(
     () => programmeFiles[form.eventChoice],
@@ -128,8 +135,12 @@ export default function ProgrammePage() {
 
       const programme = programmeFiles[form.eventChoice];
       triggerDownload(programme.href);
-      if (programme.hrefAlt) {
-        setTimeout(() => triggerDownload(programme.hrefAlt!), 300);
+
+      if (form.includeProspectus) {
+        setTimeout(() => {
+          triggerDownload(prospectusFile.href);
+          setProspectusDownloaded(true);
+        }, 300);
       }
     } catch (error) {
       console.error("Programme request failed:", error);
@@ -137,6 +148,11 @@ export default function ProgrammePage() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function handleDownloadProspectus() {
+    triggerDownload(prospectusFile.href);
+    setProspectusDownloaded(true);
   }
 
   return (
@@ -176,6 +192,20 @@ export default function ProgrammePage() {
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">Available programme options</p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
                         Kigali Edition, Perth Edition, or both programmes downloaded together.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
+                      <BookOpen className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Event prospectus, optional</p>
+                      <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
+                        Add the full event prospectus to your request, or download it separately after submitting.
                       </p>
                     </div>
                   </div>
@@ -252,11 +282,35 @@ export default function ProgrammePage() {
                       {errors.eventChoice && <p className="mt-2 text-xs text-red-600">{errors.eventChoice}</p>}
                     </div>
 
+                    <label
+                      htmlFor="includeProspectus"
+                      className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 transition hover:border-[#02026e]/30"
+                    >
+                      <input
+                        id="includeProspectus"
+                        type="checkbox"
+                        checked={form.includeProspectus}
+                        onChange={(e) => updateField("includeProspectus", e.target.checked)}
+                        className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-[#02026e] focus:ring-[#02026e]/40"
+                      />
+                      <span>
+                        <span className="block text-base font-semibold text-[color:var(--text-main)]-900">
+                          Also send me the event prospectus
+                        </span>
+                        <span className="mt-1 block text-base leading-6 text-[color:var(--text-main)]-600">
+                          A full overview of the conference, themes, and partnership details.
+                        </span>
+                      </span>
+                    </label>
+
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                        Selected file{form.eventChoice === "both" ? "s" : ""}
+                        Selected file{form.eventChoice === "both" || form.includeProspectus ? "s" : ""}
                       </p>
-                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgramme.label}</p>
+                      <p className="mt-1 text-base text-[color:var(--text-main)]-600">
+                        {selectedProgramme.label}
+                        {form.includeProspectus ? ` + ${prospectusFile.label}` : ""}
+                      </p>
                     </div>
 
                     {submitError && <p className="text-base text-red-600">{submitError}</p>}
@@ -283,16 +337,18 @@ export default function ProgrammePage() {
                   </h2>
                   <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
                     Thank you, {form.firstName}. Your selected programme{form.eventChoice === "both" ? "s" : ""} should begin downloading automatically.
+                    {form.includeProspectus ? " The event prospectus is on its way too." : ""}
                   </p>
+
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                     <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                       Downloaded file{form.eventChoice === "both" ? "s" : ""}
                     </p>
                     <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgramme.label}</p>
                   </div>
+
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <a href={selectedProgramme.href} download
-                      onClick={selectedProgramme.hrefAlt ? () => setTimeout(() => triggerDownload(selectedProgramme.hrefAlt!), 300) : undefined}
                       className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
                     >
                       Download again
@@ -303,12 +359,40 @@ export default function ProgrammePage() {
                         setIsSubmitted(false);
                         setSubmitError("");
                         setErrors({});
-                        setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both" });
+                        setProspectusDownloaded(false);
+                        setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both", includeProspectus: false });
                       }}
                       className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
                     >
                       Submit another request
                     </button>
+                  </div>
+
+                  {/* Additional download option once a programme request has already been submitted. */}
+                  <div className="mt-8 w-full rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-5 py-5 text-left">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#02026e] shadow-sm">
+                        <BookOpen className="h-5 w-5" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-base font-semibold text-[color:var(--text-main)]-900">
+                          Want the full event prospectus too?
+                        </p>
+                        <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
+                          {prospectusDownloaded
+                            ? "Sent — grab it again below any time."
+                            : "You've already given us your details, so this one's a single click."}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={handleDownloadProspectus}
+                          className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#020266] px-5 py-2.5 text-base font-semibold text-white transition hover:scale-[1.03] hover:shadow-[0_12px_30px_rgba(2,2,102,0.25)]"
+                        >
+                          {prospectusDownloaded ? "Download prospectus again" : "Download the prospectus"}
+                          <Download className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

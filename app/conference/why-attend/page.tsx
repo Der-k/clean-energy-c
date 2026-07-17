@@ -1,282 +1,429 @@
-"use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
+  Globe2,
+  Sun,
+  Handshake,
+  Megaphone,
+  Camera,
   Landmark,
-  DollarSign,
+  Zap,
+  FlaskConical,
+  BatteryCharging,
+  Coins,
+  ShieldCheck,
+  Users2,
   Building2,
-  Rocket,
-  GraduationCap,
-  Leaf,
+  MapPin,
+  CalendarDays,
   ArrowRight,
-  Check,
+  type LucideIcon,
 } from "lucide-react";
 
-const visitors = [
+export const metadata = {
+  title: "Why Attend | Clean Energy Conference Australia Africa",
+  description:
+    "600 million Africans still lack electricity. See why ministers, financiers and project developers are converging on Kigali and Perth in 2026.",
+};
+
+function Eyebrow({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)]/8 px-4 py-1.5">
+      <Icon className="h-4 w-4 text-[var(--primary)]" strokeWidth={2.25} />
+      <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--primary)]">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+const matters = [
   {
-    id: "government",
-    label: "Government",
-    icon: Landmark,
-    title: "Government & Policymakers",
-    subtitle: "Shape the future of clean energy policy.",
-    points: [
-      "Join ministerial and regulatory dialogues.",
-      "Strengthen Africa–Australia cooperation.",
-      "Explore renewable energy and critical minerals policy.",
-      "Build partnerships that accelerate national energy goals.",
-    ],
+    icon: Globe2,
+    title: "Global momentum has a destination",
+    body: "COP28's pledge to triple renewable capacity by 2030 unlocked climate finance at a scale the continent has never seen. The IEA puts the annual investment emerging economies need at $1.8 trillion — and Africa is the largest slice of that market still waiting to be built.",
   },
   {
-    id: "investors",
-    label: "Investors",
-    icon: DollarSign,
-    title: "Investors & Development Finance",
-    subtitle: "Discover investment-ready opportunities.",
-    points: [
-      "Meet project developers seeking capital.",
-      "Join investor roundtables and deal rooms.",
-      "Explore geothermal, hydrogen, solar and storage projects.",
-      "Connect directly with governments and DFIs.",
-    ],
+    icon: Sun,
+    title: "Africa's cost curve has flipped",
+    body: "Solar costs have fallen 85% since 2010, making renewables the cheapest new power on the continent. Rwanda, Kenya and South Africa are already writing the policy playbook — what's missing is a room where it gets shared.",
   },
   {
-    id: "companies",
-    label: "Companies",
-    icon: Building2,
-    title: "Energy & Mining Companies",
-    subtitle: "Grow your business across two continents.",
-    points: [
-      "Showcase products and technologies.",
-      "Meet utilities and procurement teams.",
-      "Generate qualified business leads.",
-      "Build strategic commercial partnerships.",
-    ],
-  },
-  {
-    id: "innovators",
-    label: "Innovators",
-    icon: Rocket,
-    title: "Startups & Innovators",
-    subtitle: "Turn innovation into opportunity.",
-    points: [
-      "Present breakthrough technologies.",
-      "Meet investors and venture partners.",
-      "Network with utilities and governments.",
-      "Discover collaboration opportunities.",
-    ],
-  },
-  {
-    id: "research",
-    label: "Researchers",
-    icon: GraduationCap,
-    title: "Academia & Research",
-    subtitle: "Drive the next generation of innovation.",
-    points: [
-      "Present research alongside industry leaders.",
-      "Connect with universities worldwide.",
-      "Explore collaborative research projects.",
-      "Share knowledge shaping energy transition.",
-    ],
-  },
-  {
-    id: "development",
-    label: "NGOs",
-    icon: Leaf,
-    title: "NGOs & Development Partners",
-    subtitle: "Accelerate sustainable development.",
-    points: [
-      "Collaborate on climate initiatives.",
-      "Support community energy projects.",
-      "Meet governments and funding partners.",
-      "Drive inclusive clean energy transition.",
-    ],
+    icon: Handshake,
+    title: "Australia brings what Africa needs",
+    body: "Deployment expertise, capital markets access and world-leading renewable technology meet Africa's solar resource, growing demand and critical minerals. Rwanda's governance track record makes Kigali the natural table for both sides to sit at.",
   },
 ];
 
-export default function WhyAttend() {
-  const [selected, setSelected] = useState(visitors[0]);
-  const SelectedIcon = selected.icon;
+const objectives = [
+  {
+    icon: Megaphone,
+    title: "Global visibility",
+    detail:
+      "Financial Times Energy, Bloomberg NEF and African Business Magazine are covering the summit, alongside a digital strategy built to carry the story past the delegates in the room.",
+  },
+  {
+    icon: Camera,
+    title: "Proof, not pitch decks",
+    detail:
+      "Site visits to Nyabarongo and Rusumo hydropower, Rwanda's off-grid solar rollout, and Kigali's green-city planning — case studies delegates can lift and adapt at home.",
+  },
+  {
+    icon: Landmark,
+    title: "Deals with a path to close",
+    detail:
+      "Direct access to AU energy leadership, the World Bank, AfDB and Australia's $2B climate finance commitment — the people who set financing terms, in the same building as the people who need them.",
+  },
+];
 
+const tracks = [
+  {
+    icon: Zap,
+    name: "Renewable Energy Technologies",
+    copy: "Solar, wind and hydro project development, grid integration, and distributed-energy lessons from Australia applied to African conditions.",
+  },
+  {
+    icon: FlaskConical,
+    name: "Green Hydrogen Economy",
+    copy: "Where Australia's hydrogen export strategy and Africa's renewable resource base start to look like the same supply chain.",
+  },
+  {
+    icon: BatteryCharging,
+    name: "Energy Storage Solutions",
+    copy: "Batteries and pumped hydro for grids that need to hold a high share of variable renewable power.",
+  },
+  {
+    icon: Coins,
+    name: "Climate Finance & ESG",
+    copy: "Blended finance, de-risking instruments and the governance frameworks investors are actually asking for.",
+  },
+  {
+    icon: ShieldCheck,
+    name: "Climate Resilience",
+    copy: "Building generation and transmission that survives the climate it's meant to help fix.",
+  },
+];
+
+const audience = [
+  "Ministers & policymakers",
+  "Government officials",
+  "Institutional & private investors",
+  "Project developers",
+  "Multilateral & development finance",
+  "Energy & mining executives",
+];
+
+const institutions = [
+  {
+    name: "AAEMI",
+    detail:
+      "Research, training and technical credibility from Australia's energy and mining sector.",
+  },
+  {
+    name: "Kenya & Australia Chamber of Commerce",
+    detail: "Cross-continent stakeholder networks.",
+  },
+  {
+    name: "Rwanda Ministry of Infrastructure",
+    detail: "Local knowledge and national policy alignment.",
+  },
+  {
+    name: "Private sector partners",
+    detail: "The implementation experience that turns policy into projects.",
+  },
+];
+
+const stats = [
+  { value: "20,000+", label: "Social media audience" },
+  { value: "100,000+", label: "Annual website views" },
+  { value: "6,000+", label: "Email subscribers" },
+  { value: "90%", label: "Visitor satisfaction" },
+  { value: "91%", label: "Say it's vital to connect with industry leaders" },
+];
+
+export default function WhyAttendPage() {
   return (
-  <section className="bg-white pt-24">
-      <div className="mx-auto max-w-7xl px-4 py-20 md:px-6">
-
-        {/* Heading */}
-        <div className="text-center">
-          <div className="inline-block">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#185FA5]">
-              Why Attend
-            </p>
-            <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
+    <div className="bg-white">
+      {/* HERO */}
+      <section className="hero-section relative overflow-hidden">
+        <div
+          className="energy-bg energy-bg-2 absolute inset-0 opacity-[0.06] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-6xl px-6 lg:px-8 w-full">
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            <span className="hover-glow-soft surface-card inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-[var(--primary)]">
+              <MapPin className="h-4 w-4" strokeWidth={2.25} />
+              Kigali Marriott Hotel, Rwanda
+              <span className="text-[var(--primary)]/40">·</span>
+              <CalendarDays className="h-4 w-4" strokeWidth={2.25} />
+              6–7 Aug 2026
+            </span>
+            <span className="hover-glow-soft surface-card inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-[var(--primary)]">
+              <MapPin className="h-4 w-4" strokeWidth={2.25} />
+              Novotel Hotel, Perth
+              <span className="text-[var(--primary)]/40">·</span>
+              <CalendarDays className="h-4 w-4" strokeWidth={2.25} />
+              31 Aug–1 Sept 2026
+            </span>
           </div>
 
-          <h2 className="font-heading mt-4 text-4xl font-bold text-[#02026e]">
-            Find Opportunities Tailored To You
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-500">
-            Whether you're shaping policy, investing in emerging technologies,
-            building infrastructure or driving research, discover the people,
-            insights and partnerships accelerating Africa's clean energy future.
+          <h1 className="font-heading text-[var(--foreground)] max-w-4xl">
+            Why Attend
+          </h1>
+          <p className="max-w-2xl text-muted mt-2">
+            600 million Africans still lack electricity, and the continent's
+            demand for power is set to triple by 2030. The partnerships that
+            get built this year decide whether that demand is met with clean
+            power or fossil fuel imports. This is the room where that gets
+            decided.
           </p>
-        </div>
 
-        {/* Visitor Selector */}
-        <div className="mt-16 flex justify-center">
-          <div className="inline-flex flex-wrap justify-center gap-2 p-2">
-            {visitors.map((visitor) => {
-              const Icon = visitor.icon;
-              const active = selected.id === visitor.id;
-
-              return (
-                <motion.button
-                  key={visitor.id}
-                  onClick={() => setSelected(visitor)}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="relative"
-                >
-                  {active && (
-                    <motion.div
-                      layoutId="active-pill"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 35,
-                      }}
-                      className="absolute inset-0 rounded-full bg-[#06895b]"
-                    />
-                  )}
-
-                  <span
-                    className={`
-                      relative z-10 flex items-center gap-2
-                      rounded-full border px-5 py-2.5
-                      text-sm font-medium
-                      transition-colors
-                      ${
-                        active
-                          ? "border-[#06895b] text-white"
-                          : "border-gray-200 text-gray-600 hover:border-[#06895b] hover:text-[#06895b]"
-                      }
-                    `}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {visitor.label}
-                  </span>
-                </motion.button>
-              );
-            })}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link
+              href="/register"
+              className="btn-glow inline-flex items-center gap-2 rounded-full px-7 py-3 text-white font-semibold"
+            >
+              Register to attend
+              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            </Link>
+            <Link
+              href="/prospectus"
+              className="btn-outline-glow rounded-full px-7 py-3 font-semibold text-[var(--primary)]"
+            >
+              Download the prospectus
+            </Link>
           </div>
         </div>
+      </section>
 
-        {/* Featured Card */}
-        <div className="mt-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selected.id}
-              initial={{ opacity: 0, scale: 0.97, y: 8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97, y: -8 }}
-              transition={{
-                duration: 0.35,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="overflow-hidden rounded-[28px] border border-gray-200"
-            >
-              <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+      {/* WHY IT MATTERS NOW */}
+      <section className="section-tight">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <Eyebrow icon={Globe2} label="The context" />
+          <h2 className="font-heading text-[var(--foreground)] mt-4">
+            Why this conference matters now
+          </h2>
+          <p className="text-muted max-w-2xl mt-2">
+            Three forces are converging on the same two years — this summit
+            is where they get pointed in the same direction.
+          </p>
 
-                {/* LEFT — dark blue panel */}
-                <div className="relative overflow-hidden bg-[#02026e] p-10 lg:p-14">
-
-                  {/* Decorative blobs */}
-                  <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-[#06895b]/15" />
-                  <div className="absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-white/5" />
-
-                  <div className="relative">
-                    <motion.div
-                      key={selected.id}
-                      initial={{ scale: 0.7, rotate: -15, opacity: 0 }}
-                      animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                      transition={{
-                        duration: 0.4,
-                        type: "spring",
-                        stiffness: 180,
-                      }}
-                      className="
-                        flex h-16 w-16
-                        items-center justify-center
-                        rounded-[16px]
-                        bg-[#06895b]
-                      "
-                    >
-                      <SelectedIcon className="h-8 w-8 text-white" />
-                    </motion.div>
-
-                    <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#5dcaa5]">
-                      Designed For
-                    </p>
-
-                    <h3 className="font-heading mt-3 text-3xl font-bold leading-tight text-white">
-                      {selected.title}
-                    </h3>
-
-                    <p className="mt-5 max-w-sm text-base leading-7 text-white/70">
-                      {selected.subtitle}
-                    </p>
-                  </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {matters.map((m) => (
+              <div
+                key={m.title}
+                className="hover-glow-card-strong surface-card-strong rounded-2xl p-7"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--primary)]/10">
+                  <m.icon
+                    className="h-6 w-6 text-[var(--primary)]"
+                    strokeWidth={2}
+                  />
                 </div>
-
-                {/* RIGHT — white panel */}
-                <div className="bg-gray-50 p-10 lg:p-14">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#06895b]">
-                    What You'll Gain
-                  </p>
-                  <div className="mt-2 h-[2px] w-12 rounded-full bg-[#06895b]" />
-
-                  <div className="mt-8 space-y-5">
-                    {selected.points.map((point, index) => (
-                      <motion.div
-                        key={point}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.07, duration: 0.3 }}
-                        className="flex gap-4"
-                      >
-                        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e1f5ee]">
-                          <Check className="h-4 w-4 text-[#06895b]" />
-                        </div>
-                        <p className="text-base leading-7 text-gray-600">
-                          {point}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="
-                      group mt-10 inline-flex items-center gap-3
-                      rounded-full bg-[#02026e]
-                      px-7 py-3.5
-                      text-sm font-semibold text-white
-                      transition-colors
-                      hover:bg-[#010150]
-                    "
-                  >
-                    Explore Opportunities
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </motion.button>
-                </div>
-
+                <h3 className="font-heading mt-4 text-[var(--foreground)]">
+                  {m.title}
+                </h3>
+                <p className="text-muted mt-3">{m.body}</p>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      {/* STATS STRIP */}
+      <section
+        className="section-tight relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+        }}
+      >
+        <div
+          className="energy-bg absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-luminosity"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-5 text-center">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <div className="font-heading text-3xl md:text-4xl text-white">
+                  {s.value}
+                </div>
+                <div className="mt-2 text-sm text-white/75">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OBJECTIVES */}
+      <section className="section-tight bg-[var(--surface-muted)]">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <Eyebrow icon={ShieldCheck} label="The outcome" />
+          <h2 className="font-heading text-[var(--foreground)] mt-4">
+            What you leave with
+          </h2>
+          <p className="text-muted max-w-2xl mt-2">
+            Every track ties back to one of three outcomes for delegates.
+          </p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {objectives.map((o) => (
+              <div
+                key={o.title}
+                className="hover-glow-card surface-card rounded-2xl p-7"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--primary)]/10">
+                  <o.icon
+                    className="h-6 w-6 text-[var(--primary)]"
+                    strokeWidth={2}
+                  />
+                </div>
+                <h3 className="font-heading mt-4 text-[var(--foreground)]">
+                  {o.title}
+                </h3>
+                <p className="text-muted mt-3">{o.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRACKS */}
+      <section className="section-tight">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <Eyebrow icon={Zap} label="The agenda" />
+          <h2 className="font-heading text-[var(--foreground)] mt-4">
+            Five tracks, one agenda
+          </h2>
+          <p className="text-muted max-w-2xl mt-2">
+            Ministerial policy sessions, technical panels, private-sector
+            roundtables and site visits run through each theme below.
+          </p>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {tracks.map((t) => (
+              <div
+                key={t.name}
+                className="hover-glow-card surface-card rounded-xl p-6"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--primary)]/10">
+                    <t.icon
+                      className="h-5 w-5 text-[var(--primary)]"
+                      strokeWidth={2}
+                    />
+                  </div>
+                  <h3 className="font-heading text-lg text-[var(--foreground)]">
+                    {t.name}
+                  </h3>
+                </div>
+                <p className="text-muted mt-3 text-base">{t.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO YOU'LL MEET */}
+      <section className="section-tight bg-[var(--surface-muted)]">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <Eyebrow icon={Users2} label="The room" />
+          <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:items-center">
+            <div>
+              <h2 className="font-heading text-[var(--foreground)]">
+                Who's in the room
+              </h2>
+              <p className="text-muted mt-3">
+                The summit is built around policymakers and financiers first
+                — the people who set the terms everyone else builds around —
+                alongside the developers and operators putting projects on
+                the ground.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {audience.map((a) => (
+                  <span
+                    key={a}
+                    className="hover-glow-soft surface-card rounded-full px-4 py-2 text-sm font-medium text-[var(--foreground)]"
+                  >
+                    {a}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="hover-glow-card-strong surface-card-strong rounded-2xl p-8">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--primary)]/10">
+                  <Building2
+                    className="h-5 w-5 text-[var(--primary)]"
+                    strokeWidth={2}
+                  />
+                </div>
+                <h3 className="font-heading text-[var(--foreground)]">
+                  Backed by institutions that open doors
+                </h3>
+              </div>
+              <ul className="mt-5 space-y-4">
+                {institutions.map((inst) => (
+                  <li key={inst.name} className="flex gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--primary)]" />
+                    <p className="text-muted">
+                      <span className="font-semibold text-[var(--foreground)]">
+                        {inst.name} —
+                      </span>{" "}
+                      {inst.detail}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="section-tight">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <div
+            className="relative overflow-hidden rounded-3xl p-10 md:p-14 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+            }}
+          >
+            <div
+              className="energy-bg absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-luminosity"
+              aria-hidden="true"
+            />
+            <div className="relative">
+              <h2 className="font-heading text-white">
+                Two cities. One agenda for Africa's energy future.
+              </h2>
+              <p className="text-white/75 max-w-xl mx-auto mt-3">
+                Seats for the ministerial sessions and roundtables are
+                limited. Register now to secure your place in Kigali or
+                Perth.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/register"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold bg-white text-[var(--primary)] hover:-translate-y-0.5 transition-transform"
+                >
+                  Register to attend
+                  <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-full px-7 py-3 font-semibold border border-white/40 text-white hover:-translate-y-0.5 transition-transform"
+                >
+                  Talk to the team
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
