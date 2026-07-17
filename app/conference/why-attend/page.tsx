@@ -180,14 +180,14 @@ export default function WhyAttendPage() {
 
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
-              href="/register"
+              href="/get-tickets"
               className="btn-glow inline-flex items-center gap-2 rounded-full px-7 py-3 text-white font-semibold"
             >
               Register to attend
               <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
             </Link>
             <Link
-              href="/prospectus"
+               href= "/documents/1CEE Master Presentation_.pptx"
               className="btn-outline-glow rounded-full px-7 py-3 font-semibold text-[var(--primary)]"
             >
               Download the prospectus
