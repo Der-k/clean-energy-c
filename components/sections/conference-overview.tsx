@@ -210,7 +210,7 @@ function HighlightFlipCarousel({ items }: { items: Highlight[] }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="mx-auto flex max-w-sm items-center gap-4">
+      <div className="flex w-full items-center gap-4">
         {hasMultiple && (
           <button
             type="button"
@@ -236,11 +236,11 @@ function HighlightFlipCarousel({ items }: { items: Highlight[] }) {
               style={{ willChange: "transform, opacity" }}
               className="overflow-hidden rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm"
             >
-              <div className="relative -mx-6 -mt-6 mb-6 h-48 w-[calc(100%+3rem)] overflow-hidden">
+              <div className="relative -mx-6 -mt-6 mb-6 h-56 w-[calc(100%+3rem)] overflow-hidden sm:h-64">
                 <img
                   src={item.imageSrc}
                   alt={item.imageAlt ?? item.title}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover object-center"
                 />
               </div>
               <h3 className="text-xl font-semibold text-[#020266]">{item.title}</h3>
@@ -342,7 +342,7 @@ function OverviewAnimationPlayer() {
   }, [activeVideo]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="relative z-10 -mx-4 -my-3 mb-6 overflow-hidden px-4 py-3 text-center sm:mb-8">
         <AnimatePresence mode="wait" initial={false}>
           <motion.h3
@@ -360,23 +360,25 @@ function OverviewAnimationPlayer() {
           </motion.h3>
         </AnimatePresence>
       </div>
-      <video
-        ref={videoRef}
-        key={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        onEnded={() =>
-          setActiveVideo((current) =>
-            (current + 1) % OVERVIEW_ANIMATION_VIDEOS.length
-          )
-        }
-        className="block min-h-[360px] w-full object-cover sm:min-h-[460px] lg:min-h-[560px]"
-      >
-        <source src={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src} type="video/mp4" />
-        Your browser does not support MP4 playback.
-      </video>
+      <div className="mx-auto w-full max-w-full rounded-[28px] bg-white px-4 py-10 shadow-[0_35px_80px_rgba(2,6,23,0.28)] sm:px-8 sm:py-14">
+        <video
+          ref={videoRef}
+          key={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          onEnded={() =>
+            setActiveVideo((current) =>
+              (current + 1) % OVERVIEW_ANIMATION_VIDEOS.length
+            )
+          }
+          className="mx-auto block h-auto max-h-[760px] w-auto max-w-full rounded-[16px] bg-transparent object-contain object-center"
+        >
+          <source src={OVERVIEW_ANIMATION_VIDEOS[activeVideo].src} type="video/mp4" />
+          Your browser does not support MP4 playback.
+        </video>
+      </div>
     </div>
   );
 }
@@ -606,6 +608,54 @@ function RotatingWord({
 }
 
 /* ----------------------------------------------------------------------- */
+/* Section chrome — a small shared "kicker" (numbered eyebrow + heading)   */
+/* used at the top of every major band below so each one reads as its own */
+/* distinct section rather than one long undifferentiated scroll. Each    */
+/* band gets its own accent color from the brand trio (navy/green/gold)   */
+/* plus a short intro line, mirroring the pattern "Why it matters" and     */
+/* "Latest insights" already established further up the page.             */
+/* ----------------------------------------------------------------------- */
+
+function SectionKicker({
+  index,
+  label,
+  heading,
+  intro,
+  accent,
+}: {
+  index: string;
+  label: string;
+  heading: string;
+  intro?: string;
+  accent: string;
+}) {
+  return (
+    <div className="max-w-2xl">
+      <div className="flex items-center gap-3">
+        <span
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
+          style={{ backgroundColor: accent }}
+        >
+          {index}
+        </span>
+        <p
+          className="text-xs font-semibold uppercase tracking-[0.24em]"
+          style={{ color: accent }}
+        >
+          {label}
+        </p>
+      </div>
+      <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
+        {heading}
+      </h2>
+      {intro && (
+        <p className="mt-3 text-base leading-7 text-zinc-600 sm:text-lg">{intro}</p>
+      )}
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------------- */
 /* Text labels for the manual "read as a different role" switcher. Keeps   */
 /* the automatic role-context behaviour as the default, but lets anyone    */
 /* browse how this section reads for other roles without changing their   */
@@ -730,251 +780,275 @@ export function ConferenceOverview() {
   const c = rolesContent[activeId] ?? rolesContent.default;
 
   return (
-    <section
-      key={activeId}
-      className="relative overflow-hidden bg-white py-20 sm:py-24"
-      style={{ animation: "overviewFadeIn 500ms ease forwards" }}
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,57,148,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,153,102,0.08),transparent_35%)]" />
+    <div key={activeId} style={{ animation: "overviewFadeIn 500ms ease forwards" }}>
+      {/* ================================================================= */}
+      {/* SECTION 1 — HERO: role switcher, headline/CTA, and "why it       */}
+      {/* matters" panel. White background, sits at the top of the page.   */}
+      {/* ================================================================= */}
+      <section className="relative overflow-hidden bg-white pb-16 pt-20 sm:pb-20 sm:pt-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,57,148,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,153,102,0.08),transparent_35%)]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-sm">
-          <span className="font-semibold text-zinc-500">Read this as:</span>
-          {ROLE_TABS.map((tab, i) => {
-            const isActive = tab.id === activeId;
-            return (
-              <span key={tab.id} className="flex items-baseline gap-2">
-                <button
-                  type="button"
-                  onClick={() => setPreviewId(tab.id)}
-                  className={
-                    isActive
-                      ? "font-semibold text-[#020266] underline underline-offset-4"
-                      : "text-zinc-500 underline decoration-zinc-300 underline-offset-4 transition-colors hover:text-[#020266] hover:decoration-[#020266]"
-                  }
-                >
-                  {tab.label}
-                </button>
-                {i < ROLE_TABS.length - 1 && <span className="text-zinc-300">·</span>}
-              </span>
-            );
-          })}
-
-          {isPreviewing && (
-            <button
-              type="button"
-              onClick={() => setPreviewId(null)}
-              className="ml-1 font-semibold text-[#009966] underline underline-offset-4 hover:text-[#007a52]"
-            >
-              Back to your role
-            </button>
-          )}
-        </div>
-
-        <div className="mt-8 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div>
-            <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-              {c.eyebrow}
-            </div>
-
-            <h2 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl lg:text-5xl">
-              {c.heading}
-            </h2>
-
-            <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-700 sm:text-xl">
-              {c.paragraph}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/conference"
-                className="
-                  group relative inline-flex items-center justify-center gap-2
-                  overflow-hidden
-
-                  rounded-full px-6 py-3 text-base font-semibold
-
-                  text-white
-                  bg-[#020266]
-
-                  border border-[#020266]
-
-                  shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-                  transition-all duration-500 ease-out
-
-                  hover:border-[#020266]/60
-                  hover:scale-[1.04]
-                  hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
-
-                  active:scale-[0.97]
-
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-[#020266]/25
-                  focus:ring-offset-2
-                  focus:ring-offset-white
-                "
-              >
-                {/* white sweep */}
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span
-                    className="
-                      absolute left-0 top-0 h-full w-0
-                      bg-white
-                      transition-all duration-500 ease-out
-                      group-hover:w-full
-                    "
-                  />
-                </span>
-
-                {/* text turns blue */}
-                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
-                  Explore the conference
-                </span>
-
-                <ArrowRight
-                  className="
-                    relative z-10 h-4 w-4
-                    transition-all duration-300
-                    group-hover:translate-x-1
-                    group-hover:text-[#020266]
-                  "
-                />
-              </Link>
-
-              <Link
-                href="/event/programme"
-                className="
-                  group relative inline-flex items-center justify-center gap-2
-                  overflow-hidden
-
-                  rounded-full px-6 py-3 text-base font-semibold
-
-                  text-zinc-900
-                  bg-white
-
-                  border border-zinc-300
-
-                  shadow-[0_10px_30px_rgba(0,0,0,0.08)]
-
-                  transition-all duration-500 ease-out
-
-                  hover:border-[#020266]/60
-                  hover:scale-[1.04]
-                  hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
-
-                  active:scale-[0.97]
-
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-[#020266]/25
-                  focus:ring-offset-2
-                  focus:ring-offset-white
-                "
-              >
-                {/* blue sweep */}
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span
-                    className="
-                      absolute left-0 top-0 h-full w-0
-                      bg-[#020266]
-                      transition-all duration-500 ease-out
-                      group-hover:w-full
-                    "
-                  />
-                </span>
-
-                <CalendarDays
-                  className="
-                    relative z-10 h-4 w-4
-                    transition-colors duration-300
-                    group-hover:text-white
-                  "
-                />
-
-                {/* text turns white */}
-                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-                  View programme
-                </span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-[32px] border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-8 shadow-[0_20px_60px_rgba(2,6,23,0.08)] sm:p-10 lg:p-12">
-            <div className="flex items-center gap-3">
-              <div className="h-3 w-3 rounded-full bg-[#020266]" />
-
-              <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#020266] sm:text-xl">
-                Why it matters
-              </p>
-            </div>
-
-            <p className="mt-4 text-lg font-semibold text-zinc-900 sm:text-xl">
-              {c.whyMattersSubheading}
-            </p>
-
-            <div
-              className={`mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 ${
-                c.stats.length >= 3 ? "lg:grid-cols-3" : ""
-              }`}
-            >
-              {c.stats.map((stat, index) => {
-                const fromLeft = index % 2 === 0;
-                const bg = stat.color ?? STAT_COLORS[index % STAT_COLORS.length];
-                return (
-                  <motion.div
-                    key={`${stat.value}-${index}`}
-                    initial={{ x: fromLeft ? -72 : 72, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 60,
-                      damping: 18,
-                      mass: 1,
-                      delay: index * 0.15,
-                    }}
-                    className="rounded-[28px] p-7 text-white shadow-[0_18px_40px_rgba(2,6,23,0.22)]"
-                    style={{ backgroundColor: bg }}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-sm">
+            <span className="font-semibold text-zinc-500">Read this as:</span>
+            {ROLE_TABS.map((tab, i) => {
+              const isActive = tab.id === activeId;
+              return (
+                <span key={tab.id} className="flex items-baseline gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewId(tab.id)}
+                    className={
+                      isActive
+                        ? "font-semibold text-[#020266] underline underline-offset-4"
+                        : "text-zinc-500 underline decoration-zinc-300 underline-offset-4 transition-colors hover:text-[#020266] hover:decoration-[#020266]"
+                    }
                   >
-                    <p className="text-5xl font-bold tracking-tight">{stat.value}</p>
-                    <p className="mt-3 text-base leading-7 text-white/85">{stat.description}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
+                    {tab.label}
+                  </button>
+                  {i < ROLE_TABS.length - 1 && <span className="text-zinc-300">·</span>}
+                </span>
+              );
+            })}
 
-            <div className="mt-10">
-              <OutcomeCardStack items={c.outcomes} />
-            </div>
+            {isPreviewing && (
+              <button
+                type="button"
+                onClick={() => setPreviewId(null)}
+                className="ml-1 font-semibold text-[#009966] underline underline-offset-4 hover:text-[#007a52]"
+              >
+                Back to your role
+              </button>
+            )}
           </div>
-        </div>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center">
-          <div>
-            <HighlightFlipCarousel items={c.highlights} />
-          </div>
-          <OverviewAnimationPlayer />
-        </div>
+          <div className="mt-8 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div>
+              <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
+                {c.eyebrow}
+              </div>
 
-        <section
-          className="relative mt-16 overflow-hidden rounded-[32px] border border-[#020266]/10 bg-zinc-50 p-6 shadow-[0_18px_50px_rgba(2,6,23,0.06)] sm:p-8 lg:p-10"
-          onMouseEnter={() => setIsNewsHovered(true)}
-          onMouseLeave={() => setIsNewsHovered(false)}
-        >
-          <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#009966]/10 blur-3xl" />
-          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#009966]">
-                Latest insights
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
-                News, ideas, and industry perspectives
+              <h2 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl lg:text-5xl">
+                {c.heading}
               </h2>
-              <p className="mt-3 text-base leading-7 text-zinc-600 sm:text-lg">
-                Explore the latest thinking on energy investment, policy, technology, and Africa’s clean-energy future.
+
+              <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-700 sm:text-xl">
+                {c.paragraph}
               </p>
+
+              <div className="mt-8 max-w-2xl">
+                <HighlightFlipCarousel items={c.highlights} />
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/conference"
+                  className="
+                    group relative inline-flex items-center justify-center gap-2
+                    overflow-hidden
+
+                    rounded-full px-6 py-3 text-base font-semibold
+
+                    text-white
+                    bg-[#020266]
+
+                    border border-[#020266]
+
+                    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+
+                    transition-all duration-500 ease-out
+
+                    hover:border-[#020266]/60
+                    hover:scale-[1.04]
+                    hover:shadow-[0_18px_50px_rgba(0,57,148,0.25)]
+
+                    active:scale-[0.97]
+
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-[#020266]/25
+                    focus:ring-offset-2
+                    focus:ring-offset-white
+                  "
+                >
+                  {/* white sweep */}
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span
+                      className="
+                        absolute left-0 top-0 h-full w-0
+                        bg-white
+                        transition-all duration-500 ease-out
+                        group-hover:w-full
+                      "
+                    />
+                  </span>
+
+                  {/* text turns blue */}
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
+                    Explore the conference
+                  </span>
+
+                  <ArrowRight
+                    className="
+                      relative z-10 h-4 w-4
+                      transition-all duration-300
+                      group-hover:translate-x-1
+                      group-hover:text-[#020266]
+                    "
+                  />
+                </Link>
+
+                <Link
+                  href="/event/programme"
+                  className="
+                    group relative inline-flex items-center justify-center gap-2
+                    overflow-hidden
+
+                    rounded-full px-6 py-3 text-base font-semibold
+
+                    text-zinc-900
+                    bg-white
+
+                    border border-zinc-300
+
+                    shadow-[0_10px_30px_rgba(0,0,0,0.08)]
+
+                    transition-all duration-500 ease-out
+
+                    hover:border-[#020266]/60
+                    hover:scale-[1.04]
+                    hover:shadow-[0_18px_50px_rgba(0,57,148,0.18)]
+
+                    active:scale-[0.97]
+
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-[#020266]/25
+                    focus:ring-offset-2
+                    focus:ring-offset-white
+                  "
+                >
+                  {/* blue sweep */}
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span
+                      className="
+                        absolute left-0 top-0 h-full w-0
+                        bg-[#020266]
+                        transition-all duration-500 ease-out
+                        group-hover:w-full
+                      "
+                    />
+                  </span>
+
+                  <CalendarDays
+                    className="
+                      relative z-10 h-4 w-4
+                      transition-colors duration-300
+                      group-hover:text-white
+                    "
+                  />
+
+                  {/* text turns white */}
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                    View programme
+                  </span>
+                </Link>
+              </div>
             </div>
+
+            <div className="rounded-[32px] border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-8 shadow-[0_20px_60px_rgba(2,6,23,0.08)] sm:p-10 lg:p-12">
+              <div className="flex items-center gap-3">
+                <div className="h-3 w-3 rounded-full bg-[#020266]" />
+
+                <p className="text-base font-semibold uppercase tracking-[0.22em] text-[#020266] sm:text-xl">
+                  Why it matters
+                </p>
+              </div>
+
+              <p className="mt-4 text-lg font-semibold text-zinc-900 sm:text-xl">
+                {c.whyMattersSubheading}
+              </p>
+
+              <div
+                className={`mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 ${
+                  c.stats.length >= 3 ? "lg:grid-cols-3" : ""
+                }`}
+              >
+                {c.stats.map((stat, index) => {
+                  const fromLeft = index % 2 === 0;
+                  const bg = stat.color ?? STAT_COLORS[index % STAT_COLORS.length];
+                  return (
+                    <motion.div
+                      key={`${stat.value}-${index}`}
+                      initial={{ x: fromLeft ? -72 : 72, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 60,
+                        damping: 18,
+                        mass: 1,
+                        delay: index * 0.15,
+                      }}
+                      className="rounded-[28px] p-7 text-white shadow-[0_18px_40px_rgba(2,6,23,0.22)]"
+                      style={{ backgroundColor: bg }}
+                    >
+                      <p className="text-5xl font-bold tracking-tight">{stat.value}</p>
+                      <p className="mt-3 text-base leading-7 text-white/85">{stat.description}</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-10">
+                <OutcomeCardStack items={c.outcomes} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 2 — SPOTLIGHT: theme video player. White background, with */}
+      {/* a larger, more prominent video so it stands out as its own       */}
+      {/* moment. (The auto-switching highlight cards now live up in the   */}
+      {/* hero, under the intro paragraph.)                                */}
+      {/* ================================================================= */}
+      <section className="border-t border-zinc-200 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="02"
+            label="In focus"
+            heading=""
+            intro="A running look at the sectors and themes driving this edition's agenda."
+            accent="#009966"
+          />
+
+          <div className="mt-10 flex justify-center">
+            <OverviewAnimationPlayer />
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 3 — NEWS & INSIGHTS: latest articles, on a navy-tinted   */}
+      {/* band so it's clearly a distinct zone from the green spotlight    */}
+      {/* section above it.                                                */}
+      {/* ================================================================= */}
+      <section
+        className="relative overflow-hidden border-b border-[#020266]/10 bg-[#F5F6FB] py-16 sm:py-20"
+        onMouseEnter={() => setIsNewsHovered(true)}
+        onMouseLeave={() => setIsNewsHovered(false)}
+      >
+        <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#020266]/5 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <SectionKicker
+              index="03"
+              label="Latest insights"
+              heading="News, ideas, and industry perspectives"
+              intro="Explore the latest thinking on energy investment, policy, technology, and Africa's clean-energy future."
+              accent="#020266"
+            />
             <Link
               href="/media/news"
               className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-[#020266]/20 bg-white px-5 py-3 text-sm font-semibold text-[#020266] shadow-sm transition hover:border-[#020266] hover:bg-[#020266] hover:text-white sm:self-auto"
@@ -1023,21 +1097,25 @@ export function ConferenceOverview() {
 
           <div className="relative mt-6 flex justify-center gap-2" aria-label="News carousel pages">
             {Array.from({ length: newsPageCount }).map((_, index) => (
-              <button key={index} type="button" onClick={() => setNewsPage(index)} aria-label={`Show news group ${index + 1}`} className={`h-1.5 rounded-full transition-all ${index === newsPage ? "w-7 bg-[#009966]" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"}`} />
+              <button key={index} type="button" onClick={() => setNewsPage(index)} aria-label={`Show news group ${index + 1}`} className={`h-1.5 rounded-full transition-all ${index === newsPage ? "w-7 bg-[#020266]" : "w-1.5 bg-zinc-300 hover:bg-zinc-400"}`} />
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      {/* Full-width banner with a static, hard-edged 3-color border */}
+      {/* ================================================================= */}
+      {/* SECTION 4 — THEME BANNER: full-bleed, tri-color bordered slab.   */}
+      {/* Already visually distinct by design (hard-edged conic border);   */}
+      {/* kept as the page's single boldest moment.                        */}
+      {/* ================================================================= */}
       <div
-        className="mt-14 w-full overflow-hidden p-[6px] shadow-[0_18px_50px_rgba(0,57,148,0.15)]"
+        className="w-full overflow-hidden p-[6px] shadow-[0_18px_50px_rgba(0,57,148,0.15)]"
         style={{
           background:
             "conic-gradient(#0F0F76 0deg 40deg, #009966 40deg 80deg, #F2CB01 80deg 120deg, #0F0F76 120deg 160deg, #009966 160deg 200deg, #F2CB01 200deg 240deg, #0F0F76 240deg 280deg, #009966 280deg 320deg, #F2CB01 320deg 360deg)",
         }}
       >
-        <div className="bg-white px-4 py-12 sm:px-6 lg:px-8">
+        <div className="bg-white px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">
               2026 Conference Theme
@@ -1074,24 +1152,38 @@ export function ConferenceOverview() {
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mt-14 grid gap-6 lg:grid-cols-2">
-          {editions.map((edition) => (
-            <div
-              key={edition.name}
-              className={`rounded-[28px] border bg-gradient-to-br ${edition.accent} p-7 shadow-sm`}
-            >
-              <p className="text-base font-semibold uppercase tracking-[0.18em] text-zinc-600">
-                2026 Edition
-              </p>
-              <h3 className="mt-3 text-2xl font-semibold text-zinc-950">{edition.name}</h3>
-              <p className="mt-4 text-base font-medium text-zinc-800">{edition.date}</p>
-              <p className="mt-1 text-base text-zinc-600">{edition.venue}</p>
-              <p className="mt-5 text-base leading-7 text-zinc-700">{edition.description}</p>
-            </div>
-          ))}
+      {/* ================================================================= */}
+      {/* SECTION 5 — EDITIONS: gold-tinted band, closing the page with    */}
+      {/* the concrete logistics (dates/venues) for each 2026 edition.     */}
+      {/* ================================================================= */}
+      <section className="border-t border-[#B8860B]/15  py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="04"
+            label="2026 editions"
+            heading="Two editions, one mission"
+            intro="Wherever you join from, each edition carries the same agenda: turning clean-energy ambition into action."
+            accent="#B8860B"
+          />
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            {editions.map((edition) => (
+              <div
+                key={edition.name}
+                className={`rounded-[28px] border bg-gradient-to-br ${edition.accent} p-7 shadow-[0_14px_34px_rgba(2,6,23,0.08)]`}
+              >
+                <p className="text-base font-semibold uppercase tracking-[0.18em] text-zinc-600">
+                  2026 Edition
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold text-zinc-950">{edition.name}</h3>
+                <p className="mt-4 text-base font-medium text-zinc-800">{edition.date}</p>
+                <p className="mt-1 text-base text-zinc-600">{edition.venue}</p>
+                <p className="mt-5 text-base leading-7 text-zinc-700">{edition.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
       <style>{`
         @keyframes overviewFadeIn {
@@ -1099,6 +1191,6 @@ export function ConferenceOverview() {
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </section>
+    </div>
   );
 }
