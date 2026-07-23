@@ -221,8 +221,8 @@ f2a1d603609916f8283871584898bd71ed7fc21f public/images/W-energy.png
 b630875d091f2eb8aa50705b7dbca956a78e2464 public/images/c_banner.jpg
 6018f36447b2c48f49d482fef4620f165292e396 public/images/clean-energy-collage.png
 df63550306e044c08106955ab9d05e2c5cc40e0b public/images/conference
-130098910c47955a6ad89a6477f68b4225691519 public/images/conference/kigali ticket.jpg
-9f1ffc4dc071bf901dcd80102bf0509858ee325d public/images/conference/kigali-tab.jpg
+130098910c47955a6ad89a6477f68b4225691519 public/images/conference/Kigali ticket.jpg
+9f1ffc4dc071bf901dcd80102bf0509858ee325d public/images/conference/Kigali-tab.jpg
 235c0190222a9ddf89171ffed08a5264193b5629 public/images/conference/perth ticket.jpg
 dafebce8f50bd8dc0f1b7b4bc4869ce969447052 public/images/conference/perth-tab.jpg
 97a53f6289746282412d29c665b862040ae4a2ae public/images/conference/why-attend-delegates.jpg
@@ -230,9 +230,9 @@ dafebce8f50bd8dc0f1b7b4bc4869ce969447052 public/images/conference/perth-tab.jpg
 7ebf0bca33356129f5fc1919f1af323c7a567486 public/images/conference/why-attend-learning.jpg
 ac10ae097bae1099d2ac9c67a79d2526ad5d8726 public/images/conference/why-attend-sponsors.jpg
 fa56f0144fb9fe08d9cd9d6fa964fb6fe886a53b public/images/event
-919508e151911362702423303f7782ebabf379a7 public/images/event/kigali-hero.jpg
-29fb9935dcf00ea4cc47a315dd0e2e5dbaac7bc7 public/images/event/kigali-hero.png
-75bbf71b16384508b865421ef5f418c774efcb48 public/images/event/kigali-tab.jpg
+919508e151911362702423303f7782ebabf379a7 public/images/event/Kigali-hero.jpg
+29fb9935dcf00ea4cc47a315dd0e2e5dbaac7bc7 public/images/event/Kigali-hero.png
+75bbf71b16384508b865421ef5f418c774efcb48 public/images/event/Kigali-tab.jpg
 9beb7c3f4b477b30d0ec68cedc472c91cfb97be1 public/images/event/perth-hero.jpg
 4b3b2f8a16a4a174fa2f92709ce357bed8024bc7 public/images/event/perth-hero.png
 41d63fd08cf4a89c7df380b242fc7eeb64e87a71 public/images/event/perth-tab.jpg
@@ -341,11 +341,11 @@ e39791155b1aeabec33cfb4126b436aa6ad03ee1 public/images/testimonials
 c06f563edcc2cb7933cc54a077835d5749ba6ad1 public/images/testimonials/testimonial-1.jpg
 3d066f27b076dacc51bd3a5431d502e14eceec95 public/images/testimonials/testimonial-2.jpg
 cd506176ae4730ef388635cbcb2e368ccea8916d public/images/venue
-b1d08a82ecdae818d644179281d5e86e577d1918 public/images/venue/kigali-1.jpg
-f746e54fd9e22c530f88e6ddc7b047fdee25caac public/images/venue/kigali-2.jpg
-43d657fc3f04d2e865b992524f2d6c94b89593e7 public/images/venue/kigali-3.jpg
-ce44860b735327903ac41b17542b2a1196014e4c public/images/venue/kigali-4.jpg
-ecfcd5c1a685318cc272205ff15707786e2dd0e8 public/images/venue/kigali-5.jpg
+b1d08a82ecdae818d644179281d5e86e577d1918 public/images/venue/Kigali-1.jpg
+f746e54fd9e22c530f88e6ddc7b047fdee25caac public/images/venue/Kigali-2.jpg
+43d657fc3f04d2e865b992524f2d6c94b89593e7 public/images/venue/Kigali-3.jpg
+ce44860b735327903ac41b17542b2a1196014e4c public/images/venue/Kigali-4.jpg
+ecfcd5c1a685318cc272205ff15707786e2dd0e8 public/images/venue/Kigali-5.jpg
 3416142e0745604e3f8e6d1426f6895f582a8466 public/images/venue/perth-1.jpg
 1a99656ac3d938a6b0be6be104e35c6beb58bd24 public/images/venue/perth-2.jpg
 d09c44ac84fe3520e3bdb13e417a4afec55f141a public/images/venue/perth-3.jpg
@@ -1216,7 +1216,7 @@ c8455a4f8413ccbebfb10d21f5b39c65c6d021a8 public
 544367be3b7bd925f8268900fcb713e3d11241fb public/images
 9b4cd3c76c2acfcb05ee87dd3b903159d809a74b public/images/partners
 7c39963dd6abb21fc866310cd161d9bb2e342caa public/images/venue
-6f568d9d5b8020b2c998b364d96003a684a261db public/images/venue/kigali-1.jpg
+6f568d9d5b8020b2c998b364d96003a684a261db public/images/venue/Kigali-1.jpg
 c36dc3eb7a288a20a4b7414412d991c5d3ea5cd1 public/images/venue/perth-1.jpg
 fb272d51e70a08134f1d1d1a66bbf41db887d255 
 13d0a1430eb960e16e4c01fd15f20184ca07f5ca .gitignore

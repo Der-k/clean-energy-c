@@ -22,9 +22,9 @@ const editions = [
     accent: "border-[#020266]/20 bg-[#020266]/[0.03]",
     button:
       "bg-[#020266] text-white hover:shadow-[0_0_30px_rgba(0,57,148,0.22)]",
-    href: "/conference?edition=kigali",
+    href: "/conference?edition=Kigali",
     visaText:
-      "Kenyan citizens do not need a visa to travel to Kigali, Rwanda for short business or conference travel. As EAC citizens, Kenyans can enter Rwanda for up to 6 months using a valid passport, national ID, or temporary Interstate Pass. Carry your invitation letter, accommodation details, return ticket, and yellow fever certificate where applicable.",
+      "Rwanda offers visa-on-arrival and e-visa access to travellers from virtually every country in the world, and citizens of East African Community (EAC) member states can enter visa-free for short stays. Requirements vary by nationality, so check your specific pathway on Rwanda's official immigration portal. Carry your invitation letter, accommodation details, return ticket, and yellow fever certificate where applicable.",
   },
   {
     name: "Perth Edition",
@@ -113,10 +113,11 @@ export default function VisaPage() {
 
             <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 sm:text-xl
 ">
-              This page helps delegates prepare early for travel to the Kigali and
-              Perth editions of the Clean Energy Conference & Exhibition. Use it as
-              a planning guide for timelines, supporting documents, and conference
-              details that may be useful during your travel preparation.
+              This page helps delegates from anywhere in the world prepare early
+              for travel to the Kigali and Perth editions of the Clean Energy
+              Conference & Exhibition. Use it as a planning guide for timelines,
+              supporting documents, and conference details that may be useful
+              during your travel preparation, whatever your nationality.
             </p>
 
             <div className="mt-6 rounded-[22px] border border-amber-200 bg-amber-50 px-5 py-4 text-base leading-7 text-amber-900">
@@ -145,11 +146,12 @@ export default function VisaPage() {
               </h2>
 
               <p className="mt-4 text-base leading-8 text-zinc-700">
-                Delegates attending the Perth Edition can download this guide to
-                help understand the Australia visa application process. It covers
-                creating an ImmiAccount, selecting the Temporary Activity Visa
-                Subclass 408, entering host and event details, uploading supporting
-                documents, payment, and biometrics guidance.
+                Delegates attending the Perth Edition, regardless of nationality,
+                can download this guide to help understand the Australia visa
+                application process. It covers creating an ImmiAccount, selecting
+                the Temporary Activity Visa Subclass 408, entering host and event
+                details, uploading supporting documents, payment, and biometrics
+                guidance.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
@@ -201,7 +203,7 @@ export default function VisaPage() {
 </Link>
 
 <Link
-  href="mailto:info@cleanenergyconference.com.au"
+  href="/contact"
   className="
     group relative inline-flex items-center justify-center gap-2
     overflow-hidden
@@ -293,32 +295,36 @@ export default function VisaPage() {
         </p>
 
         <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-zinc-950 sm:text-4xl">
-          Kenyan citizens do not need a visa for short travel to Rwanda
+          Entry options for delegates travelling to Rwanda
         </h2>
 
         <p className="mt-4 text-base leading-8 text-zinc-700">
-          Kenyan citizens can travel to Kigali, Rwanda without applying for a visa
-          for short business, conference, or visitor travel. As members of the East
-          African Community, Kenyans may enter Rwanda for up to 6 months using a
-          valid passport, national ID, or temporary Interstate Pass.
+          Rwanda has one of the most open entry policies in the world: most
+          nationalities can obtain a visa on arrival or apply for an e-visa in
+          advance through Rwanda's official immigration portal. Processing times,
+          fees, and required documents vary by country of passport, so check your
+          specific pathway before booking travel.
         </p>
 
         <p className="mt-4 text-base leading-8 text-zinc-700">
-          This applies to conference attendance, business meetings, signing
-          contracts, and exploring investment opportunities. However, it does not
-          replace a work permit or residence permit if someone intends to take up
+          Citizens of East African Community (EAC) member states can enter Rwanda
+          visa-free for up to 6 months using a valid passport, national ID, or
+          temporary Interstate Pass. This applies to conference attendance,
+          business meetings, and exploring investment opportunities, but it does
+          not replace a work or residence permit for those intending to take up
           employment or run a business in Rwanda permanently.
         </p>
       </div>
 
       <div className="rounded-[26px] border border-zinc-200 bg-white p-5 shadow-sm">
         <p className="text-base font-bold text-zinc-950">
-          What Kenyan delegates should carry:
+          What delegates should carry:
         </p>
 
         <div className="mt-4 space-y-3">
           {[
-            "Valid passport, national ID, or temporary Interstate Pass",
+            "Valid passport (plus national ID or Interstate Pass for EAC citizens)",
+            "Visa or e-visa approval, where applicable to your nationality",
             "Conference invitation letter or proof of event attendance",
             "Accommodation details for your stay in Kigali",
             "Return or onward ticket showing planned departure",
@@ -335,9 +341,9 @@ export default function VisaPage() {
         </div>
 
         <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-base leading-6 text-amber-900">
-          Entry requirements can change. Delegates should confirm current travel
-          rules with the Rwanda High Commission in Kenya, Kenya High Commission in
-          Kigali, or official immigration channels before travelling.
+          Entry requirements can change and vary by nationality. Delegates should
+          confirm current rules with their nearest Rwandan embassy or consulate,
+          or through Rwanda's official immigration website, before travelling.
         </div>
       </div>
     </div>
@@ -356,8 +362,9 @@ export default function VisaPage() {
             </h2>
             <p className="mt-4 text-base leading-8 text-zinc-600">
               Start early and treat your visa preparation as part of your overall
-              conference planning. The steps below are designed to work for both
-              editions without assuming country-specific immigration rules.
+              conference planning. The steps below are designed to work for
+              delegates of any nationality attending either edition, without
+              assuming country-specific immigration rules.
             </p>
           </div>
 
@@ -505,7 +512,7 @@ export default function VisaPage() {
 
          <div className="flex flex-wrap gap-3">
   <Link
-  href="mailto:info@cleanenergyconference.com.au"
+  href="/contact"
   className="
     group relative inline-flex items-center justify-center gap-2
     overflow-hidden
@@ -553,7 +560,7 @@ export default function VisaPage() {
  
 
   <Link
-    href="/tickets"
+    href="/get-tickets"
     className="
       group relative inline-flex items-center justify-center gap-2
       overflow-hidden

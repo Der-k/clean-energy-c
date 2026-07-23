@@ -13,16 +13,16 @@ import {
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 import {
-  kigaliProgramme,
+  KigaliProgramme,
   perthProgramme,
 } from "@/lib/event-programmes";
 
 
-type EditionKey = "kigali" | "perth";
+type EditionKey = "Kigali" | "perth";
 
 const editions = {
-  kigali: {
-    key: "kigali" as EditionKey,
+  Kigali: {
+    key: "Kigali" as EditionKey,
     tabLabel: "Kigali Edition",
     title: "Kigali Event Overview",
     subtitle:
@@ -30,8 +30,8 @@ const editions = {
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     duration: "2-Day Programme",
-    tabImage: "/images/event/kigali-tab.jpg",
-    heroImage: "/images/event/kigali-hero.png",
+    tabImage: "/images/event/Kigali-tab.jpg",
+    heroImage: "/images/event/Kigali-hero.png",
     floatingLabel: "Location",
     floatingValue: "Kigali Marriott Hotel, Rwanda",
     summaryTitle: "A concise overview of the Kigali edition",
@@ -46,7 +46,7 @@ const editions = {
       { value: "8+", label: "Programme Formats" },
       { value: "EA", label: "Regional Focus" },
     ],
-  dayThemes: kigaliProgramme,
+  dayThemes: KigaliProgramme,
     sessionTypes: [
       "Registration and welcome refreshments",
       "Opening remarks and keynote sessions",
@@ -104,10 +104,10 @@ const editions = {
 
 
 
-const editionOrder: EditionKey[] = ["kigali", "perth"];
+const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
 export default function EventOverviewPage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (

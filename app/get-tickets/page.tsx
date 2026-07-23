@@ -7,12 +7,12 @@ import { SectionShell } from "@/components/layout/section-shell";
 
 const ticketOptions = [
   {
-    key: "kigali",
+    key: "Kigali",
     title: "Kigali Edition",
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     image: "/images/conference/perth ticket.jpg",
-    href: "https://clean-energy.zohobackstage.com/kigali#/buyTickets/selectTickets?lang=en",
+    href: "https://clean-energy.zohobackstage.com/Kigali#/buyTickets/selectTickets?lang=en",
     description:
       "Join East Africa’s leading clean energy dialogue focused on regional integration, climate finance, and decentralized systems.",
   },
@@ -21,7 +21,7 @@ const ticketOptions = [
     title: "Perth Edition",
     date: "31 Aug – 1 Sept 2026",
     venue: "Novotel Hotel Perth, Western Australia",
-    image: "/images/conference/kigali ticket.jpg",
+    image: "/images/conference/Kigali ticket.jpg",
     href: "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
     description:
       "Engage with global investors, mining leaders, and clean technology innovators connecting Africa to international capital and expertise.",

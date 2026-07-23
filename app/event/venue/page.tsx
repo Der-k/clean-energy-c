@@ -14,11 +14,11 @@ import {
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 
-type EditionKey = "kigali" | "perth";
+type EditionKey = "Kigali" | "perth";
 
 const editions = {
-  kigali: {
-    key: "kigali" as EditionKey,
+  Kigali: {
+    key: "Kigali" as EditionKey,
     tabLabel: "Kigali",
     city: "Kigali, Rwanda",
     venueName: "Kigali Marriott Hotel",
@@ -38,11 +38,11 @@ const editions = {
       { label: "Edition", value: "Kigali Edition" },
     ],
     images: [
-      "/images/venue/kigali-1.jpg",
-      "/images/venue/kigali-2.jpg",
-      "/images/venue/kigali-3.jpg",
-      "/images/venue/kigali-4.jpg",
-      "/images/venue/kigali-5.jpg",
+      "/images/venue/Kigali-1.jpg",
+      "/images/venue/Kigali-2.jpg",
+      "/images/venue/Kigali-3.jpg",
+      "/images/venue/Kigali-4.jpg",
+      "/images/venue/Kigali-5.jpg",
     ],
     mapEmbed:
       "https://www.google.com/maps?q=Kigali%20Marriott%20Hotel%20Rwanda&z=15&output=embed",
@@ -94,10 +94,10 @@ const editions = {
   },
 };
 
-const editionOrder: EditionKey[] = ["kigali", "perth"];
+const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
 export default function VenuePage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (

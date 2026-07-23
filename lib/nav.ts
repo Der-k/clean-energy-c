@@ -39,7 +39,6 @@ export const navItems: NavItem[] = [
   {
   label: "Partners",
   children: [
-    { label: "Partners & Sponsors", href: "/partners" },
     { label: "Become a Partner / Sponsor", href: "/partners/become-a-partner" },
   ],
 },
@@ -69,7 +68,7 @@ export const navItems: NavItem[] = [
   children: [
     {
       label: "🎟 Rwanda (Kigali)",
-      href: "https://clean-energy.zohobackstage.com/kigali#/buyTickets/selectTickets?lang=en",
+      href: "https://clean-energy.zohobackstage.com/Kigali#/buyTickets/selectTickets?lang=en",
     },
     {
       label: "🎟 Australia (Perth)",

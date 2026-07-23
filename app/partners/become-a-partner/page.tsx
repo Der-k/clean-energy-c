@@ -774,13 +774,7 @@ export default function BecomeASponsorPage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex w-full justify-center">
-                <Link href="https://clean-energy.zohobackstage.com/kigali#/sponsors?lang=en"
-                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl px-10 py-4 text-base font-semibold text-white bg-[#02026e] border border-[#02026e] shadow-[0_10px_30px_rgba(2,2,110,0.18)] transition-all duration-500 ease-out hover:border-[#02026e]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(2,2,110,0.28)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#02026e]/25 focus:ring-offset-2 focus:ring-offset-white">
-                  <span className="absolute inset-0 overflow-hidden rounded-2xl"><span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" /></span>
-                  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">Become a Sponsor</span>
-                </Link>
-              </div>
+             
 
               <div className="mt-8 w-full rounded-[24px] border border-slate-200 bg-slate-50 p-6">
                 <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#020266]">Why sponsor</p>

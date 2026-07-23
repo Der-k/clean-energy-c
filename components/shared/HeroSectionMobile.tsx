@@ -23,7 +23,7 @@ const editions = [
     venue: "Kigali Marriott Hotel, Rwanda",
     accent: "text-[#02026e]",
     border: "border-[#93a4ff] shadow-[0_8px_24px_rgba(17,64,196,0.13)]",
-    href: "/conference?edition=kigali",
+    href: "/conference?edition=Kigali",
     flag: "RWA",
   },
   {

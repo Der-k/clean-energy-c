@@ -8,6 +8,108 @@ import { navItems } from "@/lib/nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { useHideOnScroll } from "@/hooks/use-hide-on-scroll";
 
+// Brand/social icons were removed from lucide-react (deprecated in v1),
+// so these are plain inline SVGs instead of lucide imports.
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8a4 4 0 0 1 3.37 3.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M16.6 5.82c-1.02-.9-1.6-2.19-1.6-3.6h-3.15v13.4a2.7 2.7 0 1 1-2.7-2.7c.2 0 .4.02.6.06V9.72a5.85 5.85 0 0 0-.6-.03A5.85 5.85 0 1 0 15 15.62V9.4a7.06 7.06 0 0 0 4.15 1.33V7.6c-.9 0-1.75-.28-2.55-.7a5.6 5.6 0 0 1-.6-.38 4.6 4.6 0 0 1-.4-.3z" />
+    </svg>
+  );
+}
+
+// Social links — update here if profiles ever change
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/cleanenergyconference.au/",
+    icon: InstagramIcon,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/clean-energy-conference-a26aa03b7/",
+    icon: LinkedinIcon,
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@cleanenergyconferenceau?lang=en",
+    icon: TikTokIcon,
+  },
+];
+
+function SocialLinks({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {socialLinks.map(({ label, href, icon: Icon }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="
+            group inline-flex h-11 w-11 items-center justify-center
+            rounded-full
+            border border-white/20
+            bg-white/5
+            text-white/80
+            transition-all duration-300 ease-out
+            hover:text-white
+            hover:bg-white/15
+            hover:border-white/40
+            hover:scale-110
+          "
+        >
+          <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const visible = useHideOnScroll(() => setMobileOpen(false));
@@ -66,8 +168,8 @@ export function Header() {
   )}
 </nav>
 
-      {/* CTA */}
-<div className="hidden xl:flex items-center">
+      {/* CTA + SOCIAL */}
+<div className="hidden xl:flex items-center gap-6">
   <a
     href="/get-tickets"
    
@@ -128,6 +230,10 @@ export function Header() {
       "
     />
   </a>
+
+  <span className="h-6 w-px bg-white/15" />
+
+  <SocialLinks />
 </div>
           {/* MOBILE */}
           <button

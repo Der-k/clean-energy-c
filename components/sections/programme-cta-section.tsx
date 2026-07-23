@@ -14,6 +14,7 @@ const carouselImages = [
   { src: "/images/hero-carousel-6.jpeg", alt: "Networking event" },
   { src: "/images/hero-carousel-7.jpeg", alt: "Conference hall" },
   { src: "/images/hero-carousel-8.jpeg", alt: "Energy discussion" },
+   { src: "/images/hero-carousel-9.jpg", alt: "Energy discussion" },
 ];
 
 const MARQUEE_BASE_SPEED = 0.7;

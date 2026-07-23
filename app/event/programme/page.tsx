@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronRight, Download, FileText, CheckCircle2, BookOpen } from "lucide-react";
 import { useRole } from "@/context/RoleContext";
 
-type EventOption = "kigali" | "perth" | "both";
+type EventOption = "Kigali" | "perth" | "both";
 
 type FormState = {
   firstName: string;
@@ -17,17 +17,17 @@ type FormState = {
 };
 
 const programmeFiles: Record<EventOption, { label: string; href: string }> = {
-  kigali: {
+  Kigali: {
     label: "Kigali Edition Programme",
     href: "/documents/conference programme Kigali Rwanda.pdf",
   },
   perth: {
     label: "Perth Edition Programme",
-    href: "/documents/conference programme Perth Australia.pdf",
+    href: "/documents/conference programme Perth Australia.docx",
   },
   both: {
     label: "Combined Programme (Kigali + Perth)",
-    href: "/documents/conference programme Kigali and Perth combined.pdf",
+    href: "/documents/conference programme Kigali Rwanda.pdf",
   },
 };
 
@@ -275,7 +275,7 @@ export default function ProgrammePage() {
                       <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Which event do you want?</label>
                       <select id="eventChoice" value={form.eventChoice} onChange={(e) => updateField("eventChoice", e.target.value as EventOption)}
                         className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
-                        <option value="kigali">Kigali Edition</option>
+                        <option value="Kigali">Kigali Edition</option>
                         <option value="perth">Perth Edition</option>
                         <option value="both">Both Editions</option>
                       </select>

@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 
-type EditionKey = "kigali" | "perth";
+type EditionKey = "Kigali" | "perth";
 
 const editions = {
-  kigali: {
-    key: "kigali" as EditionKey,
+  Kigali: {
+    key: "Kigali" as EditionKey,
     tabLabel: "Kigali Edition",
     eyebrow: "2026 Edition",
     title: "Kigali Edition Overview",
@@ -25,7 +25,7 @@ const editions = {
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     heroImage: "/images/gallery/hero-carousel-12.jpg",
-    tabImage: "/images/conference/kigali-tab.jpg",
+    tabImage: "/images/conference/Kigali-tab.jpg",
     gallery: [
       "/images/gallery/gallery-11.jpg",
       "/images/gallery/gallery-7.jpg",
@@ -146,10 +146,10 @@ const editions = {
   },
 };
 
-const editionOrder: EditionKey[] = ["kigali", "perth"];
+const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
 export default function ConferenceOverviewPage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (
@@ -279,7 +279,7 @@ export default function ConferenceOverviewPage() {
 
               <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
                 Secure your place at the{" "}
-                {current.tabLabel.toLowerCase()}
+                {current.tabLabel}
               </h2>
 
               <p className="mt-3 text-base leading-7 text-white/80 md:text-base">

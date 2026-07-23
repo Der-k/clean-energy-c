@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronRight, CalendarDays, MapPin, X, Quote, Sparkles } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 
-type EditionKey = "kigali" | "perth";
+type EditionKey = "Kigali" | "perth";
 
 type Speaker = {
   name: string;
@@ -31,7 +31,7 @@ const ACCENTS: Record<
   EditionKey,
   { primary: string; dark: string; soft: string; ring: string }
 > = {
-  kigali: {
+  Kigali: {
     primary: "#1d4ed8", // blue-700
     dark: "#1e3a8a", // blue-900
     soft: "rgba(29, 78, 216, 0.09)",
@@ -327,7 +327,7 @@ const editions: Record<
     groups: SpeakerGroup[];
   }
 > = {
-  kigali: {
+  Kigali: {
     label: "Kigali Edition",
     date: "6–7 August 2026",
     location: "Kigali Marriott Hotel, Rwanda",
@@ -583,12 +583,12 @@ const editions: Record<
   },
 };
 
-const editionOrder: EditionKey[] = ["kigali", "perth"];
+const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function SpeakersPage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
   const accent = ACCENTS[activeEdition];
 

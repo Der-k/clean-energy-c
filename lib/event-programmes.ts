@@ -1,4 +1,4 @@
-export const kigaliProgramme = [
+export const KigaliProgramme = [
   {
     day: "Day 1",
     title: "Clean Energy, Responsible Mining & Market Access",

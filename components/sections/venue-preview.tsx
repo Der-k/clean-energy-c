@@ -10,7 +10,7 @@ const venues = [
     edition: "Kigali Edition",
     location: "Kigali, Rwanda",
     date: "6–7 August 2026",
-    image: "/images/venue/kigali-1.jpg",
+    image: "/images/venue/Kigali-1.jpg",
     description:
       "A polished executive setting in Kigali designed for keynote sessions, partner engagement, networking, and high-level clean energy dialogue.",
   },

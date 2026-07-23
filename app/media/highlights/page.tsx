@@ -75,17 +75,17 @@ function Card({
 }
 
 // ── Data ─────────────────────────────────────────────────────────────────────
-type EditionKey = "kigali" | "perth";
+type EditionKey = "Kigali" | "perth";
 
 const editions = {
-  kigali: {
-    key: "kigali" as EditionKey,
+  Kigali: {
+    key: "Kigali" as EditionKey,
     label: "Kigali Edition",
     date: "6–7 August 2026",
     location: "Kigali Marriott Hotel, Rwanda",
     theme:
       "East Africa energy transition, regional integration, geothermal, climate finance, clean mobility, and decentralized systems.",
-    heroImage: "/images/highlights/kigali-highlight-hero.jpeg",
+    heroImage: "/images/highlights/Kigali-highlight-hero.jpeg",
     spotlightTitle: "Programme highlights from the Kigali edition",
     spotlightText:
       "The Kigali edition emphasizes East Africa's energy transition and Rwanda's position as a hub for clean mobility, innovation-led policy, regional integration, and climate-focused energy growth.",
@@ -140,11 +140,11 @@ const editions = {
   },
 };
 
-const editionOrder: EditionKey[] = ["kigali", "perth"];
+const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function HighlightsPage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
   const accent = current.color;
 

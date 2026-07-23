@@ -24,7 +24,7 @@ The event has hosted over 5,000 participants across previous editions.
 2026 CONFERENCE EDITIONS
 ==================================================
 
-KIGALI EDITION
+Kigali EDITION
 Dates:
 6–7 August 2026
 

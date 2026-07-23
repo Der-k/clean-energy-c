@@ -127,7 +127,7 @@ const slides: Slide[] = [
         date: "6–7 August 2026",
         venue: "Kigali Marriott Hotel, Rwanda",
         country: "RWA",
-        href: "/conference?edition=kigali",
+        href: "/conference?edition=Kigali",
         color: "#a5b4fc",
       },
       {

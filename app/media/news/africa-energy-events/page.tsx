@@ -216,7 +216,7 @@ const relatedPosts = [
   {
     title: "What to expect from the Kigali 2026 edition",
     meta: "Event Preview",
-    href: "/blogs/kigali-2026-edition",
+    href: "/blogs/Kigali-2026-edition",
   },
   {
     title: "Critical minerals and renewable infrastructure",
