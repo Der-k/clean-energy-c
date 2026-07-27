@@ -11,82 +11,82 @@ import { useEffect, useRef } from "react";
 // one single carousel — no tabs, no filtering.
 const galleryImages: { src: string; alt: string; category: string }[] = [
   {
-    src: "/images/energy-conference-delegates-networking.JPG",
+    src: "/images/energy-conference-delegates-networking.jpg",
     alt: "Energy conference delegates networking between sessions",
     category: "Delegates",
   },
   {
-    src: "/images/energy-summit-delegates-networking-event.JPG",
+    src: "/images/energy-summit-delegates-networking-event.jpg",
     alt: "Delegates connecting at the energy summit networking event",
     category: "Delegates",
   },
   {
-    src: "/images/conference-delegates-group-discussion.JPG",
+    src: "/images/conference-delegates-group-discussion.jpg",
     alt: "Conference delegates in a group discussion",
     category: "Delegates",
   },
   {
-    src: "/images/delegates-registration-desk-check-in.JPG",
+    src: "/images/delegates-registration-desk-check-in.jpg",
     alt: "Delegates checking in at the conference registration desk",
     category: "Delegates",
   },
   {
-    src: "/images/energy-conference-panel-session-speakers.JPG",
+    src: "/images/energy-conference-panel-session-speakers.jpg",
     alt: "Industry speakers on a panel session at the energy conference",
     category: "Speakers",
   },
   {
-    src: "/images/keynote-speaker-presentation-energy-summit.JPG",
+    src: "/images/keynote-speaker-presentation-energy-summit.jpg",
     alt: "Keynote speaker presenting at the energy summit",
     category: "Speakers",
   },
   {
-    src: "/images/keynote-speaker-on-stage-conference-hall.JPG",
+    src: "/images/keynote-speaker-on-stage-conference-hall.jpg",
     alt: "Keynote speaker addressing delegates from the conference stage",
     category: "Speakers",
   },
   {
-    src: "/images/conference-speaker-audience-qa-session.JPG",
+    src: "/images/conference-speaker-audience-qa-session.jpg",
     alt: "Conference speaker taking audience questions in a Q&A session",
     category: "Speakers",
   },
   {
-    src: "/images/conference-audience-keynote-address.JPG",
+    src: "/images/conference-audience-keynote-address.jpg",
     alt: "Conference audience listening to a keynote address",
     category: "Conference",
   },
   {
-    src: "/images/energy-conference-exhibition-area.JPG",
+    src: "/images/energy-conference-exhibition-area.jpg",
     alt: "Exhibition area at the energy conference showcasing industry partners",
     category: "Conference",
   },
   {
-    src: "/images/energy-conference-hall-main-venue.JPG",
+    src: "/images/energy-conference-hall-main-venue.jpg",
     alt: "Main conference hall during the energy industry gathering",
     category: "Conference",
   },
   {
-    src: "/images/conference-registration-desk-welcome.JPG",
+    src: "/images/conference-registration-desk-welcome.jpg",
     alt: "Welcome and registration desk at the energy conference",
     category: "Conference",
   },
   {
-    src: "/images/energy-industry-panel-discussion-highlight.JPG",
+    src: "/images/energy-industry-panel-discussion-highlight.jpg",
     alt: "Highlight moment from an energy industry panel discussion",
     category: "Highlights",
   },
   {
-    src: "/images/energy-conference-highlight-moment.JPG",
+    src: "/images/energy-conference-highlight-moment.jpg",
     alt: "Memorable highlight moment from the energy conference",
     category: "Highlights",
   },
   {
-    src: "/images/conference-award-ceremony-moment.JPG",
+    src: "/images/conference-award-ceremony-moment.jpg",
     alt: "Award ceremony moment at the energy conference",
     category: "Highlights",
   },
   {
-    src: "/images/energy-summit-closing-ceremony.JPG",
+    src: "/images/energy-summit-closing-ceremony.jpg",
     alt: "Closing ceremony at the energy summit",
     category: "Highlights",
   },
@@ -95,7 +95,7 @@ const galleryImages: { src: string; alt: string; category: string }[] = [
 // Leads the loop — sits first in the set, then cycles back around like any
 // other card once the marquee wraps.
 const introImage = {
-  src: "/images/energy-conference-welcome-intro.JPG",
+  src: "/images/energy-conference-welcome-intro.jpg",
   alt: "Welcome to the energy conference — opening highlight reel",
   category: "Intro",
 };
@@ -104,9 +104,9 @@ const introImage = {
 // category. Still just one carousel — no tabs, no filtering.
 const images = [introImage, ...galleryImages];
 
-const MARQUEE_BASE_SPEED = 0.7;
-const MOMENTUM_DECAY = 0.9;
-const MIN_VELOCITY = 0.15;
+const MARQUEE_BASE_SPEED = 0.45;
+const MOMENTUM_DECAY = 0.94;
+const MIN_VELOCITY = 0.1;
 
 export function ProgrammeCtaSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -123,6 +123,8 @@ export function ProgrammeCtaSection() {
     let pos = 0;
     let vel = 0;
     let dragging = false;
+    let hovering = false;
+    let speedMul = 1; // eases toward 0 on hover, back to 1 on leave — no jump-cut
     let lastX = 0;
     let lastT = 0;
     let halfW = 0;
@@ -159,8 +161,10 @@ export function ProgrammeCtaSection() {
 
     const tick = () => {
       if (!halfW) measure();
+      const target = hovering && !dragging ? 0.15 : 1;
+      speedMul += (target - speedMul) * 0.08;
       vel = Math.abs(vel) > MIN_VELOCITY ? vel * MOMENTUM_DECAY : 0;
-      if (!dragging) pos -= MARQUEE_BASE_SPEED + vel;
+      if (!dragging) pos -= (MARQUEE_BASE_SPEED + vel) * speedMul;
       wrap();
       strip.style.transform = `translateX(${pos}px)`;
       if (cardW > 0) {
@@ -223,10 +227,19 @@ export function ProgrammeCtaSection() {
     };
 
     wrapper.addEventListener("touchstart", onTouchStart, { passive: true });
+    const onMouseEnter = () => {
+      hovering = true;
+    };
+    const onMouseLeave = () => {
+      hovering = false;
+    };
+
     wrapper.addEventListener("touchmove", onTouchMove, { passive: true });
     wrapper.addEventListener("touchend", onTouchEnd, { passive: true });
     wrapper.addEventListener("touchcancel", onTouchEnd, { passive: true });
     wrapper.addEventListener("mousedown", onMouseDown);
+    wrapper.addEventListener("mouseenter", onMouseEnter);
+    wrapper.addEventListener("mouseleave", onMouseLeave);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
 
@@ -237,6 +250,8 @@ export function ProgrammeCtaSection() {
       wrapper.removeEventListener("touchend", onTouchEnd);
       wrapper.removeEventListener("touchcancel", onTouchEnd);
       wrapper.removeEventListener("mousedown", onMouseDown);
+      wrapper.removeEventListener("mouseenter", onMouseEnter);
+      wrapper.removeEventListener("mouseleave", onMouseLeave);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
     };
@@ -263,7 +278,7 @@ export function ProgrammeCtaSection() {
         </div>
 
         {/* Marquee carousel — every image, one continuous loop */}
-        <div ref={wrapperRef} className="relative pt-2 pb-1">
+        <div ref={wrapperRef} className="relative pt-2 pb-1 cursor-grab select-none">
           <div className="overflow-hidden">
             <div
               ref={marqueeRef}
@@ -273,7 +288,7 @@ export function ProgrammeCtaSection() {
               {[...images, ...images].map((image, index) => (
                 <div
                   key={`${image.src}-${index}`}
-                  className="relative shrink-0 overflow-hidden rounded-2xl bg-[#050533]"
+                  className="group relative shrink-0 overflow-hidden rounded-2xl bg-[#050533] shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.06] transition-all duration-500 ease-out hover:shadow-[0_16px_50px_rgba(0,0,0,0.5)] hover:ring-white/[0.14]"
                   style={{ width: "clamp(400px, 55vw, 780px)", height: "clamp(267px, 36.7vw, 520px)" }}
                 >
                   <Image
@@ -281,15 +296,15 @@ export function ProgrammeCtaSection() {
                     alt={image.alt}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 55vw, 780px"
-                    className="object-contain pointer-events-none"
+                    className="object-contain pointer-events-none transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     draggable={false}
                     priority={index < 3}
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
+                  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-[9px] font-semibold text-white/90 tracking-widest uppercase pointer-events-none">
                     {image.category}
                   </span>
-                  <span className="absolute bottom-2.5 left-3.5 text-[10px] font-semibold text-white/75 tracking-widest uppercase pointer-events-none">
+                  <span className="absolute bottom-3 left-3.5 text-[10px] font-semibold text-white/80 tracking-widest uppercase pointer-events-none">
                     {image.alt}
                   </span>
                 </div>
@@ -326,25 +341,30 @@ export function ProgrammeCtaSection() {
           </button>
         </div>
 
-        <div ref={dotsRef} className="flex justify-center items-center gap-1.5 pb-1 flex-wrap px-4">
-          {images.map((_, i) => (
-            <button
-              key={`dot-${i}`}
-              aria-label={`Image ${i + 1}`}
-              className="touch-manipulation"
-              style={{
-                width: i === 0 ? "22px" : "6px",
-                height: "6px",
-                borderRadius: "3px",
-                background: i === 0 ? "white" : "rgba(255,255,255,0.3)",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                flexShrink: 0,
-                transition: "width 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s ease",
-              }}
-            />
-          ))}
+        <div className="flex justify-center pb-2">
+          <div
+            ref={dotsRef}
+            className="flex items-center gap-1.5 flex-wrap justify-center max-w-[90%] bg-white/[0.04] rounded-full px-3 py-2"
+          >
+            {images.map((_, i) => (
+              <button
+                key={`dot-${i}`}
+                aria-label={`Image ${i + 1}`}
+                className="touch-manipulation"
+                style={{
+                  width: i === 0 ? "22px" : "6px",
+                  height: "6px",
+                  borderRadius: "3px",
+                  background: i === 0 ? "white" : "rgba(255,255,255,0.3)",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  transition: "width 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s ease",
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
