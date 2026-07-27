@@ -11,82 +11,82 @@ import { useEffect, useRef } from "react";
 // one single carousel — no tabs, no filtering.
 const galleryImages: { src: string; alt: string; category: string }[] = [
   {
-    src: "/images/energy-conference-delegates-networking.jpg",
+    src: "/images/energy-conference-delegates-networking.JPG",
     alt: "Energy conference delegates networking between sessions",
     category: "Delegates",
   },
   {
-    src: "/images/energy-summit-delegates-networking-event.jpg",
+    src: "/images/energy-summit-delegates-networking-event.JPG",
     alt: "Delegates connecting at the energy summit networking event",
     category: "Delegates",
   },
   {
-    src: "/images/conference-delegates-group-discussion.jpg",
+    src: "/images/conference-delegates-group-discussion.JPG",
     alt: "Conference delegates in a group discussion",
     category: "Delegates",
   },
   {
-    src: "/images/delegates-registration-desk-check-in.jpg",
+    src: "/images/delegates-registration-desk-check-in.JPG",
     alt: "Delegates checking in at the conference registration desk",
     category: "Delegates",
   },
   {
-    src: "/images/energy-conference-panel-session-speakers.jpg",
+    src: "/images/energy-conference-panel-session-speakers.JPG",
     alt: "Industry speakers on a panel session at the energy conference",
     category: "Speakers",
   },
   {
-    src: "/images/keynote-speaker-presentation-energy-summit.jpg",
+    src: "/images/keynote-speaker-presentation-energy-summit.JPG",
     alt: "Keynote speaker presenting at the energy summit",
     category: "Speakers",
   },
   {
-    src: "/images/keynote-speaker-on-stage-conference-hall.jpg",
+    src: "/images/keynote-speaker-on-stage-conference-hall.JPG",
     alt: "Keynote speaker addressing delegates from the conference stage",
     category: "Speakers",
   },
   {
-    src: "/images/conference-speaker-audience-qa-session.jpg",
+    src: "/images/conference-speaker-audience-qa-session.JPG",
     alt: "Conference speaker taking audience questions in a Q&A session",
     category: "Speakers",
   },
   {
-    src: "/images/conference-audience-keynote-address.jpg",
+    src: "/images/conference-audience-keynote-address.JPG",
     alt: "Conference audience listening to a keynote address",
     category: "Conference",
   },
   {
-    src: "/images/energy-conference-exhibition-area.jpg",
+    src: "/images/energy-conference-exhibition-area.JPG",
     alt: "Exhibition area at the energy conference showcasing industry partners",
     category: "Conference",
   },
   {
-    src: "/images/energy-conference-hall-main-venue.jpg",
+    src: "/images/energy-conference-hall-main-venue.JPG",
     alt: "Main conference hall during the energy industry gathering",
     category: "Conference",
   },
   {
-    src: "/images/conference-registration-desk-welcome.jpg",
+    src: "/images/conference-registration-desk-welcome.JPG",
     alt: "Welcome and registration desk at the energy conference",
     category: "Conference",
   },
   {
-    src: "/images/energy-industry-panel-discussion-highlight.jpg",
+    src: "/images/energy-industry-panel-discussion-highlight.JPG",
     alt: "Highlight moment from an energy industry panel discussion",
     category: "Highlights",
   },
   {
-    src: "/images/energy-conference-highlight-moment.jpg",
+    src: "/images/energy-conference-highlight-moment.JPG",
     alt: "Memorable highlight moment from the energy conference",
     category: "Highlights",
   },
   {
-    src: "/images/conference-award-ceremony-moment.jpg",
+    src: "/images/conference-award-ceremony-moment.JPG",
     alt: "Award ceremony moment at the energy conference",
     category: "Highlights",
   },
   {
-    src: "/images/energy-summit-closing-ceremony.jpg",
+    src: "/images/energy-summit-closing-ceremony.JPG",
     alt: "Closing ceremony at the energy summit",
     category: "Highlights",
   },
@@ -95,7 +95,7 @@ const galleryImages: { src: string; alt: string; category: string }[] = [
 // Leads the loop — sits first in the set, then cycles back around like any
 // other card once the marquee wraps.
 const introImage = {
-  src: "/images/energy-conference-welcome-intro.jpg",
+  src: "/images/energy-conference-welcome-intro.JPG",
   alt: "Welcome to the energy conference — opening highlight reel",
   category: "Intro",
 };
