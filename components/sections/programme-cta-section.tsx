@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // TODO: rename the actual files in /public/images to match these paths
 // exactly (case-sensitive), or update the paths below to match your files.
@@ -107,6 +107,53 @@ const images = [introImage, ...galleryImages];
 const MARQUEE_BASE_SPEED = 0.45;
 const MOMENTUM_DECAY = 0.94;
 const MIN_VELOCITY = 0.1;
+
+// Swaps just the extension's case: foo.jpg <-> foo.JPG, foo.JPEG <-> foo.jpeg, etc.
+function swapExtensionCase(src: string): string {
+  const match = src.match(/\.([a-zA-Z]+)$/);
+  if (!match) return src;
+  const ext = match[1];
+  const swapped = ext === ext.toLowerCase() ? ext.toUpperCase() : ext.toLowerCase();
+  return src.slice(0, -ext.length) + swapped;
+}
+
+// Wraps next/image so that if a file 404s (e.g. the tracked filename case on
+// the server doesn't match what the code requested), it automatically
+// retries once with the opposite extension case before giving up.
+function CarouselImage({
+  src,
+  alt,
+  sizes,
+  className,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  className?: string;
+  priority?: boolean;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const [triedFallback, setTriedFallback] = useState(false);
+
+  return (
+    <Image
+      src={currentSrc}
+      alt={alt}
+      fill
+      sizes={sizes}
+      className={className}
+      draggable={false}
+      priority={priority}
+      onError={() => {
+        if (!triedFallback) {
+          setTriedFallback(true);
+          setCurrentSrc(swapExtensionCase(src));
+        }
+      }}
+    />
+  );
+}
 
 export function ProgrammeCtaSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -291,13 +338,11 @@ export function ProgrammeCtaSection() {
                   className="group relative shrink-0 overflow-hidden rounded-2xl bg-[#050533] shadow-[0_8px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.06] transition-all duration-500 ease-out hover:shadow-[0_16px_50px_rgba(0,0,0,0.5)] hover:ring-white/[0.14]"
                   style={{ width: "clamp(400px, 55vw, 780px)", height: "clamp(267px, 36.7vw, 520px)" }}
                 >
-                  <Image
+                  <CarouselImage
                     src={image.src}
                     alt={image.alt}
-                    fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 55vw, 780px"
                     className="object-contain pointer-events-none transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    draggable={false}
                     priority={index < 3}
                   />
                   <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
