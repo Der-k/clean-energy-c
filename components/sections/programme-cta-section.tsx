@@ -295,6 +295,7 @@ export function ProgrammeCtaSection() {
                     src={image.src}
                     alt={image.alt}
                     fill
+                    unoptimized
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 55vw, 780px"
                     className="object-contain pointer-events-none transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     draggable={false}
