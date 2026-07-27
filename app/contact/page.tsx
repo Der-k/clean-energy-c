@@ -42,7 +42,7 @@ const contactCards = [
       "For general questions about the conference, event details, attendance, or logistics.",
     person: "Conference Team",
     email: "info@cleanenergyconference.com.au",
-    phone: "+254 725 707 557",
+    phone: "+61 421800071",
     icon: Users,
   },
   {
@@ -51,7 +51,7 @@ const contactCards = [
       "If you are interested in speaking at the event, submit your speaking enquiry to the team.",
     person: "Speaker Relations",
     email: "info@cleanenergyconference.com.au",
-    phone: "+254 725 707 557",
+    phone: "+61 421800071",
     icon: Mic,
   },
   {
@@ -59,8 +59,8 @@ const contactCards = [
     description:
       "For sponsorship packages, exhibition opportunities, and partnership discussions.",
     person: "Partnerships Team",
-    email: "info@cleanenergyconference.com.au",
-    phone: "+254 725 707 557",
+    email: "advisory@cleanenergyconference.com.au",
+    phone: "+61 421800071",
     icon: Handshake,
   },
   {
@@ -78,7 +78,7 @@ const contactCards = [
       "For delegate registrations, exhibition questions, and participation-related assistance.",
     person: "Delegate Services",
     email: "info@cleanenergyconference.com.au",
-    phone: "+254 725 707 557",
+    phone: "+61 421800071",
     icon: Ticket,
   },
   {
@@ -86,8 +86,8 @@ const contactCards = [
     description:
       "For questions related to venue access, location information, and event arrival planning.",
     person: "Event Logistics",
-    email: "info@cleanenergyconference.com.au",
-    phone: "+254 725 707 557",
+    email: "advisory@cleanenergyconference.com.au",
+    phone: "+61 421800071",
     icon: MapPin,
   },
 ];
@@ -256,10 +256,12 @@ export default function ContactPage() {
                 Use the form to send a message to the conference team and we will direct it to the right department.
               </p>
               <div className="mt-8 rounded-[20px] border border-[#02026e]/20 bg-white p-5 shadow-sm">
-                <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">Primary Contact</p>
+                <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">Contacts</p>
+                <p className="mt-2 text-base font-medium text-black">Clean Energy Conference Africa Australia</p>
                 <div className="mt-4 space-y-3 text-base text-black">
-                  <p><span className="font-semibold text-black">Phone:</span> +254 725 707 557</p>
-                  <p><span className="font-semibold text-black">Email:</span> dorah.simiyu@cleanenergyconference.com.au</p>
+                  <p><span className="font-semibold text-black">Tel:</span> +61 421800071</p>
+                  <p><span className="font-semibold text-black">Email:</span> info@cleanenergyconference.com.au</p>
+                  <p className="pl-[52px] sm:pl-0 sm:ml-[0]"> advisory@cleanenergyconference.com.au</p>
                   <p><span className="font-semibold text-black">Website:</span> www.cleanenergyconference.com.au</p>
                 </div>
               </div>
