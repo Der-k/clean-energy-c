@@ -42,7 +42,7 @@ const contactCards = [
       "For general questions about the conference, event details, attendance, or logistics.",
     person: "Conference Team",
     email: "info@cleanenergyconference.com.au",
-    phone: "+61 421800071",
+    phones: ["+61 421800071", "+254 725 707 557"],
     icon: Users,
   },
   {
@@ -51,7 +51,7 @@ const contactCards = [
       "If you are interested in speaking at the event, submit your speaking enquiry to the team.",
     person: "Speaker Relations",
     email: "info@cleanenergyconference.com.au",
-    phone: "+61 421800071",
+    phones: ["+61 421800071", "+254 725 707 557"],
     icon: Mic,
   },
   {
@@ -60,7 +60,7 @@ const contactCards = [
       "For sponsorship packages, exhibition opportunities, and partnership discussions.",
     person: "Partnerships Team",
     email: "advisory@cleanenergyconference.com.au",
-    phone: "+61 421800071",
+    phones: ["+61 421800071", "+254 725 707 557"],
     icon: Handshake,
   },
   {
@@ -69,7 +69,7 @@ const contactCards = [
       "For media partnerships, press accreditation, publicity enquiries, or interviews.",
     person: "Media Relations",
     email: "info@cleanenergyconference.com.au",
-    phone: "",
+    phones: [],
     icon: Newspaper,
   },
   {
@@ -78,7 +78,7 @@ const contactCards = [
       "For delegate registrations, exhibition questions, and participation-related assistance.",
     person: "Delegate Services",
     email: "info@cleanenergyconference.com.au",
-    phone: "+61 421800071",
+    phones: ["+61 421800071", "+254 725 707 557"],
     icon: Ticket,
   },
   {
@@ -87,7 +87,7 @@ const contactCards = [
       "For questions related to venue access, location information, and event arrival planning.",
     person: "Event Logistics",
     email: "advisory@cleanenergyconference.com.au",
-    phone: "+61 421800071",
+    phones: ["+61 421800071", "+254 725 707 557"],
     icon: MapPin,
   },
 ];
@@ -232,12 +232,12 @@ export default function ContactPage() {
                       <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
                       <a href={`mailto:${card.email}`} className="hover:text-[#06895b] transition-colors">{card.email}</a>
                     </div>
-                    {card.phone ? (
-                      <div className="flex items-start gap-3">
+                    {card.phones.map((phone) => (
+                      <div key={phone} className="flex items-start gap-3">
                         <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#06895b]" />
-                        <a href={`tel:${card.phone}`} className="hover:text-[#06895b] transition-colors">{card.phone}</a>
+                        <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-[#06895b] transition-colors">{phone}</a>
                       </div>
-                    ) : null}
+                    ))}
                   </div>
                 </article>
               );
@@ -259,7 +259,8 @@ export default function ContactPage() {
                 <p className="text-base font-semibold uppercase tracking-[0.18em] text-[#02026e]">Contacts</p>
                 <p className="mt-2 text-base font-medium text-black">Clean Energy Conference Africa Australia</p>
                 <div className="mt-4 space-y-3 text-base text-black">
-                  <p><span className="font-semibold text-black">Tel:</span> +61 421800071</p>
+                  <p><span className="font-semibold text-black">Tel (Australia):</span> +61 421800071</p>
+                  <p><span className="font-semibold text-black">Tel (Kenya):</span> +254 725 707 557</p>
                   <p><span className="font-semibold text-black">Email:</span> info@cleanenergyconference.com.au</p>
                   <p className="pl-[52px] sm:pl-0 sm:ml-[0]"> advisory@cleanenergyconference.com.au</p>
                   <p><span className="font-semibold text-black">Website:</span> www.cleanenergyconference.com.au</p>
