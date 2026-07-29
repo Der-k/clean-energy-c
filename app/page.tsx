@@ -1,5 +1,8 @@
 import { HeroSection } from "@/components/shared/hero-section";
 import { ConferenceOverview } from "@/components/sections/conference-overview";
+import { OverviewSpotlightSection } from "@/components/sections/overview-spotlight-section";
+import { NewsInsightsSection } from "@/components/sections/news-insights-section";
+import { ConferenceThemeSection } from "@/components/sections/conference-theme-section";
 import { EventCountdown } from "@/components/sections/event-countdown";
 import { SpeakersPreview } from "@/components/sections/speakers-preview";
 import { VenuePreview } from "@/components/sections/venue-preview";
@@ -17,7 +20,13 @@ export default function HomePage() {
 
       <ProgrammeCtaSection />
 
-      <ConferenceOverview />
+      <ConferenceThemeSection />
+       <OverviewSpotlightSection />
+    
+
+     
+      <NewsInsightsSection />
+      
 
       <SpeakersPreview />
       <VenuePreview />

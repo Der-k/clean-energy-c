@@ -23,6 +23,9 @@ type AgendaTopic = {
   card2List2?: string[];
   card3Title: string;
   card3Items: string[];
+  // Which brand color sits behind the agenda image, cycled per topic so
+  // consecutive cards don't repeat the same background.
+  accent: "navy" | "emerald" | "gold";
 };
 
 const agendaTopics: AgendaTopic[] = [
@@ -31,8 +34,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "1. Accelerating Africa's Energy Transition",
     image: "/images/theme-image-1.jpg",
     alt: "Renewable energy infrastructure",
-    agendaImage: "/images/agenda-image-1.jpg",
+    agendaImage: "/images/renewable-energy-transition-africa-solar-wind.png",
     agendaAlt: "Close-up of solar panels and wind turbines powering the grid",
+    accent: "emerald",
     description:
       "The conference exists to accelerate the deployment of renewable energy across Africa by bringing together the public and private sectors needed to move projects from planning to implementation.",
     card1Title: "Core Focus Areas",
@@ -55,8 +59,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "2. Mobilising Investment",
     image: "/images/theme-image-2.jpg",
     alt: "Investment and partnership discussions",
-    agendaImage: "/images/agenda-image-2.jpg",
+    agendaImage: "/images/climate-finance-investment-africa-energy-projects.png",
     agendaAlt: "Investors and project developers reviewing financing terms",
+    accent: "gold",
     description:
       "Perhaps the strongest theme throughout the documents. The conference isn't simply discussing energy—it's trying to attract capital into Africa.",
     card1Title: "Investment Topics",
@@ -81,8 +86,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "3. Strengthening Africa–Australia Cooperation",
     image: "/images/theme-image-3.jpg",
     alt: "Sustainable growth across Africa and Australia",
-    agendaImage: "/images/agenda-image-3.jpg",
+    agendaImage: "/images/africa-australia-energy-partnership-cooperation.png",
     agendaAlt: "Australian and African delegates shaking hands at a signing",
+    accent: "navy",
     description:
       "This is what makes the conference unique. Most energy conferences focus on one region. This conference intentionally connects two ecosystems to turn complementary strengths into long-term partnerships.",
     card1Title: "Key Strategic Pillar",
@@ -118,8 +124,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "4. Driving Innovation & Technology Adoption",
     image: "/images/theme-image-4.jpg",
     alt: "Clean energy technology deployment",
-    agendaImage: "/images/agenda-image-4.jpg",
+    agendaImage: "/images/clean-energy-technology-battery-storage-smart-grid.png",
     agendaAlt: "Engineers testing battery storage and smart grid technology",
+    accent: "emerald",
     description:
       "Another recurring theme. Not just discussing technology—actually helping governments and utilities discover technologies they can deploy.",
     card1Title: "Technologies Explored",
@@ -143,8 +150,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "5. Building Regional Collaboration",
     image: "/images/theme-image-5.jpg",
     alt: "Africa Australia partnership discussion",
-    agendaImage: "/images/agenda-image-5.jpg",
+    agendaImage: "/images/africa-energy-stakeholder-collaboration-roundtable.png",
     agendaAlt: "Multi-stakeholder roundtable discussion between sectors",
+    accent: "gold",
     description:
       "The documents repeatedly emphasize collaboration across sectors. The conference is specifically designed to remove operational silos.",
     card1Title: "Cross-Sector Stakeholders",
@@ -168,8 +176,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "6. Supporting Sustainable Industrial Development",
     image: "/images/theme-image-6.jpg",
     alt: "Grid infrastructure and transmission lines",
-    agendaImage: "/images/agenda-image-6.jpg",
+    agendaImage: "/images/sustainable-industrial-development-mineral-processing.png",
     agendaAlt: "Industrial mineral processing facility powered by clean energy",
+    accent: "navy",
     description:
       "The conference isn't only about electricity—it's about economic transformation.",
     card1Title: "Economic Drivers",
@@ -193,8 +202,9 @@ const agendaTopics: AgendaTopic[] = [
     title: "7. Turning Policy Into Implementation",
     image: "/images/theme-image-7.jpg",
     alt: "Community engagement and sustainable local development",
-    agendaImage: "/images/agenda-image-7.jpg",
+    agendaImage: "/images/africa-energy-policy-implementation-partnership.png",
     agendaAlt: "Officials reviewing a signed partnership agreement on stage",
+    accent: "emerald",
     description:
       "This is probably the biggest differentiator. Many conferences stop at discussions. This conference wants real, tangible outcomes.",
     card1Title: "Target Outcomes",
@@ -349,6 +359,12 @@ export function ConferenceThemeSection() {
   const NAVY = "#0F0F76";
   const EMERALD = "#009966";
   const GOLD = "#F2CB01";
+  const ACCENTS: Record<AgendaTopic["accent"], string> = {
+    navy: NAVY,
+    emerald: EMERALD,
+    gold: GOLD,
+  };
+  const agendaBg = ACCENTS[activeTopic.accent];
   const themeNumber = String(displayIndex + 1).padStart(2, "0");
   const totalThemes = String(agendaTopics.length).padStart(2, "0");
   const titleWithoutNumber = activeTopic.title.replace(/^\d+\.\s*/, "");
@@ -544,12 +560,19 @@ export function ConferenceThemeSection() {
                   <div
                     className={slide("transition-all duration-[450ms]")}
                   >
+                    {/* CHANGED: background swapped from var(--surface) (near-white,
+                        which let a light/white image blend straight into the card)
+                        to a per-topic brand accent (navy/emerald/gold, cycled via
+                        activeTopic.accent) so consecutive themes don't all show the
+                        same color and the image still has real contrast to pop
+                        against. Shadow bumped to --shadow-card to match the visual
+                        weight of the other colored cards below. */}
                     <div
-                      className="hover-glow-card rounded-3xl p-6 sm:p-8"
+                      className="hover-glow-card rounded-3xl p-6 sm:p-8 transition-colors duration-500"
                       style={{
-                        backgroundColor: "var(--surface)",
+                        backgroundColor: agendaBg,
                         border: "5px solid #000000",
-                        boxShadow: "var(--shadow-soft)",
+                        boxShadow: "var(--shadow-card)",
                       }}
                     >
                       <div className="overflow-hidden rounded-2xl">
@@ -564,7 +587,7 @@ export function ConferenceThemeSection() {
                 </div>
 
                 {/* 3 CARDS WITH DETAILED INFORMATION */}
-                <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-3 max-w-5xl mx-auto">
+                <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.4fr_1fr] md:items-start max-w-6xl mx-auto">
                   {/* CARD 1 */}
                   <div className={slide("transition-all duration-[650ms]")}>
                     <div
@@ -613,8 +636,8 @@ export function ConferenceThemeSection() {
                       )}
 
                       {activeTopic.card2List1 && (
-                        <div className="mt-5 grid grid-cols-1 gap-4 text-base sm:text-lg lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-white/20">
-                          <div className="lg:pr-6">
+                        <div className="mt-5 grid grid-cols-1 gap-4 text-base sm:grid-cols-2 sm:gap-0 sm:divide-x sm:divide-white/20 sm:text-lg">
+                          <div className="sm:pr-6">
                             <p className="font-semibold text-white mb-2">
                               {activeTopic.card2ListHeader1}
                             </p>
@@ -630,7 +653,7 @@ export function ConferenceThemeSection() {
                               ))}
                             </ul>
                           </div>
-                          <div className="lg:pl-6">
+                          <div className="sm:pl-6">
                             <p className="font-semibold text-white mb-2">
                               {activeTopic.card2ListHeader2}
                             </p>
