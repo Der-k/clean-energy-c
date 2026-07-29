@@ -23,7 +23,7 @@ const programmeFiles: Record<EventOption, { label: string; href: string }> = {
   },
   perth: {
     label: "Perth Edition Programme",
-    href: "/documents/conference programme Perth Australia.docx",
+     href: "/documents/conference programme Kigali Rwanda.pdf",
   },
   both: {
     label: "Combined Programme (Kigali + Perth)",
