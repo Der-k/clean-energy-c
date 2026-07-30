@@ -16,7 +16,23 @@ const featuredPartners = [
     name: "Calebb international",
     logo: "/images/partners/calebb.jpg",
   },
-  
+   {
+    name: "Ministry of energy",
+    logo: "/images/partners/ministry-of -energy.jpeg",
+  },
+ {
+    name: "AAEMI",
+    logo: "/images/partners/aaemi.jpeg",
+  },
+ {
+    name: "mininstry of environment ",
+    logo: "/images/partners/ministry-of-environment.jpeg",
+  },
+ {
+    name: "mininstry of environment ",
+    logo: "/images/partners/rwanda.jpeg",
+  },
+ 
 ];
 
 export function PartnersPreview() {
