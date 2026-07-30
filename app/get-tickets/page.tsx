@@ -21,7 +21,7 @@ const ticketOptions = [
     title: "Perth Edition",
     date: "31 Aug – 1 Sept 2026",
     venue: "Novotel Hotel Perth, Western Australia",
-    image: "/images/conference/Kigali ticket.jpg",
+    image: "/images/conference/kigali ticket.jpg",
     href: "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
     description:
       "Engage with global investors, mining leaders, and clean technology innovators connecting Africa to international capital and expertise.",
