@@ -20,10 +20,7 @@ const featuredPartners = [
     name: "Ministry of energy",
     logo: "/images/partners/ministry-of -energy.jpeg",
   },
- {
-    name: "AAEMI",
-    logo: "/images/partners/aaemi.jpeg",
-  },
+ 
  {
     name: "mininstry of environment ",
     logo: "/images/partners/ministry-of-environment.jpeg",
