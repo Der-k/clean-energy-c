@@ -41,10 +41,10 @@ const OVERRIDE_STYLES = `
   }
 `;
 
-export type Platform = "instagram" | "linkedin" | "x";
+type Platform = "instagram" | "linkedin" | "x";
 type Size = "normal" | "tall" | "wide";
 
-export interface Post {
+interface Post {
   id: string;
   platform: Platform;
   name: string;
@@ -52,12 +52,6 @@ export interface Post {
   caption: string;
   stats: string;
   time: string;
-  /**
-   * Rough total engagement (likes + comments/reposts) used purely for
-   * ranking — e.g. by the "top posts" widget on the homepage. Doesn't need
-   * to be perfectly accurate, just directionally right.
-   */
-  engagement: number;
   size?: Size;
   mediaTint: string; // placeholder gradient — ignored once `embed` is set below
   /**
@@ -80,7 +74,7 @@ export interface Post {
   permalink?: string;
 }
 
-export const POSTS: Post[] = [
+const POSTS: Post[] = [
   {
     id: "p1",
     platform: "instagram",
@@ -90,7 +84,6 @@ export const POSTS: Post[] = [
       "Delegates arriving in Kigali for the opening keynote — energy in the room already.",
     stats: "♥ 842 · 💬 61",
     time: "2h ago",
-    engagement: 903,
     size: "tall",
     mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaiLnJbjNAS/" },
@@ -105,7 +98,6 @@ export const POSTS: Post[] = [
       "Proud to be speaking on critical minerals and battery metals in Kigali this year. Africa's role in the transition is only getting bigger.",
     stats: "👍 316 · 💬 24",
     time: "5h ago",
-    engagement: 340,
     mediaTint: "",
     embed: {
       platform: "linkedin",
@@ -121,7 +113,6 @@ export const POSTS: Post[] = [
       "Panel on decentralized energy systems was packed. Rwanda's 2030 target is ambitious but the room believes it's doable.",
     stats: "♻ 128 · ♥ 402",
     time: "7h ago",
-    engagement: 530,
     mediaTint: "",
   },
   {
@@ -132,7 +123,6 @@ export const POSTS: Post[] = [
     caption: "Exhibition floor setup at Kigali Marriott — see you at Booth 14.",
     stats: "♥ 1.2k · 💬 88",
     time: "9h ago",
-    engagement: 1288,
     size: "wide",
     mediaTint: "linear-gradient(160deg,#DCEFE6,#E2E4F7)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/Daf9PtlEYD0/" },
@@ -147,7 +137,6 @@ export const POSTS: Post[] = [
       "Grid storage modeling data from this morning's session is now available to attendees. Link in comments.",
     stats: "👍 204 · 💬 19",
     time: "11h ago",
-    engagement: 223,
     mediaTint: "",
     embed: {
       platform: "linkedin",
@@ -163,7 +152,6 @@ export const POSTS: Post[] = [
       "Counting down to the Perth edition — green hydrogen and storage take center stage this year.",
     stats: "♻ 96 · ♥ 355",
     time: "1d ago",
-    engagement: 451,
     size: "tall",
     mediaTint: "linear-gradient(160deg,#DFF0E8,#E6E8F8)",
   },
@@ -175,7 +163,6 @@ export const POSTS: Post[] = [
     caption: "Honored to open the climate finance track today in Kigali.",
     stats: "♥ 967 · 💬 71",
     time: "1d ago",
-    engagement: 1038,
     mediaTint: "linear-gradient(160deg,#E9F6EF,#DEE1F6)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaLJA1ol8l0/" },
     permalink: "https://www.instagram.com/p/DaLJA1ol8l0/",
@@ -189,21 +176,22 @@ export const POSTS: Post[] = [
       "Full recap of Day 1 in Kigali — 600+ delegates, 40 speakers, and one clear message: ambition needs investment.",
     stats: "👍 540 · 💬 47",
     time: "1d ago",
-    engagement: 587,
     size: "wide",
     mediaTint: "",
   },
+  {
+    id: "p9",
+    platform: "instagram",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
+    caption: "Another moment from the conference floor — the energy keeps building.",
+    stats: "♥ 0 · 💬 0",
+    time: "Just now",
+    mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DbaVw6pFgyp/" },
+    permalink: "https://www.instagram.com/p/DbaVw6pFgyp/",
+  },
 ];
-
-/**
- * Returns the top N posts by engagement, highest first. Used by other
- * sections of the site (e.g. the homepage "News, ideas, and industry
- * perspectives" section) to surface a rotating preview of the social wall
- * without duplicating post data.
- */
-export function getTopPosts(count: number = 3): Post[] {
-  return [...POSTS].sort((a, b) => b.engagement - a.engagement).slice(0, count);
-}
 
 const STATS = [
   { label: "Mentions this edition", target: 2400 },
