@@ -41,10 +41,10 @@ const OVERRIDE_STYLES = `
   }
 `;
 
-type Platform = "instagram" | "linkedin" | "x";
+export type Platform = "instagram" | "linkedin" | "x";
 type Size = "normal" | "tall" | "wide";
 
-interface Post {
+export interface Post {
   id: string;
   platform: Platform;
   name: string;
@@ -72,18 +72,59 @@ interface Post {
    * link just won't render.
    */
   permalink?: string;
+  /**
+   * The hashtag/tag shown under this specific post's caption. Defaults to
+   * #CleanEnergy2026 if not set — override per post when it's tied to a
+   * specific track, city, or theme (e.g. #CleanEnergy2026Kigali).
+   */
+  tag?: string;
 }
 
-const POSTS: Post[] = [
+export const POSTS: Post[] = [
+  {
+    id: "p11",
+    platform: "instagram",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
+    mediaTint: "linear-gradient(160deg,#E9F6EF,#DEE1F6)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DbhkUgIgBKx/" },
+    permalink: "https://www.instagram.com/p/DbhkUgIgBKx/",
+  },
+  {
+    id: "p10",
+    platform: "instagram",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
+    mediaTint: "linear-gradient(160deg,#DCEFE6,#E2E4F7)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DbdPGR3IJth/" },
+    permalink: "https://www.instagram.com/p/DbdPGR3IJth/",
+  },
+  {
+    id: "p9",
+    platform: "instagram",
+    name: "Clean Energy Conference Australia Africa",
+    handle: "@cleanenergyconference.au",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
+    mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
+    embed: { platform: "instagram", url: "https://www.instagram.com/p/DbaVw6pFgyp/" },
+    permalink: "https://www.instagram.com/p/DbaVw6pFgyp/",
+  },
   {
     id: "p1",
     platform: "instagram",
     name: "Clean Energy Conference Australia Africa",
     handle: "@cleanenergyconference.au",
-    caption:
-      "Delegates arriving in Kigali for the opening keynote — energy in the room already.",
-    stats: "♥ 842 · 💬 61",
-    time: "2h ago",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
     size: "tall",
     mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaiLnJbjNAS/" },
@@ -94,10 +135,9 @@ const POSTS: Post[] = [
     platform: "linkedin",
     name: "Jason Paul Brewer",
     handle: "CEO, Marula Mining Plc",
-    caption:
-      "Proud to be speaking on critical minerals and battery metals in Kigali this year. Africa's role in the transition is only getting bigger.",
-    stats: "👍 316 · 💬 24",
-    time: "5h ago",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
     mediaTint: "",
     embed: {
       platform: "linkedin",
@@ -120,9 +160,9 @@ const POSTS: Post[] = [
     platform: "instagram",
     name: "Clean Energy Conference Australia Africa",
     handle: "@cleanenergyconference.au",
-    caption: "Exhibition floor setup at Kigali Marriott — see you at Booth 14.",
-    stats: "♥ 1.2k · 💬 88",
-    time: "9h ago",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
     size: "wide",
     mediaTint: "linear-gradient(160deg,#DCEFE6,#E2E4F7)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/Daf9PtlEYD0/" },
@@ -133,10 +173,9 @@ const POSTS: Post[] = [
     platform: "linkedin",
     name: "Professor George Kimathi",
     handle: "Applied Mathematics & Energy Policy",
-    caption:
-      "Grid storage modeling data from this morning's session is now available to attendees. Link in comments.",
-    stats: "👍 204 · 💬 19",
-    time: "11h ago",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
     mediaTint: "",
     embed: {
       platform: "linkedin",
@@ -160,9 +199,9 @@ const POSTS: Post[] = [
     platform: "instagram",
     name: "Clean Energy Conference Australia Africa",
     handle: "@cleanenergyconference.au",
-    caption: "Honored to open the climate finance track today in Kigali.",
-    stats: "♥ 967 · 💬 71",
-    time: "1d ago",
+    caption: "", // not shown — real post has its own actual caption
+    stats: "",
+    time: "",
     mediaTint: "linear-gradient(160deg,#E9F6EF,#DEE1F6)",
     embed: { platform: "instagram", url: "https://www.instagram.com/p/DaLJA1ol8l0/" },
     permalink: "https://www.instagram.com/p/DaLJA1ol8l0/",
@@ -178,18 +217,6 @@ const POSTS: Post[] = [
     time: "1d ago",
     size: "wide",
     mediaTint: "",
-  },
-  {
-    id: "p9",
-    platform: "instagram",
-    name: "Clean Energy Conference Australia Africa",
-    handle: "@cleanenergyconference.au",
-    caption: "Another moment from the conference floor — the energy keeps building.",
-    stats: "♥ 0 · 💬 0",
-    time: "Just now",
-    mediaTint: "linear-gradient(160deg,#E4F5EE,#DDE0F5)",
-    embed: { platform: "instagram", url: "https://www.instagram.com/p/DbaVw6pFgyp/" },
-    permalink: "https://www.instagram.com/p/DbaVw6pFgyp/",
   },
 ];
 
@@ -322,30 +349,36 @@ function PostCard({ post, onOpen }: { post: Post; onOpen: (post: Post) => void }
         // separate browsing context, so a click inside one never bubbles
         // up to this card's onClick. The overlay intercepts it first, then
         // its own click bubbles normally to open the focus modal.
-        <div className="relative px-4 pb-2">
+        //
+        // No caption/stats/tag text is shown here below the embed: the
+        // real post's actual caption renders inside the widget itself once
+        // it loads. Any text we added ourselves would be made up, not the
+        // real thing — so we don't show it.
+        <div className="relative px-4 pb-3">
           <div className="relative">
             <div className="absolute inset-0 z-10" />
             <SocialEmbed {...post.embed} />
           </div>
         </div>
       ) : (
-        post.mediaTint && (
-          <div
-            className={`relative w-full bg-cover bg-center ${mediaAspect}`}
-            style={{ backgroundImage: post.mediaTint }}
-          />
-        )
+        <>
+          {post.mediaTint && (
+            <div
+              className={`relative w-full bg-cover bg-center ${mediaAspect}`}
+              style={{ backgroundImage: post.mediaTint }}
+            />
+          )}
+          <div className="flex flex-1 flex-col gap-2.5 px-4 pb-4 pt-0.5">
+            <p className="sw-dark text-[13.5px] leading-[1.55]">
+              {post.caption} <span className="sw-green" style={{ fontWeight: 600 }}>{post.tag ?? "#CleanEnergy2026"}</span>
+            </p>
+            <div className="sw-muted mt-auto flex items-center justify-between text-[12px] font-medium">
+              <span>{post.stats}</span>
+              <span>{post.time}</span>
+            </div>
+          </div>
+        </>
       )}
-
-      <div className="flex flex-1 flex-col gap-2.5 px-4 pb-4 pt-0.5">
-        <p className="sw-dark text-[13.5px] leading-[1.55]">
-          {post.caption} <span className="sw-green" style={{ fontWeight: 600 }}>#CleanEnergy2026</span>
-        </p>
-        <div className="sw-muted mt-auto flex items-center justify-between text-[12px] font-medium">
-          <span>{post.stats}</span>
-          <span>{post.time}</span>
-        </div>
-      </div>
     </article>
   );
 }
@@ -423,13 +456,17 @@ function PostModal({ post, onClose }: { post: Post; onClose: () => void }) {
         </div>
 
         <div className="flex flex-col gap-3 px-5 pb-6 pt-2">
-          <p className="sw-dark text-[14.5px] leading-[1.6]">
-            {post.caption} <span className="sw-green" style={{ fontWeight: 600 }}>#CleanEnergy2026</span>
-          </p>
-          <div className="sw-muted flex items-center justify-between text-[12.5px] font-medium">
-            <span>{post.stats}</span>
-            <span>{post.time}</span>
-          </div>
+          {!post.embed && (
+            <>
+              <p className="sw-dark text-[14.5px] leading-[1.6]">
+                {post.caption} <span className="sw-green" style={{ fontWeight: 600 }}>{post.tag ?? "#CleanEnergy2026"}</span>
+              </p>
+              <div className="sw-muted flex items-center justify-between text-[12.5px] font-medium">
+                <span>{post.stats}</span>
+                <span>{post.time}</span>
+              </div>
+            </>
+          )}
 
           {post.permalink && (
             <a
