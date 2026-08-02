@@ -1,0 +1,168 @@
+import type { BlogData } from "./types";
+
+const blog: BlogData = {
+  category: "Conference Guide | Clean Energy | Africa",
+  primaryCategory: "Africa Energy Events",
+  title: "Renewable Energy Conferences in Africa: The Essential Guide for Industry Professionals",
+  excerpt: "Africa is rapidly emerging as one of the world's most exciting renewable energy markets. This guide explores the leading renewable energy conferences in Africa and why they deserve a place on your calendar.",
+  author: "Clean Energy Conference Editorial Team",
+  publishedAt: "July 2026",
+  readTime: "10 min read",
+  location: "Africa and Australia",
+  heroImage: "/images/blogs/conferences.jpg",
+  imageAlt: "Renewable energy conference hall and industry professionals networking",
+  tableOfContents: [
+    "Why Renewable Energy Conferences Matter",
+    "What to Look for in a Renewable Energy Conference",
+    "Leading Renewable Energy Conferences in Africa",
+    "Which Conference Is Right for You?",
+    "Emerging Trends Discussed at Renewable Energy Conferences",
+    "Tips for Making the Most of a Renewable Energy Conference",
+    "Frequently Asked Questions",
+    "Final Thoughts",
+  ],
+  investmentAreas: [
+    "New financing opportunities",
+    "Updated government policies",
+    "Emerging technologies",
+    "Battery storage innovations",
+    "Grid modernization projects",
+    "Green hydrogen developments",
+    "Carbon market initiatives",
+    "International investment partnerships",
+  ],
+  drivers: [
+    {
+      title: "Clean Energy Conference Australia–Africa",
+      text: "Designed to strengthen partnerships between Australia and Africa while accelerating renewable energy investment, innovation, technology transfer, and sustainable development. This event brings together stakeholders from across the clean energy ecosystem.",
+    },
+    {
+      title: "Intersolar Africa",
+      text: "Hosted in Nairobi, Kenya. As one of Africa's dedicated solar and energy storage exhibitions, Intersolar Africa brings together manufacturers, developers, EPC contractors, utilities, investors, policymakers, and technology companies.",
+    },
+    {
+      title: "Enlit Africa",
+      text: "Hosted in Cape Town, South Africa. One of the continent's largest conferences focused on power generation, utilities, renewable energy, transmission, distribution, digitalisation, and smart infrastructure.",
+    },
+    {
+      title: "African Energy Week",
+      text: "Hosted in Cape Town, South Africa. One of the largest energy investment gatherings on the continent, covering broader energy sectors with an increasingly dominant focus on renewable energy, infrastructure, financing, and critical minerals.",
+    },
+  ],
+  focusSectors: [
+    {
+      title: "Clean Energy Conference Australia–Africa Ecosystem",
+      text: "Places particular emphasis on Australia–Africa collaboration, helping organizations build strategic partnerships that support Africa's long-term energy transition.",
+      opportunities: [
+        "Renewable Energy",
+        "Climate Finance",
+        "Critical Minerals",
+        "Battery Storage",
+        "Green Hydrogen",
+        "Sustainable Mining",
+        "Grid Modernization",
+        "Energy Innovation",
+        "Public–Private Partnerships",
+      ],
+    },
+    {
+      title: "Intersolar Africa Value Chain",
+      text: "Provides an excellent opportunity to explore new solar technologies and build regional partnerships.",
+      opportunities: [
+        "Solar PV",
+        "Battery Energy Storage",
+        "Grid Integration",
+        "Smart Energy",
+        "E-Mobility",
+        "Commercial Solar",
+        "Financing Solutions",
+      ],
+    },
+    {
+      title: "Enlit Africa Utility & Smart Infrastructure",
+      text: "Attracts thousands of delegates from utilities, governments, engineering firms, investors, and technology companies across Africa.",
+      opportunities: [
+        "Renewable Generation",
+        "Grid Modernization",
+        "Battery Storage",
+        "AI in Energy",
+        "Water Security",
+        "Digital Utilities",
+        "Energy Investment",
+      ],
+    },
+  ],
+  countries: ["Kenya", "South Africa", "Australia"],
+  investorConsiderations: [
+    "Government participation",
+    "Investor networking",
+    "Technical workshops",
+    "Exhibition opportunities",
+    "Project showcases",
+    "B2B meetings",
+    "Startup engagement",
+    "International delegates",
+  ],
+  partnershipGroups: [
+    "Government agencies",
+    "Renewable energy developers",
+    "Investors",
+    "Utilities",
+    "Mining companies",
+    "EPC contractors",
+    "Technology providers",
+    "Researchers",
+    "Universities",
+    "Financial institutions",
+  ],
+  conferenceBenefits: [
+    "Study the programme before arriving",
+    "Schedule meetings in advance",
+    "Research speakers and exhibitors",
+    "Bring digital business cards",
+    "Attend networking events",
+    "Participate in technical sessions",
+    "Follow up with new contacts post-event",
+  ],
+  featuredEventTopics: [
+    "Battery Energy Storage",
+    "Green Hydrogen",
+    "Critical Minerals",
+    "Climate Finance",
+    "Grid Modernization",
+  ],
+  featuredEventAudience: [
+    "Investors",
+    "Renewable Energy Developers",
+    "Government Representatives",
+    "Utilities",
+    "Researchers & Universities",
+  ],
+  faqs: [
+    {
+      question: "Which is the best renewable energy conference in Africa?",
+      answer: "The answer depends on your objectives. Some conferences focus on solar technologies, while others emphasize investment, infrastructure, utilities, or policy.",
+    },
+    {
+      question: "Are renewable energy conferences only for engineers?",
+      answer: "No. These events attract professionals from finance, government, policy, research, technology, manufacturing, consulting, project development, and investment.",
+    },
+    {
+      question: "Why should investors attend renewable energy conferences?",
+      answer: "Conferences provide opportunities to meet project developers, government representatives, technology companies, and financial institutions while identifying emerging investment opportunities.",
+    },
+    {
+      question: "Are these conferences suitable for startups?",
+      answer: "Yes. Many conferences include startup showcases, innovation sessions, networking events, and opportunities to connect with investors and strategic partners.",
+    },
+  ],
+  relatedPosts: [
+    {
+      title: "Energy Investment in Africa: Opportunities, Trends and Why 2026 Could Be a Defining Year",
+      meta: "Investment Insights",
+      href: "/blogs/energy-investment-africa-2026",
+    },
+  ],
+};
+
+export default blog;

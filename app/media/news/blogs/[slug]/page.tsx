@@ -7,7 +7,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 interface Props {
-  params: Promise<{ slug: string }>; 
+  params: Promise<{ slug: string }>;
 }
 
 const lightCardStyle: CSSProperties = {
@@ -55,9 +55,15 @@ export default async function DynamicBlogPage({ params }: Props) {
             </Link>
 
             <div className="mb-5 flex flex-wrap gap-2 text-sm font-semibold text-[var(--primary,##2563eb)]">
-              <span className="rounded-full border border-slate-200 bg-white px-3 py-1">
-                {blog.category}
-              </span>
+              {/* 👇 Shows primaryCategory (e.g. "Investment", "Policy")
+                  and links back to the listing page pre-filtered to that
+                  category tab. */}
+              <Link
+                href={`/media/news?category=${encodeURIComponent(blog.primaryCategory)}`}
+                className="rounded-full border border-slate-200 bg-white px-3 py-1 transition hover:bg-[#f8fafc]"
+              >
+                {blog.primaryCategory}
+              </Link>
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1">
                 {blog.location}
               </span>

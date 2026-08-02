@@ -40,17 +40,39 @@ type EmbedProps =
       html: string;
     };
 
+/**
+ * Tries to process embeds immediately. If the relevant widget script hasn't
+ * finished loading yet, retries on a short interval (capped) instead of
+ * giving up — this covers the race between a lazy-loaded script and a post
+ * that mounts before it. Once the script is ready, real widget code takes
+ * over and this stops.
+ */
+function processWhenReady(platform: EmbedProps["platform"], el: HTMLElement | null) {
+  let attempts = 0;
+  const maxAttempts = 20; // ~10s at 500ms
+  const tick = () => {
+    attempts += 1;
+    if (platform === "instagram" && window.instgrm) {
+      window.instgrm.Embeds.process();
+      return;
+    }
+    if (platform === "x" && window.twttr?.widgets) {
+      window.twttr.widgets.load(el ?? undefined);
+      return;
+    }
+    if (attempts < maxAttempts) {
+      setTimeout(tick, 500);
+    }
+  };
+  tick();
+}
+
 export function SocialEmbed(props: EmbedProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (props.platform === "instagram" && window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
-    if (props.platform === "x" && window.twttr) {
-      window.twttr.widgets.load(ref.current ?? undefined);
-    }
-    // LinkedIn's iframe needs no post-mount processing.
+    if (props.platform === "linkedin") return; // plain iframe, nothing to process
+    processWhenReady(props.platform, ref.current);
   }, [props]);
 
   if (props.platform === "instagram") {
@@ -87,15 +109,25 @@ export function SocialEmbed(props: EmbedProps) {
 }
 
 /**
- * Mount this ONCE, near the top of the page that uses <SocialEmbed>
- * (e.g. in app/social-wall/page.tsx, alongside <SocialWall />).
+ * Mount this ONCE, near the top of any page that uses <SocialEmbed> — the
+ * social wall page AND the homepage news section both need it. Next.js
+ * dedupes <Script> by src, so mounting it in more than one place on the
+ * same page tree is safe and won't load it twice.
  * LinkedIn needs no script — do not add one, it doesn't have a public one.
  */
 export function SocialEmbedScripts() {
   return (
     <>
-      <Script src="https://www.instagram.com/embed.js" strategy="lazyOnload" />
-      <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
+      <Script
+        src="https://www.instagram.com/embed.js"
+        strategy="lazyOnload"
+        onReady={() => window.instgrm?.Embeds.process()}
+      />
+      <Script
+        src="https://platform.twitter.com/widgets.js"
+        strategy="lazyOnload"
+        onReady={() => window.twttr?.widgets.load()}
+      />
     </>
   );
 }
