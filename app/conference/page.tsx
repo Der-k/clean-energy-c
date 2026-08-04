@@ -25,7 +25,7 @@ const editions = {
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
     heroImage: "/images/gallery/hero-carousel-12.jpg",
-    tabImage: "/images/conference/Kigali-tab.jpg",
+    tabImage: "/images/conference/kigali-tab.jpg",
     gallery: [
       "/images/gallery/gallery-11.jpg",
       "/images/gallery/gallery-7.jpg",
