@@ -1,17 +1,49 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import { useRole } from "@/context/RoleContext";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
   display: "swap",
 });
+
+// Warm display serif for the header line — gives the widget a voice that
+// isn't generic SaaS-grotesk, and echoes conference/editorial print material.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+/**
+ * Signature mark: a sunrise crossing a horizon line.
+ * Used at three scales — launcher, header backdrop, typing indicator —
+ * so the "clean energy" idea is a running motif, not a one-off graphic.
+ */
+function SunriseMark({ className = "", strokeWidth = 2 }: { className?: string; strokeWidth?: number }) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" className={className}>
+      <circle cx="24" cy="26" r="9" fill="currentColor" className="text-[#F2A93B]" />
+      <g stroke="#F2A93B" strokeWidth={strokeWidth} strokeLinecap="round">
+        <path d="M24 6v6" />
+        <path d="M8 26h-5" />
+        <path d="M45 26h-5" />
+        <path d="M12.5 14.5l4 4" />
+        <path d="M35.5 14.5l-4 4" />
+      </g>
+      <path d="M2 38h44" stroke="#F2A93B" strokeWidth={strokeWidth} strokeLinecap="round" opacity="0.55" />
+    </svg>
+  );
+}
 
 export default function ChatWidget() {
   const { visitorUuid } = useRole();
@@ -135,77 +167,93 @@ export default function ChatWidget() {
   }
 
   return (
-    <div className={`${inter.className} fixed bottom-10 right-7 z-[99999] group`}>
+    <div className={`${inter.variable} ${fraunces.variable} font-sans fixed bottom-10 right-7 z-[99999] group`}>
       {/* Bubble */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="group relative flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 rounded-full border border-white/20 bg-[#06056b] text-white shadow-[0_14px_55px_rgba(6,5,107,0.55)] backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_70px_rgba(6,5,107,0.7)] active:scale-95"
+          className="group relative flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 rounded-full border border-[#F2A93B]/30 bg-[#10231F] text-white shadow-[0_14px_55px_rgba(16,35,31,0.5)] backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_70px_rgba(16,35,31,0.65)] active:scale-95"
         >
-          <div className="absolute inset-0 rounded-full bg-[#06056b] opacity-40 blur-xl transition-all duration-300 group-hover:opacity-70 group-hover:blur-3xl" />
-          <div className="absolute inset-0 rounded-full border border-white/20 animate-ping opacity-30" />
-          <MessageCircle size={34} className="relative z-10" strokeWidth={2.3} />
-          <div className="absolute bottom-1 right-1 z-20 h-4 w-4 rounded-full border-2 border-white bg-emerald-400" />
+          <div className="absolute inset-0 rounded-full bg-[#F2A93B] opacity-20 blur-xl transition-all duration-300 group-hover:opacity-40 group-hover:blur-3xl" />
+          <div className="absolute inset-0 rounded-full border border-[#F2A93B]/25 animate-ping opacity-30" />
+          <SunriseMark className="relative z-10 h-9 w-9 text-white" strokeWidth={2.3} />
+          <div className="absolute bottom-1 right-1 z-20 h-4 w-4 rounded-full border-2 border-[#10231F] bg-[#F2A93B]" />
         </button>
       )}
 
       {/* Chat Window — full-height right side panel, slides in/out with a transform transition */}
       <div
-        className={`fixed inset-y-0 right-0 z-10 flex h-full w-full flex-col overflow-hidden bg-white shadow-[0_0_60px_rgba(6,5,107,0.25)] transition-transform duration-300 ease-out sm:w-[420px] md:w-[460px] sm:border-l sm:border-black/5 ${
+        className={`fixed inset-y-0 right-0 z-10 flex h-full w-full flex-col overflow-hidden bg-[#FBF7EE] shadow-[0_0_60px_rgba(16,35,31,0.2)] transition-transform duration-300 ease-out sm:w-[420px] md:w-[460px] sm:border-l sm:border-[#10231F]/10 ${
           open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
         aria-hidden={!open}
       >
 
-        {/* Header */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-[#04045c] via-[#06056b] to-[#2954ff] px-5 py-5 sm:px-7 sm:py-6 text-white">
-            <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-black/10 to-transparent" />
-            <div className="relative z-10 flex items-center justify-between">
-              <div>
-                <h2 className="text-[28px] font-bold leading-[1.15] tracking-tight">Any questions?</h2>
-                <p className="mt-1.5 text-[15px] leading-snug text-white/75">Ask our Clean Energy Conference Assistant</p>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
-              >
-                <X size={20} />
-              </button>
+        {/* Header — dawn sky over a horizon line, the widget's signature moment */}
+        <div className="relative overflow-hidden bg-[#10231F] px-5 py-5 sm:px-7 sm:py-6 text-white">
+          <div className="absolute -right-8 -top-16 h-56 w-56 rounded-full bg-[#F2A93B]/20 blur-3xl" />
+          <svg
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full opacity-70"
+            viewBox="0 0 460 64"
+            preserveAspectRatio="none"
+          >
+            <circle cx="380" cy="60" r="34" fill="#F2A93B" fillOpacity="0.9" />
+            <line x1="0" y1="60" x2="460" y2="60" stroke="#F2A93B" strokeWidth="1.5" strokeOpacity="0.5" />
+          </svg>
+          <div className="relative z-10 flex items-center justify-between">
+            <div>
+              <h2 className={`${fraunces.className} text-[30px] font-medium italic leading-[1.1] tracking-tight`}>
+                Any questions?
+              </h2>
+              <p className="mt-2 text-[14px] font-medium uppercase tracking-[0.14em] text-[#F2A93B]/90">
+                Clean Energy Conference · AU × AF
+              </p>
             </div>
-          </div>
-
-          {/* Scrollable Area — wrapped so the scroll shadow can sit above the scrolling content */}
-          <div className="relative flex-1 overflow-hidden">
-            <div
-              className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-black/[0.08] to-transparent transition-opacity duration-200 ${
-                isScrolled ? "opacity-100" : "opacity-0"
-              }`}
-            />
-            <div
-              ref={scrollContainerRef}
-              onScroll={handleScroll}
-              className="h-full overflow-y-auto bg-[#f5f7ff] scroll-smooth"
+            <button
+              onClick={() => setOpen(false)}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
             >
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Area — wrapped so the scroll shadow can sit above the scrolling content */}
+        <div className="relative flex-1 overflow-hidden">
+          <div
+            className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-[#10231F]/[0.08] to-transparent transition-opacity duration-200 ${
+              isScrolled ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="h-full overflow-y-auto bg-[#FBF7EE] scroll-smooth"
+          >
 
             {/* Welcome Card */}
             <div className="p-5">
-              <div className="overflow-hidden rounded-[30px] bg-white shadow-sm">
+              <div className="overflow-hidden rounded-[24px] border border-[#10231F]/8 bg-white shadow-sm">
                 <div className="relative h-40 sm:h-52 overflow-hidden">
                   <img src="/images/hero_2.png" alt="Conference" className="h-full w-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#10231F]/70 via-[#10231F]/10 to-transparent" />
                   <div className="absolute bottom-5 left-5 text-white">
-                    <div className="text-2xl font-bold leading-tight tracking-tight">Clean Energy Conference</div>
-                    <div className="mt-1 text-sm text-white/80">Australia × Africa</div>
+                    <div className={`${fraunces.className} text-[26px] italic font-medium leading-tight tracking-tight`}>
+                      Clean Energy Conference
+                    </div>
+                    <div className="mt-1 text-sm text-white/85">Australia × Africa</div>
                   </div>
                 </div>
                 <div className="p-7">
-                  <h3 className="text-[24px] font-bold leading-tight text-[#06056b]">Welcome 👋</h3>
-                  <p className="mt-3 text-[15px] leading-7 text-zinc-600">
+                  <h3 className={`${fraunces.className} text-[22px] font-semibold leading-tight text-[#10231F]`}>
+                    Welcome
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-7 text-[#5B6B63]">
                     I can help you with sponsorships, registration, speakers, schedules, venue logistics and conference support.
                   </p>
                   <div className="mt-7">
-                    <div className="mb-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-zinc-400">
+                    <div className="mb-3.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#B08A3E]">
+                      <span className="h-px w-4 bg-[#F2A93B]" />
                       Suggested Questions
                     </div>
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -220,7 +268,7 @@ export default function ChatWidget() {
                         <button
                           key={prompt}
                           onClick={() => handlePromptClick(prompt)}
-                          className="rounded-2xl border border-[#06056b]/10 bg-[#f7f9ff] px-[18px] py-[18px] text-left text-sm font-medium leading-snug text-[#06056b] transition-all duration-200 hover:scale-[1.03] hover:border-[#06056b]/30 hover:bg-white hover:shadow-md active:scale-95"
+                          className="rounded-2xl border border-[#10231F]/10 border-l-[3px] border-l-[#F2A93B] bg-[#FBF7EE] px-[18px] py-[18px] text-left text-sm font-medium leading-snug text-[#10231F] transition-all duration-200 hover:scale-[1.03] hover:border-[#10231F]/20 hover:border-l-[#F2A93B] hover:bg-white hover:shadow-md active:scale-95"
                         >
                           {prompt}
                         </button>
@@ -241,8 +289,10 @@ export default function ChatWidget() {
                     style={{ animation: "messageIn 0.3s ease-out" }}
                   >
                     <div
-                      className={`max-w-[85%] rounded-[26px] px-6 py-5 text-[15px] leading-7 shadow-sm ${
-                        m.role === "user" ? "bg-[#06056b] text-white" : "bg-white text-zinc-700"
+                      className={`max-w-[85%] rounded-[22px] px-6 py-5 text-[15px] leading-7 shadow-sm ${
+                        m.role === "user"
+                          ? "bg-[#2F6F5E] text-white"
+                          : "border border-[#10231F]/8 bg-white text-[#243B34]"
                       }`}
                     >
                       {m.role === "assistant" ? (
@@ -253,60 +303,60 @@ export default function ChatWidget() {
                             p: ({ children }) => (
                               <p className="mb-3 last:mb-0">{children}</p>
                             ),
-                            // Bold text = keywords → blue
+                            // Bold text = keywords → solar amber
                             strong: ({ children }) => (
-                              <strong className="font-semibold text-[#2954ff]">{children}</strong>
+                              <strong className="font-semibold text-[#B08A3E]">{children}</strong>
                             ),
                             em: ({ children }) => (
-                              <em className="italic text-zinc-600">{children}</em>
+                              <em className="italic text-[#5B6B63]">{children}</em>
                             ),
-                            // Bullet lists: clear spacing, emerald marker for key points
+                            // Bullet lists: clear spacing, eucalyptus marker for key points
                             ul: ({ children }) => (
                               <ul className="mb-3 last:mb-0 space-y-1.5 pl-1">{children}</ul>
                             ),
                             ol: ({ children }) => (
-                              <ol className="mb-3 last:mb-0 space-y-1.5 pl-5 list-decimal marker:text-emerald-600 marker:font-semibold">
+                              <ol className="mb-3 last:mb-0 space-y-1.5 pl-5 list-decimal marker:text-[#2F6F5E] marker:font-semibold">
                                 {children}
                               </ol>
                             ),
                             li: ({ children }) => (
-                              <li className="flex gap-2 pl-0 [&>ul]:mt-1.5 [&>ol]:mt-1.5 [&_strong]:text-emerald-600">
-                                <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 [ol_&]:hidden" />
+                              <li className="flex gap-2 pl-0 [&>ul]:mt-1.5 [&>ol]:mt-1.5 [&_strong]:text-[#2F6F5E]">
+                                <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F2A93B] [ol_&]:hidden" />
                                 <span>{children}</span>
                               </li>
                             ),
                             // Headings: distinct weight/size so sections are scannable
                             h1: ({ children }) => (
-                              <h1 className="mb-2 mt-1 text-lg font-bold text-[#06056b]">{children}</h1>
+                              <h1 className={`${fraunces.className} mb-2 mt-1 text-lg font-semibold text-[#10231F]`}>{children}</h1>
                             ),
                             h2: ({ children }) => (
-                              <h2 className="mb-2 mt-1 text-base font-bold text-[#06056b]">{children}</h2>
+                              <h2 className={`${fraunces.className} mb-2 mt-1 text-base font-semibold text-[#10231F]`}>{children}</h2>
                             ),
                             h3: ({ children }) => (
-                              <h3 className="mb-1.5 mt-1 text-[15px] font-semibold text-[#06056b]">{children}</h3>
+                              <h3 className="mb-1.5 mt-1 text-[15px] font-semibold text-[#10231F]">{children}</h3>
                             ),
                             // Inline code / code blocks
                             code: ({ children }) => (
-                              <code className="rounded-md bg-[#06056b]/8 px-1.5 py-0.5 font-mono text-[13px] text-[#06056b]">
+                              <code className="rounded-md bg-[#10231F]/8 px-1.5 py-0.5 font-mono text-[13px] text-[#10231F]">
                                 {children}
                               </code>
                             ),
-                            // Links: underline on hover, brand color
+                            // Links: underline on hover, amber
                             a: ({ children, href }) => (
                               <a
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-medium text-[#2954ff] underline decoration-[#2954ff]/30 underline-offset-2 hover:decoration-[#2954ff]"
+                                className="font-medium text-[#B08A3E] underline decoration-[#F2A93B]/40 underline-offset-2 hover:decoration-[#F2A93B]"
                               >
                                 {children}
                               </a>
                             ),
                             // Horizontal rule as a soft section divider
-                            hr: () => <hr className="my-3 border-[#06056b]/10" />,
+                            hr: () => <hr className="my-3 border-[#10231F]/10" />,
                             // Blockquote for emphasis callouts
                             blockquote: ({ children }) => (
-                              <blockquote className="mb-3 last:mb-0 border-l-2 border-[#06056b]/30 pl-3 text-zinc-600">
+                              <blockquote className="mb-3 last:mb-0 border-l-2 border-[#F2A93B]/50 pl-3 text-[#5B6B63]">
                                 {children}
                               </blockquote>
                             ),
@@ -318,65 +368,63 @@ export default function ChatWidget() {
                         m.content
                       )}
                     </div>
-                    <span className="mt-1.5 px-1 text-xs text-zinc-400 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                    <span className="mt-1.5 px-1 text-xs text-[#8A9791] opacity-0 transition-opacity duration-150 group-hover:opacity-100">
                       {formatTime(m.timestamp)}
                     </span>
                   </div>
                 ))}
 
-                {/* Typing indicator — shows while waiting for the first token, hides once streaming text appears */}
+                {/* Typing indicator — sunrise pulse instead of generic gray dots */}
                 {isLoading &&
                   (messages[messages.length - 1]?.role === "user" ||
                     messages[messages.length - 1]?.content === "") && (
                   <div className="flex justify-start">
-                    <div className="rounded-[26px] bg-white px-5 py-4 shadow-sm">
-                      <div className="flex items-center gap-1.5">
-                        <span className="block h-2 w-2 rounded-full bg-[#06056b]/40" style={{ animation: "bounce 1s ease-in-out infinite" }} />
-                        <span className="block h-2 w-2 rounded-full bg-[#06056b]/40" style={{ animation: "bounce 1s ease-in-out 0.15s infinite" }} />
-                        <span className="block h-2 w-2 rounded-full bg-[#06056b]/40" style={{ animation: "bounce 1s ease-in-out 0.3s infinite" }} />
-                      </div>
+                    <div className="flex items-center gap-2.5 rounded-[22px] border border-[#10231F]/8 bg-white px-5 py-4 shadow-sm">
+                      <span className="block h-2 w-2 rounded-full bg-[#F2A93B]" style={{ animation: "sunPulse 1.1s ease-in-out infinite" }} />
+                      <span className="block h-2 w-2 rounded-full bg-[#F2A93B]" style={{ animation: "sunPulse 1.1s ease-in-out 0.18s infinite" }} />
+                      <span className="block h-2 w-2 rounded-full bg-[#F2A93B]" style={{ animation: "sunPulse 1.1s ease-in-out 0.36s infinite" }} />
                     </div>
                   </div>
                 )}
               </div>
             )}
-            </div>
-          </div>
-
-          {/* Bottom Input */}
-          <div className="border-t border-[#06056b]/10 bg-white p-5">
-            <div
-              className={`flex items-end gap-3 rounded-[22px] border bg-[#f7f9ff] px-5 py-3.5 transition-all duration-200 ${
-                justSent ? "border-[#06056b]/30 ring-2 ring-[#06056b]/10" : "border-[#06056b]/10"
-              }`}
-            >
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about the conference..."
-                disabled={isLoading}
-                rows={1}
-                className="max-h-[120px] flex-1 resize-none overflow-y-auto bg-transparent py-1 text-[15px] leading-6 text-zinc-700 outline-none placeholder:text-zinc-400 disabled:opacity-50"
-              />
-              <button
-                onClick={sendMessage}
-                disabled={isLoading || !input.trim()}
-                className={`rounded-2xl bg-[#06056b] px-4 py-3 sm:px-6 text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#0d0ca3] hover:shadow-lg active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
-                  justSent ? "scale-90" : "scale-100"
-                }`}
-              >
-                Send
-              </button>
-            </div>
           </div>
         </div>
 
+        {/* Bottom Input */}
+        <div className="border-t border-[#10231F]/10 bg-white p-5">
+          <div
+            className={`flex items-end gap-3 rounded-[20px] border bg-[#FBF7EE] px-5 py-3.5 transition-all duration-200 ${
+              justSent ? "border-[#F2A93B]/50 ring-2 ring-[#F2A93B]/15" : "border-[#10231F]/10"
+            }`}
+          >
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask about the conference..."
+              disabled={isLoading}
+              rows={1}
+              className="max-h-[120px] flex-1 resize-none overflow-y-auto bg-transparent py-1 text-[15px] leading-6 text-[#243B34] outline-none placeholder:text-[#8A9791] disabled:opacity-50"
+            />
+            <button
+              onClick={sendMessage}
+              disabled={isLoading || !input.trim()}
+              className={`rounded-2xl bg-[#10231F] px-4 py-3 sm:px-6 text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#1B3730] hover:shadow-lg active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                justSent ? "scale-90" : "scale-100"
+              }`}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+
       <style>{`
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(-4px); }
+        @keyframes sunPulse {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.55; }
+          50%       { transform: translateY(-4px) scale(1.15); opacity: 1; }
         }
         @keyframes messageIn {
           from { opacity: 0; transform: translateY(6px); }

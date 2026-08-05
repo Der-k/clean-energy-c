@@ -72,7 +72,7 @@ export const navItems: NavItem[] = [
     },
     {
       label: "🎟 Australia (Perth)",
-      href: "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
+      href: "https://clean-energy.zohobackstage.com/kigali#/buyTickets/shareDetails?currentOrderId=215082000000382003",
     },
   ],
 },
