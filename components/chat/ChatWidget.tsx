@@ -1,49 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, Send, ChevronRight, Zap } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter } from "next/font/google";
 import { useRole } from "@/context/RoleContext";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
   display: "swap",
 });
 
-// Warm display serif for the header line — gives the widget a voice that
-// isn't generic SaaS-grotesk, and echoes conference/editorial print material.
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
-/**
- * Signature mark: a sunrise crossing a horizon line.
- * Used at three scales — launcher, header backdrop, typing indicator —
- * so the "clean energy" idea is a running motif, not a one-off graphic.
- */
-function SunriseMark({ className = "", strokeWidth = 2 }: { className?: string; strokeWidth?: number }) {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" className={className}>
-      <circle cx="24" cy="26" r="9" fill="currentColor" className="text-[#EAC301]" />
-      <g stroke="#EAC301" strokeWidth={strokeWidth} strokeLinecap="round">
-        <path d="M24 6v6" />
-        <path d="M8 26h-5" />
-        <path d="M45 26h-5" />
-        <path d="M12.5 14.5l4 4" />
-        <path d="M35.5 14.5l-4 4" />
-      </g>
-      <path d="M2 38h44" stroke="#EAC301" strokeWidth={strokeWidth} strokeLinecap="round" opacity="0.55" />
-    </svg>
-  );
-}
+// Brand tokens — kept in one place so palette changes stay a one-line edit.
+const BRAND = {
+  navy: "#0b0a6b",
+  navyDark: "#080754",
+  green: "#009966",
+  gold: "#EAC301",
+};
 
 export default function ChatWidget() {
   const { visitorUuid } = useRole();
@@ -166,223 +142,230 @@ export default function ChatWidget() {
     streamReply(prompt, messages);
   }
 
+  const suggestedPrompts = [
+    "How do I become a sponsor?",
+    "Where is the venue located?",
+    "Show the conference programme",
+    "How do I register?",
+    "Who are the keynote speakers?",
+    "How do I contact support?",
+  ];
+
   return (
-    <div className={`${inter.variable} ${fraunces.variable} font-sans fixed bottom-10 right-7 z-[99999] group`}>
-      {/* Bubble */}
+    <div className={`${inter.className} fixed bottom-6 right-6 z-[99999]`}>
+      {/* Launcher */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="group relative flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 rounded-full border border-[#EAC301]/30 bg-[#0b0a6b] text-white shadow-[0_14px_55px_rgba(11,10,107,0.5)] backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_70px_rgba(11,10,107,0.65)] active:scale-95"
+          className="relative flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_4px_18px_rgba(11,10,107,0.35)] transition-transform duration-150 hover:scale-105 active:scale-95"
+          style={{ backgroundColor: BRAND.navy }}
         >
-          <div className="absolute inset-0 rounded-full bg-[#EAC301] opacity-20 blur-xl transition-all duration-300 group-hover:opacity-40 group-hover:blur-3xl" />
-          <div className="absolute inset-0 rounded-full border border-[#EAC301]/25 animate-ping opacity-30" />
-          <SunriseMark className="relative z-10 h-9 w-9 text-white" strokeWidth={2.3} />
-          <div className="absolute bottom-1 right-1 z-20 h-4 w-4 rounded-full border-2 border-[#0b0a6b] bg-[#EAC301]" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-3.8 3.05c-.5.4-1.2.04-1.2-.6V16H5.5C4.67 16 4 15.33 4 14.5v-9Z"
+              fill="white"
+            />
+            <circle cx="9" cy="10" r="1.15" fill={BRAND.navy} />
+            <circle cx="12.5" cy="10" r="1.15" fill={BRAND.navy} />
+            <circle cx="16" cy="10" r="1.15" fill={BRAND.navy} />
+          </svg>
+          <span
+            className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-[#0b0a6b] ring-2 ring-white"
+            style={{ backgroundColor: BRAND.gold }}
+          >
+            1
+          </span>
         </button>
       )}
 
-      {/* Chat Window — full-height right side panel, slides in/out with a transform transition */}
+      {/* Chat Window */}
       <div
-        className={`fixed inset-y-0 right-0 z-10 flex h-full w-full flex-col overflow-hidden bg-[#FBF7EE] shadow-[0_0_60px_rgba(11,10,107,0.2)] transition-transform duration-300 ease-out sm:w-[420px] md:w-[460px] sm:border-l sm:border-[#0b0a6b]/10 ${
-          open ? "translate-x-0" : "translate-x-full pointer-events-none"
+        className={`fixed inset-y-0 right-0 z-10 flex h-full w-full flex-col overflow-hidden bg-white shadow-[0_0_40px_rgba(0,0,0,0.18)] transition-transform duration-250 ease-out sm:inset-y-4 sm:right-4 sm:h-[calc(100%-2rem)] sm:w-[380px] sm:rounded-2xl sm:border sm:border-black/[0.06] ${
+          open ? "translate-x-0" : "translate-x-[110%] pointer-events-none"
         }`}
         aria-hidden={!open}
       >
-
-        {/* Header — dawn sky over a horizon line, the widget's signature moment */}
-        <div className="relative overflow-hidden bg-[#0b0a6b] px-5 py-5 sm:px-7 sm:py-6 text-white">
-          <div className="absolute -right-8 -top-16 h-56 w-56 rounded-full bg-[#EAC301]/20 blur-3xl" />
-          <svg
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full opacity-70"
-            viewBox="0 0 460 64"
-            preserveAspectRatio="none"
-          >
-            <circle cx="380" cy="60" r="34" fill="#EAC301" fillOpacity="0.9" />
-            <line x1="0" y1="60" x2="460" y2="60" stroke="#EAC301" strokeWidth="1.5" strokeOpacity="0.5" />
-          </svg>
-          <div className="relative z-10 flex items-center justify-between">
-            <div>
-              <h2 className={`${fraunces.className} text-[30px] font-medium italic leading-[1.1] tracking-tight`}>
-                Any questions?
-              </h2>
-              <p className="mt-2 text-[14px] font-medium uppercase tracking-[0.14em] text-[#EAC301]/90">
-                Clean Energy Conference · AU × AF
-              </p>
+        {/* Header */}
+        <div
+          className="flex items-center justify-between px-4 py-3.5 text-white sm:rounded-t-2xl"
+          style={{ backgroundColor: BRAND.navy }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-[13px] font-semibold">
+              CE
+              <span
+                className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2"
+                style={{ backgroundColor: BRAND.green, boxShadow: `0 0 0 2px ${BRAND.navy}` }}
+              />
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
-            >
-              <X size={20} />
-            </button>
+            <div className="leading-tight">
+              <div className="text-[14px] font-semibold">Conference Assistant</div>
+              <div className="text-[12px] text-white/65">Typically replies instantly</div>
+            </div>
           </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-white/80 transition hover:bg-white/10 hover:text-white"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        {/* Scrollable Area — wrapped so the scroll shadow can sit above the scrolling content */}
-        <div className="relative flex-1 overflow-hidden">
+        {/* Scrollable Area */}
+        <div className="relative flex-1 overflow-hidden bg-[#F7F8FA]">
           <div
-            className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-[#0b0a6b]/[0.08] to-transparent transition-opacity duration-200 ${
+            className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-5 bg-gradient-to-b from-black/[0.06] to-transparent transition-opacity duration-200 ${
               isScrolled ? "opacity-100" : "opacity-0"
             }`}
           />
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="h-full overflow-y-auto bg-[#FBF7EE] scroll-smooth"
+            className="h-full overflow-y-auto scroll-smooth"
           >
+            {/* Welcome */}
+            <div className="border-b border-black/[0.05] bg-white px-5 pb-5 pt-6">
+              <h3 className="text-[16px] font-semibold text-[#111827]">Hi, welcome 👋</h3>
+              <p className="mt-1.5 text-[13.5px] leading-6 text-[#6B7280]">
+                Ask about sponsorships, registration, speakers, schedules, or venue logistics.
+              </p>
+            </div>
 
-            {/* Welcome Card */}
-            <div className="p-5">
-              <div className="overflow-hidden rounded-[24px] border border-[#0b0a6b]/8 bg-white shadow-sm">
-                <div className="relative h-40 sm:h-52 overflow-hidden">
-                  <img src="/images/hero_2.png" alt="Conference" className="h-full w-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0a6b]/70 via-[#0b0a6b]/10 to-transparent" />
-                  <div className="absolute bottom-5 left-5 text-white">
-                    <div className={`${fraunces.className} text-[26px] italic font-medium leading-tight tracking-tight`}>
-                      Clean Energy Conference
-                    </div>
-                    <div className="mt-1 text-sm text-white/85">Australia × Africa</div>
-                  </div>
-                </div>
-                <div className="p-7">
-                  <h3 className={`${fraunces.className} text-[22px] font-semibold leading-tight text-[#0b0a6b]`}>
-                    Welcome
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-7 text-[#5C6270]">
-                    I can help you with sponsorships, registration, speakers, schedules, venue logistics and conference support.
-                  </p>
-                  <div className="mt-7">
-                    <div className="mb-3.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#8C6D00]">
-                      <span className="h-px w-4 bg-[#EAC301]" />
-                      Suggested Questions
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {[
-                        "How do I become a sponsor?",
-                        "Where is the venue located?",
-                        "Show the conference programme",
-                        "How do I register?",
-                        "Who are the keynote speakers?",
-                        "How do I contact support?",
-                      ].map((prompt) => (
-                        <button
-                          key={prompt}
-                          onClick={() => handlePromptClick(prompt)}
-                          className="rounded-2xl border border-[#0b0a6b]/10 border-l-[3px] border-l-[#EAC301] bg-[#FBF7EE] px-[18px] py-[18px] text-left text-sm font-medium leading-snug text-[#0b0a6b] transition-all duration-200 hover:scale-[1.03] hover:border-[#0b0a6b]/20 hover:border-l-[#EAC301] hover:bg-white hover:shadow-md active:scale-95"
-                        >
-                          {prompt}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Quick actions — list rows, not illustrated cards */}
+            <div className="border-b border-black/[0.05] bg-white px-2 py-2">
+              {suggestedPrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  onClick={() => handlePromptClick(prompt)}
+                  disabled={isLoading}
+                  className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-3 text-left text-[13.5px] font-medium text-[#1F2937] transition-colors hover:bg-[#F3F4F6] disabled:opacity-50"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Zap size={14} style={{ color: BRAND.green }} className="shrink-0" />
+                    {prompt}
+                  </span>
+                  <ChevronRight size={15} className="shrink-0 text-[#9CA3AF]" />
+                </button>
+              ))}
             </div>
 
             {/* Messages */}
             {messages.length > 0 && (
-              <div className="space-y-5 px-5 pb-6">
+              <div className="space-y-4 px-4 py-4">
                 {messages.map((m, i) => (
                   <div
                     key={i}
-                    className={`group flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}
-                    style={{ animation: "messageIn 0.3s ease-out" }}
+                    className={`flex items-end gap-2 ${m.role === "user" ? "flex-row-reverse" : ""}`}
+                    style={{ animation: "messageIn 0.2s ease-out" }}
                   >
-                    <div
-                      className={`max-w-[85%] rounded-[22px] px-6 py-5 text-[15px] leading-7 shadow-sm ${
-                        m.role === "user"
-                          ? "bg-[#009966] text-white"
-                          : "border border-[#0b0a6b]/8 bg-white text-[#23243D]"
-                      }`}
-                    >
-                      {m.role === "assistant" ? (
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            // Paragraphs: comfortable spacing between blocks
-                            p: ({ children }) => (
-                              <p className="mb-3 last:mb-0">{children}</p>
-                            ),
-                            // Bold text = keywords → solar amber
-                            strong: ({ children }) => (
-                              <strong className="font-semibold text-[#8C6D00]">{children}</strong>
-                            ),
-                            em: ({ children }) => (
-                              <em className="italic text-[#5C6270]">{children}</em>
-                            ),
-                            // Bullet lists: clear spacing, eucalyptus marker for key points
-                            ul: ({ children }) => (
-                              <ul className="mb-3 last:mb-0 space-y-1.5 pl-1">{children}</ul>
-                            ),
-                            ol: ({ children }) => (
-                              <ol className="mb-3 last:mb-0 space-y-1.5 pl-5 list-decimal marker:text-[#009966] marker:font-semibold">
-                                {children}
-                              </ol>
-                            ),
-                            li: ({ children }) => (
-                              <li className="flex gap-2 pl-0 [&>ul]:mt-1.5 [&>ol]:mt-1.5 [&_strong]:text-[#009966]">
-                                <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#EAC301] [ol_&]:hidden" />
-                                <span>{children}</span>
-                              </li>
-                            ),
-                            // Headings: distinct weight/size so sections are scannable
-                            h1: ({ children }) => (
-                              <h1 className={`${fraunces.className} mb-2 mt-1 text-lg font-semibold text-[#0b0a6b]`}>{children}</h1>
-                            ),
-                            h2: ({ children }) => (
-                              <h2 className={`${fraunces.className} mb-2 mt-1 text-base font-semibold text-[#0b0a6b]`}>{children}</h2>
-                            ),
-                            h3: ({ children }) => (
-                              <h3 className="mb-1.5 mt-1 text-[15px] font-semibold text-[#0b0a6b]">{children}</h3>
-                            ),
-                            // Inline code / code blocks
-                            code: ({ children }) => (
-                              <code className="rounded-md bg-[#0b0a6b]/8 px-1.5 py-0.5 font-mono text-[13px] text-[#0b0a6b]">
-                                {children}
-                              </code>
-                            ),
-                            // Links: underline on hover, amber
-                            a: ({ children, href }) => (
-                              <a
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-medium text-[#8C6D00] underline decoration-[#EAC301]/40 underline-offset-2 hover:decoration-[#EAC301]"
-                              >
-                                {children}
-                              </a>
-                            ),
-                            // Horizontal rule as a soft section divider
-                            hr: () => <hr className="my-3 border-[#0b0a6b]/10" />,
-                            // Blockquote for emphasis callouts
-                            blockquote: ({ children }) => (
-                              <blockquote className="mb-3 last:mb-0 border-l-2 border-[#EAC301]/50 pl-3 text-[#5C6270]">
-                                {children}
-                              </blockquote>
-                            ),
-                          }}
-                        >
-                          {m.content}
-                        </ReactMarkdown>
-                      ) : (
-                        m.content
-                      )}
+                    {m.role === "assistant" && (
+                      <div
+                        className="mb-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                        style={{ backgroundColor: BRAND.navy }}
+                      >
+                        CE
+                      </div>
+                    )}
+                    <div className={`flex max-w-[78%] flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                      <div
+                        className={`rounded-2xl px-4 py-2.5 text-[13.5px] leading-6 ${
+                          m.role === "user"
+                            ? "rounded-br-md text-white"
+                            : "rounded-bl-md border border-black/[0.06] bg-white text-[#1F2937] shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+                        }`}
+                        style={m.role === "user" ? { backgroundColor: BRAND.green } : undefined}
+                      >
+                        {m.role === "assistant" ? (
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              p: ({ children }) => <p className="mb-2.5 last:mb-0">{children}</p>,
+                              strong: ({ children }) => (
+                                <strong className="font-semibold text-[#111827]">{children}</strong>
+                              ),
+                              em: ({ children }) => <em className="italic text-[#6B7280]">{children}</em>,
+                              ul: ({ children }) => (
+                                <ul className="mb-2.5 last:mb-0 space-y-1 pl-1">{children}</ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol
+                                  className="mb-2.5 last:mb-0 space-y-1 pl-5 list-decimal"
+                                  style={{ color: BRAND.navy }}
+                                >
+                                  {children}
+                                </ol>
+                              ),
+                              li: ({ children }) => (
+                                <li className="flex gap-2 pl-0 [&>ul]:mt-1 [&>ol]:mt-1">
+                                  <span
+                                    className="mt-2 h-1 w-1 shrink-0 rounded-full [ol_&]:hidden"
+                                    style={{ backgroundColor: BRAND.green }}
+                                  />
+                                  <span>{children}</span>
+                                </li>
+                              ),
+                              h1: ({ children }) => (
+                                <h1 className="mb-1.5 mt-1 text-[15px] font-semibold text-[#111827]">{children}</h1>
+                              ),
+                              h2: ({ children }) => (
+                                <h2 className="mb-1.5 mt-1 text-[14px] font-semibold text-[#111827]">{children}</h2>
+                              ),
+                              h3: ({ children }) => (
+                                <h3 className="mb-1 mt-1 text-[13.5px] font-semibold text-[#111827]">{children}</h3>
+                              ),
+                              code: ({ children }) => (
+                                <code className="rounded bg-[#F3F4F6] px-1.5 py-0.5 font-mono text-[12px] text-[#111827]">
+                                  {children}
+                                </code>
+                              ),
+                              a: ({ children, href }) => (
+                                <a
+                                  href={href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-medium underline underline-offset-2"
+                                  style={{ color: BRAND.navy }}
+                                >
+                                  {children}
+                                </a>
+                              ),
+                              hr: () => <hr className="my-2.5 border-black/[0.08]" />,
+                              blockquote: ({ children }) => (
+                                <blockquote
+                                  className="mb-2.5 last:mb-0 border-l-2 pl-3 text-[#6B7280]"
+                                  style={{ borderColor: BRAND.gold }}
+                                >
+                                  {children}
+                                </blockquote>
+                              ),
+                            }}
+                          >
+                            {m.content}
+                          </ReactMarkdown>
+                        ) : (
+                          m.content
+                        )}
+                      </div>
+                      <span className="mt-1 px-1 text-[11px] text-[#9CA3AF]">{formatTime(m.timestamp)}</span>
                     </div>
-                    <span className="mt-1.5 px-1 text-xs text-[#8B8FA3] opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                      {formatTime(m.timestamp)}
-                    </span>
                   </div>
                 ))}
 
-                {/* Typing indicator — sunrise pulse instead of generic gray dots */}
+                {/* Typing indicator */}
                 {isLoading &&
                   (messages[messages.length - 1]?.role === "user" ||
                     messages[messages.length - 1]?.content === "") && (
-                  <div className="flex justify-start">
-                    <div className="flex items-center gap-2.5 rounded-[22px] border border-[#0b0a6b]/8 bg-white px-5 py-4 shadow-sm">
-                      <span className="block h-2 w-2 rounded-full bg-[#EAC301]" style={{ animation: "sunPulse 1.1s ease-in-out infinite" }} />
-                      <span className="block h-2 w-2 rounded-full bg-[#EAC301]" style={{ animation: "sunPulse 1.1s ease-in-out 0.18s infinite" }} />
-                      <span className="block h-2 w-2 rounded-full bg-[#EAC301]" style={{ animation: "sunPulse 1.1s ease-in-out 0.36s infinite" }} />
+                  <div className="flex items-end gap-2">
+                    <div
+                      className="mb-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                      style={{ backgroundColor: BRAND.navy }}
+                    >
+                      CE
+                    </div>
+                    <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-black/[0.06] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                      <span className="block h-1.5 w-1.5 rounded-full bg-[#9CA3AF]" style={{ animation: "dotFade 1.2s ease-in-out infinite" }} />
+                      <span className="block h-1.5 w-1.5 rounded-full bg-[#9CA3AF]" style={{ animation: "dotFade 1.2s ease-in-out 0.2s infinite" }} />
+                      <span className="block h-1.5 w-1.5 rounded-full bg-[#9CA3AF]" style={{ animation: "dotFade 1.2s ease-in-out 0.4s infinite" }} />
                     </div>
                   </div>
                 )}
@@ -391,11 +374,11 @@ export default function ChatWidget() {
           </div>
         </div>
 
-        {/* Bottom Input */}
-        <div className="border-t border-[#0b0a6b]/10 bg-white p-5">
+        {/* Input */}
+        <div className="border-t border-black/[0.06] bg-white p-3">
           <div
-            className={`flex items-end gap-3 rounded-[20px] border bg-[#FBF7EE] px-5 py-3.5 transition-all duration-200 ${
-              justSent ? "border-[#EAC301]/50 ring-2 ring-[#EAC301]/15" : "border-[#0b0a6b]/10"
+            className={`flex items-end gap-2 rounded-full border bg-[#F7F8FA] py-1.5 pl-4 pr-1.5 transition-all duration-150 ${
+              justSent ? "border-[#009966]/40" : "border-black/[0.08]"
             }`}
           >
             <textarea
@@ -403,31 +386,33 @@ export default function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask about the conference..."
+              placeholder="Type your message..."
               disabled={isLoading}
               rows={1}
-              className="max-h-[120px] flex-1 resize-none overflow-y-auto bg-transparent py-1 text-[15px] leading-6 text-[#23243D] outline-none placeholder:text-[#8B8FA3] disabled:opacity-50"
+              className="max-h-[100px] flex-1 resize-none overflow-y-auto bg-transparent py-1.5 text-[13.5px] leading-5 text-[#1F2937] outline-none placeholder:text-[#9CA3AF] disabled:opacity-50"
             />
             <button
               onClick={sendMessage}
               disabled={isLoading || !input.trim()}
-              className={`rounded-2xl bg-[#0b0a6b] px-4 py-3 sm:px-6 text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#1B3730] hover:shadow-lg active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
-                justSent ? "scale-90" : "scale-100"
-              }`}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition-transform duration-150 active:scale-90 disabled:opacity-40"
+              style={{ backgroundColor: BRAND.navy }}
             >
-              Send
+              <Send size={15} />
             </button>
+          </div>
+          <div className="mt-2 text-center text-[10.5px] text-[#9CA3AF]">
+            Powered by <span className="font-semibold" style={{ color: BRAND.navy }}>Clean Energy Conference</span>
           </div>
         </div>
       </div>
 
       <style>{`
-        @keyframes sunPulse {
-          0%, 100% { transform: translateY(0) scale(1); opacity: 0.55; }
-          50%       { transform: translateY(-4px) scale(1.15); opacity: 1; }
+        @keyframes dotFade {
+          0%, 100% { opacity: 0.3; transform: translateY(0); }
+          50%       { opacity: 1; transform: translateY(-2px); }
         }
         @keyframes messageIn {
-          from { opacity: 0; transform: translateY(6px); }
+          from { opacity: 0; transform: translateY(4px); }
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
