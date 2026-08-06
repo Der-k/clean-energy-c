@@ -126,6 +126,10 @@ export default function LivePage() {
             Enter the email address and ticket ID from your registration
             confirmation to watch the conference live.
           </p>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-500">
+            Scan the QR code on your badge or at your seat to go straight to
+            the livestream — no sign-in required.
+          </p>
         </div>
       </section>
 
