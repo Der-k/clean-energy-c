@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
  */
 
 const CONFERENCE_NAME = "Clean Energy Conference 2026";
-const CONFERENCE_DATES = "October 14–16, 2026 · San Diego, CA";
+const CONFERENCE_DATES = "October 14–16, 2026 · Kigali Marriott Hotel, Kigali, Rwanda";
 
 type AccessFormState = "idle" | "submitting" | "error";
 type SupportFormState = "idle" | "submitting" | "success" | "error";
