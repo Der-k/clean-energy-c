@@ -170,6 +170,35 @@ export function Header() {
 
       {/* CTA + SOCIAL */}
 <div className="hidden xl:flex items-center gap-6">
+  {/* LIVE BUTTON — distinct styling to stand out from the rest of the nav */}
+  <Link
+    href="/live/"
+    className="
+      group relative inline-flex items-center gap-2
+      rounded-full px-5 py-2.5
+      text-[15px] font-semibold tracking-wide
+      text-white
+      bg-red-600
+      border border-red-400/40
+      shadow-[0_0_0_0_rgba(220,38,38,0.5)]
+      transition-all duration-300
+      hover:bg-red-500
+      hover:shadow-[0_0_20px_4px_rgba(220,38,38,0.45)]
+      hover:scale-[1.05]
+      active:scale-[0.97]
+      focus:outline-none
+      focus:ring-2
+      focus:ring-red-400/50
+      focus:ring-offset-2
+    "
+  >
+    <span className="relative flex h-2.5 w-2.5">
+      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/80 opacity-75" />
+      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+    </span>
+    Live
+  </Link>
+
   <a
     href="/get-tickets"
    
