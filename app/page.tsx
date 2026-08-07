@@ -10,6 +10,7 @@ import { PartnersPreview } from "@/components/sections/partners-preview";
 import { StatsBar } from "@/components/sections/stats-bar";
 import { ProgrammeCtaSection } from "@/components/sections/programme-cta-section";
 import { RoleEntrySection } from "@/components/sections/RoleEntrySection";
+import { ProgrammeHighlightsSection } from "@/components/sections/programme-highlights-section";
 
 export default function HomePage() {
   return (
@@ -19,7 +20,7 @@ export default function HomePage() {
       <StatsBar />
 
       <ProgrammeCtaSection />
-
+<ProgrammeHighlightsSection />
       <ConferenceThemeSection />
        <OverviewSpotlightSection />
     
