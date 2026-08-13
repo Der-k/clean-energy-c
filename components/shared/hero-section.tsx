@@ -380,7 +380,7 @@ function RotatingTicker({
 
 export function HeroSection() {
   const { active, setActive } = useAutoAdvance(slides.length);
-  const slide = slides[active];
+  const currentAccent = slides[active].accent;
 
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [muted, setMuted] = useState(true);
@@ -497,7 +497,7 @@ export function HeroSection() {
 
         <motion.div
           className="rounded-full justify-self-center"
-          style={{ background: slide.accent, width: 10, height: 10 }}
+          style={{ background: currentAccent, width: 10, height: 10 }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -505,145 +505,147 @@ export function HeroSection() {
         <div />
       </nav>
 
-      {/* Extra bottom padding on mobile reserves room for the ticker so the
-          card never grows into the same space it occupies. */}
+      {/*
+        FIX FOR NAVBAR FLICKER
+        -----------------------
+        Previously this card used `layout` + swapped one slide's DOM in/out for
+        another (AnimatePresence mode="wait"). Because the "cards" slide is a
+        lot taller than the plain text slides, Framer Motion smoothly animated
+        the card's HEIGHT every time `active` changed (every 6s). That
+        animated the total page height while the hero sits above the fold,
+        which shifted window scroll position and kept re-triggering the
+        scroll-direction logic that hides/shows the header (and the
+        ROLE_NAV_TRIGGER_ID observer), causing the collapse/expand flicker.
+
+        Fix: mount ALL slides at once, stacked in the same CSS grid cell
+        (gridArea: "1 / 1"), and only crossfade opacity between the active
+        one. A grid stack auto-sizes to its tallest child, and since every
+        slide is always present that height is constant for the entire
+        lifetime of the component — it never animates or reflows again.
+      */}
       <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-40 md:px-14 md:pb-10">
-        <motion.div
-          className="w-full md:w-fit md:min-w-[280px] max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-2xl md:rounded-3xl border-2 border-white"
+        <div
+          className="w-full md:w-fit md:min-w-[280px] max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-2xl md:rounded-3xl border-2 border-white overflow-hidden"
           style={{ background: "rgba(0,0,0,0.08)" }}
-          layout
-          transition={{ layout: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } }}
         >
-          <div ref={contentRef} className="p-5 md:p-14">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={`eye-${active}`}
-                className="text-[10px] md:text-xs uppercase tracking-[0.14em] md:tracking-[0.18em] mb-3 md:mb-5"
-                style={{ color: slide.accent }}
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ duration: 0.35 }}
-              >
-                {slide.eyebrow}
-              </motion.p>
-            </AnimatePresence>
-
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={`h-${active}`}
-                className="text-white font-bold leading-[1.1] md:leading-[1.05] mb-5 md:mb-8"
-                style={{ fontSize: "clamp(1.8rem, 8vw, 5rem)", letterSpacing: "-0.03em" }}
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                {slide.headline.replace(/\n/g, " ")}
-              </motion.h1>
-            </AnimatePresence>
-
-            {slide.kind === "cards" ? (
-              <AnimatePresence mode="wait">
+          <div ref={contentRef} className="relative grid p-5 md:p-14">
+            {slides.map((s, i) => {
+              const isActive = active === i;
+              return (
                 <motion.div
-                  key={`cards-${active}`}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
+                  key={s.id}
+                  style={{ gridArea: "1 / 1", pointerEvents: isActive ? "auto" : "none" }}
+                  initial={false}
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
+                  transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  aria-hidden={!isActive}
                 >
-                  <p className="text-white/70 text-sm leading-relaxed mb-4 md:mb-5 max-w-full md:max-w-[420px]">{slide.sub}</p>
+                  <p
+                    className="text-[10px] md:text-xs uppercase tracking-[0.14em] md:tracking-[0.18em] mb-3 md:mb-5"
+                    style={{ color: s.accent }}
+                  >
+                    {s.eyebrow}
+                  </p>
 
-                  <div className="flex flex-col sm:flex-row gap-3 mb-4 md:mb-5">
-                    {slide.editions.map((ed) => (
-                      <a
-                        key={ed.name}
-                        href={ed.href}
-                        className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03] w-full sm:min-w-[160px] sm:flex-1"
-                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
-                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
-                        }}
-                      >
-                        <span style={{ position: "absolute", top: 0, left: "12px", right: "12px", height: "2px", background: ed.color, borderRadius: "0 0 2px 2px", opacity: 0.8 }} />
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>
-                            {ed.name.replace(" Edition", "")}
-                          </span>
-                          <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
-                            {ed.country}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
-                          <CalendarDays className="h-3 w-3 shrink-0" style={{ color: "rgba(255,255,255,0.45)" }} />
-                          {ed.date}
-                        </div>
-                        <div className="mt-0.5 flex items-center gap-1.5 text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }}>
-                          <MapPin className="h-3 w-3 shrink-0" />
-                          {ed.venue.split(",")[0]}
-                        </div>
-                        <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold" style={{ color: ed.color }}>
-                          Details <ArrowRight className="h-3 w-3" />
-                        </div>
-                      </a>
-                    ))}
-                  </div>
+                  <h1
+                    className="text-white font-bold leading-[1.1] md:leading-[1.05] mb-5 md:mb-8"
+                    style={{ fontSize: "clamp(1.8rem, 8vw, 5rem)", letterSpacing: "-0.03em" }}
+                  >
+                    {s.headline.replace(/\n/g, " ")}
+                  </h1>
 
-                  <div className="flex flex-wrap gap-2">
-                    {slide.buttons.map((btn) => (
-                      <a
-                        key={btn.label}
-                        href={btn.href}
-                        className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
-                        style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
-                      >
-                        {btn.label}
-                      </a>
-                    ))}
-                  </div>
+                  {s.kind === "cards" ? (
+                    <div>
+                      <p className="text-white/70 text-sm leading-relaxed mb-4 md:mb-5 max-w-full md:max-w-[420px]">
+                        {s.sub}
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row gap-3 mb-4 md:mb-5">
+                        {s.editions.map((ed) => (
+                          <a
+                            key={ed.name}
+                            href={ed.href}
+                            className="relative flex flex-col rounded-xl px-4 py-3 transition-all duration-200 hover:scale-[1.03] w-full sm:min-w-[160px] sm:flex-1"
+                            style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                            }}
+                          >
+                            <span
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: "12px",
+                                right: "12px",
+                                height: "2px",
+                                background: ed.color,
+                                borderRadius: "0 0 2px 2px",
+                                opacity: 0.8,
+                              }}
+                            />
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ed.color }}>
+                                {ed.name.replace(" Edition", "")}
+                              </span>
+                              <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+                                {ed.country}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+                              <CalendarDays className="h-3 w-3 shrink-0" style={{ color: "rgba(255,255,255,0.45)" }} />
+                              {ed.date}
+                            </div>
+                            <div className="mt-0.5 flex items-center gap-1.5 text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+                              <MapPin className="h-3 w-3 shrink-0" />
+                              {ed.venue.split(",")[0]}
+                            </div>
+                            <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold" style={{ color: ed.color }}>
+                              Details <ArrowRight className="h-3 w-3" />
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {s.buttons.map((btn) => (
+                          <a
+                            key={btn.label}
+                            href={btn.href}
+                            className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+                            style={{ borderColor: s.accent, background: "rgba(255,255,255,0.08)" }}
+                          >
+                            {btn.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col md:flex-row md:items-end gap-5 md:gap-16">
+                      <div>
+                        <a
+                          href={s.href}
+                          className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+                          style={{ borderColor: s.accent, background: "rgba(255,255,255,0.08)" }}
+                        >
+                          {s.cta}
+                        </a>
+                      </div>
+
+                      <p className="text-white/70 text-sm leading-relaxed max-w-full md:max-w-[320px]">
+                        {s.sub}
+                      </p>
+                    </div>
+                  )}
                 </motion.div>
-              </AnimatePresence>
-            ) : (
-              <div className="flex flex-col md:flex-row md:items-end gap-5 md:gap-16">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`cta-${active}`}
-                    initial={{ opacity: 0, scale: 0.92 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.92 }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
-                  >
-                    <a
-                      href={slide.href}
-                      className="inline-block px-5 md:px-7 py-2.5 md:py-3 rounded-xl border text-xs md:text-sm font-medium text-white transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
-                      style={{ borderColor: slide.accent, background: "rgba(255,255,255,0.08)" }}
-                    >
-                      {slide.cta}
-                    </a>
-                  </motion.div>
-                </AnimatePresence>
-
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={`sub-${active}`}
-                    className="text-white/70 text-sm leading-relaxed max-w-full md:max-w-[320px]"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.4, delay: 0.15 }}
-                  >
-                    {slide.sub}
-                  </motion.p>
-                </AnimatePresence>
-              </div>
-            )}
+              );
+            })}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative z-20 flex items-center px-4 md:px-14 pb-6 md:pb-8">
@@ -658,7 +660,7 @@ export function HeroSection() {
               {active === i && (
                 <motion.span
                   className="absolute inset-y-0 left-0 rounded-full"
-                  style={{ background: slide.accent }}
+                  style={{ background: currentAccent }}
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 6, ease: "linear" }}
@@ -670,7 +672,7 @@ export function HeroSection() {
       </div>
 
       <RotatingTicker
-        accent={slide.accent}
+        accent={currentAccent}
         active={active}
         total={slides.length}
         muted={muted}

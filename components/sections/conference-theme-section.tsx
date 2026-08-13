@@ -395,6 +395,7 @@ export function ConferenceThemeSection() {
       style={{
         background:
           "conic-gradient(#0F0F76 0deg 40deg, #009966 40deg 80deg, #F2CB01 80deg 120deg, #0F0F76 120deg 160deg, #009966 160deg 200deg, #F2CB01 200deg 240deg, #0F0F76 240deg 280deg, #009966 280deg 320deg, #F2CB01 320deg 360deg)",
+        overflowAnchor: "none",
       }}
     >
       <div className="relative bg-white px-4 py-14 sm:px-6 lg:px-8">
@@ -516,6 +517,7 @@ export function ConferenceThemeSection() {
             className="mt-24 px-2 py-6 sm:px-6 lg:px-8"
             onMouseEnter={pauseAutoplay}
             onMouseLeave={resumeAutoplay}
+            style={{ overflowAnchor: "none" }}
           >
             <div className="relative overflow-hidden">
               {/* Ambient glow for this block specifically — centered behind
