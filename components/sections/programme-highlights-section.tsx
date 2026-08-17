@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, MessageSquare } from "lucide-react";
 
@@ -483,18 +483,25 @@ const DAYS: Day[] = [
 
 export function ProgrammeHighlightsSection() {
   const [activeDay, setActiveDay] = useState(DAYS[0].id);
+  const [gallerySeed, setGallerySeed] = useState(0);
 
   const day = useMemo(() => DAYS.find((d) => d.id === activeDay) ?? DAYS[0], [activeDay]);
+
+  // Pick a fresh, stable set of images for each page load without creating an auto-playing carousel.
+  useEffect(() => {
+    setGallerySeed(Math.floor(Math.random() * 100_000));
+  }, []);
+
   const galleryImages = useMemo(
     () => {
       const pools = DAY_IMAGE_POOLS[day.id] ?? IMAGE_POOLS;
       const categories = ["Keynote Session", "Panel Discussion", "Workshop", "Networking"];
       return categories.map((category, index) => {
         const pool = pools[category] ?? IMAGE_POOLS[category] ?? IMAGE_POOLS.Other;
-        return { category, src: pool[index % pool.length] };
+        return { category, src: pool[(gallerySeed + index * 7) % pool.length] };
       });
     },
-    [day.id],
+    [day.id, gallerySeed],
   );
 
   return (

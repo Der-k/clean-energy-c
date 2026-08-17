@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 
-type Category = "Conference" | "Networking" | "Exhibition" | "Speakers";
+type Category = "Conference" | "Networking" | "Exhibition" | "Speakers" | "Highlights";
 
 type GalleryItem = {
   src: string;
@@ -11,44 +11,40 @@ type GalleryItem = {
   category: Category;
 };
 
+const range = (start: number, end: number) =>
+  Array.from({ length: end - start + 1 }, (_, offset) => String(start + offset).padStart(3, "0"));
+
+const galleryPaths = (
+  day: "DAY1" | "DAY2",
+  imageType: string,
+  numbers: string[],
+  category: Category,
+  alt: string,
+): GalleryItem[] =>
+  numbers.map((number) => ({
+    src: `/images/gallery/${day}/clean-energy-conference-${imageType}-${number}.jpg`,
+    alt,
+    category,
+  }));
+
 const galleryItems: GalleryItem[] = [
-  // Conference
-  { src: "/images/gallery/gallery-1.jpg", alt: "Conference opening session", category: "Conference" },
-  { src: "/images/gallery/gallery-3.jpg", alt: "Conference exhibition display", category: "Conference" },
-  { src: "/images/gallery/gallery-4.jpg", alt: "Conference audience session", category: "Conference" },
-  { src: "/images/gallery/gallery-5.jpeg", alt: "Conference discussion session", category: "Conference" },
-  { src: "/images/gallery/gallery-10.jpg", alt: "Conference delegates", category: "Conference" },
-
-  // Networking
-  { src: "/images/gallery/gallery-2.jpg", alt: "Delegates networking", category: "Networking" },
-  { src: "/images/gallery/gallery-11.jpg", alt: "Delegates meeting at the conference", category: "Networking" },
-  { src: "/images/gallery/gallery-11.jpeg", alt: "Networking and partner engagement", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-1.jpeg", alt: "Delegates networking", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-2.jpeg", alt: "Conference delegates in discussion", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-3.jpeg", alt: "Roundtable discussion", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-4.jpeg", alt: "Delegates seated during session", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-7.jpeg", alt: "Conference networking room", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-8.jpeg", alt: "Audience networking session", category: "Networking" },
-  { src: "/images/gallery/hero-carousel-10.jpeg", alt: "Panel discussion and audience", category: "Networking" },
-
-  // Exhibition
-  { src: "/images/gallery/gallery-7.jpg", alt: "Exhibition booth and branding", category: "Exhibition" },
-  { src: "/images/gallery/gallery-13.jpg", alt: "Exhibition stand", category: "Exhibition" },
-  { src: "/images/gallery/hero-carousel-16.jpeg", alt: "Exhibition and event branding", category: "Exhibition" },
-
-  // Speakers
-  { src: "/images/gallery/hero-carousel-5.jpeg", alt: "Speaker at conference table", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-6.jpeg", alt: "Speaker presentation", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-9.jpg", alt: "Speaker addressing delegates", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-9 (2).jpeg", alt: "Speaker session", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-9 (3).jpeg", alt: "Speaker presentation session", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-9 (5).jpeg", alt: "Speaker keynote session", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-10.jpg", alt: "Speaker on stage", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-11.jpg", alt: "Speaker at podium", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-12.jpg", alt: "Panel speakers on stage", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-13.jpeg", alt: "Speaker presentation", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-14.jpeg", alt: "Award presentation", category: "Speakers" },
-  { src: "/images/gallery/hero-carousel-15.jpeg", alt: "Speaker at podium", category: "Speakers" },
+  ...galleryPaths("DAY1", "audience", range(1, 38), "Conference", "Audience at the Clean Energy Conference"),
+  ...galleryPaths("DAY1", "panel-discussion", range(1, 27), "Conference", "Panel discussion at the Clean Energy Conference"),
+  ...galleryPaths("DAY1", "session", range(1, 25), "Conference", "Conference session in Kigali"),
+  ...galleryPaths("DAY1", "other", range(1, 1), "Conference", "Clean Energy Conference moment"),
+  ...galleryPaths("DAY2", "audience", range(39, 53), "Conference", "Audience at the Clean Energy Conference"),
+  ...galleryPaths("DAY2", "panel-discussion", range(28, 53), "Conference", "Panel discussion at the Clean Energy Conference"),
+  ...galleryPaths("DAY2", "session", range(26, 61), "Conference", "Conference session in Kigali"),
+  ...galleryPaths("DAY1", "networking", range(1, 24), "Networking", "Conference networking"),
+  { src: "/images/gallery/DAY1/clean-energy-conference-networking-025.png", alt: "Conference networking", category: "Networking" },
+  ...galleryPaths("DAY2", "networking", range(26, 46), "Networking", "Conference networking"),
+  ...galleryPaths("DAY1", "exhibition", range(1, 18), "Exhibition", "Conference exhibition"),
+  ...galleryPaths("DAY1", "venue", range(1, 10), "Exhibition", "Clean Energy Conference venue"),
+  ...galleryPaths("DAY1", "keynote", range(1, 25), "Speakers", "Keynote speaker at the Clean Energy Conference"),
+  ...galleryPaths("DAY2", "keynote", range(26, 54), "Speakers", "Keynote speaker at the Clean Energy Conference"),
+  ...galleryPaths("DAY1", "group-photo", ["001", "003", "004", "005", "006", "007", "008"], "Highlights", "Conference highlight"),
+  { src: "/images/gallery/DAY1/clean-energy-conference-group-photo-002.jpeg", alt: "Conference highlight", category: "Highlights" },
+  ...galleryPaths("DAY2", "group-photo", range(9, 23), "Highlights", "Conference highlight"),
 ];
 
 const filters = ["All", "Conference", "Networking", "Exhibition", "Speakers", "Highlights"] as const;
