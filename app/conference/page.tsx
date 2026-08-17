@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import {
   CalendarDays,
   ChevronRight,
@@ -10,13 +8,12 @@ import {
   ArrowRight,
   CheckCircle2,
 } from "lucide-react";
-import { SectionShell } from "@/components/layout/section-shell";
 
 type EditionKey = "Kigali" | "perth";
 
 const editions = {
   Kigali: {
-    key: "Kigali" as EditionKey,
+    key: "Kigali",
     tabLabel: "Kigali Edition",
     eyebrow: "2026 Edition",
     title: "Kigali Edition Overview",
@@ -24,15 +21,15 @@ const editions = {
       "A high-level platform for East Africa's clean energy transition, regional integration, and investment dialogue.",
     date: "6–7 August 2026",
     venue: "Kigali Marriott Hotel, Rwanda",
-    heroImage: "/images/gallery/hero-carousel-12.jpg",
+    heroImage: "/images/gallery/DAY1/clean-energy-conference-keynote-001.jpg",
     tabImage: "/images/conference/kigali-tab.jpg",
     gallery: [
-      "/images/gallery/gallery-11.jpg",
-      "/images/gallery/gallery-7.jpg",
-      "/images/gallery/hero-carousel-9.jpg",
-      "/images/gallery/gallery-4.jpg",
-      "/images/gallery/hero-carousel-10.jpg",
-      "/images/gallery/hero-carousel-11.jpg",
+      "/images/gallery/DAY1/clean-energy-conference-keynote-010.jpg",
+      "/images/gallery/DAY1/clean-energy-conference-panel-discussion-014.jpg",
+      "/images/gallery/DAY1/clean-energy-conference-exhibition-009.jpg",
+      "/images/gallery/DAY2/clean-energy-conference-audience-048.jpg",
+      "/images/gallery/DAY2/clean-energy-conference-networking-035.jpg",
+      "/images/gallery/DAY2/clean-energy-conference-group-photo-016.jpg",
     ],
     overviewTitle:
       "East Africa-focused clean energy dialogue, investment, and collaboration",
@@ -81,7 +78,7 @@ const editions = {
   },
 
   perth: {
-    key: "perth" as EditionKey,
+    key: "perth",
     tabLabel: "Perth Edition",
     eyebrow: "2026 Edition",
     title: "Perth Edition Overview",
@@ -148,12 +145,43 @@ const editions = {
 
 const editionOrder: EditionKey[] = ["Kigali", "perth"];
 
+function SectionShell({
+  children,
+  className = "",
+  muted = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  muted?: boolean;
+}) {
+  return (
+    <section
+      className={`px-4 py-14 md:px-6 lg:py-20 ${
+        muted ? "bg-slate-50" : ""
+      } ${className}`}
+    >
+      <div className="mx-auto max-w-7xl">{children}</div>
+    </section>
+  );
+}
+
+function StatCard({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="rounded-[22px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
+      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-white">
+        {value}
+      </p>
+      <p className="mt-2 text-base text-white/85">{label}</p>
+    </div>
+  );
+}
+
 export default function ConferenceOverviewPage() {
   const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (
-    <main className="pt-24 bg-white">
+    <main className="bg-white">
       <section className="relative overflow-hidden border-b border-[#02026e]/20 bg-white">
         <div className="absolute inset-0">
           <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#02026e]/10 blur-3xl" />
@@ -161,14 +189,12 @@ export default function ConferenceOverviewPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-[color:var(--text-main)]-500">
-            <Link href="/" className="hover:text-[#02026e]">
+          <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-slate-500">
+            <a href="#" className="hover:text-[#02026e]">
               Home
-            </Link>
+            </a>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-[color:var(--text-main)]-700">
-              Conference
-            </span>
+            <span className="text-slate-700">Conference</span>
           </div>
 
           <div className="max-w-4xl">
@@ -176,18 +202,19 @@ export default function ConferenceOverviewPage() {
               Conference Overview
             </p>
 
-            <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
+            <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
               Explore the 2026 conference editions
             </h1>
 
-            <p className="mt-5 max-w-3xl text-xl
- leading-8 text-[color:var(--text-main)]-600">
-              Select an edition below to view location-specific event details,
-              themes, priorities, audience value, and programme context.
+            <p className="mt-5 max-w-3xl text-xl leading-8 text-slate-600">
+              Select an edition below to view location-specific event
+              details, themes, priorities, audience value, and programme
+              context.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          {/* EDITION SELECTOR — bigger tiles, glow on active, image scales in */}
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {editionOrder.map((editionKey) => {
               const edition = editions[editionKey];
               const isActive = activeEdition === editionKey;
@@ -197,41 +224,55 @@ export default function ConferenceOverviewPage() {
                   key={editionKey}
                   type="button"
                   onClick={() => setActiveEdition(editionKey)}
-                  className={`group relative overflow-hidden rounded-[28px] text-left transition ${
-                    isActive
-                      ? "ring-2 ring-[#02026e] shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
-                      : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.12)]"
-                  }`}
+                  className="group relative text-left"
                 >
-                  <div className="relative h-[280px] w-full">
-                    <Image
-                      src={edition.tabImage}
-                      alt={edition.tabLabel}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                    />
+                  {isActive && (
+                    <div className="absolute -inset-2 -z-10 rounded-[32px] bg-gradient-to-br from-[#02026e]/25 via-[#06895b]/20 to-transparent blur-xl" />
+                  )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/10" />
+                  <div
+                    className={`relative overflow-hidden rounded-[28px] transition-all duration-500 ${
+                      isActive
+                        ? "ring-2 ring-[#02026e] shadow-[0_25px_60px_rgba(2,2,110,0.28)]"
+                        : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1.5 hover:shadow-[0_25px_60px_rgba(2,2,110,0.16)]"
+                    }`}
+                  >
+                    <div className="relative h-[340px] w-full sm:h-[380px] md:h-[420px]">
+                      <img
+                        src={edition.tabImage}
+                        alt={edition.tabLabel}
+                        className={`h-full w-full object-cover transition-transform duration-700 ease-out ${
+                          isActive ? "scale-[1.04]" : "group-hover:scale-[1.06]"
+                        }`}
+                      />
 
-                    <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
-                        {isActive ? "Selected Edition" : "Select Edition"}
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-slate-950/5" />
 
-                      <h2 className="font-heading text-2xl font-bold tracking-[-0.02em] text-white md:text-3xl">
-                        {edition.tabLabel}
-                      </h2>
-
-                      <div className="mt-4 space-y-2 text-base text-white/80">
-                        <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 text-white/60" />
-                          <span>{edition.date}</span>
+                      <div className="absolute inset-x-0 bottom-0 p-7 md:p-8">
+                        <div
+                          className={`mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${
+                            isActive
+                              ? "border-[#06895b]/50 bg-[#06895b]/90 text-white"
+                              : "border-white/20 bg-white/10 text-white/80"
+                          }`}
+                        >
+                          {isActive ? "Selected Edition" : "Select Edition"}
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-white/60" />
-                          <span>{edition.venue}</span>
+                        <h2 className="text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl">
+                          {edition.tabLabel}
+                        </h2>
+
+                        <div className="mt-4 space-y-2 text-base text-white/85">
+                          <div className="flex items-center gap-2">
+                            <CalendarDays className="h-4 w-4 text-white/60" />
+                            <span>{edition.date}</span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-white/60" />
+                            <span>{edition.venue}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -241,22 +282,21 @@ export default function ConferenceOverviewPage() {
             })}
           </div>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div className="mt-14 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
               <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 {current.eyebrow}
               </p>
 
-              <h2 className="font-heading mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
+              <h2 className="mt-3 max-w-4xl text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
                 {current.title}
               </h2>
 
-              <p className="mt-5 max-w-3xl text-xl
- leading-8 text-[color:var(--text-main)]-600">
+              <p className="mt-5 max-w-3xl text-xl leading-8 text-slate-600">
                 {current.subtitle}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3 text-base text-[color:var(--text-main)]-700">
+              <div className="mt-6 flex flex-wrap gap-3 text-base text-slate-700">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#02026e]/20 bg-white px-4 py-2 shadow-sm">
                   <CalendarDays className="h-4 w-4 text-[#02026e]" />
                   <span>{current.date}</span>
@@ -268,161 +308,63 @@ export default function ConferenceOverviewPage() {
                 </div>
               </div>
 
-              
-      <SectionShell>
-        <div className="rounded-[26px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
-                Ready to participate?
-              </p>
+              <div className="mt-10 rounded-[26px] border border-[#02026e]/30 bg-gradient-to-r from-[#02026e] to-[#010150] px-6 py-8 text-white shadow-[0_18px_50px_rgba(2,2,110,0.22)] md:px-10 md:py-10">
+                <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                  <div className="max-w-2xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+                      Ready to participate?
+                    </p>
 
-              <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
-                Secure your place at the{" "}
-                {current.tabLabel}
-              </h2>
+                    <h2 className="mt-2 text-2xl font-bold tracking-[-0.02em] md:text-3xl">
+                      Secure your place at the {current.tabLabel}
+                    </h2>
 
-              <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
-                Register early, explore the programme, and position your
-                organization for visibility, networking, and strategic
-                engagement.
-              </p>
+                    <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
+                      Register early, explore the programme, and position
+                      your organization for visibility, networking, and
+                      strategic engagement.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href="#"
+                      className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/30 bg-white px-6 py-3 text-base font-semibold text-[#02026e] shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:scale-[1.05] hover:border-[#009966] hover:text-white hover:shadow-[0_18px_50px_rgba(0,153,102,0.30)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#009966]/35 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+                    >
+                      <span className="absolute inset-0 overflow-hidden rounded-full">
+                        <span className="absolute left-0 top-0 h-full w-0 bg-gradient-to-r from-[#007a55] via-[#009966] to-[#00b377] transition-all duration-500 ease-out group-hover:w-full" />
+                      </span>
+                      <span className="relative z-10">Register Now</span>
+                    </a>
+
+                    <a
+                      href="#"
+                      className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/25 bg-white/5 px-6 py-3 text-base font-semibold text-white shadow-[0_10px_30px_rgba(0,0,0,0.10)] backdrop-blur-sm transition-all duration-500 ease-out hover:scale-[1.05] hover:border-white/60 hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+                    >
+                      <span className="absolute inset-0 overflow-hidden rounded-full">
+                        <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                      </span>
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+                        Request Programme
+                      </span>
+                      <ArrowRight className="relative z-10 h-4 w-4 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#02026e]" />
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-          <div className="flex flex-wrap gap-3">
-
-  {/* REGISTER NOW */}
-  <a
-    href="/get-tickets"
-   
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
-
-      rounded-full px-6 py-3 text-base font-semibold
-
-      text-[#02026e]
-      bg-white
-
-      border border-white/30
-
-      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-      transition-all duration-500 ease-out
-
-      hover:text-white
-      hover:border-[#009966]
-
-      hover:shadow-[0_18px_50px_rgba(0,153,102,0.30)]
-      hover:scale-[1.05]
-
-      active:scale-[0.97]
-
-      focus:outline-none
-      focus:ring-2
-      focus:ring-[#009966]/35
-      focus:ring-offset-2
-      focus:ring-offset-[#02026e]
-    "
-  >
-    {/* full emerald hover fill */}
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
-
-          bg-gradient-to-r
-          from-[#007a55]
-          via-[#009966]
-          to-[#00b377]
-
-          transition-all duration-500 ease-out
-
-          group-hover:w-full
-        "
-      />
-    </span>
-
-    <span className="relative z-10">Register Now</span>
-  </a>
-
-  {/* REQUEST PROGRAMME */}
-  <a
-    href="/event/programme"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
-
-      rounded-full px-6 py-3 text-base font-semibold
-
-      text-white
-      bg-white/5 backdrop-blur-sm
-
-      border border-white/25
-
-      shadow-[0_10px_30px_rgba(0,0,0,0.10)]
-
-      transition-all duration-500 ease-out
-
-      hover:border-white/60
-      hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-      hover:scale-[1.05]
-
-      active:scale-[0.97]
-
-      focus:outline-none
-      focus:ring-2
-      focus:ring-white/30
-      focus:ring-offset-2
-      focus:ring-offset-[#02026e]
-    "
-  >
-    {/* white sweep */}
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
-
-          bg-white
-
-          transition-all duration-500 ease-out
-
-          group-hover:w-full
-        "
-      />
-    </span>
-
-    {/* text switches to blue during sweep */}
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-      Request Programme
-    </span>
-
-    <ArrowRight
-      className="
-        relative z-10 h-4 w-4
-        transition-all duration-300
-        group-hover:translate-x-1
-        group-hover:text-[#02026e]
-      "
-    />
-  </a>
-
-</div>
-          </div>
-        </div>
-      </SectionShell>
-            </div>
-
+            {/* HERO IMAGE — taller, framed with a gradient offset border for depth */}
             <div className="relative">
-              <div className="overflow-hidden rounded-[22px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]">
-                <div className="relative aspect-[4/3] w-full">
-                  <Image
+              <div className="absolute -inset-3 -z-10 rounded-[30px] bg-gradient-to-br from-[#02026e]/20 via-[#06895b]/15 to-transparent blur-2xl" />
+              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-[24px] border-2 border-[#06895b]/30" />
+
+              <div className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_30px_70px_rgba(2,2,110,0.18)]">
+                <div className="relative aspect-[4/5] w-full">
+                  <img
                     src={current.heroImage}
                     alt={`${current.title} delegates`}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover"
-                    priority
+                    className="h-full w-full object-cover"
                   />
                 </div>
               </div>
@@ -434,59 +376,53 @@ export default function ConferenceOverviewPage() {
       {/* EVENT OVERVIEW SECTION */}
       <SectionShell className="bg-gradient-to-br from-[#02026e] via-[#0b0b8f] to-[#010150] text-white">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-         <div>
- <div className="inline-block">
-  <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
-    Event Overview
-  </p>
+          <div>
+            <div className="inline-block">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
+                Event Overview
+              </p>
+              <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
+            </div>
+            <div className="mt-3 inline-block">
+              <h2 className="text-3xl font-bold tracking-[-0.02em] text-white">
+                {current.overviewTitle}
+              </h2>
+              <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
+            </div>
 
-  <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
-</div>
-  <div className="mt-3 inline-block">
-    <h2 className="font-heading text-3xl font-bold tracking-[-0.02em] text-white">
-      {current.overviewTitle}
-    </h2>
-
-    <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
-  </div>
-
-  <div className="mt-6 space-y-5 text-base leading-8 text-white">
-    {current.overviewParagraphs.map((paragraph) => (
-      <p key={paragraph}>{paragraph}</p>
-    ))}
-  </div>
-</div>
+            <div className="mt-6 space-y-5 text-base leading-8 text-white">
+              {current.overviewParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
 
           <div className="grid grid-cols-2 gap-4">
             {current.stats.map((item) => (
-              <StatCard
-                key={item.label}
-                value={item.value}
-                label={item.label}
-              />
+              <StatCard key={item.label} value={item.value} label={item.label} />
             ))}
           </div>
         </div>
-      </SectionShell><br></br>
+      </SectionShell>
 
-      <section className="mx-auto max-w-7xl px-4 pb-10 md:px-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* GALLERY — bigger rows, a genuine hero tile, hover overlay for polish */}
+      <section className="mx-auto max-w-7xl px-4 pb-12 pt-12 md:px-6">
+        <div className="grid auto-rows-[260px] gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[220px]">
           {current.gallery.map((src, index) => (
             <div
               key={`${src}-${index}`}
-              className={`relative overflow-hidden rounded-[18px] border border-[#02026e]/20 bg-[#02026e]/5 ${
-                index === 0 ? "sm:col-span-2 lg:col-span-1" : ""
+              className={`group relative overflow-hidden rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 shadow-[0_12px_30px_rgba(2,2,110,0.08)] transition-shadow duration-500 hover:shadow-[0_18px_45px_rgba(2,2,110,0.18)] ${
+                index === 0
+                  ? "sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2"
+                  : ""
               }`}
             >
-              <div className="relative aspect-[1.35/1] w-full">
-                <Image
-                  src={src}
-                  alt={`${current.title} gallery image ${index + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition duration-500 hover:scale-[1.03]"
-                />
-              </div>
+              <img
+                src={src}
+                alt={`${current.title} gallery image ${index + 1}`}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </div>
           ))}
         </div>
@@ -496,51 +432,46 @@ export default function ConferenceOverviewPage() {
       <SectionShell className="bg-gradient-to-br from-[#02026e] via-[#0b0b8f] to-[#010150] text-white">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
- <div className="inline-block">
-  <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
-    Why Attend
-  </p>
+            <div className="inline-block">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
+                Why Attend
+              </p>
+              <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
+            </div>
+            <div className="mt-3 inline-block">
+              <h2 className="text-3xl font-bold tracking-[-0.02em] text-white">
+                Connect, learn, and build meaningful industry relationships
+              </h2>
+              <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
+            </div>
 
-  <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
-</div>
-  <div className="mt-3 inline-block">
-    <h2 className="font-heading text-3xl font-bold tracking-[-0.02em] text-white">
-      Connect, learn, and build meaningful industry relationships
-    </h2>
+            <p className="mt-5 text-base leading-8 text-white">
+              Each edition is tailored to its regional context while
+              maintaining the conference's broader goal of connecting
+              government, industry, investors, innovators, and development
+              partners around clean energy opportunity.
+            </p>
 
-    <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
-  </div>
-
-  <p className="mt-5 text-base leading-8 text-white">
-    Each edition is tailored to its regional context while maintaining
-    the conference's broader goal of connecting government, industry,
-    investors, innovators, and development partners around clean
-    energy opportunity.
-  </p>
-
-  <div className="mt-8">
-    <Link
-      href="/partners"
-      className="inline-flex items-center gap-2 text-base font-semibold text-white transition hover:text-[#9fb0ff]"
-    >
-      Explore partnership opportunities
-      <ArrowRight className="h-4 w-4" />
-    </Link>
-  </div>
-</div>
+            <div className="mt-8">
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 text-base font-semibold text-white transition hover:text-[#9fb0ff]"
+              >
+                Explore partnership opportunities
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
 
           <div className="grid gap-4">
             {current.reasonsToAttend.map((reason) => (
               <div
                 key={reason}
-              className="rounded-[18px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.16)]"
+                className="rounded-[18px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.16)]"
               >
                 <div className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[white]" />
-
-                  <p className="text-base leading-7 text-white">
-                    {reason}
-                  </p>
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-white" />
+                  <p className="text-base leading-7 text-white">{reason}</p>
                 </div>
               </div>
             ))}
@@ -555,7 +486,7 @@ export default function ConferenceOverviewPage() {
               Sectors Represented
             </p>
 
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
               Cross-sector participation across the clean energy ecosystem
             </h2>
 
@@ -563,7 +494,7 @@ export default function ConferenceOverviewPage() {
               {current.sectors.map((sector) => (
                 <div
                   key={sector}
-                  className="rounded-[16px] border border-[#02026e]/20 bg-white px-4 py-3 text-base text-[color:var(--text-main)]-700 shadow-sm"
+                  className="rounded-[16px] border border-[#02026e]/20 bg-white px-4 py-3 text-base text-slate-700 shadow-sm"
                 >
                   {sector}
                 </div>
@@ -576,7 +507,7 @@ export default function ConferenceOverviewPage() {
               Who Attends
             </p>
 
-            <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
               A senior-level audience with strong decision-making influence
             </h2>
 
@@ -587,10 +518,9 @@ export default function ConferenceOverviewPage() {
                   className="rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
                 >
                   <div className="mb-2 flex items-center justify-between gap-4">
-                    <span className="text-base font-medium text-[color:var(--text-main)]-700">
+                    <span className="text-base font-medium text-slate-700">
                       {item.label}
                     </span>
-
                     <span className="text-base font-bold text-[#02026e]">
                       {item.value}
                     </span>
@@ -608,27 +538,6 @@ export default function ConferenceOverviewPage() {
           </div>
         </div>
       </SectionShell>
-
     </main>
-  );
-}
-
-function StatCard({
-  value,
-  label,
-}: {
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="rounded-[22px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
-      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-white">
-        {value}
-      </p>
-
-      <p className="mt-2 text-base text-white/85">
-        {label}
-      </p>
-    </div>
   );
 }

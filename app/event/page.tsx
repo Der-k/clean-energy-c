@@ -144,7 +144,8 @@ export default function EventOverviewPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          {/* EDITION SELECTOR — bigger tiles, glow on active, image scales in */}
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {editionOrder.map((editionKey) => {
               const edition = editions[editionKey];
               const isActive = activeEdition === editionKey;
@@ -154,46 +155,62 @@ export default function EventOverviewPage() {
                   key={editionKey}
                   type="button"
                   onClick={() => setActiveEdition(editionKey)}
-                  className={`group relative overflow-hidden rounded-[28px] text-left transition ${
-                    isActive
-                      ? "ring-2 ring-[#02026e] shadow-[0_18px_40px_rgba(2,2,110,0.22)]"
-                      : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(2,2,110,0.12)]"
-                  }`}
+                  className="group relative text-left"
                 >
-                  <div className="relative h-[280px] w-full">
-                    <Image
-                      src={edition.tabImage}
-                      alt={edition.tabLabel}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                    />
+                  {isActive && (
+                    <div className="absolute -inset-2 -z-10 rounded-[32px] bg-gradient-to-br from-[#02026e]/25 via-[#06895b]/20 to-transparent blur-xl" />
+                  )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/10" />
+                  <div
+                    className={`relative overflow-hidden rounded-[28px] transition-all duration-500 ${
+                      isActive
+                        ? "ring-2 ring-[#02026e] shadow-[0_25px_60px_rgba(2,2,110,0.28)]"
+                        : "border border-[#02026e]/20 shadow-sm hover:-translate-y-1.5 hover:shadow-[0_25px_60px_rgba(2,2,110,0.16)]"
+                    }`}
+                  >
+                    <div className="relative h-[340px] w-full sm:h-[380px] md:h-[420px]">
+                      <Image
+                        src={edition.tabImage}
+                        alt={edition.tabLabel}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className={`object-cover transition-transform duration-700 ease-out ${
+                          isActive ? "scale-[1.04]" : "group-hover:scale-[1.06]"
+                        }`}
+                      />
 
-                    <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                      <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md">
-                        {isActive ? "Selected Edition" : "Select Edition"}
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-slate-950/5" />
 
-                      <h2 className="font-heading text-2xl font-bold tracking-[-0.02em] text-white md:text-3xl">
-                        {edition.tabLabel}
-                      </h2>
-
-                      <div className="mt-4 space-y-2 text-base text-white/80">
-                        <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 text-white/60" />
-                          <span>{edition.date}</span>
+                      <div className="absolute inset-x-0 bottom-0 p-7 md:p-8">
+                        <div
+                          className={`mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${
+                            isActive
+                              ? "border-[#06895b]/50 bg-[#06895b]/90 text-white"
+                              : "border-white/20 bg-white/10 text-white/80"
+                          }`}
+                        >
+                          {isActive ? "Selected Edition" : "Select Edition"}
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-white/60" />
-                          <span>{edition.venue}</span>
-                        </div>
+                        <h2 className="font-heading text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl">
+                          {edition.tabLabel}
+                        </h2>
 
-                        <div className="flex items-center gap-2">
-                          <Clock3 className="h-4 w-4 text-white/60" />
-                          <span>{edition.duration}</span>
+                        <div className="mt-4 space-y-2 text-base text-white/85">
+                          <div className="flex items-center gap-2">
+                            <CalendarDays className="h-4 w-4 text-white/60" />
+                            <span>{edition.date}</span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-white/60" />
+                            <span>{edition.venue}</span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Clock3 className="h-4 w-4 text-white/60" />
+                            <span>{edition.duration}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -205,7 +222,7 @@ export default function EventOverviewPage() {
 
 
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+          <div className="mt-14 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
             <div>
               <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
                 {current.tabLabel}
@@ -240,10 +257,13 @@ export default function EventOverviewPage() {
           
             </div>
 
-
+            {/* HERO IMAGE — taller, framed with a gradient offset border for depth */}
             <div className="relative">
-              <div className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_20px_50px_rgba(2,2,110,0.08)]">
-                <div className="relative aspect-[4/3.2] w-full">
+              <div className="absolute -inset-3 -z-10 rounded-[30px] bg-gradient-to-br from-[#02026e]/20 via-[#06895b]/15 to-transparent blur-2xl" />
+              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-[24px] border-2 border-[#06895b]/30" />
+
+              <div className="overflow-hidden rounded-[24px] border border-[#02026e]/20 bg-white shadow-[0_30px_70px_rgba(2,2,110,0.18)]">
+                <div className="relative aspect-[4/4.4] w-full">
                   <Image
                     src={current.heroImage}
                     alt={`${current.tabLabel} conference session`}
