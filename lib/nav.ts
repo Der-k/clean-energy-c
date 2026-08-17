@@ -68,11 +68,11 @@ export const navItems: NavItem[] = [
   children: [
     {
       label: "🎟 Rwanda (Kigali)",
-      href: "https://clean-energy.zohobackstage.com/Kigali#/buyTickets/selectTickets?lang=en",
+    href: "https://clean-energy.zohobackstage.com/Kigali#/buyTickets/selectTickets?lang=en",
     },
     {
       label: "🎟 Australia (Perth)",
-      href: "https://clean-energy.zohobackstage.com/kigali#/buyTickets/shareDetails?currentOrderId=215082000000382003",
+      href: "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
     },
   ],
 },

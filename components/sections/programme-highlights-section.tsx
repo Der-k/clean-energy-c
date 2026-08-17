@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, MessageSquare } from "lucide-react";
 
 type Session = {
   time: string;
@@ -573,25 +573,31 @@ export function ProgrammeHighlightsSection() {
           </div>
         </div>
 
+        <div className="mt-6 flex flex-col gap-4 border-l-4 border-[var(--primary)] bg-[var(--surface-muted)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div>
+            <p className="text-base font-semibold text-[var(--foreground)]">Were you part of the Kigali Edition?</p>
+            <p className="text-muted mt-1 text-sm">Tell us what worked, what stayed with you, and what we can improve next time.</p>
+          </div>
+          <a
+            href="https://forms.cloud.microsoft/r/SmSZTm9cgn"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center justify-center gap-2 bg-[var(--primary)] px-4 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+          >
+            <MessageSquare size={16} aria-hidden="true" />
+            Leave feedback
+          </a>
+        </div>
+
         {/* footer link */}
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
           <p className="text-muted text-xs">Two days · Fourteen conversations · One shared direction</p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://forms.cloud.microsoft/r/SmSZTm9cgn"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-bold text-[var(--primary)] underline underline-offset-4"
-            >
-              Attended? Leave feedback
-            </a>
-            <Link
-              href="/gallery"
-              className="text-xs font-bold text-[var(--primary)] underline underline-offset-4"
-            >
-              View full photo gallery →
-            </Link>
-          </div>
+          <Link
+            href="/gallery"
+            className="text-xs font-bold text-[var(--primary)] underline underline-offset-4"
+          >
+            View full photo gallery →
+          </Link>
         </div>
       </div>
     </section>
