@@ -535,82 +535,15 @@ const editions: Record<
   bio: "Warner Priest is the Midstream Director at InterContinental Energy, a global pioneer in large-scale green hydrogen development. With more than 30 years of experience in the energy sector, he leads the engineering and delivery of midstream infrastructure across the company's global portfolio of green hydrogen projects, guiding projects from concept through execution and operation.\n\nAt InterContinental Energy, Warner draws on extensive expertise in power transmission, electricity distribution systems, microgrids, and integrated energy infrastructure to develop scalable hydrogen solutions that support the global transition to clean energy. His technical leadership has contributed to groundbreaking renewable energy initiatives, including the development of South Australia's first megawatt-scale hydrogen solution, establishing him as a recognized authority in integrated hydrogen value chains and next-generation energy systems.\n\nInterContinental Energy has established itself as a global leader in green hydrogen development through a portfolio of flagship projects that have attracted partnerships with some of the world's largest energy companies. Under Warner's engineering leadership, the company continues to develop large-scale projects designed to accelerate the production, transportation, and commercialization of green hydrogen worldwide.\n\nBeyond project development, Warner contributes to advancing innovation through InterContinental Energy's proprietary P2(H2)Node™ architecture, a pioneering technology platform that optimizes the production and integration of green hydrogen at scale. His work reflects a strong commitment to delivering commercially viable hydrogen infrastructure that supports decarbonization, energy security, and the transition to a sustainable global energy economy."
 },
           {
-            name: "To be announced",
-            role: "Institutional Leadership Speaker",
-            organization: "Australia–Africa Cooperation Platform",
-            image: "/images/speakers/speaker-13.jpg",
-          },
+  name: "Asad Ali",
+  role: "PhD Candidate",
+  organization: "Edith Cowan University (ECU)",
+  image: "/images/speakers/asad-ali.png",
+  bio: "Asad Ali is a Chemical Engineer and PhD candidate at Edith Cowan University (ECU) in Perth, Western Australia. His doctoral research focuses on the sustainable recycling of lithium-ion batteries, with particular emphasis on recovering lithium and other critical minerals through green solvents and advanced separation technologies. His work aims to develop environmentally responsible recycling processes that support resource recovery, circular economy principles, and the global transition towards cleaner energy technologies.\n\nAsad brings more than seven years of combined academic and industry experience. Before commencing his PhD, he served as a Lecturer at the University of Gujrat, Pakistan, where he contributed to engineering education and research. He also worked as a Process Engineer on Pakistan's Underground Coal Gasification project, gaining practical experience in large-scale energy systems and industrial process operations.\n\nHis current research interests include lithium-ion battery recycling, critical mineral recovery, green hydrometallurgy, membrane-based separation technologies, and sustainable process development. His research has contributed to publications in lithium recovery and battery recycling, and he has presented his work at both national and international conferences.\n\nThrough his research, Asad is working to develop innovative resource-recovery solutions that can strengthen sustainable battery supply chains, reduce the environmental impact of battery waste, and support the development of a circular economy for critical minerals. His work contributes to the broader clean-energy transition by addressing the growing need for responsible and sustainable management of battery materials."
+},
         ],
       },
-      {
-        label: "Capital Markets / Investment Voices",
-        speakers: [
-          {
-            name: "To be announced",
-            role: "Capital Markets Speaker",
-            organization: "Investment / Advisory Group",
-            image: "/images/speakers/speaker-14.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Energy Finance Leader",
-            organization: "Infrastructure / Energy Fund",
-            image: "/images/speakers/speaker-15.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Development / Investment Specialist",
-            organization: "Institutional Finance Platform",
-            image: "/images/speakers/speaker-16.jpg",
-          },
-        ],
-      },
-      {
-        label: "Mining / Technology / Hydrogen",
-        speakers: [
-          {
-            name: "To be announced",
-            role: "Mining Technology Executive",
-            organization: "Advanced Mining Solutions",
-            image: "/images/speakers/speaker-17.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Hydrogen / Storage Specialist",
-            organization: "Clean Technology Company",
-            image: "/images/speakers/speaker-18.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Critical Minerals Speaker",
-            organization: "Resources / Processing Platform",
-            image: "/images/speakers/speaker-19.jpg",
-          },
-        ],
-      },
-      {
-        label: "Policy / ESG / Moderators",
-        speakers: [
-          {
-            name: "To be announced",
-            role: "ESG Leadership Speaker",
-            organization: "Sustainability Advisory Platform",
-            image: "/images/speakers/speaker-20.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Policy Dialogue Representative",
-            organization: "Government / Institutional Body",
-            image: "/images/speakers/speaker-21.jpg",
-          },
-          {
-            name: "To be announced",
-            role: "Conference Moderator",
-            organization: "Industry / Media / Advisory Network",
-            image: "/images/speakers/speaker-22.jpg",
-          },
-        ],
-      },
+
     ],
   },
 };
