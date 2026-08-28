@@ -23,11 +23,11 @@ const programmeFiles: Record<EventOption, { label: string; href: string }> = {
   },
   perth: {
     label: "Perth Edition Programme",
-     href: "/documents/conference programme Kigali Rwanda.pdf",
+     href: "/documents/clean-energy-conference-programme-2026.pdf",
   },
   both: {
     label: "Combined Programme (Kigali + Perth)",
-    href: "/documents/conference programme Kigali Rwanda.pdf",
+    href: "/documents/clean-energy-conference-programme-2026.pdf",
   },
 };
 
