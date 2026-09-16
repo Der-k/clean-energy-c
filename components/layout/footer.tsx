@@ -10,11 +10,10 @@ export function Footer() {
               Clean Energy Conference
             </p>
             <p className="mt-1 text-base text-zinc-600">
-<<<<<<< HEAD
+
               Connecting Leaders. Mobilising Investment. Accelerating Africa’s Clean Energy Future.
-=======
-              Fast, clean, and professional event website.
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
+
+ 
             </p>
           </div>
 
@@ -22,11 +21,7 @@ export function Footer() {
             <Link href="/conference">Conference</Link>
             <Link href="/event">Event</Link>
             <Link href="/speakers">Speakers</Link>
-<<<<<<< HEAD
-           
-=======
-            <Link href="/partners">Partners</Link>
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
+
             <Link href="/contact">Contact</Link>
           </div>
         </div>

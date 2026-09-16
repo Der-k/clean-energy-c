@@ -328,11 +328,11 @@ export default function ConferenceOverviewPage() {
 
                   <div className="flex flex-wrap gap-3">
                     <a
-<<<<<<< HEAD
+
                        href="/get-tickets"
-=======
-                      href="#"
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
+
+                  
+
                       className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/30 bg-white px-6 py-3 text-base font-semibold text-[#02026e] shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:scale-[1.05] hover:border-[#009966] hover:text-white hover:shadow-[0_18px_50px_rgba(0,153,102,0.30)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#009966]/35 focus:ring-offset-2 focus:ring-offset-[#02026e]"
                     >
                       <span className="absolute inset-0 overflow-hidden rounded-full">
@@ -342,11 +342,9 @@ export default function ConferenceOverviewPage() {
                     </a>
 
                     <a
-<<<<<<< HEAD
+
                       href="/event/programme"
-=======
-                      href="#"
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
+
                       className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/25 bg-white/5 px-6 py-3 text-base font-semibold text-white shadow-[0_10px_30px_rgba(0,0,0,0.10)] backdrop-blur-sm transition-all duration-500 ease-out hover:scale-[1.05] hover:border-white/60 hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#02026e]"
                     >
                       <span className="absolute inset-0 overflow-hidden rounded-full">

@@ -272,7 +272,6 @@ function RotatingTicker({
   videoSrc,
   onToggleSound,
 }: RotatingTickerProps) {
-  // Advances strictly in order from index 0 — caption 0 = opening image, rest follow video scenes.
   const indexRef = useRef(0);
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -378,28 +377,19 @@ function RotatingTicker({
   );
 }
 
-<<<<<<< HEAD
-// Desktop / mobile sources. `media` on <source> inside <video> is NOT honoured by
-// browsers (it's an <picture>/<img> feature only), so we pick the file in JS.
 const DESKTOP_SRC = "/videos/c_banner-compressed.mp4";
 const MOBILE_SRC = "/videos/c_banner-mobile.mp4";
-const POSTER_SRC = "/images/hero-poster.jpg"; // export frame 0 of the video
+const POSTER_SRC = "/images/hero-poster.jpg";
 
-=======
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
 export function HeroSection() {
   const { active, setActive } = useAutoAdvance(slides.length);
   const currentAccent = slides[active].accent;
 
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [muted, setMuted] = useState(true);
-<<<<<<< HEAD
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Resolved on first client paint. The poster covers the single frame before this lands.
   const [videoSrc, setVideoSrc] = useState<string>(DESKTOP_SRC);
-
-  // Sweep starts immediately rather than after a 3s hold.
   const [sweepDone, setSweepDone] = useState(false);
 
   useEffect(() => {
@@ -413,9 +403,6 @@ export function HeroSection() {
     return () => clearTimeout(t);
   }, []);
 
-  // React does not always reflect the `muted` prop onto the DOM node, and Chrome
-  // blocks autoplay silently when the node isn't actually muted. Force it, then
-  // kick playback once the element can render a frame.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -437,34 +424,6 @@ export function HeroSection() {
     };
   }, [videoSrc]);
 
-=======
-  const [showVideo, setShowVideo] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const [sweeping, setSweeping] = useState(false);
-  const [sweepDone, setSweepDone] = useState(false);
-  const [imageVisible, setImageVisible] = useState(true);
-
-  useEffect(() => {
-    const t1 = setTimeout(() => {
-      setImageVisible(false);
-      setSweeping(true);
-      setShowVideo(true);
-    }, 3000);
-    const t2 = setTimeout(() => setSweepDone(true), 6500);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
-
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
   const toggleSound = () => {
     if (videoRef.current) {
       videoRef.current.muted = !muted;
@@ -475,8 +434,6 @@ export function HeroSection() {
   return (
     <section
       id={ROLE_NAV_TRIGGER_ID}
-<<<<<<< HEAD
-      // Brand-coloured base so any sub-frame gap reads as navy, never grey.
       className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[90px] md:-mt-[152px] bg-[#0F0F76]"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
     >
@@ -485,50 +442,15 @@ export function HeroSection() {
         src={videoSrc}
         poster={POSTER_SRC}
         autoPlay
-=======
-      className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[90px] md:-mt-[152px]"
-      style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
-    >
-      <motion.div
-        className="absolute inset-0 z-0"
-        animate={{ opacity: imageVisible ? 1 : 0 }}
-        transition={{ duration: 1.0, ease: "easeInOut" }}
-        style={{
-          backgroundImage: "url('/images/hero.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-
-      <motion.video
-        ref={videoRef}
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
         loop
         muted
         playsInline
         preload="auto"
-<<<<<<< HEAD
-        // No opacity animation — the first decoded frame is painted straight away,
-        // and the poster holds the exact same image until then.
         className="absolute inset-0 z-[1] w-full h-full object-cover"
       />
 
       <AnimatePresence>
         {!sweepDone && (
-=======
-        className="absolute inset-0 z-[1] w-full h-full object-cover"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showVideo ? 1 : 0 }}
-        transition={{ duration: 1.2, ease: "easeInOut" }}
-      >
-        <source media="(max-width: 768px)" src="/videos/c_banner-mobile.mp4" type="video/mp4" />
-        <source src="/videos/c_banner.webm" type="video/webm" />
-        <source src="/videos/c_banner-compressed.mp4" type="video/mp4" />
-      </motion.video>
-
-      <AnimatePresence>
-        {sweeping && !sweepDone && (
->>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
           <motion.div
             className="absolute inset-0 z-[3] pointer-events-none overflow-hidden"
             initial={{ x: "-100%" }}
@@ -561,9 +483,6 @@ export function HeroSection() {
         }}
       />
 
-      {/* Nav is now a 3-col grid so the pulsing dot centers itself relative to
-          this row's own height, instead of a hardcoded pixel `top` that only
-          matched the desktop nav height. */}
       <nav className="relative z-20 grid grid-cols-[1fr_auto_1fr] items-center px-4 pt-[90px] pb-4 md:px-14 md:pt-[168px] md:pb-6">
         <span
           className="text-white text-base md:text-xl font-semibold truncate"
@@ -582,24 +501,6 @@ export function HeroSection() {
         <div />
       </nav>
 
-      {/*
-        FIX FOR NAVBAR FLICKER
-        -----------------------
-        Previously this card used `layout` + swapped one slide's DOM in/out for
-        another (AnimatePresence mode="wait"). Because the "cards" slide is a
-        lot taller than the plain text slides, Framer Motion smoothly animated
-        the card's HEIGHT every time `active` changed (every 6s). That
-        animated the total page height while the hero sits above the fold,
-        which shifted window scroll position and kept re-triggering the
-        scroll-direction logic that hides/shows the header (and the
-        ROLE_NAV_TRIGGER_ID observer), causing the collapse/expand flicker.
-
-        Fix: mount ALL slides at once, stacked in the same CSS grid cell
-        (gridArea: "1 / 1"), and only crossfade opacity between the active
-        one. A grid stack auto-sizes to its tallest child, and since every
-        slide is always present that height is constant for the entire
-        lifetime of the component — it never animates or reflows again.
-      */}
       <div className="relative z-10 flex-1 flex items-center justify-start px-4 pb-40 md:px-14 md:pb-10">
         <div
           className="w-full md:w-fit md:min-w-[280px] max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-2xl md:rounded-3xl border-2 border-white overflow-hidden"
