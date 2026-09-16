@@ -9,3 +9,4 @@ public/images/*.exe
 *.exe
 *.zip
 
+".env.local" 

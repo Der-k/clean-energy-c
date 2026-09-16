@@ -378,18 +378,22 @@ function RotatingTicker({
   );
 }
 
+<<<<<<< HEAD
 // Desktop / mobile sources. `media` on <source> inside <video> is NOT honoured by
 // browsers (it's an <picture>/<img> feature only), so we pick the file in JS.
 const DESKTOP_SRC = "/videos/c_banner-compressed.mp4";
 const MOBILE_SRC = "/videos/c_banner-mobile.mp4";
 const POSTER_SRC = "/images/hero-poster.jpg"; // export frame 0 of the video
 
+=======
+>>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
 export function HeroSection() {
   const { active, setActive } = useAutoAdvance(slides.length);
   const currentAccent = slides[active].accent;
 
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [muted, setMuted] = useState(true);
+<<<<<<< HEAD
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Resolved on first client paint. The poster covers the single frame before this lands.
@@ -433,6 +437,34 @@ export function HeroSection() {
     };
   }, [videoSrc]);
 
+=======
+  const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const [sweeping, setSweeping] = useState(false);
+  const [sweepDone, setSweepDone] = useState(false);
+  const [imageVisible, setImageVisible] = useState(true);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => {
+      setImageVisible(false);
+      setSweeping(true);
+      setShowVideo(true);
+    }, 3000);
+    const t2 = setTimeout(() => setSweepDone(true), 6500);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
+
+>>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
   const toggleSound = () => {
     if (videoRef.current) {
       videoRef.current.muted = !muted;
@@ -443,6 +475,7 @@ export function HeroSection() {
   return (
     <section
       id={ROLE_NAV_TRIGGER_ID}
+<<<<<<< HEAD
       // Brand-coloured base so any sub-frame gap reads as navy, never grey.
       className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[90px] md:-mt-[152px] bg-[#0F0F76]"
       style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
@@ -452,10 +485,29 @@ export function HeroSection() {
         src={videoSrc}
         poster={POSTER_SRC}
         autoPlay
+=======
+      className="relative w-full min-h-screen overflow-hidden flex flex-col -mt-[90px] md:-mt-[152px]"
+      style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+    >
+      <motion.div
+        className="absolute inset-0 z-0"
+        animate={{ opacity: imageVisible ? 1 : 0 }}
+        transition={{ duration: 1.0, ease: "easeInOut" }}
+        style={{
+          backgroundImage: "url('/images/hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
+      <motion.video
+        ref={videoRef}
+>>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
         loop
         muted
         playsInline
         preload="auto"
+<<<<<<< HEAD
         // No opacity animation — the first decoded frame is painted straight away,
         // and the poster holds the exact same image until then.
         className="absolute inset-0 z-[1] w-full h-full object-cover"
@@ -463,6 +515,20 @@ export function HeroSection() {
 
       <AnimatePresence>
         {!sweepDone && (
+=======
+        className="absolute inset-0 z-[1] w-full h-full object-cover"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showVideo ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
+        <source media="(max-width: 768px)" src="/videos/c_banner-mobile.mp4" type="video/mp4" />
+        <source src="/videos/c_banner.webm" type="video/webm" />
+        <source src="/videos/c_banner-compressed.mp4" type="video/mp4" />
+      </motion.video>
+
+      <AnimatePresence>
+        {sweeping && !sweepDone && (
+>>>>>>> 30d2ceb24450687e15a1ca80c1efa84d701f0bba
           <motion.div
             className="absolute inset-0 z-[3] pointer-events-none overflow-hidden"
             initial={{ x: "-100%" }}
