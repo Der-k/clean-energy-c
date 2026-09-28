@@ -414,7 +414,7 @@ export function ConferenceThemeSection() {
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">
-              2026 Conference Theme
+              2027 Conference Theme
             </p>
             <h2 className="mt-3 text-[17px] font-semibold tracking-tight text-zinc-950">
               Turning Ambition Into Action

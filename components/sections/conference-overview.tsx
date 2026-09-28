@@ -1118,7 +1118,7 @@ export function ConferenceOverview() {
         <div className="bg-white px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">
-              2026 Conference Theme
+              2027 Conference Theme
             </p>
             <h2 className="mt-3 text-[17px] font-semibold tracking-tight text-zinc-950">
               Turning Ambition Into Action

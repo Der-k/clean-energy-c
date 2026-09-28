@@ -167,7 +167,7 @@ export function SpeakersPreview() {
               Confirmed speakers
             </p>
             <h2 className="font-heading mt-3 text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
-              Meet the 2026 speakers
+              Meet the 2027 speakers
             </h2>
             <p className="mt-4 text-base leading-8 text-white/75">
               Senior policymakers, investors, and clean energy innovators confirmed

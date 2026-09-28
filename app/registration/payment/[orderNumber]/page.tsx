@@ -4,6 +4,14 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { OrderStatus } from "@/lib/conference/types";
 
+type PaymentMethod = "card" | "bank_transfer" | "mobile_money";
+
+const PAYMENT_METHODS: { id: PaymentMethod; label: string; description: string }[] = [
+  { id: "card", label: "Credit / Debit Card", description: "Visa, Mastercard, Amex" },
+  { id: "bank_transfer", label: "Bank Transfer", description: "Direct transfer via your bank" },
+  { id: "mobile_money", label: "Mobile Money", description: "M-Pesa and similar wallets" },
+];
+
 export default function PaymentPage({
   params,
 }: {
@@ -16,6 +24,7 @@ export default function PaymentPage({
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
 
   useEffect(() => {
     fetch(`/api/conference/orders/${orderNumber}`)
@@ -29,13 +38,17 @@ export default function PaymentPage({
   }, [orderNumber]);
 
   async function handleManualConfirm() {
+    if (!selectedMethod) {
+      setError("Choose a payment method first.");
+      return;
+    }
     setConfirming(true);
     setError(null);
     try {
       const res = await fetch("/api/conference/payments/manual-confirm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderNumber }),
+        body: JSON.stringify({ orderNumber, paymentMethod: selectedMethod }),
       });
       const data = await res.json();
       if (!data.ok) {
@@ -83,7 +96,6 @@ export default function PaymentPage({
             </span>
           </div>
         )}
-        <p className="text-muted text-sm mt-2">Payment provider integration will be added here.</p>
       </div>
 
       {error && (
@@ -91,19 +103,53 @@ export default function PaymentPage({
       )}
 
       {order?.status === "pending" ? (
-        <div className="rounded-2xl border-2 border-dashed border-[var(--border-strong)] p-6">
-          <p className="text-sm text-muted mb-3">
-            Development mode — no live payment gateway is connected yet. Use this to simulate a
-            successful payment and test the rest of the flow.
-          </p>
-          <button
-            onClick={handleManualConfirm}
-            disabled={confirming}
-            className="btn-outline-glow rounded-xl px-6 py-3 disabled:opacity-60"
-          >
-            {confirming ? "Confirming…" : "Simulate payment (dev only)"}
-          </button>
-        </div>
+        <>
+          <h3 className="mb-3">Choose a payment method</h3>
+          <div className="grid gap-3 mb-6">
+            {PAYMENT_METHODS.map((method) => (
+              <button
+                key={method.id}
+                onClick={() => setSelectedMethod(method.id)}
+                className={`surface-card hover-glow-card rounded-2xl p-4 text-left flex items-center justify-between ${
+                  selectedMethod === method.id ? "border-[var(--primary)]" : ""
+                }`}
+                style={
+                  selectedMethod === method.id
+                    ? { borderColor: "var(--primary)", boxShadow: "var(--glow-blue-medium)" }
+                    : undefined
+                }
+              >
+                <div>
+                  <p className="font-medium">{method.label}</p>
+                  <p className="text-muted text-sm">{method.description}</p>
+                </div>
+                <span
+                  className={`h-4 w-4 rounded-full border-2 shrink-0 ${
+                    selectedMethod === method.id ? "bg-[var(--primary)]" : "bg-transparent"
+                  }`}
+                  style={{ borderColor: "var(--primary)" }}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="rounded-2xl border-2 border-dashed border-[var(--border-strong)] p-6">
+            <p className="text-sm text-muted mb-3">
+              Development mode — no live payment gateway is connected yet for {" "}
+              {selectedMethod
+                ? PAYMENT_METHODS.find((m) => m.id === selectedMethod)?.label.toLowerCase()
+                : "the method you choose"}
+              . Use this to simulate a successful payment and test the rest of the flow.
+            </p>
+            <button
+              onClick={handleManualConfirm}
+              disabled={confirming || !selectedMethod}
+              className="btn-outline-glow rounded-xl px-6 py-3 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {confirming ? "Confirming…" : "Simulate payment (dev only)"}
+            </button>
+          </div>
+        </>
       ) : (
         <p className="text-muted">This order is already {order?.status}.</p>
       )}

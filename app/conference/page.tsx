@@ -15,11 +15,11 @@ const editions = {
   Kigali: {
     key: "Kigali",
     tabLabel: "Kigali Edition",
-    eyebrow: "2026 Edition",
+    eyebrow: "2027 Edition",
     title: "Kigali Edition Overview",
     subtitle:
       "A high-level platform for East Africa's clean energy transition, regional integration, and investment dialogue.",
-    date: "6–7 August 2026",
+    date: "6–7 August 2027",
     venue: "Kigali Marriott Hotel, Rwanda",
     heroImage: "/images/gallery/DAY1/clean-energy-conference-keynote-001.jpg",
     tabImage: "/images/conference/kigali-tab.jpg",
@@ -80,11 +80,11 @@ const editions = {
   perth: {
     key: "perth",
     tabLabel: "Perth Edition",
-    eyebrow: "2026 Edition",
+    eyebrow: "2027 Edition",
     title: "Perth Edition Overview",
     subtitle:
       "A strategic Australia-facing edition linking African energy priorities to capital, mining technology, green hydrogen, storage, and ESG leadership.",
-    date: "31 Aug – 1 Sept 2026",
+    date: "31 Aug – 1 Sept 2027",
     venue: "Novotel Hotel Perth, Western Australia",
     heroImage: "/images/gallery/hero-carousel-1.jpeg",
     tabImage: "/images/conference/perth-tab.jpg",
@@ -203,7 +203,7 @@ export default function ConferenceOverviewPage() {
             </p>
 
             <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
-              Explore the 2026 conference editions
+              Explore the 2027 conference editions
             </h1>
 
             <p className="mt-5 max-w-3xl text-xl leading-8 text-slate-600">
