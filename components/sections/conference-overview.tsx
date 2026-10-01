@@ -14,19 +14,172 @@ import {
 import { useRole, type RoleKey } from "@/context/RoleContext";
 import {
   rolesContent,
-  editions,
   type Highlight,
   type AudienceItem,
 } from "@/data/rolesData";
 
 /* ----------------------------------------------------------------------- */
 /* All role-specific copy (headings, highlights, stats, outcomes,          */
-/* audience cards, CTA words, banner paragraph) and the edition logistics  */
-/* now live in data/rolesData.ts. This file only handles rendering + the   */
-/* interactive bits (the shuffling card stack, typewriter reveal, role     */
-/* tabs, rotating word, etc). To add/edit a role's content, edit           */
-/* rolesData.ts — nothing in this component needs to change.               */
+/* audience cards, CTA words, banner paragraph) lives in                   */
+/* data/rolesData.ts. This file handles rendering + the interactive bits   */
+/* (the shuffling card stack, role tabs, rotating word, etc).              */
+/*                                                                         */
+/* The 2027 concept-note content (editions, convergence stats, capability  */
+/* fit table, deal room, pillars) is defined in this file below, so the    */
+/* `editions` export in rolesData.ts is no longer used here.               */
 /* ----------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------- */
+/* CEAA 2027 concept-note content                                          */
+/* ----------------------------------------------------------------------- */
+
+type Edition = {
+  name: string;
+  date: string;
+  venue: string;
+  description: string;
+  focus: string[];
+  accent: string;
+};
+
+const EDITIONS_2027: Edition[] = [
+  {
+    name: "Kigali Edition",
+    date: "25–28 May 2027",
+    venue: "Kigali International Convention Centre, Rwanda",
+    description:
+      "Where Africa prepares the opportunity. African governments and developers present qualified projects to investors and development-finance partners.",
+    focus: [
+      "African government priorities and regulatory conditions",
+      "Regional infrastructure needs",
+      "Project preparation and qualification",
+      "Development-finance participation",
+      "Project-owner and investor matching",
+      "Local manufacturing and workforce development",
+    ],
+    accent: "from-blue-50 to-white border-blue-200",
+  },
+  {
+    name: "Australia Edition",
+    date: "30 Aug – 2 Sept 2027",
+    venue: "Perth, Western Australia (venue TBA)",
+    description:
+      "Where Australia helps move the opportunity forward. Investors, technology providers and delivery partners respond to the projects introduced in Kigali.",
+    focus: [
+      "Mining and critical-mineral investment",
+      "Australian technology, storage and grid expertise",
+      "Engineering and project delivery",
+      "Institutional capital",
+      "Research and skills partnerships",
+      "Structured responses to projects introduced in Kigali",
+    ],
+    accent: "from-emerald-50 to-white border-emerald-200",
+  },
+];
+
+const CONVERGENCE_STATS = [
+  {
+    value: "60%",
+    label: "of the world's best solar resources are in Africa",
+  },
+  {
+    value: "USD 200–240B",
+    label: "Africa's required annual clean-energy investment by 2030 (IEA)",
+  },
+  {
+    value: "~2–3%",
+    label:
+      "of global clean-energy investment goes to Africa, despite 20% of the world's population (IEA)",
+  },
+  {
+    value: "30%+",
+    label: "of global green-tech critical minerals are held by Africa (East Asia Forum)",
+  },
+  {
+    value: "~170",
+    label:
+      "ASX-listed companies operate across about 35 African countries, mostly in mining (Australian Mining Review, March 2026)",
+  },
+  {
+    value: "~A$60B",
+    label: "Australia's mining investment in Africa",
+  },
+];
+
+const FIT_ROWS: [string, string, string][] = [
+  [
+    "Mining finance. ASX-listed miners active in about 35 African countries.",
+    "Capital for processing and downstream steps at existing mines.",
+    "Processing-stage joint ventures and offtake-linked finance.",
+  ],
+  [
+    "Mining-energy technology. WA miners run large off-grid renewable systems; Fortescue reports 480 km of transmission built and a 2 to 3 GW target by 2030.",
+    "Mines dependent on diesel or unreliable grids.",
+    "Hybrid solar-storage at operating mines, with the mine as anchor load for a wider renewable project.",
+  ],
+  [
+    "Storage and grid. Third-largest utility-scale battery market (Clean Energy Council, 2026).",
+    "Grids absorbing fast-growing distributed solar.",
+    "Storage pilots, C&I batteries, grid-planning technical assistance.",
+  ],
+  [
+    "Engineering and project delivery.",
+    "The project-preparation gap.",
+    "Feasibility, owner's engineer and PMO contracts funded by DFI preparation facilities.",
+  ],
+  [
+    "Institutional capital. A$4.5 trillion invested overseas (DFAT, end-2025).",
+    "About 3% of global energy investment; capital costs at least double those in advanced economies.",
+    "Co-investment alongside DFIs with guarantees. Institutions arrive after de-risking.",
+  ],
+  [
+    "Research and skills. Universities, Australia Awards short courses.",
+    "About 2% of the renewable workforce.",
+    "Institutional pairings, grid-operator training, metallurgy and processing courses.",
+  ],
+];
+
+const DEAL_ROOM = [
+  {
+    space: "Project Showcase",
+    job: "Structured 15-minute presentations of pipeline projects.",
+    rule: "Standard template. Qualified projects only.",
+  },
+  {
+    space: "Project Clinics",
+    job: "Technical and financial interrogation.",
+    rule: "By invitation. Output is the Readiness Note.",
+  },
+  {
+    space: "Investor Lounge",
+    job: "Matched meetings by appointment.",
+    rule: "Pre-booked through the pipeline register.",
+  },
+  {
+    space: "Regulatory Working Sessions",
+    job: "Barriers, permits, market rules.",
+    rule: "Closed format. Output is the barrier log.",
+  },
+];
+
+const PILLARS = [
+  {
+    title: "Future power systems",
+    body: "The next African power system. AI and energy infrastructure, and smart cities and mobility, are treated as demand drivers.",
+  },
+  {
+    title: "Critical-mineral value chains",
+    body: "Critical minerals beyond extraction. Green hydrogen and manufacturing are included only where a named project or buyer exists.",
+  },
+  {
+    title: "Investable projects",
+    body: "Reaching financial close. Carbon markets are one element of a project's revenue stack.",
+  },
+  {
+    title: "Skills and capacity",
+    body: "The future workforce. ESG traceability is a cross-cutting eligibility criterion, not a session.",
+  },
+];
 
 /* ----------------------------------------------------------------------- */
 /* Stacked "deck of cards" shuffle for the outcomes list                   */
@@ -301,25 +454,25 @@ const STAT_COLORS = ["#020266", "#009966", "#B8860B", "#0F0F76"];
 
 const OVERVIEW_ANIMATION_VIDEOS = [
   {
-  src: "/videos/mine2.mp4",
-  title: "Critical",
-  keyword: "Minerals & Sustainable Mining",
-},
-{
-  src: "/videos/solar.mp4",
-  title: "Accelerating",
-  keyword: "Solar Energy",
-},
-{
-  src: "/videos/turbine.mp4",
-  title: "Harnessing",
-  keyword: "Geothermal & Hydrothermal Energy",
-},
-{
-  src: "/videos/join.mp4",
-  title: "Join the",
-  keyword: "Clean Energy Conference Africa Australia",
-},
+    src: "/videos/mine2.mp4",
+    title: "Critical",
+    keyword: "Minerals & Sustainable Mining",
+  },
+  {
+    src: "/videos/solar.mp4",
+    title: "Accelerating",
+    keyword: "Solar Energy",
+  },
+  {
+    src: "/videos/turbine.mp4",
+    title: "Harnessing",
+    keyword: "Geothermal & Hydrothermal Energy",
+  },
+  {
+    src: "/videos/join.mp4",
+    title: "Join the",
+    keyword: "Clean Energy Conference Africa Australia",
+  },
 ];
 
 const TITLE_TRANSITIONS = [
@@ -612,8 +765,7 @@ function RotatingWord({
 /* used at the top of every major band below so each one reads as its own */
 /* distinct section rather than one long undifferentiated scroll. Each    */
 /* band gets its own accent color from the brand trio (navy/green/gold)   */
-/* plus a short intro line, mirroring the pattern "Why it matters" and     */
-/* "Latest insights" already established further up the page.             */
+/* plus a short intro line.                                                */
 /* ----------------------------------------------------------------------- */
 
 function SectionKicker({
@@ -1008,10 +1160,7 @@ export function ConferenceOverview() {
       </section>
 
       {/* ================================================================= */}
-      {/* SECTION 2 — SPOTLIGHT: theme video player. White background, with */}
-      {/* a larger, more prominent video so it stands out as its own       */}
-      {/* moment. (The auto-switching highlight cards now live up in the   */}
-      {/* hero, under the intro paragraph.)                                */}
+      {/* SECTION 2 — SPOTLIGHT: theme video player.                       */}
       {/* ================================================================= */}
       <section className="border-t border-zinc-200 bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -1030,9 +1179,136 @@ export function ConferenceOverview() {
       </section>
 
       {/* ================================================================= */}
-      {/* SECTION 3 — NEWS & INSIGHTS: latest articles, on a navy-tinted   */}
-      {/* band so it's clearly a distinct zone from the green spotlight    */}
-      {/* section above it.                                                */}
+      {/* SECTION 3 — WHY NOW: convergence stats from the 2027 concept     */}
+      {/* note.                                                            */}
+      {/* ================================================================= */}
+      <section className="border-t border-zinc-200 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="03"
+            label="Why now"
+            heading="Why this convergence matters now"
+            intro="Africa holds 60% of the world's best solar resources and critical minerals that global markets need. Australia brings capital, mining expertise and clean-tech maturity. CEAA 2027, staged in Kigali and Perth, is where that gap becomes investable opportunity."
+            accent="#009966"
+          />
+
+          <p className="mt-6 max-w-3xl text-base leading-7 text-zinc-700 sm:text-lg">
+            CEAA is the Africa–Australia platform that moves clean-energy and critical-mineral
+            projects from opportunity to capital. In Kigali, African governments and developers
+            present qualified projects. In Perth, Australian investors, technology providers and
+            delivery partners respond. Between the two, projects are tested, matched and tracked,
+            so every introduction is followed through.
+          </p>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {CONVERGENCE_STATS.map((s, i) => (
+              <div
+                key={s.value}
+                className="rounded-[24px] p-7 text-white shadow-[0_18px_40px_rgba(2,6,23,0.18)]"
+                style={{ backgroundColor: STAT_COLORS[i % STAT_COLORS.length] }}
+              >
+                <p className="text-4xl font-bold tracking-tight">{s.value}</p>
+                <p className="mt-3 text-base leading-7 text-white/85">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 4 — FIT: Australian capability vs African need.          */}
+      {/* ================================================================= */}
+      <section className="border-t border-[#020266]/10 bg-[#F5F6FB] py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="04"
+            label="Fit"
+            heading="Where Australian capability fits African need"
+            accent="#020266"
+          />
+
+          <div className="mt-10 overflow-x-auto rounded-[24px] border border-zinc-200 bg-white shadow-sm">
+            <table className="w-full min-w-[760px] text-left text-sm">
+              <thead className="bg-[#020266] text-white">
+                <tr>
+                  <th className="p-4 font-semibold">Australian strength</th>
+                  <th className="p-4 font-semibold">African need</th>
+                  <th className="p-4 font-semibold">Fastest fit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {FIT_ROWS.map((row) => (
+                  <tr key={row[0]} className="border-t border-zinc-200 align-top">
+                    {row.map((cell) => (
+                      <td key={cell} className="p-4 leading-6 text-zinc-700">
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 5 — DEAL ROOM: the four structured spaces.               */}
+      {/* ================================================================= */}
+      <section className="border-t border-zinc-200 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="05"
+            label="The deal room"
+            heading="Making the deal room precise"
+            accent="#B8860B"
+          />
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            {DEAL_ROOM.map((d) => (
+              <div
+                key={d.space}
+                className="rounded-[24px] border border-zinc-200 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-semibold text-[#020266]">{d.space}</h3>
+                <p className="mt-2 text-base leading-7 text-zinc-700">{d.job}</p>
+                <p className="mt-3 text-sm font-medium text-zinc-500">{d.rule}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 6 — PILLARS: four pillars, defined outputs.              */}
+      {/* ================================================================= */}
+      <section className="border-t border-zinc-200 bg-white pb-16 pt-16 sm:pb-20 sm:pt-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionKicker
+            index="06"
+            label="Programme"
+            heading="Four pillars, defined outputs"
+            accent="#009966"
+          />
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p, i) => (
+              <div
+                key={p.title}
+                className="rounded-2xl p-5 text-white shadow-[0_8px_22px_rgba(2,6,23,0.14)]"
+                style={{ backgroundColor: STAT_COLORS[i % STAT_COLORS.length] }}
+              >
+                <h4 className="text-lg font-semibold leading-snug">{p.title}</h4>
+                <p className="mt-2 text-sm leading-6 text-white/85">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SECTION 7 — NEWS & INSIGHTS: latest articles, on a navy-tinted   */}
+      {/* band.                                                            */}
       {/* ================================================================= */}
       <section
         className="relative overflow-hidden border-b border-[#020266]/10 bg-[#F5F6FB] py-16 sm:py-20"
@@ -1043,7 +1319,7 @@ export function ConferenceOverview() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <SectionKicker
-              index="03"
+              index="07"
               label="Latest insights"
               heading="News, ideas, and industry perspectives"
               intro="Explore the latest thinking on energy investment, policy, technology, and Africa's clean-energy future."
@@ -1104,9 +1380,8 @@ export function ConferenceOverview() {
       </section>
 
       {/* ================================================================= */}
-      {/* SECTION 4 — THEME BANNER: full-bleed, tri-color bordered slab.   */}
-      {/* Already visually distinct by design (hard-edged conic border);   */}
-      {/* kept as the page's single boldest moment.                        */}
+      {/* THEME BANNER: full-bleed, tri-color bordered slab. Kept as the   */}
+      {/* page's single boldest moment.                                    */}
       {/* ================================================================= */}
       <div
         className="w-full overflow-hidden p-[6px] shadow-[0_18px_50px_rgba(0,57,148,0.15)]"
@@ -1153,32 +1428,41 @@ export function ConferenceOverview() {
       </div>
 
       {/* ================================================================= */}
-      {/* SECTION 5 — EDITIONS: gold-tinted band, closing the page with    */}
-      {/* the concrete logistics (dates/venues) for each 2026 edition.     */}
+      {/* SECTION 8 — EDITIONS: one journey, two cities. Gold-tinted band, */}
+      {/* closing the page with dates, venues and focus areas for each     */}
+      {/* 2027 edition.                                                    */}
       {/* ================================================================= */}
-      <section className="border-t border-[#B8860B]/15  py-16 sm:py-20">
+      <section className="border-t border-[#B8860B]/15 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionKicker
-            index="04"
-            label="2026 editions"
-            heading="Two editions, one mission"
-            intro="Wherever you join from, each edition carries the same agenda: turning clean-energy ambition into action."
+            index="08"
+            label="2027 editions"
+            heading="One journey, two cities"
+            intro="One shared project and partnership pipeline connects both cities."
             accent="#B8860B"
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {editions.map((edition) => (
+            {EDITIONS_2027.map((edition) => (
               <div
                 key={edition.name}
                 className={`rounded-[28px] border bg-gradient-to-br ${edition.accent} p-7 shadow-[0_14px_34px_rgba(2,6,23,0.08)]`}
               >
                 <p className="text-base font-semibold uppercase tracking-[0.18em] text-zinc-600">
-                  2026 Edition
+                  2027 Edition
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold text-zinc-950">{edition.name}</h3>
                 <p className="mt-4 text-base font-medium text-zinc-800">{edition.date}</p>
                 <p className="mt-1 text-base text-zinc-600">{edition.venue}</p>
                 <p className="mt-5 text-base leading-7 text-zinc-700">{edition.description}</p>
+                <ul className="mt-5 space-y-2 text-base leading-7 text-zinc-700">
+                  {edition.focus.map((f) => (
+                    <li key={f} className="flex gap-3">
+                      <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#009966]" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>

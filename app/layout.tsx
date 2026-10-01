@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { RoleProvider } from "@/context/RoleContext";
 import { TrackingProvider } from "@/components/TrackingProvider";
-import { RoleSubNav } from "@/components/layout/role-subnav";
+// import { RoleSubNav } from "@/components/layout/role-subnav"; // Temporarily commented out
 
 export const metadata = {
   title: "Clean Energy Conference",
@@ -48,13 +48,12 @@ export default function RootLayout({
       <body>
         <RoleProvider>
           <Header />
-          <RoleSubNav />
+          {/* <RoleSubNav /> */}
           <TrackingProvider />
 
-          {/* pt offsets the fixed Header (96px) + fixed RoleSubNav (~56px) */}
-          <main className="pt-[152px]">{children}</main>
+          {/* Adjusted pt back to only offset the fixed Header (96px) */}
+          <main className="pt-[96px]">{children}</main>
           
-
           <Footer />
 
           <ChatWidget />

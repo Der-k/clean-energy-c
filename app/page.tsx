@@ -10,12 +10,14 @@ import { PartnersPreview } from "@/components/sections/partners-preview";
 import { StatsBar } from "@/components/sections/stats-bar";
 import { ProgrammeCtaSection } from "@/components/sections/programme-cta-section";
 import { RoleEntrySection } from "@/components/sections/RoleEntrySection";
+
 import { ProgrammeHighlightsSection } from "@/components/sections/programme-highlights-section";
 
 export default function HomePage() {
   return (
     <main className="pt-24">
       <HeroSection />
+
 
       <StatsBar />
 
@@ -29,8 +31,8 @@ export default function HomePage() {
       <NewsInsightsSection />
       
 
-      <SpeakersPreview />
-      <VenuePreview />
+ 
+    
       <EventCountdown />
       <PartnersPreview />
     </main>

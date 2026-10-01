@@ -15,7 +15,7 @@ type CountdownParts = {
 type EventItem = {
   name: string;
   location: string;
-  venue: string;
+  venue: string | null; // null = venue not yet announced
   dateLabel: string;
   startsAt: string;
   accent: "blue" | "green";
@@ -25,17 +25,17 @@ const events: EventItem[] = [
   {
     name: "Kigali Edition",
     location: "Kigali, Rwanda",
-    venue: "Kigali Marriott Hotel",
-    dateLabel: "6–7 August 2026",
-    startsAt: "2026-08-06T08:00:00+02:00",
+    venue: "Kigali International Convention Centre",
+    dateLabel: "25–28 May 2027",
+    startsAt: "2027-05-25T08:00:00+02:00",
     accent: "blue",
   },
   {
     name: "Perth Edition",
     location: "Perth, Western Australia",
-    venue: "Novotel Hotel Perth",
-    dateLabel: "31 Aug – 1 Sept 2026",
-    startsAt: "2026-08-31T08:00:00+08:00",
+    venue: null, // venue TBA
+    dateLabel: "30 Aug – 2 Sept 2027",
+    startsAt: "2027-08-30T08:00:00+08:00",
     accent: "green",
   },
 ];
@@ -89,9 +89,9 @@ function TimeCard({
     <div
       className={`rounded-2xl border px-4 py-5 text-center shadow-sm ${accentClasses}`}
     >
-     <div className="text-3xl font-semibold sm:text-4xl" suppressHydrationWarning>
-  {String(value).padStart(2, "0")}
-</div>
+      <div className="text-3xl font-semibold sm:text-4xl" suppressHydrationWarning>
+        {String(value).padStart(2, "0")}
+      </div>
       <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-600">
         {label}
       </div>
@@ -168,7 +168,9 @@ function EventCountdownCard({ event }: { event: EventItem }) {
         <div className="flex items-center gap-3">
           <MapPin className="h-4 w-4 text-zinc-400" />
           <span>
-            {event.venue}, {event.location}
+            {event.venue
+              ? `${event.venue}, ${event.location}`
+              : `${event.location} (venue TBA)`}
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -191,13 +193,13 @@ export function EventCountdown() {
             Event Countdown
           </div>
           <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Countdown to Kigali and Perth 2026
+            Countdown to Kigali and Perth 2027
           </h2>
-          <p className="mt-5 text-base leading-8 text-white/70 sm:text-xl
-">
-            Join the next editions of The Clean Energy Conference & Exhibition
-            as Africa and Australia connect around renewable energy, critical
-            minerals, innovation, investment, and sustainable infrastructure.
+          <p className="mt-5 text-base leading-8 text-white/70 sm:text-xl">
+            Join the next editions of the Clean Energy Conference Africa
+            Australia. From Minerals to Megawatts connects Australian capital,
+            technology and delivery expertise with Africa&apos;s clean-energy
+            and critical-mineral opportunities.
           </p>
         </div>
 

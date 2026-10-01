@@ -15,7 +15,7 @@ export const navItems: NavItem[] = [
     children: [
       { label: "Conference Overview", href: "/conference" },
       { label: "Why Attend", href: "/conference/why-attend" },
-      { label: "Testimonials", href: "/conference/testimonials" },
+      
     ],
   },
   {

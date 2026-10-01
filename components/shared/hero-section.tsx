@@ -8,14 +8,16 @@ import { ROLE_NAV_TRIGGER_ID } from "@/components/layout/role-subnav"; // adjust
 // ─── STATS BAR ─────────────────────────────────────────────────────────────────
 
 const stats = [
-  { value: "600+", label: "Expected Delegates" },
+  { value: "USD 200–240B", label: "Annual Clean-Energy Investment Africa Needs by 2030" },
+  { value: "60%", label: "Of the World's Best Solar Resources Are in Africa" },
+  { value: "30%+", label: "Global Green-Tech Critical Minerals Held by Africa" },
+  { value: "~2–3%", label: "Share of Global Clean-Energy Investment Africa Attracts" },
+  { value: "42.7%+", label: "Australian Electricity from Renewables" },
+  { value: "~170", label: "ASX-Listed Companies Active in Africa" },
+  { value: "~35", label: "African Countries with ASX-Listed Miners" },
+  { value: "A$4.5T", label: "Invested Overseas by Australia (DFAT, End-2025)" },
   { value: "5,000+", label: "Past Participants" },
   { value: "8", label: "Successful Editions" },
-  { value: "USD 2.2T", label: "Global Clean Energy Investment" },
-  { value: "585 GW", label: "2024 Renewable Capacity Added" },
-  { value: "600M", label: "Africans Without Electricity" },
-  { value: "90%", label: "Rwanda Renewable Target by 2030" },
-  { value: "$16B", label: "Rwanda Energy Investment Pipeline" },
 ];
 
 export function StatsBar() {
@@ -85,6 +87,7 @@ type Edition = {
   name: string;
   date: string;
   venue: string;
+  venueShort: string;
   country: string;
   href: string;
   color: string;
@@ -107,9 +110,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 0,
-    eyebrow: "Africa · Australia · 2026",
-    headline: "Clean Energy\nConference\n2026",
-    sub: "Kigali & Perth editions bringing together policymakers, investors, and industry leaders to accelerate Africa's clean energy transition.",
+    eyebrow: "Africa · Australia · 2027",
+    headline: "From Minerals\nto Megawatts",
+    sub: "Australia's capital, technology and delivery expertise meets Africa's energy and critical-mineral opportunities. Two continents. One clean-energy decade.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#fad202",
@@ -117,23 +120,25 @@ const slides: Slide[] = [
   {
     kind: "cards",
     id: 1,
-    eyebrow: "Two Editions · One Mission",
-    headline: "Two Editions.\nOne Mission.",
-    sub: "Choose your destination and be part of Africa and Australia's leading clean energy event.",
+    eyebrow: "Two Editions · One Pipeline",
+    headline: "Two Cities.\nOne Pipeline.",
+    sub: "Kigali is where Africa prepares the opportunity. Perth is where Australia helps move it forward. One shared project and partnership pipeline connects both.",
     accent: "#a5b4fc",
     editions: [
       {
         name: "Kigali Edition",
-        date: "6–7 August 2026",
-        venue: "Kigali Marriott Hotel, Rwanda",
+        date: "25–28 May 2027",
+        venue: "Kigali International Convention Centre, Rwanda",
+        venueShort: "Kigali International Convention Centre",
         country: "RWA",
         href: "/conference?edition=Kigali",
         color: "#a5b4fc",
       },
       {
         name: "Perth Edition",
-        date: "31 Aug – 1 Sept 2026",
-        venue: "Novotel Hotel Perth, Australia",
+        date: "30 Aug – 2 Sept 2027",
+        venue: "Perth, Western Australia (venue TBA)",
+        venueShort: "Perth, venue TBA",
         country: "AUS",
         href: "/conference?edition=perth",
         color: "#6ee7b7",
@@ -148,9 +153,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 2,
-    eyebrow: "Programme · 2026",
-    headline: "Solar,\nGeothermal\n& Clean Mining",
-    sub: "Focused tracks covering renewable energy, critical minerals, green hydrogen, and sustainable infrastructure across Africa and Australia.",
+    eyebrow: "Programme · 2027",
+    headline: "Power Systems,\nCritical Minerals\n& Financial Close",
+    sub: "Core tracks cover the next African power system, critical-mineral value chains beyond extraction, reaching financial close, and skills and capacity.",
     cta: "View Programme",
     href: "/event/programme",
     accent: "#6ee7b7",
@@ -160,7 +165,7 @@ const slides: Slide[] = [
     id: 3,
     eyebrow: "World-Class Speakers",
     headline: "Governments.\nInvestors.\nInnovators.",
-    sub: "High-level plenaries, technical workshops, investor roundtables, and panel discussions shaping Africa's clean energy agenda.",
+    sub: "Framing keynotes on energy security and geopolitical change in both cities, alongside ministers, development-finance institutions, developers and delivery partners.",
     cta: "See Speakers",
     href: "/speakers",
     accent: "#fad202",
@@ -168,9 +173,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 4,
-    eyebrow: "Networking · 2026",
-    headline: "Unrivalled\nNetworking\nOpportunities",
-    sub: "Deal rooms, B2B meetings, investor roundtables, and partnership sessions across both the Kigali and Perth editions.",
+    eyebrow: "The Deal Room · 2027",
+    headline: "Projects Tested.\nInvestors Matched.\nDeals Tracked.",
+    sub: "Project Showcase, Project Clinics, the Investor Lounge and Regulatory Working Sessions, each with a defined output, across both the Kigali and Perth editions.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#f9a8d4",
@@ -178,9 +183,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 5,
-    eyebrow: "Partnership · 2026",
+    eyebrow: "Partnership · 2027",
     headline: "Become a\nConference\nPartner",
-    sub: "Gain visibility across African and Australian energy networks, access curated investment matchmaking, and help shape Africa's clean energy agenda.",
+    sub: "Gain visibility across African and Australian energy networks, access matched investor meetings through the pipeline register, and help move projects from opportunity to capital.",
     cta: "Partner With Us",
     href: "/partners/become-a-partner",
     accent: "#fbbf24",
@@ -188,9 +193,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 6,
-    eyebrow: "Rwanda's Vision 2050",
-    headline: "Rwanda:\nClean Energy\nHub",
-    sub: "Rwanda's Vision 2050 targets 90% renewable energy by 2030 — Kigali is emerging as the continent's leading hub for clean energy and innovation.",
+    eyebrow: "Kigali · 25–28 May 2027",
+    headline: "Rwanda:\nConvening\nAfrica",
+    sub: "Kigali brings ministers, ambassadors and senior officials together to advance regional integration, including the AU Continental Power System Master Plan and the African Single Electricity Market.",
     cta: "Learn More",
     href: "/about",
     accent: "#6ee7b7",
@@ -198,9 +203,9 @@ const slides: Slide[] = [
   {
     kind: "text",
     id: 7,
-    eyebrow: "600+ Delegates Expected",
+    eyebrow: "Kigali & Perth · 2027",
     headline: "Join\nLeaders\nWorldwide",
-    sub: "Join government ministers, Fortune 500 firms, investors, utility companies, and innovators from across the clean energy value chain.",
+    sub: "Join African governments and project developers, Australian investors and technology providers, development-finance institutions, miners and delivery partners.",
     cta: "Register Now",
     href: "/get-tickets",
     accent: "#fad202",
@@ -208,24 +213,24 @@ const slides: Slide[] = [
 ];
 
 const TICKER_ITEMS = [
-  "Join us for the Clean Energy 2026 Conference",
-  "Connecting minds, powering a cleaner future",
-  "Building solar infrastructure across continents",
-  "Collaboration between engineers and investors driving solar adoption",
-  "Preserving Africa's wildlife through sustainable energy",
-  "Celebrating nature's power — water as a renewable resource",
-  "Global leaders driving clean energy conversations",
-  "Powering future cities with clean, reliable energy",
-  "Harnessing hydrothermal potential across Africa and Australia",
-  "Inclusive discussions on diversity and clean energy innovation",
-  "Solar energy transforming rural and urban landscapes",
-  "Training the next generation of solar engineers",
-  "Empowering communities for a brighter, cleaner tomorrow",
-  "Harnessing the wind for Africa–Australia energy needs",
-  "Smart cities powered by clean tech solutions",
-  "Transforming transportation for a net-zero future",
-  "Africa's cities embracing clean energy innovation",
-  "Networking for climate action and energy collaboration",
+  "Join us for CEAA 2027 in Kigali and Perth",
+  "From Minerals to Megawatts: Australia's capital, Africa's power",
+  "Kigali, 25–28 May 2027: where Africa prepares the opportunity",
+  "Perth, 30 Aug – 2 Sept 2027: where Australia helps move it forward",
+  "One shared project and partnership pipeline connects both cities",
+  "Africa holds 60% of the world's best solar resources",
+  "Demand for magnetic rare earths is set to triple by 2035",
+  "Hybrid solar-storage at operating mines, anchoring wider renewable projects",
+  "Co-investment alongside DFIs: institutions arrive after de-risking",
+  "Qualified projects only: structured 15-minute pipeline presentations",
+  "Project Clinics produce a Readiness Note for every project",
+  "Regulatory Working Sessions produce a barrier log",
+  "Matched investor meetings, pre-booked through the pipeline register",
+  "Critical-mineral value chains beyond extraction",
+  "Storage pilots, C&I batteries and grid-planning assistance",
+  "Local manufacturing leveraging AfCFTA frameworks",
+  "Training grid operators and the next generation of energy workers",
+  "Cross-border grid integration and regional energy pooling",
   "A global gathering for a clean energy future",
 ];
 
@@ -488,7 +493,7 @@ export function HeroSection() {
           className="text-white text-base md:text-xl font-semibold truncate"
           style={{ letterSpacing: "-0.02em" }}
         >
-          Clean Energy Conference
+          Clean Energy Conference Africa Australia
         </span>
 
         <motion.div
@@ -580,7 +585,7 @@ export function HeroSection() {
                             </div>
                             <div className="mt-0.5 flex items-center gap-1.5 text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }}>
                               <MapPin className="h-3 w-3 shrink-0" />
-                              {ed.venue.split(",")[0]}
+                              {ed.venueShort}
                             </div>
                             <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold" style={{ color: ed.color }}>
                               Details <ArrowRight className="h-3 w-3" />

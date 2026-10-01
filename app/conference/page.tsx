@@ -9,18 +9,18 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-type EditionKey = "Kigali" | "perth";
+type EditionKey = "kigali" | "perth";
 
 const editions = {
-  Kigali: {
-    key: "Kigali",
+  kigali: {
+    key: "kigali",
     tabLabel: "Kigali Edition",
     eyebrow: "2027 Edition",
     title: "Kigali Edition Overview",
     subtitle:
-      "A high-level platform for East Africa's clean energy transition, regional integration, and investment dialogue.",
-    date: "6–7 August 2027",
-    venue: "Kigali Marriott Hotel, Rwanda",
+      "Where Africa prepares the opportunity. African governments and developers present qualified clean-energy and critical-mineral projects to investors and development-finance partners.",
+    date: "25–28 May 2027",
+    venue: "Kigali International Convention Centre, Rwanda",
     heroImage: "/images/gallery/DAY1/clean-energy-conference-keynote-001.jpg",
     tabImage: "/images/conference/kigali-tab.jpg",
     gallery: [
@@ -32,38 +32,38 @@ const editions = {
       "/images/gallery/DAY2/clean-energy-conference-group-photo-016.jpg",
     ],
     overviewTitle:
-      "East Africa-focused clean energy dialogue, investment, and collaboration",
+      "Preparing, qualifying and matching African projects with capital",
     overviewParagraphs: [
-      "The Kigali Edition will focus strongly on East Africa's energy transition, highlighting regional integration, geothermal and renewable expansion, decentralized energy systems, green industrialization, and climate finance mobilization.",
-      "It also recognizes Rwanda's growing leadership in clean mobility, sustainable urban systems, and innovation-driven energy policy.",
-      "The platform creates space to deepen Kenya–Rwanda collaboration in cross-border power trade, regional power pools, clean technology ecosystems, and institutional partnerships.",
+      "The Kigali Edition is where African governments and developers present qualified projects. It covers government priorities and regulatory conditions, regional infrastructure needs, project preparation and qualification, and development-finance participation.",
+      "Project owners and investors are matched through a shared pipeline register, alongside work on local manufacturing and workforce development.",
+      "Every project introduced in Kigali is tested, matched and tracked, so that Australian investors, technology providers and delivery partners can respond in Perth.",
     ],
     stats: [
       { value: "600+", label: "Delegates targeted" },
-      { value: "2", label: "Conference days" },
-      { value: "8+", label: "Programme formats" },
-      { value: "Africa", label: "Regional focus" },
+      { value: "4", label: "Conference days" },
+      { value: "4", label: "Deal-room formats" },
+      { value: "Africa", label: "Projects presented" },
     ],
     reasonsToAttend: [
-      "Connect with policymakers, investors, regulators, and innovators shaping East Africa's energy transition.",
-      "Gain insight into regional integration, decentralized energy systems, and green industrialization.",
-      "Explore climate finance mobilization and practical implementation opportunities.",
-      "Build institutional and commercial relationships across clean technology and cross-border energy ecosystems.",
-      "Learn from discussions tied closely to Rwanda's and the region's energy priorities.",
+      "Present or review qualified projects in structured 15-minute Project Showcase sessions.",
+      "Join invitation-only Project Clinics for technical and financial interrogation, ending in a Readiness Note.",
+      "Meet investors and development-finance partners through pre-booked Investor Lounge appointments.",
+      "Work through permits, barriers and market rules in closed Regulatory Working Sessions.",
+      "Build relationships that carry through to the Perth edition, where projects receive structured responses.",
     ],
     sectors: [
-      "Renewable Energy",
-      "Geothermal",
-      "Decentralized Energy Systems",
-      "Climate Finance",
-      "Clean Mobility",
-      "Sustainable Urban Systems",
-      "Regional Power Trade",
-      "Green Industrialization",
-      "Energy Policy",
-      "Critical Minerals",
+      "Future Power Systems",
+      "Regional Infrastructure",
+      "Project Preparation",
+      "Development Finance",
+      "Critical-Mineral Value Chains",
+      "Investable Projects",
+      "Local Manufacturing",
+      "Workforce Development",
+      "Regulatory Conditions",
       "Grid & Transmission",
-      "Technology & Innovation",
+      "Storage",
+      "Skills & Capacity",
     ],
     audienceBreakdown: [
       { label: "Government & Institutional Stakeholders", value: "18%" },
@@ -83,9 +83,9 @@ const editions = {
     eyebrow: "2027 Edition",
     title: "Perth Edition Overview",
     subtitle:
-      "A strategic Australia-facing edition linking African energy priorities to capital, mining technology, green hydrogen, storage, and ESG leadership.",
-    date: "31 Aug – 1 Sept 2027",
-    venue: "Novotel Hotel Perth, Western Australia",
+      "Where Australia helps move the opportunity forward. Investors, technology providers and delivery partners respond to the projects introduced in Kigali.",
+    date: "30 Aug – 2 Sept 2027",
+    venue: "Perth, Western Australia (venue TBA)",
     heroImage: "/images/gallery/hero-carousel-1.jpeg",
     tabImage: "/images/conference/perth-tab.jpg",
     gallery: [
@@ -97,37 +97,37 @@ const editions = {
       "/images/gallery/hero-carousel-3.jpeg",
     ],
     overviewTitle:
-      "A bridge between African opportunity and Australian clean energy capability",
+      "Australian capital, technology and delivery expertise, matched to African need",
     overviewParagraphs: [
-      "The Perth Edition will connect African energy priorities to Australian capital markets, advanced mining technologies, green hydrogen expertise, energy storage innovation, and ESG leadership frameworks.",
-      "As a global mining and clean energy investment hub, Perth presents a strategic opportunity to position Kenya and the broader East African region within global critical minerals and renewable energy value chains.",
-      "The event is designed to strengthen Africa–Australia policy dialogue, investment relationships, and long-term institutional partnerships.",
+      "The Perth Edition brings together mining and critical-mineral investment, Australian technology, storage and grid expertise, engineering and project delivery, and institutional capital.",
+      "It also covers research and skills partnerships, and gives structured responses to the projects introduced in Kigali.",
+      "The fastest fits include processing-stage joint ventures, hybrid solar-storage at operating mines, storage pilots, DFI-funded project preparation, and co-investment alongside development finance institutions.",
     ],
     stats: [
       { value: "600+", label: "Delegates targeted" },
-      { value: "2", label: "Conference days" },
-      { value: "Global", label: "Investment outlook" },
+      { value: "4", label: "Conference days" },
+      { value: "~35", label: "African countries with ASX-listed miners" },
       { value: "AU–AF", label: "Partnership focus" },
     ],
     reasonsToAttend: [
-      "Connect African clean energy priorities to Australian capital markets and investor networks.",
-      "Explore advanced mining technologies, green hydrogen, and storage innovation.",
-      "Engage with ESG leadership frameworks relevant to global energy and minerals markets.",
-      "Position organizations within critical minerals and renewable value chains.",
-      "Strengthen Africa–Australia policy, investment, and technology partnerships.",
+      "Respond to qualified projects introduced in Kigali through a structured, tracked process.",
+      "Explore processing-stage joint ventures and offtake-linked finance with Africa-active miners.",
+      "Connect with Australian storage, grid and mining-energy technology providers.",
+      "Find owner's engineer, feasibility and PMO opportunities funded by DFI preparation facilities.",
+      "Co-invest alongside DFIs, and build research and skills partnerships.",
     ],
     sectors: [
-      "Capital Markets",
       "Critical Minerals",
-      "Advanced Mining Technology",
-      "Green Hydrogen",
+      "Mining Finance",
+      "Mining-Energy Technology",
       "Energy Storage",
-      "ESG Leadership",
-      "Renewable Energy",
-      "Investment & Finance",
       "Grid Modernization",
-      "Clean Technology",
-      "Policy & Governance",
+      "Engineering & Project Delivery",
+      "Institutional Capital",
+      "Research & Skills",
+      "Investable Projects",
+      "Processing & Downstream",
+      "Hybrid Solar-Storage",
       "Cross-Border Partnerships",
     ],
     audienceBreakdown: [
@@ -143,7 +143,7 @@ const editions = {
   },
 };
 
-const editionOrder: EditionKey[] = ["Kigali", "perth"];
+const editionOrder: EditionKey[] = ["kigali", "perth"];
 
 function SectionShell({
   children,
@@ -177,7 +177,7 @@ function StatCard({ value, label }: { value: string; label: string }) {
 }
 
 export default function ConferenceOverviewPage() {
-  const [activeEdition, setActiveEdition] = useState<EditionKey>("Kigali");
+  const [activeEdition, setActiveEdition] = useState<EditionKey>("kigali");
   const current = useMemo(() => editions[activeEdition], [activeEdition]);
 
   return (
@@ -203,13 +203,13 @@ export default function ConferenceOverviewPage() {
             </p>
 
             <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
-              Explore the 2027 conference editions
+              From Minerals to Megawatts: Australia&apos;s Capital, Africa&apos;s Power
             </h1>
 
             <p className="mt-5 max-w-3xl text-xl leading-8 text-slate-600">
-              Select an edition below to view location-specific event
-              details, themes, priorities, audience value, and programme
-              context.
+              Two continents, one clean-energy decade. One shared project and
+              partnership pipeline connects Kigali and Perth. Select an
+              edition below to view its dates, venue, focus areas and audience.
             </p>
           </div>
 
@@ -328,11 +328,7 @@ export default function ConferenceOverviewPage() {
 
                   <div className="flex flex-wrap gap-3">
                     <a
-
-                       href="/get-tickets"
-
-                  
-
+                      href="/get-tickets"
                       className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/30 bg-white px-6 py-3 text-base font-semibold text-[#02026e] shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:scale-[1.05] hover:border-[#009966] hover:text-white hover:shadow-[0_18px_50px_rgba(0,153,102,0.30)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#009966]/35 focus:ring-offset-2 focus:ring-offset-[#02026e]"
                     >
                       <span className="absolute inset-0 overflow-hidden rounded-full">
@@ -342,9 +338,7 @@ export default function ConferenceOverviewPage() {
                     </a>
 
                     <a
-
                       href="/event/programme"
-
                       className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-white/25 bg-white/5 px-6 py-3 text-base font-semibold text-white shadow-[0_10px_30px_rgba(0,0,0,0.10)] backdrop-blur-sm transition-all duration-500 ease-out hover:scale-[1.05] hover:border-white/60 hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#02026e]"
                     >
                       <span className="absolute inset-0 overflow-hidden rounded-full">
@@ -446,16 +440,16 @@ export default function ConferenceOverviewPage() {
             </div>
             <div className="mt-3 inline-block">
               <h2 className="text-3xl font-bold tracking-[-0.02em] text-white">
-                Connect, learn, and build meaningful industry relationships
+                Move projects from opportunity to capital
               </h2>
               <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
             </div>
 
             <p className="mt-5 text-base leading-8 text-white">
-              Each edition is tailored to its regional context while
-              maintaining the conference's broader goal of connecting
-              government, industry, investors, innovators, and development
-              partners around clean energy opportunity.
+              CEAA is the Africa–Australia platform that moves clean-energy
+              and critical-mineral projects from opportunity to capital.
+              Between Kigali and Perth, projects are tested, matched and
+              tracked, so every introduction is followed through.
             </p>
 
             <div className="mt-8">
@@ -489,7 +483,7 @@ export default function ConferenceOverviewPage() {
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
-              Sectors Represented
+              Focus Areas
             </p>
 
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
