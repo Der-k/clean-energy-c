@@ -199,7 +199,7 @@ export function EventCountdown() {
             Join the next editions of the Clean Energy Conference Africa
             Australia. From Minerals to Megawatts connects Australian capital,
             technology and delivery expertise with Africa&apos;s clean-energy
-            and critical-mineral opportunities.
+            and Critical-Mineral opportunities.
           </p>
         </div>
 

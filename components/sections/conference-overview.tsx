@@ -66,7 +66,7 @@ const EDITIONS_2027: Edition[] = [
     description:
       "Where Australia helps move the opportunity forward. Investors, technology providers and delivery partners respond to the projects introduced in Kigali.",
     focus: [
-      "Mining and critical-mineral investment",
+      "Mining and Critical-Mineral investment",
       "Australian technology, storage and grid expertise",
       "Engineering and project delivery",
       "Institutional capital",
@@ -168,7 +168,7 @@ const PILLARS = [
     body: "The next African power system. AI and energy infrastructure, and smart cities and mobility, are treated as demand drivers.",
   },
   {
-    title: "Critical-mineral value chains",
+    title: "Critical-Mineral value chains",
     body: "Critical minerals beyond extraction. Green hydrogen and manufacturing are included only where a named project or buyer exists.",
   },
   {
@@ -1193,7 +1193,7 @@ export function ConferenceOverview() {
           />
 
           <p className="mt-6 max-w-3xl text-base leading-7 text-zinc-700 sm:text-lg">
-            CEAA is the Africa–Australia platform that moves clean-energy and critical-mineral
+            CEAA is the Africa–Australia platform that moves clean-energy and Critical-Mineral
             projects from opportunity to capital. In Kigali, African governments and developers
             present qualified projects. In Perth, Australian investors, technology providers and
             delivery partners respond. Between the two, projects are tested, matched and tracked,

@@ -24,7 +24,7 @@ const editions = {
     tabLabel: "Kigali Edition",
     title: "Kigali Event Overview",
     subtitle:
-      "A four-day edition where African governments and developers present qualified clean-energy and critical-mineral projects, and prepare them for investment.",
+      "A four-day edition where African governments and developers present qualified clean-energy and Critical-Mineral projects, and prepare them for investment.",
     tagline: "Where Africa prepares the opportunity",
     date: "25–28 May 2027",
     venue: "Kigali International Convention Centre, Rwanda",
@@ -85,7 +85,7 @@ const editions = {
     summaryTitle: "A concise overview of the Perth edition",
     summaryParagraphs: [
       "Perth is where Australian capital, mining expertise and clean-tech maturity respond to the pipeline built in Kigali. Projects are tested, matched and tracked so that every introduction is followed through.",
-      "The edition covers mining and critical-mineral investment, Australian technology, storage and grid expertise, engineering and project delivery, institutional capital, and research and skills partnerships.",
+      "The edition covers mining and Critical-Mineral investment, Australian technology, storage and grid expertise, engineering and project delivery, institutional capital, and research and skills partnerships.",
       "Australia brings renewables at more than 42.7% of national electricity generation, the third-largest utility-scale battery market, and about 170 ASX-listed companies active across roughly 35 African countries.",
     ],
     stats: [
@@ -95,7 +95,7 @@ const editions = {
       { value: "A$4.5T", label: "Invested overseas by Australian institutions (DFAT, end-2025)" },
     ],
     focusAreas: [
-      "Mining and critical-mineral investment",
+      "Mining and Critical-Mineral investment",
       "Australian technology, storage and grid expertise",
       "Engineering and project delivery",
       "Institutional capital",
@@ -108,7 +108,7 @@ const editions = {
       "Structured responses to Kigali pipeline projects",
       "Project Clinics: technical and financial review",
       "Regulatory Working Sessions",
-      "Critical-mineral value chain breakout",
+      "Critical-Mineral value chain breakout",
       "Mining-energy and hybrid solar-storage sessions",
       "Storage, grid and C&I battery sessions",
       "Reaching financial close: co-investment with DFIs",

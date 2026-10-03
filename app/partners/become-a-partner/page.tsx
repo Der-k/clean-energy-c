@@ -1,479 +1,133 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
-  ChevronRight,
-  Handshake,
-  Building2,
-  Globe2,
-  CheckCircle2,
-  Upload,
-  ChevronDown,
+  ChevronRight, ChevronDown, Upload, Check,
+  Trophy, Medal, Globe, Tag, Building2, Mic, Ticket, Contact, Share2, BarChart3,
+  Utensils, Briefcase, Crown, ShoppingBag, Coffee, Flag, Mountain, GraduationCap,
+  type LucideIcon,
 } from "lucide-react";
+// Move CountryCodePicker, FlagImg and COUNTRY_CODES (unchanged) into this file.
+import CountryCodePicker from "@/components/CountryCodePicker";
 
-const COUNTRY_CODES = [
-  { code: "+93",    iso: "af", name: "Afghanistan" },
-  { code: "+358818",iso: "ax", name: "Åland Islands" },
-  { code: "+355",   iso: "al", name: "Albania" },
-  { code: "+213",   iso: "dz", name: "Algeria" },
-  { code: "+1684",  iso: "as", name: "American Samoa" },
-  { code: "+376",   iso: "ad", name: "Andorra" },
-  { code: "+244",   iso: "ao", name: "Angola" },
-  { code: "+1264",  iso: "ai", name: "Anguilla" },
-  { code: "+672",   iso: "aq", name: "Antarctica" },
-  { code: "+1268",  iso: "ag", name: "Antigua and Barbuda" },
-  { code: "+54",    iso: "ar", name: "Argentina" },
-  { code: "+374",   iso: "am", name: "Armenia" },
-  { code: "+297",   iso: "aw", name: "Aruba" },
-  { code: "+247",   iso: "sh", name: "Ascension Island" },
-  { code: "+61",    iso: "au", name: "Australia" },
-  { code: "+43",    iso: "at", name: "Austria" },
-  { code: "+994",   iso: "az", name: "Azerbaijan" },
-  { code: "+1242",  iso: "bs", name: "Bahamas" },
-  { code: "+973",   iso: "bh", name: "Bahrain" },
-  { code: "+880",   iso: "bd", name: "Bangladesh" },
-  { code: "+1246",  iso: "bb", name: "Barbados" },
-  { code: "+375",   iso: "by", name: "Belarus" },
-  { code: "+32",    iso: "be", name: "Belgium" },
-  { code: "+501",   iso: "bz", name: "Belize" },
-  { code: "+229",   iso: "bj", name: "Benin" },
-  { code: "+1441",  iso: "bm", name: "Bermuda" },
-  { code: "+975",   iso: "bt", name: "Bhutan" },
-  { code: "+591",   iso: "bo", name: "Bolivia" },
-  { code: "+5997",  iso: "bq", name: "Bonaire" },
-  { code: "+387",   iso: "ba", name: "Bosnia and Herzegovina" },
-  { code: "+267",   iso: "bw", name: "Botswana" },
-  { code: "+55",    iso: "br", name: "Brazil" },
-  { code: "+246",   iso: "io", name: "British Indian Ocean Territory" },
-  { code: "+1284",  iso: "vg", name: "British Virgin Islands" },
-  { code: "+673",   iso: "bn", name: "Brunei" },
-  { code: "+359",   iso: "bg", name: "Bulgaria" },
-  { code: "+226",   iso: "bf", name: "Burkina Faso" },
-  { code: "+257",   iso: "bi", name: "Burundi" },
-  { code: "+238",   iso: "cv", name: "Cabo Verde" },
-  { code: "+855",   iso: "kh", name: "Cambodia" },
-  { code: "+237",   iso: "cm", name: "Cameroon" },
-  { code: "+1",     iso: "ca", name: "Canada" },
-  { code: "+1345",  iso: "ky", name: "Cayman Islands" },
-  { code: "+236",   iso: "cf", name: "Central African Republic" },
-  { code: "+235",   iso: "td", name: "Chad" },
-  { code: "+56",    iso: "cl", name: "Chile" },
-  { code: "+86",    iso: "cn", name: "China" },
-  { code: "+6189164",iso:"cx", name: "Christmas Island" },
-  { code: "+6189162",iso:"cc", name: "Cocos (Keeling) Islands" },
-  { code: "+57",    iso: "co", name: "Colombia" },
-  { code: "+269",   iso: "km", name: "Comoros" },
-  { code: "+242",   iso: "cg", name: "Congo" },
-  { code: "+243",   iso: "cd", name: "Congo (DRC)" },
-  { code: "+682",   iso: "ck", name: "Cook Islands" },
-  { code: "+506",   iso: "cr", name: "Costa Rica" },
-  { code: "+225",   iso: "ci", name: "Côte d'Ivoire" },
-  { code: "+385",   iso: "hr", name: "Croatia" },
-  { code: "+53",    iso: "cu", name: "Cuba" },
-  { code: "+5999",  iso: "cw", name: "Curaçao" },
-  { code: "+357",   iso: "cy", name: "Cyprus" },
-  { code: "+420",   iso: "cz", name: "Czech Republic" },
-  { code: "+45",    iso: "dk", name: "Denmark" },
-  { code: "+253",   iso: "dj", name: "Djibouti" },
-  { code: "+1767",  iso: "dm", name: "Dominica" },
-  { code: "+1809",  iso: "do", name: "Dominican Republic" },
-  { code: "+593",   iso: "ec", name: "Ecuador" },
-  { code: "+20",    iso: "eg", name: "Egypt" },
-  { code: "+503",   iso: "sv", name: "El Salvador" },
-  { code: "+240",   iso: "gq", name: "Equatorial Guinea" },
-  { code: "+291",   iso: "er", name: "Eritrea" },
-  { code: "+372",   iso: "ee", name: "Estonia" },
-  { code: "+268",   iso: "sz", name: "Eswatini" },
-  { code: "+251",   iso: "et", name: "Ethiopia" },
-  { code: "+500",   iso: "fk", name: "Falkland Islands" },
-  { code: "+298",   iso: "fo", name: "Faroe Islands" },
-  { code: "+679",   iso: "fj", name: "Fiji" },
-  { code: "+358",   iso: "fi", name: "Finland" },
-  { code: "+33",    iso: "fr", name: "France" },
-  { code: "+594",   iso: "gf", name: "French Guiana" },
-  { code: "+689",   iso: "pf", name: "French Polynesia" },
-  { code: "+241",   iso: "ga", name: "Gabon" },
-  { code: "+220",   iso: "gm", name: "Gambia" },
-  { code: "+995",   iso: "ge", name: "Georgia" },
-  { code: "+49",    iso: "de", name: "Germany" },
-  { code: "+233",   iso: "gh", name: "Ghana" },
-  { code: "+350",   iso: "gi", name: "Gibraltar" },
-  { code: "+30",    iso: "gr", name: "Greece" },
-  { code: "+299",   iso: "gl", name: "Greenland" },
-  { code: "+1473",  iso: "gd", name: "Grenada" },
-  { code: "+590",   iso: "gp", name: "Guadeloupe" },
-  { code: "+1671",  iso: "gu", name: "Guam" },
-  { code: "+502",   iso: "gt", name: "Guatemala" },
-  { code: "+44",    iso: "gg", name: "Guernsey" },
-  { code: "+224",   iso: "gn", name: "Guinea" },
-  { code: "+245",   iso: "gw", name: "Guinea-Bissau" },
-  { code: "+592",   iso: "gy", name: "Guyana" },
-  { code: "+509",   iso: "ht", name: "Haiti" },
-  { code: "+504",   iso: "hn", name: "Honduras" },
-  { code: "+852",   iso: "hk", name: "Hong Kong" },
-  { code: "+36",    iso: "hu", name: "Hungary" },
-  { code: "+354",   iso: "is", name: "Iceland" },
-  { code: "+91",    iso: "in", name: "India" },
-  { code: "+62",    iso: "id", name: "Indonesia" },
-  { code: "+98",    iso: "ir", name: "Iran" },
-  { code: "+964",   iso: "iq", name: "Iraq" },
-  { code: "+353",   iso: "ie", name: "Ireland" },
-  { code: "+44",    iso: "im", name: "Isle of Man" },
-  { code: "+972",   iso: "il", name: "Israel" },
-  { code: "+39",    iso: "it", name: "Italy" },
-  { code: "+1876",  iso: "jm", name: "Jamaica" },
-  { code: "+81",    iso: "jp", name: "Japan" },
-  { code: "+44",    iso: "je", name: "Jersey" },
-  { code: "+962",   iso: "jo", name: "Jordan" },
-  { code: "+7",     iso: "kz", name: "Kazakhstan" },
-  { code: "+254",   iso: "ke", name: "Kenya" },
-  { code: "+686",   iso: "ki", name: "Kiribati" },
-  { code: "+383",   iso: "xk", name: "Kosovo" },
-  { code: "+965",   iso: "kw", name: "Kuwait" },
-  { code: "+996",   iso: "kg", name: "Kyrgyzstan" },
-  { code: "+856",   iso: "la", name: "Laos" },
-  { code: "+371",   iso: "lv", name: "Latvia" },
-  { code: "+961",   iso: "lb", name: "Lebanon" },
-  { code: "+266",   iso: "ls", name: "Lesotho" },
-  { code: "+231",   iso: "lr", name: "Liberia" },
-  { code: "+218",   iso: "ly", name: "Libya" },
-  { code: "+423",   iso: "li", name: "Liechtenstein" },
-  { code: "+370",   iso: "lt", name: "Lithuania" },
-  { code: "+352",   iso: "lu", name: "Luxembourg" },
-  { code: "+853",   iso: "mo", name: "Macao" },
-  { code: "+261",   iso: "mg", name: "Madagascar" },
-  { code: "+265",   iso: "mw", name: "Malawi" },
-  { code: "+60",    iso: "my", name: "Malaysia" },
-  { code: "+960",   iso: "mv", name: "Maldives" },
-  { code: "+223",   iso: "ml", name: "Mali" },
-  { code: "+356",   iso: "mt", name: "Malta" },
-  { code: "+692",   iso: "mh", name: "Marshall Islands" },
-  { code: "+596",   iso: "mq", name: "Martinique" },
-  { code: "+222",   iso: "mr", name: "Mauritania" },
-  { code: "+230",   iso: "mu", name: "Mauritius" },
-  { code: "+262",   iso: "yt", name: "Mayotte" },
-  { code: "+52",    iso: "mx", name: "Mexico" },
-  { code: "+691",   iso: "fm", name: "Micronesia" },
-  { code: "+373",   iso: "md", name: "Moldova" },
-  { code: "+377",   iso: "mc", name: "Monaco" },
-  { code: "+976",   iso: "mn", name: "Mongolia" },
-  { code: "+382",   iso: "me", name: "Montenegro" },
-  { code: "+1664",  iso: "ms", name: "Montserrat" },
-  { code: "+212",   iso: "ma", name: "Morocco" },
-  { code: "+258",   iso: "mz", name: "Mozambique" },
-  { code: "+95",    iso: "mm", name: "Myanmar" },
-  { code: "+264",   iso: "na", name: "Namibia" },
-  { code: "+674",   iso: "nr", name: "Nauru" },
-  { code: "+977",   iso: "np", name: "Nepal" },
-  { code: "+31",    iso: "nl", name: "Netherlands" },
-  { code: "+687",   iso: "nc", name: "New Caledonia" },
-  { code: "+64",    iso: "nz", name: "New Zealand" },
-  { code: "+505",   iso: "ni", name: "Nicaragua" },
-  { code: "+227",   iso: "ne", name: "Niger" },
-  { code: "+234",   iso: "ng", name: "Nigeria" },
-  { code: "+683",   iso: "nu", name: "Niue" },
-  { code: "+6723",  iso: "nf", name: "Norfolk Island" },
-  { code: "+850",   iso: "kp", name: "North Korea" },
-  { code: "+389",   iso: "mk", name: "North Macedonia" },
-  { code: "+1670",  iso: "mp", name: "Northern Mariana Islands" },
-  { code: "+47",    iso: "no", name: "Norway" },
-  { code: "+968",   iso: "om", name: "Oman" },
-  { code: "+92",    iso: "pk", name: "Pakistan" },
-  { code: "+680",   iso: "pw", name: "Palau" },
-  { code: "+970",   iso: "ps", name: "Palestine" },
-  { code: "+507",   iso: "pa", name: "Panama" },
-  { code: "+675",   iso: "pg", name: "Papua New Guinea" },
-  { code: "+595",   iso: "py", name: "Paraguay" },
-  { code: "+51",    iso: "pe", name: "Peru" },
-  { code: "+63",    iso: "ph", name: "Philippines" },
-  { code: "+64",    iso: "pn", name: "Pitcairn Islands" },
-  { code: "+48",    iso: "pl", name: "Poland" },
-  { code: "+351",   iso: "pt", name: "Portugal" },
-  { code: "+1787",  iso: "pr", name: "Puerto Rico" },
-  { code: "+974",   iso: "qa", name: "Qatar" },
-  { code: "+262",   iso: "re", name: "Réunion" },
-  { code: "+40",    iso: "ro", name: "Romania" },
-  { code: "+7",     iso: "ru", name: "Russia" },
-  { code: "+250",   iso: "rw", name: "Rwanda" },
-  { code: "+290",   iso: "sh", name: "Saint Helena" },
-  { code: "+1869",  iso: "kn", name: "Saint Kitts and Nevis" },
-  { code: "+1758",  iso: "lc", name: "Saint Lucia" },
-  { code: "+590",   iso: "mf", name: "Saint Martin" },
-  { code: "+508",   iso: "pm", name: "Saint Pierre and Miquelon" },
-  { code: "+1784",  iso: "vc", name: "Saint Vincent and the Grenadines" },
-  { code: "+685",   iso: "ws", name: "Samoa" },
-  { code: "+378",   iso: "sm", name: "San Marino" },
-  { code: "+239",   iso: "st", name: "São Tomé and Príncipe" },
-  { code: "+966",   iso: "sa", name: "Saudi Arabia" },
-  { code: "+221",   iso: "sn", name: "Senegal" },
-  { code: "+381",   iso: "rs", name: "Serbia" },
-  { code: "+248",   iso: "sc", name: "Seychelles" },
-  { code: "+232",   iso: "sl", name: "Sierra Leone" },
-  { code: "+65",    iso: "sg", name: "Singapore" },
-  { code: "+1721",  iso: "sx", name: "Sint Maarten" },
-  { code: "+421",   iso: "sk", name: "Slovakia" },
-  { code: "+386",   iso: "si", name: "Slovenia" },
-  { code: "+677",   iso: "sb", name: "Solomon Islands" },
-  { code: "+252",   iso: "so", name: "Somalia" },
-  { code: "+27",    iso: "za", name: "South Africa" },
-  { code: "+82",    iso: "kr", name: "South Korea" },
-  { code: "+211",   iso: "ss", name: "South Sudan" },
-  { code: "+34",    iso: "es", name: "Spain" },
-  { code: "+94",    iso: "lk", name: "Sri Lanka" },
-  { code: "+249",   iso: "sd", name: "Sudan" },
-  { code: "+597",   iso: "sr", name: "Suriname" },
-  { code: "+4779",  iso: "sj", name: "Svalbard and Jan Mayen" },
-  { code: "+46",    iso: "se", name: "Sweden" },
-  { code: "+41",    iso: "ch", name: "Switzerland" },
-  { code: "+963",   iso: "sy", name: "Syria" },
-  { code: "+886",   iso: "tw", name: "Taiwan" },
-  { code: "+992",   iso: "tj", name: "Tajikistan" },
-  { code: "+255",   iso: "tz", name: "Tanzania" },
-  { code: "+66",    iso: "th", name: "Thailand" },
-  { code: "+670",   iso: "tl", name: "Timor-Leste" },
-  { code: "+228",   iso: "tg", name: "Togo" },
-  { code: "+690",   iso: "tk", name: "Tokelau" },
-  { code: "+676",   iso: "to", name: "Tonga" },
-  { code: "+1868",  iso: "tt", name: "Trinidad and Tobago" },
-  { code: "+290",   iso: "ta", name: "Tristan da Cunha" },
-  { code: "+216",   iso: "tn", name: "Tunisia" },
-  { code: "+90",    iso: "tr", name: "Turkey" },
-  { code: "+993",   iso: "tm", name: "Turkmenistan" },
-  { code: "+1649",  iso: "tc", name: "Turks and Caicos Islands" },
-  { code: "+688",   iso: "tv", name: "Tuvalu" },
-  { code: "+1340",  iso: "vi", name: "U.S. Virgin Islands" },
-  { code: "+256",   iso: "ug", name: "Uganda" },
-  { code: "+380",   iso: "ua", name: "Ukraine" },
-  { code: "+971",   iso: "ae", name: "United Arab Emirates" },
-  { code: "+44",    iso: "gb", name: "United Kingdom" },
-  { code: "+1",     iso: "us", name: "United States" },
-  { code: "+598",   iso: "uy", name: "Uruguay" },
-  { code: "+998",   iso: "uz", name: "Uzbekistan" },
-  { code: "+678",   iso: "vu", name: "Vanuatu" },
-  { code: "+379",   iso: "va", name: "Vatican City" },
-  { code: "+58",    iso: "ve", name: "Venezuela" },
-  { code: "+84",    iso: "vn", name: "Vietnam" },
-  { code: "+681",   iso: "wf", name: "Wallis and Futuna" },
-  { code: "+212",   iso: "eh", name: "Western Sahara" },
-  { code: "+967",   iso: "ye", name: "Yemen" },
-  { code: "+260",   iso: "zm", name: "Zambia" },
-  { code: "+263",   iso: "zw", name: "Zimbabwe" },
+function Ico({ icon: Icon }: { icon: LucideIcon }) {
+  return <Icon className="h-6 w-6 shrink-0 text-black" strokeWidth={1.75} aria-hidden="true" />;
+}
+
+/* ───────────── Content (from the 2027 sponsorship brochure) ───────────── */
+
+const STATS = [
+  { value: "~170", label: "ASX-listed companies active in about 35 African countries" },
+  { value: "A$60bn", label: "Australian mining investment in Africa (DFAT, 2024)" },
+  { value: "~600m", label: "Africans still without electricity (IEA, 2025)" },
 ];
 
-function FlagImg({ iso, size = 24 }: { iso: string; size?: number }) {
-  return (
-    <Image
-      src={`https://flagcdn.com/w40/${iso}.png`}
-      alt=""
-      width={size}
-      height={Math.round(size * 0.67)}
-      className="rounded-sm object-cover shrink-0"
-      style={{ borderRadius: 2 }}
-      unoptimized
-    />
-  );
-}
+const EDITIONS = [
+  { city: "Kigali", dates: "25–28 May 2027", venue: "Kigali International Convention Centre, Rwanda", role: "Prepare the opportunity" },
+  { city: "Perth", dates: "30 Aug – 2 Sep 2027", venue: "Perth, Western Australia", role: "Mobilise capital and delivery" },
+];
 
-function CountryCodePicker({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (code: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const ref = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
+const BENEFITS = [
+  "Meet ministers, financiers and project owners through receptions, roundtables and pre-booked meetings",
+  "Branding across both editions: onsite, in print and on every digital channel",
+  "Speaking slots, panel seats and masterclass sessions inside the programme",
+  "Access to screened African energy and critical-mineral projects",
+];
 
-  const selected = COUNTRY_CODES.find((c) => c.code === value) ?? COUNTRY_CODES[0];
+const PRICES = [
+  { tier: "Title / Platinum", icon: Trophy, perth: "A$45,000", kigali: "US$45,000", both: "US$59,000", row: "bg-white", price: "text-black" },
+  { tier: "Gold", icon: Medal, perth: "A$35,100", kigali: "US$35,100", both: "US$45,100", row: "bg-white", price: "text-black" },
+  { tier: "Silver / Bronze", icon: Medal, perth: "A$15,650", kigali: "US$15,650", both: "Bronze: US$20,650", row: "bg-white", price: "text-black" },
+];
 
-  const filtered = COUNTRY_CODES.filter(
-    (c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.code.includes(search)
-  );
+const TIER_COLS = [
+  { name: "Platinum", icon: Trophy, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+  { name: "Gold", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+  { name: "Silver", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+  { name: "Bronze", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+  { name: "Global Corridor", icon: Globe, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+];
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-        setSearch("");
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+const INCLUDES: { icon: LucideIcon; item: string; values: string[] }[] = [
+  { icon: Tag, item: "Logo on branding and signage", values: ["Premium", "Yes", "Yes", "Yes", "Premium, both editions"] },
+  { icon: Building2, item: "Exhibition space", values: ["Yes", "Yes", "—", "—", "Yes"] },
+  { icon: Mic, item: "Speaking opportunity", values: ["Keynote or panel", "Panel seat", "Programme mention", "—", "Keynote, both editions"] },
+  { icon: Ticket, item: "Delegate passes", values: ["Full delegation", "Team allocation", "Standard allocation", "Individual pass", "Full delegation, both editions"] },
+  { icon: Contact, item: "Logo on badges and programme", values: ["Yes", "Yes", "Yes", "—", "Yes"] },
+  { icon: Globe, item: "Logo on website and app", values: ["Yes", "Yes", "Yes", "Yes", "Yes"] },
+  { icon: Share2, item: "Social media recognition", values: ["Yes", "Yes", "Yes", "Yes", "Yes"] },
+  { icon: BarChart3, item: "Recognition in post-event report", values: ["Yes", "Yes", "Yes", "Yes", "Yes, both editions"] },
+];
 
-  useEffect(() => {
-    if (open) setTimeout(() => searchRef.current?.focus(), 50);
-  }, [open]);
+const ADDONS = [
+  { icon: Utensils, name: "Gala dinner presenting sponsor", price: "A$35,000 Perth · US$6,000 Kigali", note: "Branded signage, stage recognition and a reserved VIP table. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Briefcase, name: "Investor lounge sponsor", price: "US$8,000", note: "Space for structured investor meetings by appointment. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Crown, name: "VIP room sponsor", price: "US$10,000", note: "Private lounge for ministers and delegation heads. Perth. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: ShoppingBag, name: "Delegate bag sponsor", price: "US$5,000", note: "Your logo on the bag every delegate receives. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Coffee, name: "Coffee break sponsor", price: "US$4,000", note: "Branded refreshment stations at networking breaks. 3 available, one per day.", tone: "bg-white", pill: "text-black" },
+  { icon: Flag, name: "Aisle banners sponsor", price: "US$2,500", note: "Banners above the exhibition aisles. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Mountain, name: "Lake Kivu site visit sponsor", price: "US$2,500", note: "Day 4 site visit including transport and signage. Kigali. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Contact, name: "Lanyard sponsor", price: "US$2,200", note: "Your logo on every delegate and speaker lanyard. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: GraduationCap, name: "Technical masterclass presenting sponsor", price: "US$1,500", note: "The full training day at either edition. One sponsor per edition.", tone: "bg-white", pill: "text-black" },
+];
 
-  return (
-    <div ref={ref} className="relative shrink-0">
-      {/* Trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-semibold text-black hover:border-[#020266]/40 hover:bg-white focus:border-[#020266] focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all"
-        style={{ minWidth: 110 }}
-      >
-        <FlagImg iso={selected.iso} size={22} />
-        <span className="text-sm font-semibold">{selected.code}</span>
-        <ChevronDown
-          className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
+const REPORTING = [
+  ["DFIs and multilaterals", "Projects that entered Project Clinics, and readiness notes shared", "bg-white"],
+  ["Mining and energy companies", "Pre-booked meetings held and showcase slots delivered", "bg-white"],
+  ["Technology and engineering firms", "Technical showcase delivered and introductions logged", "bg-white"],
+  ["Banks, law firms and advisers", "Roundtable seats and conversations logged", "bg-white"],
+  ["Universities and training bodies", "Skills pairing sessions held and agreements signed", "bg-white"],
+];
 
-      {/* Dropdown */}
-      {open && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white shadow-[0_16px_48px_rgba(15,23,42,0.12)] overflow-hidden">
-          {/* Search */}
-          <div className="p-3 border-b border-slate-100">
-            <input
-              ref={searchRef}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search country or code…"
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all"
-            />
-          </div>
+const SPONSOR_OPTIONS = [
+  { value: "platinum", label: "Title / Platinum" },
+  { value: "gold", label: "Gold" },
+  { value: "silver", label: "Silver" },
+  { value: "bronze", label: "Bronze" },
+  { value: "addon", label: "Exhibition or event add-on only" },
+];
 
-          {/* List */}
-          <ul className="max-h-56 overflow-y-auto py-1">
-            {filtered.length === 0 && (
-              <li className="px-4 py-3 text-sm text-slate-400">No results</li>
-            )}
-            {filtered.map((c) => (
-              <li key={`${c.code}-${c.name}`}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onChange(c.code);
-                    setOpen(false);
-                    setSearch("");
-                  }}
-                  className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[#020266]/5 ${
-                    c.code === value ? "bg-[#020266]/8 font-semibold text-[#020266]" : "text-black"
-                  }`}
-                >
-                  <FlagImg iso={c.iso} size={22} />
-                  <span className="flex-1 text-left">{c.name}</span>
-                  <span className="text-slate-400 tabular-nums">{c.code}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
+const EDITION_OPTIONS = [
+  { value: "kigali", label: "Kigali (25–28 May 2027)" },
+  { value: "perth", label: "Perth (30 Aug – 2 Sep 2027)" },
+  { value: "both", label: "Both editions (Global Corridor package)" },
+];
+
+/* ───────────── Form ───────────── */
 
 type SponsorForm = {
-  companyName: string;
-  website: string;
-  description: string;
-  sponsorType: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  contactCompany: string;
-  designation: string;
-  phone: string;
+  companyName: string; website: string; description: string;
+  edition: string; sponsorType: string;
+  firstName: string; lastName: string; email: string; designation: string; phone: string;
 };
 
 const initialForm: SponsorForm = {
-  companyName: "",
-  website: "",
-  description: "",
-  sponsorType: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  contactCompany: "",
-  designation: "",
-  phone: "",
+  companyName: "", website: "", description: "", edition: "", sponsorType: "",
+  firstName: "", lastName: "", email: "", designation: "", phone: "",
 };
 
+const input =
+  "w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:outline-none focus:ring-2 focus:ring-[#020266]/15";
+const label = "mb-1.5 block text-sm font-medium text-black";
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+
 export default function BecomeASponsorPage() {
-  const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [dragOver, setDragOver] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [countryCode, setCountryCode] = useState("+254");
   const [form, setForm] = useState<SponsorForm>(initialForm);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function updateField<K extends keyof SponsorForm>(
-    field: K,
-    value: SponsorForm[K]
-  ) {
-    setForm((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  }
+  const set = <K extends keyof SponsorForm>(k: K, v: SponsorForm[K]) =>
+    setForm((p) => ({ ...p, [k]: v }));
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const formData = new FormData();
-
-      formData.append("companyName", form.companyName);
-      formData.append("website", form.website);
-      formData.append("description", form.description);
-      formData.append("sponsorType", form.sponsorType);
-
-      formData.append("firstName", form.firstName);
-      formData.append("lastName", form.lastName);
-      formData.append("email", form.email);
-
-      formData.append("contactCompany", form.contactCompany);
-      formData.append("designation", form.designation);
-
-      formData.append("countryCode", countryCode);
-      formData.append("phone", form.phone);
-
-      if (logoFile) {
-        formData.append("logo", logoFile);
-      }
-
-     const response = await fetch("/api/sponsorship-request", {
-  method: "POST",
-  body: formData,
-});
-
-      if (!response.ok) throw new Error(`Server error: ${response.status}`);
-
-      await response.json();
-
-      setSubmitStatus("success");
-      setForm(initialForm);
-      setLogoFile(null);
-      setFileName(null);
-      setCountryCode("+254");
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    } catch (err) {
-      console.error(err);
-      setSubmitStatus("error");
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-
-  const validateAndSetFile = (file: File) => {
+  function setFile(file: File) {
     if (!ALLOWED_TYPES.includes(file.type)) {
-      alert("Invalid file type. Please upload a JPG, JPEG, PNG, GIF, or WEBP file.");
+      alert("Invalid file type. Upload a JPG, PNG, GIF or WEBP file.");
       return;
     }
     if (file.size > 30 * 1024 * 1024) {
@@ -482,320 +136,326 @@ export default function BecomeASponsorPage() {
     }
     setLogoFile(file);
     setFileName(file.name);
-  };
+  }
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) validateAndSetFile(file);
-  };
+    setSubmitting(true);
+    setStatus("idle");
+    try {
+      const fd = new FormData();
+      Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+      fd.append("contactCompany", form.companyName); // keeps the existing API payload
+      fd.append("countryCode", countryCode);
+      if (logoFile) fd.append("logo", logoFile);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) validateAndSetFile(file);
-  };
+      const res = await fetch("/api/sponsorship-request", { method: "POST", body: fd });
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      await res.json();
+
+      setStatus("success");
+      setForm(initialForm);
+      setLogoFile(null);
+      setFileName(null);
+      setCountryCode("+254");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <main className="bg-white pt-24">
-      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,white_72%,#f8fafc_100%)]" />
+      <div className="mx-auto w-full max-w-6xl px-6 pb-24">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-2 py-6 text-sm text-slate-600">
+          <Link href="/" className="hover:text-[#020266]">Home</Link>
+          <ChevronRight className="h-4 w-4" />
+          <Link href="/partners" className="hover:text-[#020266]">Partners</Link>
+          <ChevronRight className="h-4 w-4" />
+          <span className="text-black">Become a sponsor</span>
+        </nav>
 
-        <div className="relative w-full flex justify-center px-6 py-12 lg:py-16">
-          <div className="w-full max-w-[1400px]">
-            <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-black">
-              <Link href="/" className="transition hover:text-[#020266]">Home</Link>
-              <ChevronRight className="h-4 w-4" />
-              <Link href="/partners" className="transition hover:text-[#020266]">Partners</Link>
-              <ChevronRight className="h-4 w-4" />
-              <span className="text-black">Become a Sponsor</span>
+        {/* Hero + form */}
+        <section className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <h1 className="font-heading text-4xl font-extrabold tracking-tight text-black sm:text-5xl">
+              Sponsor the Clean Energy Conference Africa Australia 2027
+            </h1>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-slate-700">
+              From mine to megawatt: connect Australian capital, technology and delivery expertise
+              with Africa&apos;s energy and critical-mineral projects, in Kigali and Perth.
+            </p>
+
+            <dl className="mt-14 grid gap-10 border-y border-slate-200 py-10 sm:grid-cols-3">
+              {STATS.map((s) => (
+                <div key={s.value}>
+                  <dt className="font-heading text-3xl font-extrabold text-[#020266]">{s.value}</dt>
+                  <dd className="mt-1 text-sm leading-6 text-slate-600">{s.label}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-14 grid gap-12 sm:grid-cols-2">
+              {EDITIONS.map((ed) => (
+                <div key={ed.city}>
+                  <h2 className="font-heading text-xl font-bold text-black">{ed.city}</h2>
+                  <p className="mt-1 text-base font-medium text-[#020266]">{ed.dates}</p>
+                  <p className="mt-1 text-sm text-slate-600">{ed.venue}</p>
+                  <p className="mt-2 text-sm text-black">{ed.role}</p>
+                </div>
+              ))}
             </div>
 
-            {/* ── Two-column grid ── */}
-            <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-              <div className="max-w-3xl">
-                <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
-                  Sponsorship Opportunities
-                </p>
-                <h1 className="mt-3 font-heading text-4xl font-extrabold tracking-[-0.03em] text-black sm:text-5xl">
-                  Become a sponsor of the Clean Energy Conference 2026
-                </h1>
-                <p className="mt-5 max-w-2xl text-xl leading-8 text-black">
-                  Position your brand alongside senior decision-makers, investors, project developers,
-                  technology providers, and public sector leaders shaping the clean energy transition
-                  in Africa and Australia.
-                </p>
-
-                <div className="mt-5 grid gap-4">
-                  {[
-                    { Icon: Handshake, title: "Strategic visibility", body: "Showcase your company to a high-value audience through branding, speaking visibility, exhibition presence, and direct stakeholder engagement." },
-                    { Icon: Building2, title: "Access the right audience", body: "Connect with policymakers, utilities, developers, financiers, EPCs, technology partners, and corporate energy stakeholders across both editions." },
-                    { Icon: Globe2,    title: "Kigali and Perth editions", body: "Explore sponsorship for Kigali, Perth, or a combined 2026 conference partnership package." },
-                  ].map(({ Icon, title, body }) => (
-                    <div key={title} className="rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
-                      <div className="flex items-start gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#020266]/5 text-[#020266]">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <p className="text-base font-semibold text-black">{title}</p>
-                          <p className="mt-1 text-base leading-7 text-black">{body}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* ── Sticky sidebar / form ── */}
-              <div className="sticky top-28 flex h-fit flex-col rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
-                {/* Header */}
-                <div className="bg-[#020266] px-6 py-5 rounded-t-[28px]">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-                      <Handshake className="h-5 w-5 text-white" />
-                    </div>
-                    <h2 className="font-heading text-xl font-bold text-white">Submit Sponsorship Request</h2>
-                  </div>
-                </div>
-
-                <form
-                  onSubmit={handleSubmit}
-                  className="p-6 space-y-5 rounded-b-[28px]"
-                >
-                  {/* Company Name */}
-                  <div>
-                    <label htmlFor="companyName" className="block text-sm font-semibold text-black mb-1.5">
-                      Company Name <span className="text-red-500">*</span>
-                    </label>
-                    <input id="companyName" type="text" required value={form.companyName} onChange={(e) => updateField("companyName", e.target.value)} placeholder="Enter your company name"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                  </div>
-
-                  {/* Website URL */}
-                  <div>
-                    <label htmlFor="website" className="block text-sm font-semibold text-black mb-1.5">Website URL</label>
-                    <input id="website" type="url" autoComplete="url" value={form.website} onChange={(e) => updateField("website", e.target.value)} placeholder="https://yourcompany.com"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                  </div>
-
-                  {/* Logo upload */}
-                  <div>
-                    <label htmlFor="logoUpload" className="block text-sm font-semibold text-black mb-1.5">Company Logo</label>
-                    <p className="text-xs text-slate-500 mb-2">File size: Up to 30 MB · Supported: JPG, JPEG, PNG, GIF, WEBP</p>
-                    <div
-                      onClick={() => fileInputRef.current?.click()}
-                      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                      onDragLeave={() => setDragOver(false)}
-                      onDrop={handleDrop}
-                      className={`flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-6 cursor-pointer transition-all ${dragOver ? "border-[#020266] bg-[#020266]/5" : "border-slate-200 bg-slate-50 hover:border-[#020266]/40 hover:bg-[#020266]/[0.02]"}`}
-                    >
-                      <Upload className="h-6 w-6 text-slate-400" />
-                      {fileName ? (
-                        <p className="text-sm font-medium text-[#020266]">{fileName}</p>
-                      ) : (
-                        <p className="text-sm text-slate-500">Drop or Upload Your File Here</p>
-                      )}
-                      <span className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm">Drop Here</span>
-                    </div>
-                    <input id="logoUpload" ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png,.gif,.webp" className="hidden" onChange={handleFileChange} />
-                  </div>
-
-                  {/* Description */}
-                  <div>
-                    <label htmlFor="description" className="block text-sm font-semibold text-black mb-1.5">Description</label>
-                    <textarea id="description" rows={3} value={form.description} onChange={(e) => updateField("description", e.target.value)} placeholder="Tell us about your sponsorship goals..."
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all resize-none" />
-                  </div>
-
-                  {/* Sponsor Type */}
-                  <div>
-                    <label htmlFor="sponsorType" className="block text-sm font-semibold text-black mb-1.5">
-                      Sponsor Type <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <select id="sponsorType" required value={form.sponsorType} onChange={(e) => updateField("sponsorType", e.target.value)}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 pr-10 text-sm text-black focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all appearance-none cursor-pointer">
-                        <option value="" disabled>Select sponsor type</option>
-                        <option value="bronze">Bronze Sponsorship — $10,000</option>
-                        <option value="industry">Industry / Session Sponsorship — $11,000</option>
-                        <option value="silver">Silver Sponsorship — $15,000</option>
-                        <option value="gold">Gold Sponsorship — $20,500</option>
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    </div>
-                  </div>
-
-                  {/* Contact Details */}
-                  <div className="pt-1">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#020266] mb-4">Contact Details</p>
-
-                    {/* First + Last name */}
-                    <div className="grid grid-cols-2 gap-3 mb-3">
-                      <div>
-                        <label htmlFor="firstName" className="block text-sm font-semibold text-black mb-1.5">First Name <span className="text-red-500">*</span></label>
-                        <input id="firstName" type="text" required autoComplete="given-name" value={form.firstName} onChange={(e) => updateField("firstName", e.target.value)} placeholder="First name"
-                          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                      </div>
-                      <div>
-                        <label htmlFor="lastName" className="block text-sm font-semibold text-black mb-1.5">Last Name</label>
-                        <input id="lastName" type="text" autoComplete="family-name" value={form.lastName} onChange={(e) => updateField("lastName", e.target.value)} placeholder="Last name"
-                          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="mb-3">
-                      <label htmlFor="email" className="block text-sm font-semibold text-black mb-1.5">Email <span className="text-red-500">*</span></label>
-                      <input id="email" type="email" required autoComplete="email" value={form.email} onChange={(e) => updateField("email", e.target.value)} placeholder="you@company.com"
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                    </div>
-
-                    {/* Company Name (contact) */}
-                    <div className="mb-3">
-                      <label htmlFor="contactCompany" className="block text-sm font-semibold text-black mb-1.5">Company Name</label>
-                      <input id="contactCompany" type="text" autoComplete="organization" value={form.contactCompany} onChange={(e) => updateField("contactCompany", e.target.value)} placeholder="Company name"
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                    </div>
-
-                    {/* Designation */}
-                    <div className="mb-3">
-                      <label htmlFor="designation" className="block text-sm font-semibold text-black mb-1.5">Designation</label>
-                      <input id="designation" type="text" autoComplete="organization-title" value={form.designation} onChange={(e) => updateField("designation", e.target.value)} placeholder="Your role / title"
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all" />
-                    </div>
-
-                    {/* Phone with custom country picker */}
-                    <div className="mb-1">
-                      <label htmlFor="phone" className="block text-sm font-semibold text-black mb-1.5">Phone</label>
-                      <div className="flex gap-2 items-stretch">
-                        <CountryCodePicker value={countryCode} onChange={setCountryCode} />
-                        <input
-                          type="tel"
-                          id="phone" autoComplete="tel" value={form.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="700 000 000"
-                          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-black placeholder:text-slate-400 focus:border-[#020266] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#020266]/10 transition-all"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Submit / Cancel */}
-                  <div className="flex gap-3 pt-2">
-                    <button type="button" onClick={() => { setForm(initialForm); setLogoFile(null); setFileName(null); setCountryCode("+254"); if (fileInputRef.current) { fileInputRef.current.value = ""; } }} className="group relative inline-flex items-center justify-center gap-2 overflow-hidden flex-1 rounded-xl px-5 py-3 text-sm font-semibold text-black bg-white border border-slate-200 shadow-sm transition-all duration-500 ease-out hover:border-[#02026e]/60 hover:scale-[1.03] hover:shadow-[0_12px_32px_rgba(2,2,110,0.14)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#02026e]/25 focus:ring-offset-2">
-                      <span className="absolute inset-0 overflow-hidden rounded-xl"><span className="absolute left-0 top-0 h-full w-0 bg-[#02026e] transition-all duration-500 ease-out group-hover:w-full" /></span>
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-white">Cancel</span>
-                    </button>
-                    <button type="submit" disabled={submitting} className="group relative inline-flex items-center justify-center gap-2 overflow-hidden flex-1 rounded-xl px-5 py-3 text-sm font-semibold text-white bg-[#02026e] border border-[#02026e] shadow-[0_8px_24px_rgba(2,2,110,0.2)] transition-all duration-500 ease-out hover:scale-[1.03] hover:shadow-[0_14px_36px_rgba(2,2,110,0.3)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#02026e]/25 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100 disabled:shadow-none">
-                      <span className="absolute inset-0 overflow-hidden rounded-xl"><span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" /></span>
-                      <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-                        {submitting ? "Submitting…" : "Submit"}
-                      </span>
-                    </button>
-                  </div>
-
-                  {/* Status messages */}
-                  {submitStatus === "success" && (
-                    <p className="rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm font-medium text-green-700 text-center">
-                      ✓ Your sponsorship request has been submitted successfully. We'll be in touch soon!
-                    </p>
-                  )}
-                  {submitStatus === "error" && (
-                    <p className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm font-medium text-red-700 text-center">
-                      Something went wrong. Please try again or contact us directly.
-                    </p>
-                  )}
-
-                  <div className="flex justify-center pt-1">
-                    <Link href="/partners" className="text-sm font-semibold text-[#020266] hover:underline transition-all">
-                      ← Back to Partners
-                    </Link>
-                  </div>
-                </form>
-              </div>
-            </div>
-            {/* ── End two-column grid ── */}
-
-            {/* ── Full-width section ── */}
-            <div className="mt-12 flex flex-col items-center">
-              <div className="w-full overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
-                <div className="border-b border-slate-200 bg-[#020266] px-6 py-5">
-                  <h2 className="font-heading text-2xl font-bold text-white">Sponsor Categories</h2>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="min-w-[900px] w-full border-collapse">
-                    <thead>
-                      <tr className="bg-slate-100 text-left">
-                        <th className="border-b border-r border-slate-200 px-5 py-5 text-base font-bold uppercase text-black">Sponsor Categories</th>
-                        {[
-                          { name: "Bronze",           price: "$10,000.00" },
-                          { name: "Industry/Session", price: "$11,000.00" },
-                          { name: "Silver",           price: "$15,000.00" },
-                          { name: "Gold",             price: "$20,500.00" },
-                        ].map((tier) => (
-                          <th key={tier.name} className="border-b border-r border-slate-200 px-5 py-5 text-center">
-                            <p className="text-base font-bold uppercase tracking-wide text-black">{tier.name}</p>
-                            <div className="mx-auto mt-4 h-[2px] w-full bg-red-500" />
-                            <p className="mt-5 text-base font-bold text-black">{tier.price}</p>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        { feature: "Exclusive",                                    values: ["4",   true,  true,  true]  },
-                        { feature: "Logo on the Conference Portal",                values: [true,  true,  true,  true]  },
-                        { feature: "Logo on Social Media pages advertising event", values: [true,  true,  true,  true]  },
-                        { feature: "Mention at the event",                         values: [false, true,  true,  true]  },
-                        { feature: "Online Exhibition",                            values: [false, false, true,  true]  },
-                        { feature: "Exhibition Booth",                             values: [false, false, false, false] },
-                        { feature: "Roll-up Banner(s)",                            values: ["1",   "2",   "3",   "3"]  },
-                        { feature: "Conference Pass",                              values: [true,  true,  true,  true]  },
-                        { feature: "Speaking Slot",                                values: [true,  true,  true,  true]  },
-                        { feature: "Promotional Material Souvenir insert",         values: [false, false, false, false] },
-                        { feature: "Full Page Advert",                             values: [false, false, false, false] },
-                        { feature: "Spotlight during the session",                 values: [false, false, false, false] },
-                      ].map((row) => (
-                        <tr key={row.feature} className="border-b border-slate-200 bg-white">
-                          <td className="border-r border-slate-200 px-5 py-4 text-base font-medium text-black">{row.feature}</td>
-                          {row.values.map((value, index) => (
-                            <td key={index} className="border-r border-slate-200 px-5 py-4 text-center">
-                              {typeof value === "boolean" ? (
-                                value ? <span className="text-xl font-bold text-green-600">✓</span>
-                                      : <span className="text-xl font-bold text-red-500">⊖</span>
-                              ) : (
-                                <span className="text-base font-semibold text-black">{value}</span>
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-             
-
-              <div className="mt-8 w-full rounded-[24px] border border-slate-200 bg-slate-50 p-6">
-                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#020266]">Why sponsor</p>
-                <ul className="mt-4 space-y-3">
-                  {[
-                    "Strengthen brand credibility in the clean energy market",
-                    "Support dialogue around energy transition, investment, and innovation",
-                    "Build commercial relationships with high-level attendees",
-                    "Gain tailored visibility through curated sponsorship packages",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#020266]" />
-                      <span className="text-base leading-7 text-black">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <h2 className="mt-16 font-heading text-xl font-bold text-black">Why sponsor</h2>
+            <ul className="mt-6 space-y-5">
+              {BENEFITS.map((b) => (
+                <li key={b} className="flex items-start gap-3 text-base leading-7 text-black">
+                  <Check className="mt-1 h-5 w-5 shrink-0 text-[#020266]" />
+                  {b}
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </section>
+
+          {/* Form */}
+          <div id="request" className="rounded-2xl border border-slate-200 bg-white lg:sticky lg:top-28">
+            <div className="rounded-t-2xl bg-[#020266] px-6 py-4">
+              <h2 className="font-heading text-lg font-bold text-white">Request sponsorship details</h2>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6 p-8">
+              <div>
+                <label htmlFor="companyName" className={label}>Company name <span className="text-red-600">*</span></label>
+                <input id="companyName" required className={input} value={form.companyName} onChange={(e) => set("companyName", e.target.value)} />
+              </div>
+
+              <div>
+                <label htmlFor="website" className={label}>Website</label>
+                <input id="website" type="url" autoComplete="url" className={input} placeholder="https://yourcompany.com" value={form.website} onChange={(e) => set("website", e.target.value)} />
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="edition" className={label}>Edition <span className="text-red-600">*</span></label>
+                  <div className="relative">
+                    <select id="edition" required value={form.edition} onChange={(e) => set("edition", e.target.value)} className={`${input} appearance-none pr-9`}>
+                      <option value="" disabled>Select edition</option>
+                      {EDITION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="sponsorType" className={label}>Sponsorship <span className="text-red-600">*</span></label>
+                  <div className="relative">
+                    <select id="sponsorType" required value={form.sponsorType} onChange={(e) => set("sponsorType", e.target.value)} className={`${input} appearance-none pr-9`}>
+                      <option value="" disabled>Select tier</option>
+                      {SPONSOR_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="description" className={label}>Your goals</label>
+                <textarea id="description" rows={3} className={`${input} resize-none`} placeholder="What do you want to achieve as a sponsor?" value={form.description} onChange={(e) => set("description", e.target.value)} />
+              </div>
+
+              <div>
+                <label htmlFor="logoUpload" className={label}>Company logo</label>
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                  onDragLeave={() => setDragOver(false)}
+                  onDrop={(e) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files?.[0]; if (f) setFile(f); }}
+                  className={`flex cursor-pointer items-center gap-3 rounded-lg border border-dashed px-4 py-3 text-sm ${dragOver ? "border-[#020266] bg-[#020266]/5" : "border-slate-300 hover:border-[#020266]/50"}`}
+                >
+                  <Upload className="h-5 w-5 shrink-0 text-slate-400" />
+                  <span className={fileName ? "font-medium text-[#020266]" : "text-slate-600"}>
+                    {fileName ?? "Drop a file or click to upload (JPG, PNG, GIF, WEBP, up to 30 MB)"}
+                  </span>
+                </div>
+                <input id="logoUpload" ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png,.gif,.webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) setFile(f); }} />
+              </div>
+
+              <fieldset className="space-y-6 border-t border-slate-200 pt-7">
+                <legend className="sr-only">Contact details</legend>
+                <p className="text-sm font-semibold text-black">Contact details</p>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="firstName" className={label}>First name <span className="text-red-600">*</span></label>
+                    <input id="firstName" required autoComplete="given-name" className={input} value={form.firstName} onChange={(e) => set("firstName", e.target.value)} />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className={label}>Last name</label>
+                    <input id="lastName" autoComplete="family-name" className={input} value={form.lastName} onChange={(e) => set("lastName", e.target.value)} />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="email" className={label}>Email <span className="text-red-600">*</span></label>
+                  <input id="email" type="email" required autoComplete="email" className={input} placeholder="you@company.com" value={form.email} onChange={(e) => set("email", e.target.value)} />
+                </div>
+                <div>
+                  <label htmlFor="designation" className={label}>Job title</label>
+                  <input id="designation" autoComplete="organization-title" className={input} value={form.designation} onChange={(e) => set("designation", e.target.value)} />
+                </div>
+                <div>
+                  <label htmlFor="phone" className={label}>Phone</label>
+                  <div className="flex items-stretch gap-2">
+                    <CountryCodePicker value={countryCode} onChange={setCountryCode} />
+                    <input id="phone" type="tel" autoComplete="tel" className={input} placeholder="700 000 000" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
+                  </div>
+                </div>
+              </fieldset>
+
+              <button type="submit" disabled={submitting} className="w-full rounded-lg bg-[#020266] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#03038f] focus:outline-none focus:ring-2 focus:ring-[#020266]/40 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60">
+                {submitting ? "Sending…" : "Send request"}
+              </button>
+
+              {status === "success" && (
+                <p role="status" className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                  Request sent. Our sponsorship team will be in touch soon.
+                </p>
+              )}
+              {status === "error" && (
+                <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                  We couldn&apos;t send your request. Try again, or contact us directly.
+                </p>
+              )}
+            </form>
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section className="mt-32">
+          <h2 className="font-heading text-3xl font-extrabold tracking-tight text-black">Sponsorship tiers</h2>
+          <p className="mt-4 max-w-2xl text-base text-slate-700">
+            Sponsor one edition, or carry a single partnership across both with the new Global Corridor package:
+            one negotiation, with recognition, speaking rights and delegate passes at Kigali and Perth.
+          </p>
+
+          <div className="mt-10 overflow-x-auto rounded-2xl border border-slate-200 border-t-4 border-t-[#020266]">
+            <table className="w-full min-w-[640px] border-collapse text-left">
+              <thead className="bg-slate-100 text-sm text-black">
+                <tr>
+                  <th className="px-6 py-5 font-semibold">Tier</th>
+                  <th className="px-6 py-5 font-semibold">Perth (AUD)</th>
+                  <th className="px-6 py-5 font-semibold">Kigali (USD)</th>
+                  <th className="px-6 py-5 font-semibold">Global Corridor, both editions (USD)</th>
+                </tr>
+              </thead>
+              <tbody className="text-base text-black">
+                {PRICES.map((p) => (
+                  <tr key={p.tier} className={`border-t border-slate-200 ${p.row}`}>
+                    <th scope="row" className="px-6 py-5 font-semibold"><span className="flex items-center gap-2"><Ico icon={p.icon} />{p.tier}</span></th>
+                    <td className={`px-6 py-5 font-bold ${p.price}`}>{p.perth}</td>
+                    <td className={`px-6 py-5 font-bold ${p.price}`}>{p.kigali}</td>
+                    <td className={`px-6 py-5 font-bold ${p.price}`}>{p.both}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-600">
+            Global Corridor tiers: Platinum US$59,000, Gold US$45,100, Bronze US$20,650. Exhibition space: turnkey
+            shell-scheme booths on request; custom or raw space A$776 per sqm in Perth and US$575 per sqm in Kigali.
+          </p>
+        </section>
+
+        {/* Inclusions */}
+        <section className="mt-28">
+          <h2 className="font-heading text-2xl font-bold text-black">What each tier includes</h2>
+          <p className="mt-4 max-w-2xl text-sm text-slate-600">
+            Applied at each edition across onsite branding, delegate materials and digital platforms. Exact pass
+            allocations and placements are confirmed at contracting.
+          </p>
+          <div className="mt-10 overflow-x-auto rounded-2xl border border-slate-200 border-t-4 border-t-[#020266]">
+            <table className="w-full min-w-[900px] border-collapse text-left">
+              <thead className="text-sm">
+                <tr>
+                  <th className="bg-slate-100 px-6 py-5 font-semibold text-black">Deliverable</th>
+                  {TIER_COLS.map((c) => (
+                    <th key={c.name} className={`px-5 pb-0 pt-5 text-center font-bold ${c.head}`}>
+                      <span className="flex items-center justify-center gap-2"><Ico icon={c.icon} />{c.name}</span>
+                      <div className={`mt-5 h-[3px] w-full ${c.bar}`} />
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="text-sm text-black">
+                {INCLUDES.map((row, r) => (
+                  <tr key={row.item} className={`border-t border-slate-200 ${"bg-white"}`}>
+                    <th scope="row" className="px-6 py-5 font-medium"><span className="flex items-center gap-2.5"><Ico icon={row.icon} />{row.item}</span></th>
+                    {row.values.map((v, i) => (
+                      <td key={i} className="px-5 py-5 text-center">
+                        {v === "Yes" ? <span className="text-xl font-bold text-green-600" aria-label="Included">✓</span>
+                          : v === "—" ? <span className="text-xl font-bold text-red-500" aria-label="Not included">⊖</span>
+                          : <span className="font-semibold text-black">{v}</span>}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Add-ons */}
+        <section className="mt-28">
+          <h2 className="font-heading text-2xl font-bold text-black">Exhibition and event add-ons</h2>
+          <p className="mt-4 max-w-2xl text-sm text-slate-600">
+            Available on top of a sponsorship tier or on their own.
+          </p>
+          <div className="mt-10 overflow-x-auto rounded-2xl border border-slate-200 border-t-4 border-t-[#020266]">
+            <table className="w-full min-w-[720px] border-collapse text-left">
+              <thead className="bg-slate-100 text-sm text-black">
+                <tr>
+                  <th className="px-6 py-5 font-semibold">Add-on</th>
+                  <th className="px-6 py-5 font-semibold">What you get</th>
+                  <th className="px-6 py-5 font-semibold">Price</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm text-black">
+                {ADDONS.map((a) => (
+                  <tr key={a.name} className={`border-t border-slate-200 align-top ${a.tone}`}>
+                    <th scope="row" className="px-6 py-5 font-semibold"><span className="flex items-center gap-2.5"><Ico icon={a.icon} />{a.name}</span></th>
+                    <td className="px-6 py-5 text-slate-700">{a.note}</td>
+                    <td className="whitespace-nowrap px-6 py-5">
+                      <span className={`font-bold ${a.pill}`}>{a.price}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-600">
+            Sending staff to the technical masterclass instead? The per-delegate rate is US$546 per day.
+          </p>
+        </section>
+
+        {/* Reporting */}
+        <section className="mt-28 grid gap-12 border-t border-slate-200 pt-16 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <h2 className="font-heading text-2xl font-bold text-black">What we report back</h2>
+            <p className="mt-4 text-sm leading-7 text-slate-600">Every sponsor receives a post-event report built on what CEAA can verify.</p>
+          </div>
+          <dl className="overflow-hidden rounded-2xl border border-slate-200 text-sm">
+            {REPORTING.map(([who, what, tone]) => (
+              <div key={who} className={`grid gap-1 border-b border-slate-200 px-6 py-5 last:border-b-0 sm:grid-cols-[1fr_1.4fr] ${tone}`}>
+                <dt className="font-semibold text-black">{who}</dt>
+                <dd className="text-slate-700">{what}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+      
+      </div>
     </main>
   );
 }

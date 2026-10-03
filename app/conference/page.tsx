@@ -18,7 +18,7 @@ const editions = {
     eyebrow: "2027 Edition",
     title: "Kigali Edition Overview",
     subtitle:
-      "Where Africa prepares the opportunity. African governments and developers present qualified clean-energy and critical-mineral projects to investors and development-finance partners.",
+      "Where Africa prepares the opportunity. African governments and developers present qualified clean-energy and Critical-Mineral projects to investors and development-finance partners.",
     date: "25–28 May 2027",
     venue: "Kigali International Convention Centre, Rwanda",
     heroImage: "/images/gallery/DAY1/clean-energy-conference-keynote-001.jpg",
@@ -99,7 +99,7 @@ const editions = {
     overviewTitle:
       "Australian capital, technology and delivery expertise, matched to African need",
     overviewParagraphs: [
-      "The Perth Edition brings together mining and critical-mineral investment, Australian technology, storage and grid expertise, engineering and project delivery, and institutional capital.",
+      "The Perth Edition brings together mining and Critical-Mineral investment, Australian technology, storage and grid expertise, engineering and project delivery, and institutional capital.",
       "It also covers research and skills partnerships, and gives structured responses to the projects introduced in Kigali.",
       "The fastest fits include processing-stage joint ventures, hybrid solar-storage at operating mines, storage pilots, DFI-funded project preparation, and co-investment alongside development finance institutions.",
     ],
@@ -203,11 +203,11 @@ export default function ConferenceOverviewPage() {
             </p>
 
             <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] text-slate-900 sm:text-5xl">
-              From Minerals to Megawatts: Australia&apos;s Capital, Africa&apos;s Power
+            Explore Upcoming 2027 Conference Australia&apos;s Capital, Africa&apos;s Power
             </h1>
 
             <p className="mt-5 max-w-3xl text-xl leading-8 text-slate-600">
-              Two continents, one clean-energy decade. One shared project and
+              Two continents, one Clean-Energy decade. One shared project and
               partnership pipeline connects Kigali and Perth. Select an
               edition below to view its dates, venue, focus areas and audience.
             </p>
@@ -447,7 +447,7 @@ export default function ConferenceOverviewPage() {
 
             <p className="mt-5 text-base leading-8 text-white">
               CEAA is the Africa–Australia platform that moves clean-energy
-              and critical-mineral projects from opportunity to capital.
+              and Critical-Mineral projects from opportunity to capital.
               Between Kigali and Perth, projects are tested, matched and
               tracked, so every introduction is followed through.
             </p>
