@@ -8,68 +8,68 @@ import {
   Utensils, Briefcase, Crown, ShoppingBag, Coffee, Flag, Mountain, GraduationCap,
   type LucideIcon,
 } from "lucide-react";
-// Move CountryCodePicker, FlagImg and COUNTRY_CODES (unchanged) into this file.
 import CountryCodePicker from "@/components/CountryCodePicker";
 
 function Ico({ icon: Icon }: { icon: LucideIcon }) {
   return <Icon className="h-6 w-6 shrink-0 text-black" strokeWidth={1.75} aria-hidden="true" />;
 }
 
-/* ───────────── Content (from the 2027 sponsorship brochure) ───────────── */
+/* ───────────── Content (Updated from Concept Note & Sponsorship Brochure) ───────────── */
 
 const STATS = [
-  { value: "~170", label: "ASX-listed companies active in about 35 African countries" },
+  { value: "~170", label: "ASX-listed companies active in about 35 African countries (Australian Mining Review, Mar 2026)" },
   { value: "A$60bn", label: "Australian mining investment in Africa (DFAT, 2024)" },
-  { value: "~600m", label: "Africans still without electricity (IEA, 2025)" },
+  { value: "$200-240B", label: "Africa's required annual clean-energy investment by 2030 (IEA)" },
 ];
 
 const EDITIONS = [
-  { city: "Kigali", dates: "25–28 May 2027", venue: "Kigali International Convention Centre, Rwanda", role: "Prepare the opportunity" },
-  { city: "Perth", dates: "30 Aug – 2 Sep 2027", venue: "Perth, Western Australia", role: "Mobilise capital and delivery" },
+  { city: "Kigali", dates: "25–28 May 2027", venue: "Kigali International Convention Centre, Rwanda", role: "Prepare the opportunity: government priorities, project qualification & DFI clinics" },
+  { city: "Perth", dates: "30 Aug – 2 Sep 2027", venue: "Perth, Western Australia", role: "Mobilise capital and delivery: mining finance, grid technology & institutional capital" },
 ];
 
 const BENEFITS = [
-  "Meet ministers, financiers and project owners through receptions, roundtables and pre-booked meetings",
+  "Meet ministers, financiers, DFIs and project owners through receptions, roundtables and pre-booked meetings",
   "Branding across both editions: onsite, in print and on every digital channel",
   "Speaking slots, panel seats and masterclass sessions inside the programme",
-  "Access to screened African energy and critical-mineral projects",
+  "Access to screened African energy and critical-mineral project pipelines",
 ];
 
 const PRICES = [
-  { tier: "Title / Platinum", icon: Trophy, perth: "A$45,000", kigali: "US$45,000", both: "US$59,000", row: "bg-white", price: "text-black" },
-  { tier: "Gold", icon: Medal, perth: "A$35,100", kigali: "US$35,100", both: "US$45,100", row: "bg-white", price: "text-black" },
-  { tier: "Silver / Bronze", icon: Medal, perth: "A$15,650", kigali: "US$15,650", both: "Bronze: US$20,650", row: "bg-white", price: "text-black" },
+  { tier: "Title / Lead Partner", icon: Trophy, perth: "US$35,000", kigali: "US$35,000", both: "US$79,000", row: "bg-white", price: "text-black" },
+  { tier: "Platinum", icon: Trophy, perth: "US$50,000", kigali: "US$50,000", both: "US$50,000", row: "bg-white", price: "text-black" },
+  { tier: "Gold", icon: Medal, perth: "US$25,000", kigali: "US$25,000", both: "US$45,000", row: "bg-white", price: "text-black" },
+  { tier: "Silver / Bronze", icon: Medal, perth: "US$15,000", kigali: "US$15,000", both: "Bronze: US$20,650", row: "bg-white", price: "text-black" },
 ];
 
 const TIER_COLS = [
+  { name: "Lead", icon: Trophy, head: "bg-slate-100 text-black", bar: "bg-red-500" },
   { name: "Platinum", icon: Trophy, head: "bg-slate-100 text-black", bar: "bg-red-500" },
   { name: "Gold", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
   { name: "Silver", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
-  { name: "Bronze", icon: Medal, head: "bg-slate-100 text-black", bar: "bg-red-500" },
-  { name: "Global Corridor", icon: Globe, head: "bg-slate-100 text-black", bar: "bg-red-500" },
+  { name: "Bronze", icon: Globe, head: "bg-slate-100 text-black", bar: "bg-red-500" },
 ];
 
 const INCLUDES: { icon: LucideIcon; item: string; values: string[] }[] = [
-  { icon: Tag, item: "Logo on branding and signage", values: ["Premium", "Yes", "Yes", "Yes", "Premium, both editions"] },
-  { icon: Building2, item: "Exhibition space", values: ["Yes", "Yes", "—", "—", "Yes"] },
-  { icon: Mic, item: "Speaking opportunity", values: ["Keynote or panel", "Panel seat", "Programme mention", "—", "Keynote, both editions"] },
-  { icon: Ticket, item: "Delegate passes", values: ["Full delegation", "Team allocation", "Standard allocation", "Individual pass", "Full delegation, both editions"] },
-  { icon: Contact, item: "Logo on badges and programme", values: ["Yes", "Yes", "Yes", "—", "Yes"] },
-  { icon: Globe, item: "Logo on website and app", values: ["Yes", "Yes", "Yes", "Yes", "Yes"] },
-  { icon: Share2, item: "Social media recognition", values: ["Yes", "Yes", "Yes", "Yes", "Yes"] },
-  { icon: BarChart3, item: "Recognition in post-event report", values: ["Yes", "Yes", "Yes", "Yes", "Yes, both editions"] },
+  { icon: Tag, item: "Logo on branding and signage", values: ["Title partner", "Top-tier logo", "High-prominence logo", "Medium logo", "Logo listing"] },
+  { icon: Building2, item: "Exhibition footprint", values: ["18 sqm prime", "12 sqm", "9 sqm", "6 sqm", "Logo only"] },
+  { icon: Mic, item: "Speaking allocation", values: ["Opening keynote", "Plenary keynote", "Session chair", "Panel seat", "Panel seat"] },
+  { icon: Ticket, item: "VIP delegate passes", values: ["12 passes", "8 passes", "6 passes", "4 passes", "2 passes"] },
+  { icon: Contact, item: "Directory print ad", values: ["Double page", "Full page", "Full page", "Half page", "—"] },
+  { icon: Globe, item: "Programme book profile", values: ["Executive profile", "500 words", "300 words", "200 words", "Logo only"] },
+  { icon: Share2, item: "B2B Deal Room status", values: ["Dedicated VIP", "Priority access", "Priority access", "Standard", "Standard"] },
+  { icon: BarChart3, item: "Venue banner allocation", values: ["6 banners", "4 banners", "3 banners", "2 banners", "—"] },
 ];
 
 const ADDONS = [
-  { icon: Utensils, name: "Gala dinner presenting sponsor", price: "A$35,000 Perth · US$6,000 Kigali", note: "Branded signage, stage recognition and a reserved VIP table. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: Briefcase, name: "Investor lounge sponsor", price: "US$8,000", note: "Space for structured investor meetings by appointment. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: Crown, name: "VIP room sponsor", price: "US$10,000", note: "Private lounge for ministers and delegation heads. Perth. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: ShoppingBag, name: "Delegate bag sponsor", price: "US$5,000", note: "Your logo on the bag every delegate receives. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: Coffee, name: "Coffee break sponsor", price: "US$4,000", note: "Branded refreshment stations at networking breaks. 3 available, one per day.", tone: "bg-white", pill: "text-black" },
-  { icon: Flag, name: "Aisle banners sponsor", price: "US$2,500", note: "Banners above the exhibition aisles. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: Mountain, name: "Lake Kivu site visit sponsor", price: "US$2,500", note: "Day 4 site visit including transport and signage. Kigali. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: Contact, name: "Lanyard sponsor", price: "US$2,200", note: "Your logo on every delegate and speaker lanyard. Exclusive.", tone: "bg-white", pill: "text-black" },
-  { icon: GraduationCap, name: "Technical masterclass presenting sponsor", price: "US$1,500", note: "The full training day at either edition. One sponsor per edition.", tone: "bg-white", pill: "text-black" },
+  { icon: Utensils, name: "Networking Luncheon Partner", price: "US$15,000", note: "Exclusive branding in the ballroom at the busiest point of the day.", tone: "bg-white", pill: "text-black" },
+  { icon: Briefcase, name: "Thematic Session Partner (Power, Solar, ESG, Finance)", price: "US$11,000", note: "Branding of a chosen session, speaking slot, logo, event mention and brochure insert.", tone: "bg-white", pill: "text-black" },
+  { icon: Crown, name: "Cocktail Reception Sponsor", price: "US$12,000", note: "Welcome remarks of 3-5 minutes, banners, corporate video on screen, private introductions.", tone: "bg-white", pill: "text-black" },
+  { icon: ShoppingBag, name: "Delegate Bag Sponsor", price: "US$5,000", note: "Your logo on the bag every delegate receives at registration. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Coffee, name: "Coffee Break Sponsor", price: "US$4,000", note: "Branded refreshment stations during networking breaks. 3 available, one per day.", tone: "bg-white", pill: "text-black" },
+  { icon: Flag, name: "Aisle Banners Sponsor", price: "US$2,500", note: "Branded banners above the exhibition aisles, seen by every delegate. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: Mountain, name: "Lake Kivu / Perth Site Visit Sponsor", price: "US$2,500", note: "Day 4 site visit including transport, itinerary and signage recognition.", tone: "bg-white", pill: "text-black" },
+  { icon: Contact, name: "Lanyard Sponsor", price: "US$2,200", note: "Your logo on every delegate and speaker lanyard for all four days. Exclusive.", tone: "bg-white", pill: "text-black" },
+  { icon: GraduationCap, name: "Technical Masterclass Training", price: "US$1,500", note: "Presenting sponsorship of the full training day at either edition. Per-delegate rate: US$546/day.", tone: "bg-white", pill: "text-black" },
 ];
 
 const REPORTING = [
@@ -81,7 +81,8 @@ const REPORTING = [
 ];
 
 const SPONSOR_OPTIONS = [
-  { value: "platinum", label: "Title / Platinum" },
+  { value: "lead", label: "Title / Lead Partner" },
+  { value: "platinum", label: "Platinum" },
   { value: "gold", label: "Gold" },
   { value: "silver", label: "Silver" },
   { value: "bronze", label: "Bronze" },
@@ -145,7 +146,7 @@ export default function BecomeASponsorPage() {
     try {
       const fd = new FormData();
       Object.entries(form).forEach(([k, v]) => fd.append(k, v));
-      fd.append("contactCompany", form.companyName); // keeps the existing API payload
+      fd.append("contactCompany", form.companyName);
       fd.append("countryCode", countryCode);
       if (logoFile) fd.append("logo", logoFile);
 
@@ -186,8 +187,7 @@ export default function BecomeASponsorPage() {
               Sponsor the Clean Energy Conference Africa Australia 2027
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-slate-700">
-              From mine to megawatt: connect Australian capital, technology and delivery expertise
-              with Africa&apos;s energy and critical-mineral projects, in Kigali and Perth.
+              Connecting Australian capital, technology and delivery expertise with Africa&apos;s energy and critical-mineral opportunities across Kigali and Perth.
             </p>
 
             <dl className="mt-14 grid gap-10 border-y border-slate-200 py-10 sm:grid-cols-3">
@@ -335,7 +335,7 @@ export default function BecomeASponsorPage() {
         <section className="mt-32">
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-black">Sponsorship tiers</h2>
           <p className="mt-4 max-w-2xl text-base text-slate-700">
-            Sponsor one edition, or carry a single partnership across both with the new Global Corridor package:
+            Sponsor one edition, or carry a single partnership across both with the Global Corridor package:
             one negotiation, with recognition, speaking rights and delegate passes at Kigali and Perth.
           </p>
 
@@ -344,7 +344,7 @@ export default function BecomeASponsorPage() {
               <thead className="bg-slate-100 text-sm text-black">
                 <tr>
                   <th className="px-6 py-5 font-semibold">Tier</th>
-                  <th className="px-6 py-5 font-semibold">Perth (AUD)</th>
+                  <th className="px-6 py-5 font-semibold">Perth (USD)</th>
                   <th className="px-6 py-5 font-semibold">Kigali (USD)</th>
                   <th className="px-6 py-5 font-semibold">Global Corridor, both editions (USD)</th>
                 </tr>
@@ -362,8 +362,7 @@ export default function BecomeASponsorPage() {
             </table>
           </div>
           <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-600">
-            Global Corridor tiers: Platinum US$59,000, Gold US$45,100, Bronze US$20,650. Exhibition space: turnkey
-            shell-scheme booths on request; custom or raw space A$776 per sqm in Perth and US$575 per sqm in Kigali.
+            Global Corridor tiers: Lead US$79,000, Platinum US$50,000, Gold US$45,000, Bronze US$20,650. Exhibition space: Turnkey booth (shell scheme) US$4,000; Custom or raw space US$545 per sqm.
           </p>
         </section>
 
@@ -453,8 +452,6 @@ export default function BecomeASponsorPage() {
             ))}
           </dl>
         </section>
-
-      
       </div>
     </main>
   );

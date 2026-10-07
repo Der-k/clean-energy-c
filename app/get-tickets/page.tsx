@@ -10,13 +10,12 @@ import {
   ChevronRight,
   CalendarDays,
   MapPin,
-  ArrowRight,
-  ArrowUpRight,
   CreditCard,
   Landmark,
   Copy,
   Check,
   Mail,
+  Info,
 } from "lucide-react";
 import { SectionShell } from "@/components/layout/section-shell";
 
@@ -24,24 +23,24 @@ const editionOptions = [
   {
     key: "kigali",
     title: "Kigali Edition",
-    date: "6–7 August 2026",
-    venue: "Kigali Marriott Hotel, Rwanda",
+    date: "25–28 May 2027",
+    venue: "Kigali International Convention Centre, Rwanda",
     image: "/images/conference/perth ticket.jpg",
     zohoHref:
       "https://clean-energy.zohobackstage.com/Kigali#/buyTickets/selectTickets?lang=en",
     description:
-      "Join East Africa’s leading clean energy dialogue focused on regional integration, climate finance, and decentralized systems.",
+      "Where Africa prepares the opportunity. African governments and developers present qualified clean-energy and critical-mineral projects to investors and development-finance partners.",
   },
   {
     key: "perth",
     title: "Perth Edition",
-    date: "31 Aug – 1 Sept 2026",
-    venue: "Novotel Hotel Perth, Western Australia",
+    date: "30 Aug – 2 Sept 2027",
+    venue: "Perth, Western Australia (venue to be announced)",
     image: "/images/conference/kigali ticket.jpg",
     zohoHref:
       "https://clean-energy.zohobackstage.com/australia#/buyTickets/selectTickets?lang=en",
     description:
-      "Engage with global investors, mining leaders, and clean technology innovators connecting Africa to international capital and expertise.",
+      "Where Australia helps move the opportunity forward. Investors, technology providers and delivery partners respond to the projects introduced in Kigali.",
   },
 ] as const;
 
@@ -278,11 +277,12 @@ export default function GetTicketsPage() {
               Registration
             </p>
             <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
-              Register for the conference
+              Register for CEAA 2027
             </h1>
             <p className="mt-5 max-w-3xl text-xl leading-8 text-[color:var(--text-main)]-600">
-              Choose your edition and how you&apos;d like to pay. We&apos;ll
-              show you the right checkout step below.
+              One journey across two cities: Kigali in May and Perth in
+              August–September 2027. Choose your edition and how you&apos;d
+              like to pay.
             </p>
           </div>
         </div>
@@ -485,25 +485,20 @@ export default function GetTicketsPage() {
           )}
 
           {bothSelected && selectedPayment === "card" && edition && (
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-start gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#02026e]/10 text-[#02026e]">
+                <Info className="h-5 w-5" />
+              </span>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#02026e]">
                   {edition.title} · Pay by card
                 </p>
-                <p className="mt-2 text-base leading-7 text-[color:var(--text-main)]-600">
-                  You&apos;ll be redirected to our secure Zoho Backstage
-                  checkout to complete your registration.
+                <p className="mt-2 text-base leading-7 text-[color:var(--text-main)]-700">
+                  Ticket prices will be updated soon. Online card checkout
+                  will open once the new prices are published. Please check
+                  back shortly.
                 </p>
               </div>
-              <a
-                href={edition.zohoHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#02026e] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#010150]"
-              >
-                Proceed to secure checkout
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
             </div>
           )}
 
@@ -525,8 +520,8 @@ export default function GetTicketsPage() {
                 Explore the full conference programme
               </h2>
               <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
-                Review session formats, speakers, and thematic focus areas before
-                securing your place.
+                Review session formats, the deal room, and the four pillars
+                across Kigali and Perth before securing your place.
               </p>
             </div>
 

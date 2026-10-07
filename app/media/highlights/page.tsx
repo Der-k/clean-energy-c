@@ -51,91 +51,68 @@ function Section({
   );
 }
 
-// ── Card helper ──────────────────────────────────────────────────────────────
-function Card({
-  children,
-  color,
-  className = "",
-}: {
-  children: React.ReactNode;
-  color: typeof C[keyof typeof C];
-  className?: string;
-}) {
-  return (
-    <div
-      className={`rounded-[22px] p-5 shadow-sm transition ${className}`}
-      style={{
-        background: `rgba(${color.rgb}, 0.08)`,
-        border: `1px solid rgba(${color.rgb}, 0.22)`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-// ── Data ─────────────────────────────────────────────────────────────────────
+// ── Data ────────────────────────────────────────────────────────────────     
 type EditionKey = "Kigali" | "perth";
 
 const editions = {
   Kigali: {
     key: "Kigali" as EditionKey,
     label: "Kigali Edition",
-    date: "6–7 August 2026",
-    location: "Kigali Marriott Hotel, Rwanda",
+    date: "25–28 May 2027",
+    location: "Kigali International Convention Centre, Rwanda",
     theme:
-      "East Africa energy transition, regional integration, geothermal, climate finance, clean mobility, and decentralized systems.",
+      "Connecting Australian capital, technology and delivery expertise with Africa's energy and critical-mineral opportunities.",
     heroImage: "/images/highlights/Kigali-highlight-hero.jpeg",
     spotlightTitle: "Programme highlights from the Kigali edition",
     spotlightText:
-      "The Kigali edition emphasizes East Africa's energy transition and Rwanda's position as a hub for clean mobility, innovation-led policy, regional integration, and climate-focused energy growth.",
+      "Where Africa prepares the opportunity, focusing on African government priorities, regional infrastructure gaps identification, project preparation and qualification, and development-finance participation.",
     color: C.orange,
     cards: [
-      { title: "High-Level Plenaries", text: "Discussions on renewable energy policy, regional cooperation, and frameworks for grid integration.", icon: Landmark },
-      { title: "Technical Workshops", text: "Sessions on energy storage, financing models, critical minerals, and regulatory reform.", icon: Lightbulb },
-      { title: "Innovation Expo", text: "An exhibition showcasing renewable energy technologies from Africa and Australia.", icon: Sparkles },
-      { title: "Investor Roundtables", text: "Targeted engagement connecting project developers with financiers and development institutions.", icon: Handshake },
+      { title: "Project Showcase", text: "Structured 15-minute presentations of pipeline projects using a standard template for qualified opportunities.", icon: Landmark },
+      { title: "Project Clinics", text: "Technical and financial interrogation by invitation, outputting a formalized Readiness Note.", icon: Lightbulb },
+      { title: "Regulatory Working Sessions", text: "Closed formats addressing barriers, permits, and market rules to produce a clear barrier log.", icon: Sparkles },
+      { title: "Investor Matching", text: "Connecting project owners with development-finance participation and local manufacturing partners.", icon: Handshake },
     ],
     featuredBlocks: [
-      { title: "Regional integration focus", text: "Highlights cross-border energy cooperation, regional power pools, and stronger East African institutional partnerships." },
-      { title: "Climate finance and green industrialization", text: "Focuses on financing pathways and industrial opportunities that support long-term low-carbon growth." },
-      { title: "Innovation-led clean mobility", text: "Reflects Rwanda's growing visibility in clean mobility, sustainable urban systems, and policy-led innovation." },
+      { title: "African government priorities", text: "Aligns regulatory conditions and national frameworks with capital providers." },
+      { title: "Project preparation and qualification", text: "Bridges the project-preparation gap through structured pipeline tracking." },
+      { title: "Local manufacturing & workforce", text: "Drives employment, local manufacturing, and sustainable industrial development." },
     ],
     outcomeCards: [
-      "Australia-Africa Clean Energy Report 2026",
-      "Policy Dialogue Framework",
-      "Partnership and MoU opportunities",
-      "Government, investor, and innovator matchmaking",
+      "Qualified project Readiness Notes",
+      "Barrier logs from regulatory working sessions",
+      "Development-finance participation frameworks",
+      "Project-owner and investor matchmaking",
     ],
   },
   perth: {
     key: "perth" as EditionKey,
     label: "Perth Edition",
-    date: "31 Aug – 1 Sept 2026",
-    location: "Novotel Hotel Perth, Western Australia",
+    date: "30 Aug – 2 Sept 2027",
+    location: "Perth, Western Australia (venue TBA)",
     theme:
-      "Capital markets, mining technology, green hydrogen, storage innovation, ESG leadership, and Africa–Australia investment ties.",
+      "Where Australia helps move the opportunity forward through mining, technology, storage, and institutional capital.",
     heroImage: "/images/highlights/perth-highlight-hero.jpeg",
     spotlightTitle: "Programme highlights from the Perth edition",
     spotlightText:
-      "The Perth edition is positioned as a strategic bridge between African clean energy priorities and Australian finance, mining innovation, hydrogen expertise, storage capability, and ESG leadership frameworks.",
+      "Focuses on mining and critical-mineral investment, Australian technology, storage and grid expertise, engineering delivery, and institutional capital responses to projects introduced in Kigali.",
     color: C.teal,
     cards: [
-      { title: "Capital & Investment Lens", text: "Connects African clean energy priorities to Australian capital markets and investment ecosystems.", icon: Landmark },
-      { title: "Mining & Critical Minerals", text: "Highlights advanced mining technologies and the role of minerals in future clean energy value chains.", icon: Lightbulb },
-      { title: "Green Hydrogen & Storage", text: "Brings focus to next-generation hydrogen and storage innovation relevant to long-term transition planning.", icon: Sparkles },
-      { title: "ESG Leadership Frameworks", text: "Explores governance, sustainability, and responsible industry models shaping future partnerships.", icon: Handshake },
+      { title: "Mining & Critical Minerals", text: "Leverages ASX-listed miners and processing-stage joint ventures for critical mineral value chains.", icon: Landmark },
+      { title: "Storage & Grid Expertise", text: "Utilizes Australia's battery market experience to address fast-growing distributed solar grids.", icon: Lightbulb },
+      { title: "Engineering & Delivery", text: "Addresses the project-preparation gap via feasibility, owner's engineer, and PMO contracts.", icon: Sparkles },
+      { title: "Institutional Capital", text: "Co-invests alongside DFIs with guarantees and risk mitigation strategies.", icon: Handshake },
     ],
     featuredBlocks: [
-      { title: "Australia–Africa policy dialogue", text: "Strengthens long-term cooperation and policy exchange between African priorities and Australian market capability." },
-      { title: "Investment and value-chain positioning", text: "Frames East African opportunity inside broader global critical minerals and renewable energy value chains." },
-      { title: "Technology and market access", text: "Spotlights practical commercial links between mining technology, storage, hydrogen, and project development." },
+      { title: "Mining-energy technology", text: "Deploys hybrid solar-storage solutions at operating mines acting as anchor loads." },
+      { title: "Institutional capital alignment", text: "Connects overseas investments with de-risked African renewable projects." },
+      { title: "Research and skills partnerships", text: "Facilitates institutional pairings, grid-operator training, and metallurgy courses." },
     ],
     outcomeCards: [
-      "Australia-Africa Clean Energy Report 2026",
-      "Strategic investor and policy conversations",
-      "Partnership and MoU opportunities",
-      "Market access and value-chain positioning",
+      "Structured responses to Kigali projects",
+      "Processing-stage joint venture agreements",
+      "Engineering and PMO delivery contracts",
+      "Institutional co-investment frameworks",
     ],
   },
 };
@@ -163,22 +140,12 @@ export default function HighlightsPage() {
         `,
       }}
     >
-
-      {/* ── HERO ── teal accent ─────────────────────────────────────────────── */}
+      {/* ── HERO ── */}
       <section
         className="relative overflow-hidden"
         style={{ borderBottom: `1px solid rgba(${C.teal.rgb}, 0.2)` }}
       >
-        {/* Background glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute left-[-120px] top-[-120px] h-[280px] w-[280px] rounded-full blur-3xl"
-               style={{ background: `rgba(${C.teal.rgb}, 0.18)` }} />
-          <div className="absolute right-[-80px] top-[40px] h-[240px] w-[240px] rounded-full blur-3xl"
-               style={{ background: `rgba(${C.orange.rgb}, 0.14)` }} />
-        </div>
-
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-          {/* Breadcrumb */}
           <div className="mb-6 flex flex-wrap items-center gap-2 text-base text-white/50">
             <Link href="/" className="hover:text-white transition">Home</Link>
             <ChevronRight className="h-4 w-4" />
@@ -188,16 +155,14 @@ export default function HighlightsPage() {
           </div>
 
           <div className="max-w-4xl">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]"
-               style={{ color: C.teal.hex }}>
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: C.teal.hex }}>
               Highlights
             </p>
             <h1 className="mt-3 text-4xl font-extrabold tracking-[-0.03em] text-white sm:text-5xl">
-              Edition highlights and featured moments
+              2027 Clean Energy Conference Highlights
             </h1>
             <p className="mt-5 max-w-3xl text-xl leading-8 text-white/70">
-              Explore key highlights from the 2026 Kigali and Perth editions,
-              including programme emphasis, showcase formats, and expected strategic outcomes.
+              Connecting Australian capital, technology, and delivery expertise with Africa's energy and critical-mineral opportunities[cite: 3].
             </p>
           </div>
 
@@ -211,6 +176,7 @@ export default function HighlightsPage() {
                   key={editionKey}
                   type="button"
                   onClick={() => setActiveEdition(editionKey)}
+                  aria-pressed={isActive}
                   className="rounded-[24px] p-5 text-left transition"
                   style={
                     isActive
@@ -254,12 +220,11 @@ export default function HighlightsPage() {
         </div>
       </section>
 
-      {/* ── SPOTLIGHT ── edition accent color ───────────────────────────────── */}
+      {/* ── SPOTLIGHT ── */}
       <Section color={accent} intensity={0.06}>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]"
-               style={{ color: accent.hex }}>
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: accent.hex }}>
               Spotlight
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-white">
@@ -268,26 +233,24 @@ export default function HighlightsPage() {
             <p className="mt-5 text-base leading-8 text-white/70">{current.spotlightText}</p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-  <a
-    href="/event/programme"
-    className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-80"
-    style={{
-      border: `1px solid rgba(${accent.rgb}, 0.5)`,
-      background: `rgba(${accent.rgb}, 0.12)`,
-    }}
-  >
-    Download Programme
-  </a>
-
-  <a
-    href="/get-tickets"
-   
-    className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-90"
-    style={{ background: accent.hex }}
-  >
-    Register Now
-  </a>
-</div>
+              <Link
+                href="/event/programme"
+                className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-80"
+                style={{
+                  border: `1px solid rgba(${accent.rgb}, 0.5)`,
+                  background: `rgba(${accent.rgb}, 0.12)`,
+                }}
+              >
+                Download Programme
+              </Link>
+              <Link
+                href="/get-tickets"
+                className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-90"
+                style={{ background: accent.hex }}
+              >
+                Register Now
+              </Link>
+            </div>
           </div>
 
           <div
@@ -308,15 +271,14 @@ export default function HighlightsPage() {
         </div>
       </Section>
 
-      {/* ── HIGHLIGHT FORMATS ── gold ────────────────────────────────────────── */}
+      {/* ── HIGHLIGHT FORMATS ── */}
       <Section color={C.gold} intensity={0.07}>
         <div className="max-w-3xl">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.22em]"
-             style={{ color: C.gold.hex }}>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: C.gold.hex }}>
             Highlight Formats
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-white">
-            Featured programme elements
+            Featured deal room elements
           </h2>
         </div>
 
@@ -330,10 +292,7 @@ export default function HighlightsPage() {
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   border: `1px solid rgba(${C.gold.rgb}, 0.22)`,
-                  boxShadow: "0 0 0 0 transparent",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 16px 36px rgba(${C.gold.rgb}, 0.14)`)}
-                onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
               >
                 <div
                   className="flex h-12 w-12 items-center justify-center rounded-2xl"
@@ -349,16 +308,15 @@ export default function HighlightsPage() {
         </div>
       </Section>
 
-      {/* ── FOCUS AREAS ── olive ─────────────────────────────────────────────── */}
+      {/* ── FOCUS AREAS ── */}
       <Section color={C.olive} intensity={0.06}>
         <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]"
-               style={{ color: C.olive.hex }}>
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: C.olive.hex }}>
               Focus Areas
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-white">
-              Edition-specific highlight areas
+              Edition-specific focus blocks
             </h2>
           </div>
 
@@ -380,21 +338,18 @@ export default function HighlightsPage() {
         </div>
       </Section>
 
-      {/* ── STRATEGIC OUTPUTS ── pink ────────────────────────────────────────── */}
+      {/* ── STRATEGIC OUTPUTS ── */}
       <Section color={C.pink} intensity={0.07}>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]"
-               style={{ color: C.pink.hex }}>
+            <p className="text-[13px] font-semibold uppercase tracking-[0.22em]" style={{ color: C.pink.hex }}>
               Strategic Outputs
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-white">
-              Expected highlight outcomes
+              Expected pipeline outcomes
             </h2>
             <p className="mt-5 text-base leading-8 text-white/70">
-              The concept note frames the conference as a platform for high-level dialogue,
-              investment conversations, technical exchange, policy continuity, and partnership
-              formation across the two editions.
+              Moving clean-energy and critical-mineral projects from opportunity to capital through a structured pipeline linking Kigali and Perth[cite: 3].
             </p>
           </div>
 
@@ -416,8 +371,7 @@ export default function HighlightsPage() {
             >
               <Users className="mt-0.5 h-5 w-5 shrink-0" style={{ color: C.pink.hex }} />
               <p className="text-base leading-7 text-white/80">
-                A flagship platform connecting governments, investors, utilities, innovators,
-                and industry stakeholders.
+                A unified project and collaborative pipeline connecting two cities.
               </p>
             </div>
 
@@ -427,14 +381,14 @@ export default function HighlightsPage() {
             >
               <FileText className="mt-0.5 h-5 w-5 shrink-0" style={{ color: C.pink.hex }} />
               <p className="text-base leading-7 text-white/80">
-                A platform for formal reports, policy dialogue, and structured cooperation mechanisms.
+                Actionable tracking ensuring every introduction is followed through.
               </p>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* ── CTA ── purple ────────────────────────────────────────────────────── */}
+      {/* ── CTA ── */}
       <Section color={C.purple} intensity={0.06}>
         <div
           className="rounded-[28px] px-6 py-8 text-white md:px-10 md:py-10"
@@ -457,27 +411,27 @@ export default function HighlightsPage() {
               </p>
             </div>
 
-        <div className="flex flex-wrap gap-3">
-  <a
-    href="/event/programme"
-    className="rounded-full px-6 py-3 text-base font-semibold transition hover:opacity-90"
-    style={{
-      background: "rgba(255,255,255,0.15)",
-      border: "1px solid rgba(255,255,255,0.3)",
-      color: "#fff",
-    }}
-  >
-    Download Programme
-  </a>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/event/programme"
+                className="rounded-full px-6 py-3 text-base font-semibold transition hover:opacity-90"
+                style={{
+                  background: "rgba(255,255,255,0.15)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "#fff",
+                }}
+              >
+                Download Programme
+              </Link>
 
-  <Link
-    href="/media/gallery"
-    className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-90"
-    style={{ background: C.purple.hex }}
-  >
-    View Gallery
-  </Link>
-</div>
+              <Link
+                href="/media/gallery"
+                className="rounded-full px-6 py-3 text-base font-semibold text-white transition hover:opacity-90"
+                style={{ background: C.purple.hex }}
+              >
+                View Gallery
+              </Link>
+            </div>
           </div>
         </div>
       </Section>

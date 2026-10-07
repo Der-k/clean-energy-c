@@ -16,8 +16,8 @@ const australiaVisaGuideHref = "/documents/australia-visa-application-guide.pdf"
 const editions = [
   {
     name: "Kigali Edition",
-    date: "6–7 August 2026",
-    venue: "Kigali Marriott Hotel, Rwanda",
+    date: "25–28 May 2027",
+    venue: "Kigali International Convention Centre, Rwanda",
     location: "Kigali, Rwanda",
     accent: "border-[#020266]/20 bg-[#020266]/[0.03]",
     button:
@@ -28,8 +28,8 @@ const editions = [
   },
   {
     name: "Perth Edition",
-    date: "31 Aug – 1 Sept 2026",
-    venue: "Novotel Hotel Perth, Western Australia",
+    date: "30 Aug – 2 Sept 2027",
+    venue: "Perth, Western Australia (venue TBA)",
     location: "Perth, Western Australia",
     accent: "border-[#009966]/20 bg-[#009966]/[0.04]",
     button:
@@ -108,14 +108,13 @@ export default function VisaPage() {
             </div>
 
             <h1 className="mt-5 text-4xl font-extrabold tracking-[-0.03em] text-zinc-950 sm:text-5xl">
-              Plan your visa and travel for the 2026 conference editions
+              Plan your visa and travel for the 2027 conference editions
             </h1>
 
-            <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 sm:text-xl
-">
+            <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 sm:text-xl">
               This page helps delegates from anywhere in the world prepare early
               for travel to the Kigali and Perth editions of the Clean Energy
-              Conference & Exhibition. Use it as a planning guide for timelines,
+              Conference & Exhibition[cite: 3]. Use it as a planning guide for timelines,
               supporting documents, and conference details that may be useful
               during your travel preparation, whatever your nationality.
             </p>
@@ -155,99 +154,31 @@ export default function VisaPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-  href="/downloads/australia-visa-guide.pdf"
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-    rounded-full px-6 py-3 text-base font-semibold
-    text-white
-    bg-[#009966]
-    border border-[#009966]
-    shadow-[0_10px_30px_rgba(0,153,102,0.18)]
-    transition-all duration-500 ease-out
-    hover:border-[#009966]/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(0,153,102,0.28)]
-    active:scale-[0.97]
-    focus:outline-none
-    focus:ring-2
-    focus:ring-[#009966]/25
-    focus:ring-offset-2
-    focus:ring-offset-white
-  "
->
-  {/* white sweep */}
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-white
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
+                <Link
+                  href="/downloads/australia-visa-guide.pdf"
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 text-base font-semibold text-white bg-[#009966] border border-[#009966] shadow-[0_10px_30px_rgba(0,153,102,0.18)] transition-all duration-500 ease-out hover:border-[#009966]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,153,102,0.28)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#009966]/25 focus:ring-offset-2 focus:ring-offset-white"
+                >
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                  </span>
+                  <Download className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-[#009966]" />
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#009966]">
+                    Download Australia visa guide
+                  </span>
+                </Link>
 
-  <Download
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-[#009966]
-    "
-  />
-
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-[#009966]">
-    Download Australia visa guide
-  </span>
-</Link>
-
-<Link
-  href="/contact"
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-    rounded-full px-6 py-3 text-base font-semibold
-    text-zinc-950
-    bg-white
-    border border-zinc-300
-    shadow-sm
-    transition-all duration-500 ease-out
-    hover:border-[#009966]/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(0,153,102,0.18)]
-    active:scale-[0.97]
-    focus:outline-none
-    focus:ring-2
-    focus:ring-[#009966]/25
-    focus:ring-offset-2
-    focus:ring-offset-white
-  "
->
-  {/* green sweep */}
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-[#009966]
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
-
-  <Mail
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-white
-    "
-  />
-
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-    Ask for support
-  </span>
-</Link>
+                <Link
+                  href="/contact"
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 text-base font-semibold text-zinc-950 bg-white border border-zinc-300 shadow-sm transition-all duration-500 ease-out hover:border-[#009966]/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,153,102,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[#009966]/25 focus:ring-offset-2 focus:ring-offset-white"
+                >
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span className="absolute left-0 top-0 h-full w-0 bg-[#009966] transition-all duration-500 ease-out group-hover:w-full" />
+                  </span>
+                  <Mail className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-white" />
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                    Ask for support
+                  </span>
+                </Link>
               </div>
             </div>
 
@@ -283,74 +214,73 @@ export default function VisaPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-  <div className="rounded-[32px] border border-[#020266]/20 bg-gradient-to-br from-[#020266]/[0.06] via-white to-white p-6 shadow-sm sm:p-8 lg:p-10">
-    <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-      <div>
-        <div className="inline-flex rounded-full bg-[#020266] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
-          Kigali visa guidance
-        </div>
+        <div className="rounded-[32px] border border-[#020266]/20 bg-gradient-to-br from-[#020266]/[0.06] via-white to-white p-6 shadow-sm sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div>
+              <div className="inline-flex rounded-full bg-[#020266] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+                Kigali visa guidance
+              </div>
 
-        <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
-          Kigali edition travel support
-        </p>
+              <p className="mt-5 text-[13px] font-semibold uppercase tracking-[0.22em] text-[#020266]">
+                Kigali edition travel support
+              </p>
 
-        <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-zinc-950 sm:text-4xl">
-          Entry options for delegates travelling to Rwanda
-        </h2>
+              <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-zinc-950 sm:text-4xl">
+                Entry options for delegates travelling to Rwanda
+              </h2>
 
-        <p className="mt-4 text-base leading-8 text-zinc-700">
-          Rwanda has one of the most open entry policies in the world: most
-          nationalities can obtain a visa on arrival or apply for an e-visa in
-          advance through Rwanda's official immigration portal. Processing times,
-          fees, and required documents vary by country of passport, so check your
-          specific pathway before booking travel.
-        </p>
+              <p className="mt-4 text-base leading-8 text-zinc-700">
+                Rwanda has one of the most open entry policies in the world: most
+                nationalities can obtain a visa on arrival or apply for an e-visa in
+                advance through Rwanda's official immigration portal. Processing times,
+                fees, and required documents vary by country of passport, so check your
+                specific pathway before booking travel.
+              </p>
 
-        <p className="mt-4 text-base leading-8 text-zinc-700">
-          Citizens of East African Community (EAC) member states can enter Rwanda
-          visa-free for up to 6 months using a valid passport, national ID, or
-          temporary Interstate Pass. This applies to conference attendance,
-          business meetings, and exploring investment opportunities, but it does
-          not replace a work or residence permit for those intending to take up
-          employment or run a business in Rwanda permanently.
-        </p>
-      </div>
-
-      <div className="rounded-[26px] border border-zinc-200 bg-white p-5 shadow-sm">
-        <p className="text-base font-bold text-zinc-950">
-          What delegates should carry:
-        </p>
-
-        <div className="mt-4 space-y-3">
-          {[
-            "Valid passport (plus national ID or Interstate Pass for EAC citizens)",
-            "Visa or e-visa approval, where applicable to your nationality",
-            "Conference invitation letter or proof of event attendance",
-            "Accommodation details for your stay in Kigali",
-            "Return or onward ticket showing planned departure",
-            "Proof of sufficient funds if requested at entry",
-            "Yellow fever certificate where applicable",
-          ].map((item) => (
-            <div key={item} className="flex items-start gap-3">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#020266]" />
-              <span className="text-base leading-6 text-zinc-700">
-                {item}
-              </span>
+              <p className="mt-4 text-base leading-8 text-zinc-700">
+                Citizens of East African Community (EAC) member states can enter Rwanda
+                visa-free for up to 6 months using a valid passport, national ID, or
+                temporary Interstate Pass. This applies to conference attendance,
+                business meetings, and exploring investment opportunities, but it does
+                not replace a work or residence permit for those intending to take up
+                employment or run a business in Rwanda permanently.
+              </p>
             </div>
-          ))}
-        </div>
 
-        <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-base leading-6 text-amber-900">
-          Entry requirements can change and vary by nationality. Delegates should
-          confirm current rules with their nearest Rwandan embassy or consulate,
-          or through Rwanda's official immigration website, before travelling.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            <div className="rounded-[26px] border border-zinc-200 bg-white p-5 shadow-sm">
+              <p className="text-base font-bold text-zinc-950">
+                What delegates should carry:
+              </p>
 
-      
+              <div className="mt-4 space-y-3">
+                {[
+                  "Valid passport (plus national ID or Interstate Pass for EAC citizens)",
+                  "Visa or e-visa approval, where applicable to your nationality",
+                  "Conference invitation letter or proof of event attendance",
+                  "Accommodation details for your stay in Kigali",
+                  "Return or onward ticket showing planned departure",
+                  "Proof of sufficient funds if requested at entry",
+                  "Yellow fever certificate where applicable",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#020266]" />
+                    <span className="text-base leading-6 text-zinc-700">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-base leading-6 text-amber-900">
+                Entry requirements can change and vary by nationality. Delegates should
+                confirm current rules with their nearest Rwandan embassy or consulate,
+                or through Rwanda's official immigration website, before travelling.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="rounded-[30px] border border-zinc-200 bg-zinc-50 p-6 shadow-sm sm:p-8 lg:p-10">
           <div className="max-w-3xl">
@@ -363,7 +293,7 @@ export default function VisaPage() {
             <p className="mt-4 text-base leading-8 text-zinc-600">
               Start early and treat your visa preparation as part of your overall
               conference planning. The steps below are designed to work for
-              delegates of any nationality attending either edition, without
+              delegates of any nationality attending either edition[cite: 3], without
               assuming country-specific immigration rules.
             </p>
           </div>
@@ -381,8 +311,7 @@ export default function VisaPage() {
                     <Icon className="h-5 w-5" />
                   </div>
 
-                  <h3 className="mt-4 text-xl
- font-semibold text-zinc-950">
+                  <h3 className="mt-4 text-xl font-semibold text-zinc-950">
                     {step.title}
                   </h3>
 
@@ -446,7 +375,7 @@ export default function VisaPage() {
         </div>
       </section>
 
-<section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2">
           {editions.map((edition) => (
             <div
@@ -491,7 +420,6 @@ export default function VisaPage() {
         </div>
       </section>
 
-
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
         <div className="rounded-[30px] border border-[#020266]/20 bg-gradient-to-r from-[#020266] to-[#001b6e] px-6 py-8 text-white shadow-[0_18px_50px_rgba(0,57,148,0.22)] md:px-10 md:py-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -504,116 +432,39 @@ export default function VisaPage() {
               </h2>
               <p className="mt-3 text-base leading-7 text-white/80 md:text-base">
                 Ticket guidance in the concept note shows early bird registration at
-                USD 770 until 1 March 2026, with regular tickets at USD 800. Secure
+                USD 770 until 1 March 2027, with regular tickets at USD 800[cite: 3]. Secure
                 your place early so your conference registration can support your
                 travel planning.
               </p>
             </div>
 
-         <div className="flex flex-wrap gap-3">
-  <Link
-  href="/contact"
-  className="
-    group relative inline-flex items-center justify-center gap-2
-    overflow-hidden
-    rounded-full px-5 py-3 text-base font-semibold
-    text-[#02026e]
-    bg-white
-    border border-white
-    shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-    transition-all duration-500 ease-out
-    hover:border-white/60
-    hover:scale-[1.04]
-    hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-    active:scale-[0.97]
-    focus:outline-none
-    focus:ring-2
-    focus:ring-white/40
-    focus:ring-offset-2
-    focus:ring-offset-[#02026e]
-  "
->
-  {/* blue sweep */}
-  <span className="absolute inset-0 overflow-hidden rounded-full">
-    <span
-      className="
-        absolute left-0 top-0 h-full w-0
-        bg-[#02026e]
-        transition-all duration-500 ease-out
-        group-hover:w-full
-      "
-    />
-  </span>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-5 py-3 text-base font-semibold text-[#02026e] bg-white border border-white shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-white/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+              >
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span className="absolute left-0 top-0 h-full w-0 bg-[#02026e] transition-all duration-500 ease-out group-hover:w-full" />
+                </span>
+                <Mail className="relative z-10 h-4 w-4 transition-colors duration-300 group-hover:text-white" />
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                  Contact conference team
+                </span>
+              </Link>
 
-  <Mail
-    className="
-      relative z-10 h-4 w-4
-      transition-colors duration-300
-      group-hover:text-white
-    "
-  />
-
-  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-    Contact conference team
-  </span>
-</Link>
- 
-
-  <Link
-    href="/get-tickets"
-    className="
-      group relative inline-flex items-center justify-center gap-2
-      overflow-hidden
-
-      rounded-full px-5 py-3 text-base font-semibold
-
-      text-white
-      bg-white/10 backdrop-blur-sm
-
-      border border-white/30
-
-      shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-
-      transition-all duration-500 ease-out
-
-      hover:border-white/60
-      hover:scale-[1.04]
-      hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]
-
-      active:scale-[0.97]
-
-      focus:outline-none
-      focus:ring-2
-      focus:ring-white/40
-      focus:ring-offset-2
-      focus:ring-offset-[#02026e]
-    "
-  >
-    <span className="absolute inset-0 overflow-hidden rounded-full">
-      <span
-        className="
-          absolute left-0 top-0 h-full w-0
-          bg-white
-          transition-all duration-500 ease-out
-          group-hover:w-full
-        "
-      />
-    </span>
-
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
-      View tickets
-    </span>
-
-    <ArrowRight
-      className="
-        relative z-10 h-4 w-4
-        transition-all duration-300
-        group-hover:translate-x-1
-        group-hover:text-[#02026e]
-      "
-    />
-  </Link>
-</div>
+              <Link
+                href="/get-tickets"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-5 py-3 text-base font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out hover:border-white/60 hover:scale-[1.04] hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#02026e]"
+              >
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
+                </span>
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#02026e]">
+                  View tickets
+                </span>
+                <ArrowRight className="relative z-10 h-4 w-4 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#02026e]" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
