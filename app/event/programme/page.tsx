@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Download, FileText, CheckCircle2, BookOpen } from "lucide-react";
+import { ChevronRight, Download, FileText, CheckCircle2, BookOpen, Clock } from "lucide-react";
 import { useRole } from "@/context/RoleContext";
 
 type EventOption = "Kigali" | "perth" | "both";
@@ -14,21 +14,6 @@ type FormState = {
   organization: string;
   eventChoice: EventOption;
   includeProspectus: boolean;
-};
-
-const programmeFiles: Record<EventOption, { label: string; href: string }> = {
-  Kigali: {
-    label: "Kigali Edition Programme",
-    href: "/documents/conference programme Kigali Rwanda.pdf",
-  },
-  perth: {
-    label: "Perth Edition Programme",
-     href: "/documents/clean-energy-conference-programme-2026.pdf",
-  },
-  both: {
-    label: "Combined Programme (Kigali + Perth)",
-    href: "/documents/clean-energy-conference-programme-2026.pdf",
-  },
 };
 
 const prospectusFile = {
@@ -63,8 +48,14 @@ export default function ProgrammePage() {
   const [submitError, setSubmitError] = useState("");
   const [prospectusDownloaded, setProspectusDownloaded] = useState(false);
 
-  const selectedProgramme = useMemo(
-    () => programmeFiles[form.eventChoice],
+  const editionNames: Record<EventOption, string> = {
+    Kigali: "Kigali Edition Programme",
+    perth: "Perth Edition Programme",
+    both: "Combined Programme (Kigali + Perth)",
+  };
+
+  const selectedProgrammeLabel = useMemo(
+    () => editionNames[form.eventChoice],
     [form.eventChoice]
   );
 
@@ -133,9 +124,6 @@ export default function ProgrammePage() {
 
       setIsSubmitted(true);
 
-      const programme = programmeFiles[form.eventChoice];
-      triggerDownload(programme.href);
-
       if (form.includeProspectus) {
         setTimeout(() => {
           triggerDownload(prospectusFile.href);
@@ -175,23 +163,22 @@ export default function ProgrammePage() {
                 Programme Access
               </p>
               <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-[-0.03em] text-[color:var(--text-main)]-900 sm:text-5xl">
-                Request the conference programme
+                Request conference programme updates
               </h1>
               <p className="mt-5 max-w-2xl text-xl leading-8 text-[color:var(--text-main)]-600">
-                Select the edition you are interested in, submit your details,
-                and access the relevant programme document for the conference.
+                Select the edition you are interested in and submit your details. The detailed conference programme will be updated and shared with you in the future.
               </p>
 
               <div className="mt-8 space-y-4">
-                <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
+                <div className="hover-glow-soft rounded-[20px] border border-amber-200 bg-amber-50/60 p-5 shadow-[0_10px_28px_rgba(245,158,11,0.06)]">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
-                      <FileText className="h-5 w-5" />
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-700">
+                      <Clock className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Available programme options</p>
-                      <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
-                        Kigali Edition, Perth Edition, or both programmes downloaded together.
+                      <p className="text-base font-semibold text-amber-900">Programme coming soon</p>
+                      <p className="mt-1 text-base leading-7 text-amber-800/80">
+                        The full conference schedule and speaker sessions are currently being finalized and will be updated in the future.
                       </p>
                     </div>
                   </div>
@@ -214,12 +201,12 @@ export default function ProgrammePage() {
                 <div className="hover-glow-soft rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                   <div className="flex items-start gap-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#02026e]/5 text-[#02026e]">
-                      <Download className="h-5 w-5" />
+                      <FileText className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Download after submission</p>
+                      <p className="text-base font-semibold text-[color:var(--text-main)]-900">Stay informed</p>
                       <p className="mt-1 text-base leading-7 text-[color:var(--text-main)]-600">
-                        Once submitted, the selected programme file(s) will open or download automatically.
+                        Register your details now to receive the updated programme directly in your inbox as soon as it is released.
                       </p>
                     </div>
                   </div>
@@ -233,7 +220,7 @@ export default function ProgrammePage() {
                   <div className="mb-6">
                     <p className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#02026e]">Request Form</p>
                     <h2 className="font-heading mt-2 text-2xl font-bold tracking-[-0.02em] text-[color:var(--text-main)]-900">
-                      Get the programme schedule
+                      Get notified when the programme updates
                     </h2>
                   </div>
 
@@ -272,7 +259,7 @@ export default function ProgrammePage() {
                     </div>
 
                     <div>
-                      <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Which event do you want?</label>
+                      <label htmlFor="eventChoice" className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">Which event do you want updates for?</label>
                       <select id="eventChoice" value={form.eventChoice} onChange={(e) => updateField("eventChoice", e.target.value as EventOption)}
                         className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
                         <option value="Kigali">Kigali Edition</option>
@@ -310,7 +297,7 @@ export default function ProgrammePage() {
                         </span>
                         <span>
                           <span className="block text-base font-semibold text-emerald-900">
-                             Send me the event prospectus
+                            Send me the event prospectus
                           </span>
                           <span className="mt-1 block text-base leading-6 text-emerald-800/70">
                             A full overview of the conference, themes, and partnership details.
@@ -321,10 +308,10 @@ export default function ProgrammePage() {
 
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                        Selected file{form.eventChoice === "both" || form.includeProspectus ? "s" : ""}
+                        Selected selection
                       </p>
                       <p className="mt-1 text-base text-[color:var(--text-main)]-600">
-                        {selectedProgramme.label}
+                        {selectedProgrammeLabel} (Programme updates coming soon)
                         {form.includeProspectus ? (
                           <span className="font-semibold text-emerald-700"> + {prospectusFile.label}</span>
                         ) : (
@@ -342,7 +329,7 @@ export default function ProgrammePage() {
                         <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-500 ease-out group-hover:w-full" />
                       </span>
                       <span className="relative z-10 transition-colors duration-300 group-hover:text-[#020266]">
-                        {isSubmitting ? "Submitting..." : "Submit and Get Programme"}
+                        {isSubmitting ? "Submitting..." : "Submit and Request Updates"}
                       </span>
                     </button>
                   </form>
@@ -353,27 +340,21 @@ export default function ProgrammePage() {
                     <CheckCircle2 className="h-8 w-8" />
                   </div>
                   <h2 className="font-heading mt-6 text-2xl font-bold text-[color:var(--text-main)]-900">
-                    Programme request submitted
+                    Request submitted successfully
                   </h2>
                   <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
-                    Thank you, {form.firstName}. Your selected programme{form.eventChoice === "both" ? "s" : ""} should begin downloading automatically.
-                    {form.includeProspectus ? " The event prospectus is on its way too." : ""}
+                    Thank you, {form.firstName}. The programme will be updated in the future, and we will email you as soon as the latest schedule is available.
+                    {form.includeProspectus ? " Your event prospectus download has started." : ""}
                   </p>
 
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
                     <p className="text-base font-semibold text-[color:var(--text-main)]-900">
-                      Downloaded file{form.eventChoice === "both" ? "s" : ""}
+                      Selected Preference
                     </p>
-                    <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgramme.label}</p>
+                    <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgrammeLabel}</p>
                   </div>
 
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
-                    <a href={selectedProgramme.href} download
-                      className="btn-outline-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-[color:var(--text-main)]-900"
-                    >
-                      Download again
-                      <Download className="h-4 w-4" />
-                    </a>
                     <button type="button"
                       onClick={() => {
                         setIsSubmitted(false);
@@ -382,13 +363,13 @@ export default function ProgrammePage() {
                         setProspectusDownloaded(false);
                         setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both", includeProspectus: false });
                       }}
-                      className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white"
+                      className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white bg-[#020266]"
                     >
                       Submit another request
                     </button>
                   </div>
 
-                  {/* Additional download option once a programme request has already been submitted. */}
+                  {/* Additional download option for prospectus if requested */}
                   <div className="mt-8 w-full rounded-[20px] border border-emerald-300 bg-emerald-50 px-5 py-5 text-left shadow-[0_10px_28px_rgba(6,95,70,0.08)]">
                     <div className="flex items-start gap-3">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-700 shadow-sm">
