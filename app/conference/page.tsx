@@ -148,18 +148,12 @@ const editionOrder: EditionKey[] = ["kigali", "perth"];
 function SectionShell({
   children,
   className = "",
-  muted = false,
 }: {
   children: ReactNode;
   className?: string;
-  muted?: boolean;
 }) {
   return (
-    <section
-      className={`px-4 py-14 md:px-6 lg:py-20 ${
-        muted ? "bg-slate-50" : ""
-      } ${className}`}
-    >
+    <section className={`px-4 py-14 md:px-6 lg:py-20 ${className}`}>
       <div className="mx-auto max-w-7xl">{children}</div>
     </section>
   );
@@ -167,11 +161,11 @@ function SectionShell({
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-[22px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
-      <p className="font-heading text-3xl font-extrabold tracking-[-0.03em] text-white">
+    <div className="rounded-[18px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
+      <p className="text-5xl font-extrabold tracking-[-0.03em] text-white">
         {value}
       </p>
-      <p className="mt-2 text-base text-white/85">{label}</p>
+      <p className="mt-3 text-xl font-semibold leading-8 text-white">{label}</p>
     </div>
   );
 }
@@ -374,30 +368,30 @@ export default function ConferenceOverviewPage() {
       </section>
 
       {/* EVENT OVERVIEW SECTION */}
-      <SectionShell className="bg-gradient-to-br from-[#02026e] via-[#0b0b8f] to-[#010150] text-white">
+      <SectionShell className="bg-gradient-to-r from-[#02026e] to-[#010150] text-white">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <div className="inline-block">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
+              <p className="text-lg font-bold uppercase tracking-[0.22em] text-white">
                 Event Overview
               </p>
               <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
             </div>
             <div className="mt-3 inline-block">
-              <h2 className="text-3xl font-bold tracking-[-0.02em] text-white">
+              <h2 className="text-5xl font-extrabold tracking-[-0.02em] text-white md:text-6xl">
                 {current.overviewTitle}
               </h2>
               <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
             </div>
 
-            <div className="mt-6 space-y-5 text-base leading-8 text-white">
+            <div className="mt-6 space-y-6 text-2xl font-medium leading-10 text-white">
               {current.overviewParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:content-start">
             {current.stats.map((item) => (
               <StatCard key={item.label} value={item.value} label={item.label} />
             ))}
@@ -429,23 +423,23 @@ export default function ConferenceOverviewPage() {
       </section>
 
       {/* WHY ATTEND SECTION */}
-      <SectionShell className="bg-gradient-to-br from-[#02026e] via-[#0b0b8f] to-[#010150] text-white">
+      <SectionShell className="bg-gradient-to-r from-[#02026e] to-[#010150] text-white">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <div className="inline-block">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white">
+              <p className="text-lg font-bold uppercase tracking-[0.22em] text-white">
                 Why Attend
               </p>
               <div className="mt-2 h-[2px] w-full rounded-full bg-[#06895b]" />
             </div>
             <div className="mt-3 inline-block">
-              <h2 className="text-3xl font-bold tracking-[-0.02em] text-white">
+              <h2 className="text-5xl font-extrabold tracking-[-0.02em] text-white md:text-6xl">
                 Move projects from opportunity to capital
               </h2>
               <div className="mt-3 h-[3px] w-24 rounded-full bg-[#06895b]" />
             </div>
 
-            <p className="mt-5 text-base leading-8 text-white">
+            <p className="mt-6 text-2xl font-medium leading-10 text-white">
               CEAA is the Africa–Australia platform that moves clean-energy
               and Critical-Mineral projects from opportunity to capital.
               Between Kigali and Perth, projects are tested, matched and
@@ -455,10 +449,10 @@ export default function ConferenceOverviewPage() {
             <div className="mt-8">
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-base font-semibold text-white transition hover:text-[#9fb0ff]"
+                className="inline-flex items-center gap-2 text-2xl font-bold text-white transition hover:text-white/80"
               >
                 Explore partnership opportunities
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-6 w-6" />
               </a>
             </div>
           </div>
@@ -470,71 +464,11 @@ export default function ConferenceOverviewPage() {
                 className="rounded-[18px] border border-[#06895b]/40 bg-gradient-to-br from-[#06895b] to-[#046746] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.16)]"
               >
                 <div className="flex gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-white" />
-                  <p className="text-base leading-7 text-white">{reason}</p>
+                  <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-white" />
+                  <p className="text-xl font-semibold leading-9 text-white">{reason}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </SectionShell>
-
-      <SectionShell muted>
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
-              Focus Areas
-            </p>
-
-            <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
-              Cross-sector participation across the clean energy ecosystem
-            </h2>
-
-            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {current.sectors.map((sector) => (
-                <div
-                  key={sector}
-                  className="rounded-[16px] border border-[#02026e]/20 bg-white px-4 py-3 text-base text-slate-700 shadow-sm"
-                >
-                  {sector}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-[#02026e]">
-              Who Attends
-            </p>
-
-            <h2 className="mt-3 text-3xl font-bold tracking-[-0.02em] text-slate-900">
-              A senior-level audience with strong decision-making influence
-            </h2>
-
-            <div className="mt-8 space-y-4">
-              {current.audienceBreakdown.map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-[18px] border border-[#02026e]/20 bg-white p-4 shadow-sm"
-                >
-                  <div className="mb-2 flex items-center justify-between gap-4">
-                    <span className="text-base font-medium text-slate-700">
-                      {item.label}
-                    </span>
-                    <span className="text-base font-bold text-[#02026e]">
-                      {item.value}
-                    </span>
-                  </div>
-
-                  <div className="h-2.5 overflow-hidden rounded-full bg-[#02026e]/12">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#02026e] to-[#3535c4]"
-                      style={{ width: item.value }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </SectionShell>

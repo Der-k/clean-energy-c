@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, MessageSquare } from "lucide-react";
 
@@ -484,6 +485,7 @@ const DAYS: Day[] = [
 export function ProgrammeHighlightsSection() {
   const [activeDay, setActiveDay] = useState(DAYS[0].id);
   const [gallerySeed, setGallerySeed] = useState(0);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
   const day = useMemo(() => DAYS.find((d) => d.id === activeDay) ?? DAYS[0], [activeDay]);
 
@@ -492,23 +494,39 @@ export function ProgrammeHighlightsSection() {
     setGallerySeed(Math.floor(Math.random() * 100_000));
   }, []);
 
+  // Close the lightbox with Escape.
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox]);
+
   const galleryImages = useMemo(
     () => {
       const pools = DAY_IMAGE_POOLS[day.id] ?? IMAGE_POOLS;
       const categories = ["Keynote Session", "Panel Discussion", "Workshop", "Networking"];
       return categories.map((category, index) => {
         const pool = pools[category] ?? IMAGE_POOLS[category] ?? IMAGE_POOLS.Other;
-        return { category, src: pool[(gallerySeed + index * 7) % pool.length] };
+        return {
+          category,
+          src: pool[(gallerySeed + index * 7) % pool.length],
+          alt: `${day.label} ${category}`,
+        };
       });
     },
-    [day.id, gallerySeed],
+    [day.id, day.label, gallerySeed],
   );
+
+  const [hero, ...tiles] = galleryImages;
 
   return (
     <section className="py-12" id="recap">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--primary)]">
               <CheckCircle2 size={13} />
@@ -541,22 +559,31 @@ export function ProgrammeHighlightsSection() {
           </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-stretch">
-          <div className="grid grid-cols-2 gap-2 sm:gap-3">
-            {galleryImages.map((image, index) => (
-              <figure
-                key={image.src}
-                className={`relative overflow-hidden rounded-lg bg-[var(--surface-muted)] ${
-                  index === 0 ? "col-span-2 aspect-[16/8]" : "aspect-[4/3]"
-                }`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image.src} alt={`${day.label} ${image.category}`} className="h-full w-full object-cover" />
-              </figure>
-            ))}
-          </div>
+        {/* Hero photo + day summary */}
+        <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+          {/*
+            Photos use the originals' native 3:2 ratio, so nothing is cropped or zoomed in.
+            Sizes are generous so Next serves a large, sharp variant (same fidelity as /gallery).
+          */}
+          <button
+            type="button"
+            onClick={() => setLightbox({ src: hero.src, alt: hero.alt })}
+            className="group relative block aspect-[3/2] w-full cursor-zoom-in overflow-hidden rounded-xl bg-[var(--surface-muted)]"
+            aria-label={`Open ${hero.alt} photo full size`}
+          >
+            <Image
+              key={hero.src}
+              src={hero.src}
+              alt={hero.alt}
+              fill
+              quality={90}
+              priority
+              sizes="(min-width: 1280px) 760px, (min-width: 1024px) 60vw, 100vw"
+              className="object-cover"
+            />
+          </button>
 
-          <div className="border-t border-[var(--border-soft)] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <div>
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--primary)]">{day.label} highlights</p>
             <h3 className="mt-2 text-2xl font-semibold text-[var(--foreground)]">A programme built for exchange</h3>
             <p className="text-muted mt-3 text-base leading-relaxed">
@@ -580,7 +607,29 @@ export function ProgrammeHighlightsSection() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-4 border-l-4 border-[var(--primary)] bg-[var(--surface-muted)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        {/* Supporting photos */}
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {tiles.map((image) => (
+            <button
+              key={image.src}
+              type="button"
+              onClick={() => setLightbox({ src: image.src, alt: image.alt })}
+              className="relative block aspect-[3/2] w-full cursor-zoom-in overflow-hidden rounded-xl bg-[var(--surface-muted)]"
+              aria-label={`Open ${image.alt} photo full size`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                quality={90}
+                sizes="(min-width: 1152px) 360px, (min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8 flex flex-col gap-4 border-l-4 border-[var(--primary)] bg-[var(--surface-muted)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div>
             <p className="text-base font-semibold text-[var(--foreground)]">Were you part of the Kigali Edition?</p>
             <p className="text-muted mt-1 text-sm">Tell us what worked, what stayed with you, and what we can improve next time.</p>
@@ -607,6 +656,28 @@ export function ProgrammeHighlightsSection() {
           </Link>
         </div>
       </div>
+
+      {/* Lightbox: full-resolution view */}
+      {lightbox && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightbox.alt}
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/90 p-4 sm:p-8"
+        >
+          <div className="relative h-full max-h-[90vh] w-full max-w-6xl">
+            <Image
+              src={lightbox.src}
+              alt={lightbox.alt}
+              fill
+              quality={90}
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

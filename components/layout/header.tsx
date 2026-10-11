@@ -70,7 +70,7 @@ const socialLinks = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/clean-energy-conference-a26aa03b7/",
+    href: "https://www.linkedin.com/company/clean-energy-conference-australia-africa/",
     icon: LinkedinIcon,
   },
   {
@@ -126,7 +126,7 @@ export function Header() {
 {/* LOGO */}
 <Link href="/" className="shrink-0 relative z-10 -ml-4 md:-ml-14">
   <Image
-    src="/images/logo_4.png"
+    src="/images/logo_2.png"
     alt="Clean Energy Conference"
     width={320}
     height={170}
