@@ -21,6 +21,23 @@ type Day = {
   sessions: Session[];
 };
 
+type EventName = "Kigali" | "Perth";
+
+/** Perth photos: day id ("day-1" | "day-2") -> pool name -> image paths. Built on the server (see perth-photos.ts). */
+export type PerthPools = Record<string, Record<string, string[]>>;
+
+// Order in which Perth pools are used for the four recap photos (first four that have images).
+const PERTH_POOL_ORDER = [
+  "Keynote Session",
+  "Panel Discussion",
+  "Award Ceremony",
+  "Workshop",
+  "Networking",
+  "Audience",
+  "Group Photo",
+  "Exhibition",
+];
+
 // Photo pools generated from the labeled event library (public/images/gallery).
 // Each session is tagged with a category; the card rotates through every photo
 // in that category's pool rather than pinning one fixed photo per session.
@@ -482,10 +499,31 @@ const DAYS: Day[] = [
   },
 ];
 
+const EVENTS: EventName[] = ["Kigali", "Perth"];
+
 export function ProgrammeHighlightsSection() {
+  const [event, setEvent] = useState<EventName>("Kigali");
   const [activeDay, setActiveDay] = useState(DAYS[0].id);
   const [gallerySeed, setGallerySeed] = useState(0);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+
+  const [perthPools, setPerthPools] = useState<PerthPools | null>(null);
+  const isPerth = event === "Perth";
+
+  // Load the Perth photo list the first time the Perth tab is opened
+  useEffect(() => {
+    if (!isPerth || perthPools) return;
+    let cancelled = false;
+    fetch("/api/perth-photos")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data) setPerthPools(data);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [isPerth, perthPools]);
 
   const day = useMemo(() => DAYS.find((d) => d.id === activeDay) ?? DAYS[0], [activeDay]);
 
@@ -506,6 +544,21 @@ export function ProgrammeHighlightsSection() {
 
   const galleryImages = useMemo(
     () => {
+      if (isPerth) {
+        // Perth: only ever use Perth photos (never fall back to Kigali pools)
+        const pools = perthPools?.[day.id] ?? {};
+        return PERTH_POOL_ORDER.filter((c) => (pools[c]?.length ?? 0) > 0)
+          .slice(0, 4)
+          .map((category, index) => {
+            const pool = pools[category];
+            return {
+              category,
+              src: pool[(gallerySeed + index * 7) % pool.length],
+              alt: `Perth ${day.label} ${category}`,
+            };
+          });
+      }
+
       const pools = DAY_IMAGE_POOLS[day.id] ?? IMAGE_POOLS;
       const categories = ["Keynote Session", "Panel Discussion", "Workshop", "Networking"];
       return categories.map((category, index) => {
@@ -517,20 +570,47 @@ export function ProgrammeHighlightsSection() {
         };
       });
     },
-    [day.id, day.label, gallerySeed],
+    [isPerth, perthPools, day.id, day.label, gallerySeed],
   );
 
   const [hero, ...tiles] = galleryImages;
 
+  const pill = (isActive: boolean) =>
+    `rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+      isActive ? "bg-[var(--primary)] text-white" : "text-[var(--text-muted)] hover:bg-white"
+    }`;
+
   return (
     <section className="py-12" id="recap">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Event tabs */}
+        <div role="tablist" aria-label="Event recap" className="mb-8 flex gap-8 border-b border-[var(--border-soft)]">
+          {EVENTS.map((e) => {
+            const isActive = event === e;
+            return (
+              <button
+                key={e}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setEvent(e)}
+                className={`-mb-px border-b-2 pb-3 text-sm font-bold uppercase tracking-[0.12em] transition-colors ${
+                  isActive
+                    ? "border-[var(--primary)] text-[var(--primary)]"
+                    : "border-transparent text-[var(--text-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                {e} Recap
+              </button>
+            );
+          })}
+        </div>
+
         {/* Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--primary)]">
               <CheckCircle2 size={13} />
-              Kigali Edition · Concluded 6–7 Aug 2026
+              {isPerth ? "Perth Edition · Concluded" : "Kigali Edition · Concluded 6–7 Aug 2026"}
             </span>
             <h2 className="font-heading mt-1 text-2xl font-bold text-[var(--foreground)]">
               Event Recap
@@ -540,22 +620,15 @@ export function ProgrammeHighlightsSection() {
             </p>
           </div>
 
-          {/* Day toggle */}
-          <div className="flex shrink-0 gap-1 rounded-full border border-[var(--border-soft)] bg-[var(--surface-muted)] p-1">
-            {DAYS.map((d) => {
-              const isActive = d.id === activeDay;
-              return (
-                <button
-                  key={d.id}
-                  onClick={() => setActiveDay(d.id)}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    isActive ? "bg-[var(--primary)] text-white" : "text-[var(--text-muted)] hover:bg-white"
-                  }`}
-                >
+          <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+            {/* Day toggle */}
+            <div className="flex gap-1 rounded-full border border-[var(--border-soft)] bg-[var(--surface-muted)] p-1">
+              {DAYS.map((d) => (
+                <button key={d.id} onClick={() => setActiveDay(d.id)} className={pill(d.id === activeDay)}>
                   {d.label}
                 </button>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
 
@@ -565,23 +638,30 @@ export function ProgrammeHighlightsSection() {
             Photos use the originals' native 3:2 ratio, so nothing is cropped or zoomed in.
             Sizes are generous so Next serves a large, sharp variant (same fidelity as /gallery).
           */}
-          <button
-            type="button"
-            onClick={() => setLightbox({ src: hero.src, alt: hero.alt })}
-            className="group relative block aspect-[3/2] w-full cursor-zoom-in overflow-hidden rounded-xl bg-[var(--surface-muted)]"
-            aria-label={`Open ${hero.alt} photo full size`}
-          >
-            <Image
-              key={hero.src}
-              src={hero.src}
-              alt={hero.alt}
-              fill
-              quality={90}
-              priority
-              sizes="(min-width: 1280px) 760px, (min-width: 1024px) 60vw, 100vw"
-              className="object-cover"
-            />
-          </button>
+          {!hero && isPerth && (
+            <div className="flex aspect-[3/2] w-full items-center justify-center rounded-xl bg-[var(--surface-muted)] text-sm text-[var(--text-muted)]">
+              {perthPools === null ? "Loading Perth photos…" : "No Perth photos found for this day."}
+            </div>
+          )}
+          {hero && (
+            <button
+              type="button"
+              onClick={() => setLightbox({ src: hero.src, alt: hero.alt })}
+              className="group relative block aspect-[3/2] w-full cursor-zoom-in overflow-hidden rounded-xl bg-[var(--surface-muted)]"
+              aria-label={`Open ${hero.alt} photo full size`}
+            >
+              <Image
+                key={hero.src}
+                src={hero.src}
+                alt={hero.alt}
+                fill
+                quality={90}
+                priority
+                sizes="(min-width: 1280px) 760px, (min-width: 1024px) 60vw, 100vw"
+                className="object-cover"
+              />
+            </button>
+          )}
 
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--primary)]">{day.label} highlights</p>
@@ -603,7 +683,9 @@ export function ProgrammeHighlightsSection() {
                 <p className="text-muted mt-1">Informal moments across the exhibition and networking programme carried the dialogue beyond the stage.</p>
               </div>
             </div>
-            <p className="text-muted mt-5 text-xs">{day.date} · Part of a two-day programme</p>
+            <p className="text-muted mt-5 text-xs">
+              {isPerth ? "Part of a two-day programme" : `${day.date} · Part of a two-day programme`}
+            </p>
           </div>
         </div>
 
@@ -629,25 +711,30 @@ export function ProgrammeHighlightsSection() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 border-l-4 border-[var(--primary)] bg-[var(--surface-muted)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <div>
-            <p className="text-base font-semibold text-[var(--foreground)]">Were you part of the Kigali Edition?</p>
-            <p className="text-muted mt-1 text-sm">Tell us what worked, what stayed with you, and what we can improve next time.</p>
+        {/* Feedback (Kigali form only) */}
+        {!isPerth && (
+          <div className="mt-8 flex flex-col gap-4 border-l-4 border-[var(--primary)] bg-[var(--surface-muted)] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div>
+              <p className="text-base font-semibold text-[var(--foreground)]">Were you part of the Kigali Edition?</p>
+              <p className="text-muted mt-1 text-sm">Tell us what worked, what stayed with you, and what we can improve next time.</p>
+            </div>
+            <a
+              href="https://forms.cloud.microsoft/r/SmSZTm9cgn"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-2 bg-[var(--primary)] px-4 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+            >
+              <MessageSquare size={16} aria-hidden="true" />
+              Leave feedback
+            </a>
           </div>
-          <a
-            href="https://forms.cloud.microsoft/r/SmSZTm9cgn"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex shrink-0 items-center justify-center gap-2 bg-[var(--primary)] px-4 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
-          >
-            <MessageSquare size={16} aria-hidden="true" />
-            Leave feedback
-          </a>
-        </div>
+        )}
 
         {/* footer link */}
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-muted text-xs">Two days · Fourteen conversations · One shared direction</p>
+          <p className="text-muted text-xs">
+            {isPerth ? "Two days · One shared direction" : "Two days · Fourteen conversations · One shared direction"}
+          </p>
           <Link
             href="/gallery"
             className="text-xs font-bold text-[var(--primary)] underline underline-offset-4"
