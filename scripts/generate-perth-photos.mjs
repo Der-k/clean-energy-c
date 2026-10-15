@@ -1,6 +1,8 @@
 // scripts/generate-perth-photos.mjs
 // Scans public/images/gallery/Highlights-part2 (Perth Day One) and Highlights-part3 (Perth Day Two)
-// and writes public/perth-photos.json, which the Event Recap loads as a plain static file.
+// and writes two plain static files (no server code, nothing reads the disk at runtime):
+//   public/perth-photos.json   -> used by the Event Recap
+//   public/perth-gallery.json  -> used by the /gallery page
 //
 // Run from the project root:   node scripts/generate-perth-photos.mjs
 // Re-run it whenever you add/remove Perth photos (the "prebuild" script below does it on every build).
@@ -204,6 +206,36 @@ const POOL_BY_TYPE = {
   "exhibition": "Exhibition",
 };
 
+// Photo type -> gallery filter + alt text (for the gallery page)
+const GALLERY_TYPES = {
+  "audience":         { category: "Conference", alt: "Audience at the Clean Energy Conference" },
+  "session":          { category: "Conference", alt: "Conference session" },
+  "panel-discussion": { category: "Conference", alt: "Panel discussion at the Clean Energy Conference" },
+  "other":            { category: "Conference", alt: "Clean Energy Conference moment" },
+  "networking":       { category: "Networking", alt: "Conference networking" },
+  "exhibition":       { category: "Exhibition", alt: "Conference exhibition" },
+  "venue":            { category: "Exhibition", alt: "Clean Energy Conference venue" },
+  "keynote":          { category: "Speakers",   alt: "Keynote speaker at the Clean Energy Conference" },
+  "group-photo":      { category: "Moments",    alt: "Conference group photo" },
+  "award-ceremony":   { category: "Moments",    alt: "Award presentation at the Clean Energy Conference" },
+};
+
+function loadGalleryFolder(folder) {
+  const dir = path.join(process.cwd(), "public", "images", "gallery", folder);
+  if (!fs.existsSync(dir)) return [];
+  const removed = new Set((removedByFolder[folder] ?? []).map((n) => n.toLowerCase()));
+
+  return fs
+    .readdirSync(dir)
+    .sort()
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f) && !removed.has(f.toLowerCase()))
+    .map((f) => {
+      const match = f.match(/^clean-energy-conference-(.+)-\d+\.\w+$/i);
+      const info = (match && GALLERY_TYPES[match[1].toLowerCase()]) || { category: "Conference", alt: "Perth conference photo" };
+      return { src: `/images/gallery/${folder}/${encodeURIComponent(f)}`, alt: info.alt, category: info.category, event: "Perth" };
+    });
+}
+
 function loadFolder(folder) {
   const dir = path.join(process.cwd(), "public", "images", "gallery", folder);
   if (!fs.existsSync(dir)) {
@@ -228,6 +260,10 @@ const result = Object.fromEntries(
 );
 
 fs.writeFileSync(path.join(process.cwd(), "public", "perth-photos.json"), JSON.stringify(result));
+
+const gallery = Object.values(FOLDER_BY_DAY).flatMap(loadGalleryFolder);
+fs.writeFileSync(path.join(process.cwd(), "public", "perth-gallery.json"), JSON.stringify(gallery));
+console.log(`gallery: ${gallery.length} photos`);
 
 for (const [day, pools] of Object.entries(result)) {
   const total = Object.values(pools).reduce((n, p) => n + p.length, 0);
