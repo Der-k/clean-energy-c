@@ -13,13 +13,14 @@ type FormState = {
   email: string;
   organization: string;
   eventChoice: EventOption;
-  includeProspectus: boolean;
 };
 
-const prospectusFile = {
-  label: "Event Prospectus",
-  href: "/documents/1CEE Master Presentation_.pptx",
-};
+// TODO: change the hrefs to match the exact file names you upload to /public/documents
+const documentFiles = [
+  { label: "Concept Page", description: "The vision and concept behind the conference.", href: "/documents/Concept Page.pdf" },
+  { label: "Sponsorship Package", description: "Partnership tiers, benefits and pricing.", href: "/documents/Sponsorship Package.pdf" },
+  { label: "New Programme", description: "The latest conference programme.", href: "/documents/New Programme.pdf" },
+];
 
 function triggerDownload(href: string) {
   const link = document.createElement("a");
@@ -39,14 +40,12 @@ export default function ProgrammePage() {
     email: "",
     organization: "",
     eventChoice: "both",
-    includeProspectus: false,
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [prospectusDownloaded, setProspectusDownloaded] = useState(false);
 
   const editionNames: Record<EventOption, string> = {
     Kigali: "Kigali Edition Programme",
@@ -123,24 +122,12 @@ export default function ProgrammePage() {
       }
 
       setIsSubmitted(true);
-
-      if (form.includeProspectus) {
-        setTimeout(() => {
-          triggerDownload(prospectusFile.href);
-          setProspectusDownloaded(true);
-        }, 300);
-      }
     } catch (error) {
       console.error("Programme request failed:", error);
       setSubmitError("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  function handleDownloadProspectus() {
-    triggerDownload(prospectusFile.href);
-    setProspectusDownloaded(true);
   }
 
   return (
@@ -190,9 +177,9 @@ export default function ProgrammePage() {
                       <BookOpen className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-semibold text-emerald-900">Event prospectus, optional</p>
+                      <p className="text-base font-semibold text-emerald-900">Documents available after registration</p>
                       <p className="mt-1 text-base leading-7 text-emerald-800/80">
-                        Add the full event prospectus to your request, or download it separately after submitting.
+                        Register to download the concept page, sponsorship package and the new programme.
                       </p>
                     </div>
                   </div>
@@ -269,54 +256,12 @@ export default function ProgrammePage() {
                       {errors.eventChoice && <p className="mt-2 text-xs text-red-600">{errors.eventChoice}</p>}
                     </div>
 
-                    <div>
-                      <span className="mb-2 block text-base font-medium text-[color:var(--text-main)]-800">
-                        Want the prospectus too?
-                      </span>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={form.includeProspectus}
-                        onClick={() => updateField("includeProspectus", !form.includeProspectus)}
-                        className={[
-                          "flex w-full items-start gap-3 rounded-2xl border px-4 py-4 text-left transition",
-                          form.includeProspectus
-                            ? "border-emerald-500 bg-emerald-50 shadow-[0_10px_28px_rgba(6,95,70,0.12)]"
-                            : "border-emerald-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/40",
-                        ].join(" ")}
-                      >
-                        <span
-                          className={[
-                            "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition",
-                            form.includeProspectus
-                              ? "border-emerald-600 bg-emerald-600 text-white"
-                              : "border-emerald-300 bg-white text-transparent",
-                          ].join(" ")}
-                        >
-                          <CheckCircle2 className="h-4 w-4" />
-                        </span>
-                        <span>
-                          <span className="block text-base font-semibold text-emerald-900">
-                            Send me the event prospectus
-                          </span>
-                          <span className="mt-1 block text-base leading-6 text-emerald-800/70">
-                            A full overview of the conference, themes, and partnership details.
-                          </span>
-                        </span>
-                      </button>
-                    </div>
-
                     <div className="rounded-[20px] border border-[#02026e]/20 bg-[#02026e]/5 px-4 py-4">
                       <p className="text-base font-semibold text-[color:var(--text-main)]-900">
                         Selected selection
                       </p>
                       <p className="mt-1 text-base text-[color:var(--text-main)]-600">
                         {selectedProgrammeLabel} (Programme updates coming soon)
-                        {form.includeProspectus ? (
-                          <span className="font-semibold text-emerald-700"> + {prospectusFile.label}</span>
-                        ) : (
-                          ""
-                        )}
                       </p>
                     </div>
 
@@ -344,7 +289,6 @@ export default function ProgrammePage() {
                   </h2>
                   <p className="mt-3 max-w-md text-base leading-7 text-[color:var(--text-main)]-600">
                     Thank you, {form.firstName}. The programme will be updated in the future, and we will email you as soon as the latest schedule is available.
-                    {form.includeProspectus ? " Your event prospectus download has started." : ""}
                   </p>
 
                   <div className="mt-6 rounded-[20px] border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)]">
@@ -354,46 +298,48 @@ export default function ProgrammePage() {
                     <p className="mt-1 text-base text-[color:var(--text-main)]-600">{selectedProgrammeLabel}</p>
                   </div>
 
+                  {/* Documents unlocked after registration */}
+                  <div className="mt-8 w-full space-y-3 text-left">
+                    <p className="text-base font-semibold text-[color:var(--text-main)]-900">
+                      Your documents
+                    </p>
+                    {documentFiles.map((doc) => (
+                      <div
+                        key={doc.label}
+                        className="flex items-center gap-3 rounded-[20px] border border-emerald-300 bg-emerald-50 px-5 py-4 shadow-[0_10px_28px_rgba(6,95,70,0.08)]"
+                      >
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-700 shadow-sm">
+                          <FileText className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-base font-semibold text-emerald-900">{doc.label}</p>
+                          <p className="text-sm leading-6 text-emerald-800/70">{doc.description}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => triggerDownload(doc.href)}
+                          aria-label={`Download ${doc.label}`}
+                          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:scale-[1.03] hover:bg-emerald-700"
+                        >
+                          <Download className="h-4 w-4" />
+                          <span className="hidden sm:inline">Download</span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <button type="button"
                       onClick={() => {
                         setIsSubmitted(false);
                         setSubmitError("");
                         setErrors({});
-                        setProspectusDownloaded(false);
-                        setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both", includeProspectus: false });
+                        setForm({ firstName: "", secondName: "", email: "", organization: "", eventChoice: "both" });
                       }}
                       className="btn-glow rounded-full px-6 py-3 text-base font-semibold text-white bg-[#020266]"
                     >
                       Submit another request
                     </button>
-                  </div>
-
-                  {/* Additional download option for prospectus if requested */}
-                  <div className="mt-8 w-full rounded-[20px] border border-emerald-300 bg-emerald-50 px-5 py-5 text-left shadow-[0_10px_28px_rgba(6,95,70,0.08)]">
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-700 shadow-sm">
-                        <BookOpen className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-base font-semibold text-emerald-900">
-                          Want the full event prospectus too?
-                        </p>
-                        <p className="mt-1 text-base leading-7 text-emerald-800/70">
-                          {prospectusDownloaded
-                            ? "Sent — grab it again below any time."
-                            : "You've already given us your details, so this one's a single click."}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={handleDownloadProspectus}
-                          className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-base font-semibold text-white transition hover:scale-[1.03] hover:bg-emerald-700 hover:shadow-[0_12px_30px_rgba(6,95,70,0.3)]"
-                        >
-                          {prospectusDownloaded ? "Download prospectus again" : "Download the prospectus"}
-                          <Download className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               )}
